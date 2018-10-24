@@ -1,9 +1,9 @@
 <?php
  include "../settings/connect.php"; //$database handler $dbConn or $conn
 
- //$new_guest = json_decode($_POST["new_guest"], true);
+ $new_guest = $_POST["new_guest"];
 
- $new_guest = '{"guest_name":"Ewere", "guest_type_gender": "male", "phone_number":"08023456789", "contact_address":"webplay nigeria ltd", "total_rooms_booked":9, "no_of_nights":8, "room_outstanding": 4000}';
+ // $new_guest = '{"guest_name":"Ewere", "guest_type_gender": "male", "phone_number":"08023456789", "contact_address":"webplay nigeria ltd", "total_rooms_booked":9, "no_of_nights":8, "room_outstanding": 4000}';
 
  $new_guest = json_decode($new_guest, true);
 
