@@ -78,12 +78,18 @@ li{
 .green{
     color: green !important;
 }
+.purp-clr{
+    color: rgb(153, 46, 202) !important;
+}
 .choral{
     color: #d9534f !important;
 }
 .orange{
     background: #f0ad4e;
     color: #fff;
+}
+.orange-clr{
+    color: #f0ad4e;
 }
 .choralback{
     background: #d9534f !important;
@@ -202,8 +208,24 @@ input::placeholder {
     background-color: transparent;
     border-color: #f0ad4e;
   }
+.custom-btn-outline-orange {
+    color: #f0ad4e;
+    background-image: none;
+    background-color: transparent;
+    border-color: #fff;
+  }
+  
+.custom-btn-outline-orange:hover {
+    color: #fff;
+    background-color: #f0ad4e;
+    border-color: #f0ad4e;
+  }
 .blu{
     background: #509CCB;
+/*    font-weight: 700;*/
+}
+.blu-clr{
+    color: #509CCB;
 /*    font-weight: 700;*/
 }
 .btn-darkgrn:hover{
@@ -253,6 +275,12 @@ button.btnnone{
 .b-1{
     border-bottom: .5px dotted rgba(0,0,0,.3) !important;
 }
+.bb-1{
+    border-bottom: .5px solid rgba(0,0,0,.5) !important;
+}
+.br-1{
+    border-right: .5px solid rgba(0,0,0,.5) !important;
+}
 .w-90{
     width: 90% !important;
 }
@@ -298,6 +326,9 @@ button.btnnone{
 .h-80{
     height: 80% !important;
 }
+.h-75{
+    height: 75% !important;
+}
 .h-70{
     height: 70% !important;
 }
@@ -309,6 +340,9 @@ button.btnnone{
 }
 .h-30{
     height: 30% !important;
+}
+.h-25{
+    height: 25% !important;
 }
 .h-20{
     height: 20% !important;

@@ -23,7 +23,7 @@ transaction */
  $no_of_nights = $new_guest["no_of_nights"];
  $d = strtotime("+"."$no_of_nights days");
  $check_out_date = date("Y-m-d", $d);
- var_dump($check_out_date);
+ //var_dump($check_out_date);
  $room_outstanding = $new_guest["room_outstanding"];
 
  $rand_id = mt_rand(0, 100000);
@@ -114,7 +114,7 @@ $update_stock_query->close();
 
  if($add_new_guest_result){
 	$msg_response[0] = "OUTPUT";
-	$msg_response[1] = $guest_name . " SUCCESSFULLY ADDED";
+	$msg_response[1] = "SUCCESSFULLY ADDED";
  } else {
 	$msg_response[0] = "ERROR";
 	$msg_response[1] = "SOMETHING WENT WRONG". mysqli_error($dbConn);

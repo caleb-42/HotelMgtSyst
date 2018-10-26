@@ -18,11 +18,23 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
                     scope.guest.listhddata = [
                         {
                             name: "Name",
-                            width: "col-6",
+                            width: "col-3",
                         },
                         {
-                            name: "Role",
-                            width: "col-6",
+                            name: "Gender",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Rooms",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Visit Count",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Out bal.",
+                            width: "col-3",
                         }
                     ];
                 },
@@ -43,71 +55,75 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
     };
 }]);
 
-salesApp.directive('ordersgrid', ['$rootScope', function ($rootScope) {
+dashApp.directive('roomgrid', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/dashboard/listTemplates.php?type=ordersgrid',
-        scope: {
-            ordercheck: "&"
-        },
+        templateUrl: './assets/js/dashboard/listTemplates.php?list=roomgrid',
+
+        scope: false,
+
         link: function (scope, element, attrs) {
-            $rootScope.$on("neworder", function (evt, params) {
-                scope.order.listarray = $.extend(true, {}, params);
-                arr = $.map(scope.order.listarray, function (el) {
-                    return el
-                });
-                scope.order.list = arr;
-                scope.order.list.length == 1 ? scope.ordercheck() : null;
-                $(".orderRow").fadeOut(10, function () {
-                    $(".orderRow").delay(700).fadeIn(100);
-                }).delay(50);
-
-            });
-            $rootScope.$on("deleteorder", function (evt, params) {
-                scope.order.focused = null;
-                scope.order.list.length == 1 ? scope.ordercheck() : null;
-                //console.log(scope.order.list[scope.order.focusedIndex]);
-                scope.order.list.splice(scope.order.focusedIndex, 1);
-            });
-            $rootScope.$on("DeselectOrder", function (evt, params) {
-                if (scope.order.focused) {
-                    scope.order.focused = null;
-                    $rootScope.$emit("orderDeselected", {});
-                }
-            });
-            scope.order = {
-                focus: function (ordername, index) {
-                    //console.log(index);
-                    if (ordername == scope.order.focused) {
-                        scope.order.focused = null;
-                        $rootScope.$emit("orderDeselected", {});
-                    } else {
-                        scope.order.focused = ordername;
-                        scope.order.focusedIndex = index;
-                        $rootScope.$emit("orderSelected", {
-                            list: scope.order.list[index],
-                            indx: index
-                        });
-                    }
-
+            scope.rooms.jslist = {
+                createList: function () {
+                    listdetails = scope.rooms.itemlist();
+                    jsonlist = listdetails.jsonfunc;
+                    jsonlist.then(function (result) {
+                        console.log(result);
+                        scope.rooms.jslist.values = result;
+                        scope.rooms.jslist.selected = null;
+                    });
+                    scope.rooms.listhddata = [
+                        {
+                            name: "Name",
+                            width: "col-3",
+                        },
+                        {
+                            name: "Gender",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Rooms",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Visit Count",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Out bal.",
+                            width: "col-3",
+                        }
+                    ];
                 },
-                list: []
+                select: function (index, id) {
+                    scope.rooms.jslist.selected = id;
+                    scope.rooms.jslist.selectedObj = scope.rooms.jslist.newItemArray[index];
+                    console.log(scope.rooms.jslist.newItemArray[index]);
+                },
+                toggleOut : function(){
+                    $(".listcont").fadeOut(200);
+                },
+                toggleIn : function(){
+                    $(".listcont").delay(500).fadeIn(200);
+                }
             }
+            scope.rooms.jslist.createList();
         }
     };
 }]);
-
-salesApp.directive('accordion', ['$rootScope', function ($rootScope) {
+ 
+dashApp.directive('accordion', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/dashboard/listTemplates.php?type=accordion',
+        templateUrl: './assets/js/dashboard/listTemplates.php?list=accordion',
         scope: {
             
         },
         link: function (scope, element, attrs) {
-            
+            scope.type = attrs.type;
         }
     };
 }]);
+
 
 

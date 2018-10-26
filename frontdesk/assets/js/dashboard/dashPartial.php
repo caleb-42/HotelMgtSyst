@@ -1,4 +1,4 @@
-<div ng-controller="sales">
+<div ng-controller="dashboard">
 <div class="prime-hd anim  {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.primeclass : 'w-100'}}">
     <div class="statusbar blu row  align-items-end pl-1">
         <div class="tabnav col-12 row">
@@ -14,31 +14,41 @@
 
     <div class="prime-body {{tabnav.selected.options.rightbar ? '' : 'p-0'}}">
         <div class="animate-switch-container" ng-switch on="tabnav.selected.name">
-            <div class="animate-switch Sales h-100" ng-switch-default>
-                <div class="products  anim " ng-class='{"h-100": !sales.order.panel, "h-70": sales.order.panel}'>
-                    <div class="p-3 px-4 itemlayout w-100" ng-class='{" h-95": !sales.order.panel, " h-93": sales.order.panel}'>
+            <div class="animate-switch" ng-switch-when="Rooms">
+
+                <roomgrid></roomgrid>
+
+            </div>
+            <div class="animate-switch Sales h-100" ng-switch-when = "Guests">
+                <div class="products  anim h-75">
+                    <div class="p-3 px-4 itemlayout w-100 h-93">
                         <div class="mb-5 item-container">
                             <div class="userlisthd row justify-content-between">
-                                <h4 class=" my-4 py-2 font-fam-Montserrat-bold">Manage Users</h4>
+                                <h4 class=" my-4 py-2 font-fam-Montserrat-bold">Manage Guest</h4>
                                 <div class="my-4">
                                     <button class="btn btn-outline-primary mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Add Guest'; settings.modal.size = 'md' " data-toggle="modal" data-target="#crud" >Add</button>
                                     <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Update Guest'; settings.modal.size = 'lg'; " ng-disabled="!guest.jslist.selected">Update</button>
                                     <!-- <button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" ng-click="users.deleteUser()"  ng-disabled="!users.jslist.selected">Delete</button> -->
                                 </div>
                             </div>
-                            <jslist class="font-fam-Montserrat" layout="sales.products.layout" searchquery="searchbox.imp" getlistfunc="sales.products.itemlist()"></jslist>
+                            <jslist class="font-fam-Montserrat"></jslist>
                         </div>
                     </div>
-                    <div class="orderbtn w-100"><button class="ml-2 h-100 btn-danger px-5 " ng-class="{'hvr-pulse-grow' : sales.order.orderExist}" ng-click="sales.order.togglepanel()">Orders</button></div>
+                    <!-- <div class="orderbtn w-100"><button class="ml-2 h-100 btn-warning px-5 font-fam-Montserrat-bold">Details</button></div> -->
                 </div>
-                <div class="orders anim px-4" ng-class='{"h-0": !sales.order.panel, "h-30": sales.order.panel}'>
+                <div class="orders row align-items-center anim px-2 h-25">
 
-                    <!--<ordersgrid list = "sales.order.list"></ordersgrid>-->
-                    <ordersgrid ordercheck="sales.order.checkOrderExist()"></ordersgrid>
+                    <div class = "row w-100">
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Rooms</h6>
+                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.rooms : '2, 4, 7'}} </p>
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Phone Number</h6>
+                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.phone_number : '08130439102'}} </p>
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Address</h6>
+                        <p class = "  col-8  f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.contact_address : 'Conversion of Architectural Blueprints to well-designed Structural layouts (foundaton, beams, columns and bases, slabs'}} </p>
+                    </div>
 
                 </div>
             </div>
-            <div class="animate-switch" ng-switch-when="History">HomeSpan</div>
         </div>
     </div>
 </div>
@@ -51,15 +61,19 @@
                     <input class="form-control float-right anim" ng-model="searchbox.imp" />
                 </div>
                 <!-- ng-class="{vanishsearch:searchbox.iconhover}" -->
-                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" href = "../php1/restaurant_bar/restaurant_logoff.php" ng-mouseenter="settings.log = false;" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm btn-outline-secondary wht mb-2">{{settings.log ? settings.user : 'log out'}}</a>
+                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" href = "../php1/restaurant_bar/restaurant_logoff.php" ng-mouseenter="settings.log = false;" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a>
             </div>
         </div>
     </div>
     <!--statusbar for main-sidebar-right end -->
-    <div class="sidebar-body" ng-switch on="tabnav.selected">
-        <div ng-switch-default class = " whtback hs-100 anim">
+    <div class="sidebar-body animate-switch-container" ng-switch on="tabnav.selected.name">
+        <div ng-switch-when = "Guests" class = " whtback hs-100 anim animate-switch">
             <!--<ordersgrid list = "sales.order.list"></ordersgrid>-->
-            <accordion></accordion>
+            <accordion type = "guest"></accordion>
+        </div>
+        <div ng-switch-when = "Rooms" class = " whtback hs-100 anim animate-switch">
+            <!--<ordersgrid list = "sales.order.list"></ordersgrid>-->
+            <accordion type = "rooms"></accordion>
         </div>
     </div>
 

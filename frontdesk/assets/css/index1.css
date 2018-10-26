@@ -152,7 +152,6 @@ body {
     /*border-left: .5px solid rgba(0,0,0,.2);*/
 }
 
-
 .ordercart{
     background: #555 !important;
     color: white;
@@ -191,10 +190,9 @@ body {
 
 
 .itembox {
-    width: 140px;
-    height: 140px;
-    margin-right: 30px;
-    margin-bottom: 30px;
+    width: 111px;
+    height: 111px;
+    margin: 15px;
     background: #ccc;
     color: #555;
     text-align: center;

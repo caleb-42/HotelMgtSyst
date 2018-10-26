@@ -3,9 +3,9 @@
 session_start();
 print (isset($_SESSION['user']));
 if(!isset($_SESSION['user_name'])){
-     $_SESSION['user_name'] = 'webplay';
-     $_SESSION['role'] = 'admin'; 
-    //header("Location: logIn.php");
+     /* $_SESSION['user_name'] = 'webplay';
+     $_SESSION['role'] = 'admin';  */
+    header("Location: logIn.php");
 }
 
 $templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Stocks"=>"./assets/js/stocks/stocksPartial.php","Users"=>"./assets/js/users/usersPartial.php","Records"=>"./assets/js/records/recordsPartial.php"]
