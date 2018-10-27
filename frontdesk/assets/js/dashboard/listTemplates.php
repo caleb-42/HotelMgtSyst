@@ -6,7 +6,7 @@
     </div>
     <div class = "hs-45 listbody ovflo-y pb-4" >
         <ul class = "list" >
-            <li class = "anim-fast itemlistrow row align-items-center f-12" ng-repeat = "gst in (guest.jslist.newItemArray = (guest.jslist.values | filter:searchbox.imp))" ng-click = "guest.jslist.select($index, items.id)" ng-class = "{'actparent' :guest.jslist.selected == gst.guest_id}">
+            <li class = "anim-fast itemlistrow row align-items-center f-12" ng-repeat = "gst in (guest.jslist.newItemArray = (guest.jslist.values | filter:searchbox.imp))" ng-click = "guest.jslist.select($index, gst.guest_id)" ng-class = "{'actparent' :guest.jslist.selected == gst.guest_id}">
                 <span class = "username col-3">{{gst.guest_name}}</span>
                 <span class = "text-center role col-2">{{gst.guest_type_gender}}</span>
                 <span class = "text-center role col-2">{{gst.total_rooms_booked}}</span>

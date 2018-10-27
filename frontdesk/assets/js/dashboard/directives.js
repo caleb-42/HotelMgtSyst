@@ -39,6 +39,7 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
                     ];
                 },
                 select: function (index, id) {
+                    console.log(id);
                     scope.guest.jslist.selected = id;
                     scope.guest.jslist.selectedObj = scope.guest.jslist.newItemArray[index];
                     console.log(scope.guest.jslist.newItemArray[index]);

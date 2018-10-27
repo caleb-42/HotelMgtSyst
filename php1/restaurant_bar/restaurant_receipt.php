@@ -222,9 +222,9 @@ function receipt_body($fprinter, $items_arr, $item_arr_count, $cost_due, $paid_a
 	    	for ($x=0; $x<(17-strlen($array_items[count($array_items) - 1])); $x++){
 			fwrite($fprinter, " ");
 		  }
-	    } elseif (strlen($products) < 49) {
-	    	$products = wordwrap($products, 16, "\n", true);
-	    	$array_items = explode("\n", $products);
+	    } elseif (strlen($item) < 49) {
+	    	$item = wordwrap($item, 16, "\n", true);
+	    	$array_items = explode("\n", $item);
 	    	fwrite($fprinter, $item);
 	    	for ($x=0; $x<(17-strlen($array_items[count($array_items) - 1])); $x++){
 			fwrite($fprinter, " ");
@@ -340,7 +340,7 @@ file_put_contents($filename, $printData);
 copy($filename, $device);       //Print receipt contents
 unlink($filename);
 
-$msg_response="";
+$msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
 if($txn_insert_result && $payment_record_result){
 	$msg_response[0] = "OUTPUT";
