@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2018 at 10:29 AM
+-- Generation Time: Oct 29, 2018 at 11:22 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -28,15 +28,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `frontdesk_bookings` (
   `id` int(11) NOT NULL,
-  `room_no` int(11) NOT NULL,
+  `booking_ref` varchar(200) NOT NULL,
+  `room_number` int(11) NOT NULL,
+  `room_id` varchar(200) NOT NULL,
   `room_category` varchar(200) NOT NULL,
   `room_rate` int(11) NOT NULL,
-  `guest_name` int(11) NOT NULL,
-  `guest_id` int(11) NOT NULL,
+  `guest_name` varchar(200) NOT NULL,
+  `guest_id` varchar(200) NOT NULL,
   `no_of_nights` int(11) NOT NULL,
-  `occupancy` int(11) NOT NULL,
-  `check_in_date` timestamp NOT NULL,
-  `expected_checkout_date` datetime NOT NULL
+  `guests` int(11) NOT NULL DEFAULT '1',
+  `check_in_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `expected_checkout_date` date NOT NULL,
+  `expected_checkout_time` time NOT NULL,
+  `checked_out` varchar(30) NOT NULL DEFAULT 'NO',
+  `check_out_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -55,25 +60,60 @@ CREATE TABLE IF NOT EXISTS `frontdesk_guests` (
   `total_rooms_booked` int(11) NOT NULL,
   `checked_in` varchar(11) NOT NULL DEFAULT 'YES',
   `check_in_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `check_out_date` date NOT NULL,
-  `check_out_time` time NOT NULL,
   `room_outstanding` int(11) NOT NULL,
   `restaurant_outstanding` int(11) NOT NULL DEFAULT '0',
   `checked_out` varchar(50) NOT NULL DEFAULT 'NO',
   `visit_count` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
 
 --
 -- Dumping data for table `frontdesk_guests`
 --
 
-INSERT INTO `frontdesk_guests` (`id`, `guest_id`, `guest_name`, `guest_type_gender`, `phone_number`, `contact_address`, `total_rooms_booked`, `checked_in`, `check_in_date`, `check_out_date`, `check_out_time`, `room_outstanding`, `restaurant_outstanding`, `checked_out`, `visit_count`) VALUES
-(1, 'LOD_13381', 'Ewere', 'male', '08023456789', 'webplay nigerial ltd', 0, 'YES', '2018-10-10 12:28:41', '0000-00-00', '13:28:41', 4000, 0, 'NO', 1),
-(2, 'LOD_70578', 'Ewere', 'male', '08023456789', 'webplay nigerial ltd', 0, 'YES', '2018-10-10 12:29:10', '0000-00-00', '13:29:10', 4000, 0, 'NO', 1),
-(3, 'LOD_4856', 'Ewere', 'male', '08023456789', 'webplay nigerial ltd', 9, 'YES', '2018-10-10 12:30:57', '0000-00-00', '13:30:57', 4000, 0, 'NO', 1),
-(4, 'LOD_96684', 'Ewere', 'male', '08023456789', 'webplay nigerial ltd', 9, 'YES', '2018-10-10 12:34:45', '2018-10-19', '13:34:45', 4000, 0, 'NO', 1),
-(5, 'LOD_98410', 'Ewere', 'male', '08023456789', 'webplay nigerial ltd', 9, 'YES', '2018-10-10 12:34:58', '2018-10-18', '13:34:58', 4000, 0, 'NO', 1);
+INSERT INTO `frontdesk_guests` (`id`, `guest_id`, `guest_name`, `guest_type_gender`, `phone_number`, `contact_address`, `total_rooms_booked`, `checked_in`, `check_in_date`, `room_outstanding`, `restaurant_outstanding`, `checked_out`, `visit_count`) VALUES
+(1, 'LOD_7079', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:19:32', 4000, 0, 'NO', 1),
+(2, 'LOD_38431', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:21:02', 4000, 0, 'NO', 1),
+(3, 'LOD_22872', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:21:23', 4000, 0, 'NO', 1),
+(4, 'LOD_45572', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:22:49', 4000, 0, 'NO', 1),
+(5, 'LOD_49593', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:24:07', 4000, 0, 'NO', 1),
+(6, 'LOD_72942', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:24:26', 4000, 0, 'NO', 1),
+(7, 'LOD_778', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:25:52', 4000, 0, 'NO', 1),
+(8, 'LOD_31817', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:26:14', 4000, 0, 'NO', 1),
+(9, 'LOD_81566', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:27:01', 4000, 0, 'NO', 1),
+(10, 'LOD_91717', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:28:12', 4000, 0, 'NO', 1),
+(11, 'LOD_13034', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:28:57', 4000, 0, 'NO', 1),
+(12, 'LOD_27909', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:30:20', 4000, 0, 'NO', 1),
+(13, 'LOD_78011', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:30:40', 4000, 0, 'NO', 1),
+(14, 'LOD_88818', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:31:03', 4000, 0, 'NO', 1),
+(15, 'LOD_68875', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:36:33', 4000, 0, 'NO', 1),
+(16, 'LOD_12269', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:39:04', 4000, 0, 'NO', 1),
+(17, 'LOD_36074', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:39:37', 4000, 0, 'NO', 1),
+(18, 'LOD_64841', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:40:01', 4000, 0, 'NO', 1),
+(19, 'LOD_49585', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:41:31', 4000, 0, 'NO', 1),
+(20, 'LOD_86533', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:42:43', 4000, 0, 'NO', 1),
+(21, 'LOD_44378', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:43:25', 4000, 0, 'NO', 1),
+(22, 'LOD_53514', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 14:47:09', 4000, 0, 'NO', 1),
+(23, 'LOD_53520', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:16:09', 4000, 0, 'NO', 1),
+(24, 'LOD_47464', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:17:37', 4000, 0, 'NO', 1),
+(25, 'LOD_24584', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:18:13', 4000, 0, 'NO', 1),
+(26, 'LOD_59098', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:18:35', 4000, 0, 'NO', 1),
+(27, 'LOD_10891', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:24:24', 4000, 0, 'NO', 1),
+(28, 'LOD_25216', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:25:24', 4000, 0, 'NO', 1),
+(29, 'LOD_22313', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:26:17', 4000, 0, 'NO', 1),
+(30, 'LOD_33748', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:30:24', 4000, 0, 'NO', 1),
+(31, 'LOD_41139', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:31:12', 4000, 0, 'NO', 1),
+(32, 'LOD_93609', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:32:13', 4000, 0, 'NO', 1),
+(33, 'LOD_7935', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:32:45', 4000, 0, 'NO', 1),
+(34, 'LOD_22147', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:34:06', 4000, 0, 'NO', 1),
+(35, 'LOD_97157', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:34:47', 4000, 0, 'NO', 1),
+(36, 'LOD_61284', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:36:38', 4000, 0, 'NO', 1),
+(37, 'LOD_18129', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:37:27', 4000, 0, 'NO', 1),
+(38, 'LOD_55168', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:39:01', 4000, 0, 'NO', 1),
+(39, 'LOD_20626', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:43:23', 4000, 0, 'NO', 1),
+(40, 'LOD_62754', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:43:35', 4000, 0, 'NO', 1),
+(41, 'LOD_5464', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-26 10:14:09', 4000, 0, 'NO', 1),
+(42, 'LOD_6808', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-26 14:44:01', 4000, 0, 'NO', 1);
 
 -- --------------------------------------------------------
 
@@ -92,19 +132,67 @@ CREATE TABLE IF NOT EXISTS `frontdesk_other_transactions` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `frontdesk_payments`
+--
+
+CREATE TABLE IF NOT EXISTS `frontdesk_payments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `frontdesk_txn` varchar(100) NOT NULL,
+  `payment_index` int(11) NOT NULL DEFAULT '1',
+  `txn_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `amount_paid` int(11) NOT NULL,
+  `date_of_payment` timestamp NOT NULL,
+  `amount_balance` int(11) NOT NULL,
+  `net_paid` int(11) NOT NULL,
+  `txn_worth` int(11) NOT NULL,
+  `guest_id` varchar(100) NOT NULL,
+  `means_of_payment` varchar(100) NOT NULL,
+  `frontdesk_rep` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `frontdesk_payments`
+--
+
+INSERT INTO `frontdesk_payments` (`id`, `frontdesk_txn`, `payment_index`, `txn_date`, `amount_paid`, `date_of_payment`, `amount_balance`, `net_paid`, `txn_worth`, `guest_id`, `means_of_payment`, `frontdesk_rep`) VALUES
+(1, 'BK_9989', 1, '2018-10-26 11:14:09', 54000, '2018-10-26 10:14:09', 9000, 54000, 63000, 'LOD_5464', 'POS', ''),
+(2, 'BK_9989', 2, '2018-10-26 11:14:09', 2000, '2018-10-26 14:55:52', 7000, 56000, 63000, 'LOD_5464', 'CASH', 'Joan'),
+(3, 'BK_9989', 3, '2018-10-26 11:14:09', 2000, '2018-10-26 14:57:16', 5000, 58000, 63000, 'LOD_5464', 'CASH', 'Joan'),
+(4, 'BK_9989', 4, '2018-10-26 11:14:09', 2000, '2018-10-26 14:58:36', 3000, 60000, 63000, 'LOD_5464', 'CASH', 'Joan'),
+(5, 'BK_9989', 5, '2018-10-26 11:14:09', 2000, '2018-10-26 15:00:19', 1000, 62000, 63000, 'LOD_5464', 'CASH', 'Joan'),
+(6, 'BK_9989', 6, '2018-10-26 11:14:09', 1000, '2018-10-26 15:06:19', 0, 63000, 63000, 'LOD_5464', 'CASH', 'Joan');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `frontdesk_reservations`
 --
 
 CREATE TABLE IF NOT EXISTS `frontdesk_reservations` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reservation_ref` varchar(100) NOT NULL,
   `guest_name` varchar(200) NOT NULL,
   `reserved_date` date NOT NULL,
+  `no_of_nights` int(11) NOT NULL,
   `inquiry_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `room` int(11) NOT NULL,
+  `room_id` varchar(100) NOT NULL,
   `room_category` varchar(200) NOT NULL,
   `amount_paid` int(11) NOT NULL,
-  `amount_balance` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `amount_balance` int(11) NOT NULL,
+  `booked` varchar(20) NOT NULL DEFAULT 'NO',
+  `booking_ref` varchar(100) NOT NULL DEFAULT '',
+  `cancelled` varchar(100) NOT NULL DEFAULT 'NO',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `frontdesk_reservations`
+--
+
+INSERT INTO `frontdesk_reservations` (`id`, `reservation_ref`, `guest_name`, `reserved_date`, `no_of_nights`, `inquiry_date`, `room_id`, `room_category`, `amount_paid`, `amount_balance`, `booked`, `booking_ref`, `cancelled`) VALUES
+(1, 'akja', 'john', '2018-10-30', 4, '2018-10-28 16:55:16', 'RM_25367', 'deluxe', 12000, 21000, 'NO', '', 'NO'),
+(2, 'asdnmes', 'mark', '2018-11-15', 6, '2018-10-28 16:55:16', 'RM_25367', 'deluxe', 21000, 12000, 'NO', '', 'NO');
 
 -- --------------------------------------------------------
 
@@ -118,9 +206,9 @@ CREATE TABLE IF NOT EXISTS `frontdesk_rooms` (
   `room_id` varchar(200) NOT NULL,
   `room_rate` int(11) NOT NULL,
   `category` varchar(100) NOT NULL,
-  `occupancy` int(11) NOT NULL DEFAULT '0',
+  `features` varchar(400) NOT NULL DEFAULT '',
   `current_guest_id` varchar(200) NOT NULL DEFAULT '',
-  `extra_guests` int(11) NOT NULL DEFAULT '0',
+  `guests` int(11) NOT NULL DEFAULT '0',
   `booked` varchar(50) NOT NULL DEFAULT 'NO',
   `booking_ref` varchar(100) NOT NULL DEFAULT '',
   `booked_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -138,14 +226,14 @@ CREATE TABLE IF NOT EXISTS `frontdesk_rooms` (
 -- Dumping data for table `frontdesk_rooms`
 --
 
-INSERT INTO `frontdesk_rooms` (`id`, `room_number`, `room_id`, `room_rate`, `category`, `occupancy`, `current_guest_id`, `extra_guests`, `booked`, `booking_ref`, `booked_on`, `booking_expires`, `reserved`, `reserved_by`, `reservation_ref`, `reservation_date`, `days_till_reservation_date`, `reservation_expiry`) VALUES
-(1, 100, 'RM_25367', 0, 'deluxe', 0, '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
-(2, 101, 'RM_85965', 0, 'standard', 0, '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
-(3, 102, 'RM_66480', 0, 'standard', 0, '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
-(4, 103, 'RM_71638', 0, 'standard', 0, '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
-(5, 200, 'RM_51704', 0, 'deluxe', 0, '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
-(6, 201, 'RM_60146', 0, 'deluxe', 0, '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
-(7, 202, 'RM_64917', 0, 'deluxe', 0, '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00');
+INSERT INTO `frontdesk_rooms` (`id`, `room_number`, `room_id`, `room_rate`, `category`, `features`, `current_guest_id`, `guests`, `booked`, `booking_ref`, `booked_on`, `booking_expires`, `reserved`, `reserved_by`, `reservation_ref`, `reservation_date`, `days_till_reservation_date`, `reservation_expiry`) VALUES
+(1, 100, 'RM_25367', 33000, 'deluxe', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
+(2, 101, 'RM_85965', 15000, 'standard', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
+(3, 102, 'RM_66480', 15000, 'standard', '', 'LOD_5464', 3, 'YES', 'BK_9989', '2018-10-26 10:14:09', '2018-10-30 11:14:09', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
+(4, 103, 'RM_71638', 15000, 'standard', '', 'LOD_5464', 3, 'YES', 'BK_9989', '2018-10-26 10:14:09', '2018-10-30 11:14:09', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
+(5, 200, 'RM_51704', 33000, 'deluxe', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
+(6, 201, 'RM_60146', 33000, 'deluxe', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
+(7, 202, 'RM_64917', 33000, 'deluxe', '', 'LOD_5464', 3, 'YES', 'BK_9989', '2018-10-26 10:14:09', '2018-10-30 11:14:09', 'NO', '', '', '0000-00-00', NULL, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -172,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `frontdesk_sessions` (
 
 CREATE TABLE IF NOT EXISTS `frontdesk_txn` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `txn_ref` varchar(100) NOT NULL,
+  `booking_ref` varchar(100) NOT NULL,
   `total_rooms_booked` int(11) NOT NULL,
   `total_cost` int(11) NOT NULL,
   `deposited` int(11) NOT NULL,
@@ -181,7 +269,14 @@ CREATE TABLE IF NOT EXISTS `frontdesk_txn` (
   `payment_status` varchar(100) NOT NULL,
   `frontdesk_rep` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `frontdesk_txn`
+--
+
+INSERT INTO `frontdesk_txn` (`id`, `booking_ref`, `total_rooms_booked`, `total_cost`, `deposited`, `balance`, `means_of_payment`, `payment_status`, `frontdesk_rep`) VALUES
+(1, 'BK_9989', 3, 63000, 63000, 0, 'POS', 'PAID FULL', 'Ada');
 
 -- --------------------------------------------------------
 
