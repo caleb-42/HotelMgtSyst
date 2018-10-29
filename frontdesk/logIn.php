@@ -32,7 +32,7 @@ $date=date("D M d, Y g:i a");
     <body>
         <div class="container">
             <div class = "adminform row justify-content-center" style="height: 100vh;">
-                <form autocomplete="off" role="form" method="post" action = "../php1/restaurant_bar/restaurant_logon.php" class="align-self-center">
+                <form autocomplete="off" role="form" method="post" action = "../php1/front_desk/frontdesk_logon.php" class="align-self-center">
                     <div class="formhd text-center px-4 pt-4">
                         <img  class = "" width = 140px height = 130px src = "assets/img/icon.png"/>
                         <!-- <h5 class = "Title mb-4 pb-1 mx-5 mt-3 wht font-fam-Calibri">Front<b>Desk</b></h5> -->

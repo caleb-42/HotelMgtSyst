@@ -369,7 +369,7 @@ unlink($filename);
 
  if($add_new_guest_result){
 	$msg_response[0] = "OUTPUT";
-	$msg_response[1] = $guest_name . " SUCCESSFULLY ADDED";
+	$msg_response[1] = "SUCCESSFULLY ADDED";
  } else {
 	$msg_response[0] = "ERROR";
 	$msg_response[1] = "SOMETHING WENT WRONG". mysqli_error($dbConn);
