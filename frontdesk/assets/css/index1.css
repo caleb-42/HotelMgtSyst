@@ -251,6 +251,11 @@ body {
     /*box-shadow:  200px 200px 20px rgba(217, 83, 79, .9) inset !important;*/
     box-shadow:  200px 200px 20px rgba(80, 156, 203, .8) inset !important;
 }
+div.actparent{
+    color: white !important;
+    /*box-shadow:  200px 200px 20px rgba(217, 83, 79, .9) inset !important;*/
+    box-shadow:  200px 200px 20px rgba(80, 156, 203, .8) inset !important;
+} 
 .listhd {
     background: #ddd;
     color: #333;

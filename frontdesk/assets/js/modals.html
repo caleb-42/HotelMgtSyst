@@ -388,27 +388,68 @@
             <!--....... Discount End ......... -->
 
 
-            <!--....... User Start ......... -->
+            <!--....... Guest Start ......... -->
             <div class="w-100" ng-if="settings.modal.active == 'Guest'">
                 <div class="w-100" ng-if="settings.modal.name == 'Add Guest'">
-                    <form class="p-4 w-100 addGuestForm row justify-content-center m-0">
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-2" placeholder="Name"
-                            name="guest_name" />
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-2" placeholder="Phone Number"
-                            name="phone_number" />
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-2" placeholder="Address" name="contact_address" />
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-2" placeholder="Rooms" name="total_rooms_booked" />
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-2" placeholder="Number of Nights" name="no_of_nights" />
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-2" placeholder="Room Outstanding" name="room_outstanding" />
-                        <div class="row justify-content-between w-50 py-2">
-                            <span class="py-1">
-                                <input type="radio" id="male" value="male" checked name="guest_type_gender" />
-                                <label for="male" class="f-15 ml-2">Male</label>
-                            </span>
-                            <span class="py-1">
-                                <input type="radio" value="female" name="guest_type_gender" id="female" />
-                                <label for="female" class="f-15 ml-2">Female</label>
-                            </span>
+                    <form class="py-4 w-100 addGuestForm row justify-content-between m-0 px-5">
+                        <div class = 'w-40 pr-5'>
+                            <input class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Name"
+                                name="guest_name" />
+                            <input class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Phone Number"
+                                name="phone_number" />
+                            <textarea class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Address" name="contact_address" ></textarea>
+                            <!-- <input class="form-control w-75 font-fam-Montserrat text-center d-block my-2" placeholder="Rooms" name="total_rooms_booked" /> -->
+                            <div class = "row">
+                                <input ng-model = 'nyt' class="form-control col-4 font-fam-Montserrat text-center d-block my-3" placeholder="Nights" name="average_no_of_nights" ng-change = "nytdate = (nyt | intervalGetDate); guest.roomgrid.addnyts(nyt);"/>
+                                <input ng-model = 'nytdate' class="form-control offset-1 col-7 font-fam-Montserrat text-center d-block my-3" placeholder="leaving" name="leaving_date" />
+                            </div>
+                            <!-- <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Room Outstanding" name="room_outstanding" /> -->
+                            <div class="row justify-content-around w-100 py-3">
+                                <span class="py-1">
+                                    <input type="radio" id="male" value="male" checked name="guest_type_gender" />
+                                    <label for="male" class="f-15 ml-2">Male</label>
+                                </span>
+                                <span class="py-1">
+                                    <input type="radio" value="female" name="guest_type_gender" id="female" />
+                                    <label for="female" class="f-15 ml-2">Female</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class = 'w-60 table-bordered'>
+                            <div ng-switch on = 'guest.roomgrid.activated'>
+                                <div ng-switch-when = 'false'>
+                                    <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
+                                        <h6 class='col-3 f-15 text-left'>Category</h6>
+                                        <h6 class='col-6 f-15'>Rooms Available</h6>
+                                        <h6 class='col-3 f-15'>No. Rooms</h6>
+                                    </div>
+                                    <div class='row w-100 text-center b-1 pointer'>
+                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate('Deluxe'); guest.roomgrid.roomsHolder = guest.roomgrid.rooms.deluxe">Deluxe</h6>
+                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate('Deluxe')">24</p>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input class='formcontrol w-100 text-center' name = 'noroom'/></span>
+                                    </div>
+                                    <div class='row w-100 text-center b-1 pointer'>
+                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate('Standard'); guest.roomgrid.roomsHolder = guest.roomgrid.rooms.standard">Standard</h6>
+                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate('Standard');">37</p>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input class='formcontrol w-100 text-center' name = 'noroom'/></span>
+                                    </div>
+                                </div>
+                                <div ng-switch-when = 'true'>
+                                    <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
+                                        <h6 class='col-3 f-15 text-left pointer' ng-click='guest.roomgrid.deactivate()'>Back</h6>
+                                        <h6 class='col-9 f-15 text-right'>{{guest.roomgrid.type}}</h6>
+                                    </div>
+                                    <div class='row w-100 text-center'>
+                                        <ul class="w-100">
+                                            <li ng-repeat = 'room in guest.roomgrid.roomsHolder' class = "w-100 row py-2">
+                                                <span class="col-4 roomno text-left">{{room.room_number}}</span>
+                                                <span class="col-4 roomno">{{room.room_id}}</span>
+                                                <span class="col-4 nights text-right"><input ng-model = 'nytval' class='formcontrol w-100 text-center' value = {{nyt}} name = 'no_of_nights' ng-change = "room.no_of_nights = nytval"/></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
                     <div class="modal-footer w-100">
@@ -477,7 +518,7 @@
                     </div>
                 </div>
             </div>
-            <!--....... User End ......... -->
+            <!--....... Guest End ......... -->
 
 
             <!--....... User Start ......... -->

@@ -81,6 +81,9 @@ li{
 .purp-clr{
     color: rgb(153, 46, 202) !important;
 }
+.purp-back{
+    background: rgb(153, 46, 202) !important;
+}
 .choral{
     color: #d9534f !important;
 }
@@ -151,7 +154,7 @@ li{
 .f-19{
     font-size: 19px  !important;
 }
-input::placeholder {
+input::placeholder, textarea::placeholder {
     opacity: .5 !important;
 }
 .font-fam-Montserrat{

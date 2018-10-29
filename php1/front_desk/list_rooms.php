@@ -29,7 +29,7 @@
 
   $frontdesk_rooms = get_all_frontdesk_rooms($get_rooms_result, $get_rooms_array, $dbConn);
 
-  if ($_SERVER["REQUEST_METHOD"] += "POST") {
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	echo $frontdesk_rooms;
   } else {
   	echo "UNAUTHORIZED ACCESS";

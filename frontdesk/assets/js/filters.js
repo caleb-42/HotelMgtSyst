@@ -13,3 +13,17 @@ app.filter('objtoarray', function(){
         return array;
     }
 });
+app.filter('intervalGetDate', function(){
+    return function(input){
+        if(!input){
+            return '';
+        }
+        today = new Date();
+        today.setDate(today.getDate() + parseInt(input));
+        dd = today.getDate();
+        mm = today.getMonth() + 1;
+        yy = today.getFullYear();
+        today = dd + '-' + mm + '-' + yy;
+        return today;
+    }
+});

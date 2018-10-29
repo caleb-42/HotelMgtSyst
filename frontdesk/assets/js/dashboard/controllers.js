@@ -54,6 +54,48 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 jsonfunc: jsonPost.data("../php1/front_desk/list_guests.php", {})
             }
         },
+        roomgrid:{
+            type: '',
+            rooms : {},
+            activate: function(room_type){
+                //$scope.guest.rooms[room_type] = 
+                $scope.guest.roomgrid.type = room_type;
+                $scope.guest.roomgrid.activated = 'true';
+            },
+            deactivate: function(){
+                $scope.guest.roomgrid.type = '';
+                $scope.guest.roomgrid.activated = 'false';
+            },
+            getrooms : function(roomCat){
+                roomCat.forEach(function(cat){
+                    jsonPost.data("../php1/front_desk/frontdesk_rooms_by_category.php", {
+                        category : cat
+                    }).then(function(result){
+                        $scope.guest.roomgrid.rooms[cat] = result;
+                        console.log($scope.guest.roomgrid.rooms);
+                    });
+                });
+                
+            },
+            addnyts : function(num){
+                console.log($scope.guest.roomgrid.rooms.toArray);
+                ($scope.guest.roomgrid.rooms.toArray()).forEach(function(cat){
+                    (cat.toArray()).forEach(function(room){
+                        room.no_of_nights = num;
+                    });
+                });
+            },
+            activated:'false'
+        },
+        catRoom : function(){
+            jsonPost.data("../php1/front_desk/list_rooms.php", {}).then(function(result){
+
+
+
+            });
+
+            
+        },
         addGuest: function (jsonguest) {
             console.log("new Guest", jsonguest);
 
