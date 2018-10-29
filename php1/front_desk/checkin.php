@@ -30,13 +30,14 @@ $connector = new WindowsPrintConnector($printName);
 $printer = new Printer($connector);
  // $checkin_data = $_POST["checkin_data"];
 
-$checkin_data = '{"guest_name":"Ewere", "guest_type_gender": "male", "phone_number":"08023456789", "contact_address":"webplay nigeria ltd", "room_outstanding": 4000, "total_rooms_booked": 3, "total_cost": 63000, "deposited": 54000, "balance": 9000, "means_of_payment": "POS", "frontdesk_rep": "Ada", "rooms": [{"room_no": 102, "room_id": "RM_64917", "guests":3, "room_rate": 33000, "no_of_nights":4, "room_category": "deluxe"}, {"room_no": 102, "room_id": "RM_66480", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard"}, {"room_no": 102, "room_id": "RM_71638", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard"}]}';
+$checkin_data = '{"guest_id":"LOD_5464", "guest_name":"Ewere", "total_rooms_booked": 3, "total_cost": 63000, "deposited": 54000, "balance": 9000, "means_of_payment": "POS", "frontdesk_rep": "Ada", "rooms": [{"room_number": 102, "room_id": "RM_64917", "guests":3, "room_rate": 33000, "no_of_nights":4, "room_category": "deluxe"}, {"room_number": 102, "room_id": "RM_66480", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard"}, {"room_number": 102, "room_id": "RM_71638", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard"}]}';
 /*checkin_data is the json string from the front-end the keys contain aspects of the
 /*sales_details is the json string from the front-end the keys contain aspects of the
 transaction */
  $checkin_data = json_decode($checkin_data, true);
 
- $guest_name = mysqli_real_escape_string($dbConn, $checkin_data["guest_name"]);
+ $guest_name = $checkin_data["guest_name"];
+ $guest_id = $checkin_data["guest_id"];
  $total_rooms_booked = $checkin_data["total_rooms_booked"];
  $total_cost = $checkin_data["total_cost"];
  $deposited = $checkin_data["deposited"];
@@ -100,15 +101,15 @@ $select_rooms_query->bind_param("s", $room_id); // continue from here
  /*room check*/
 
 /*Record sales of individual rooms*/
-$insert_into_bookings = $conn->prepare("INSERT INTO frontdesk_bookings (booking_ref, room_no, room_id, room_category, room_rate, guest_name, guest_id, no_of_nights, guests, expected_checkout_date, expected_checkout_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? ,?, CURRENT_TIME)");
+$insert_into_bookings = $conn->prepare("INSERT INTO frontdesk_bookings (booking_ref, room_number, room_id, room_category, room_rate, guest_name, guest_id, no_of_nights, guests, expected_checkout_date, expected_checkout_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? ,?, CURRENT_TIME)");
 // echo mysqli_error($conn);
 // var_dump($insert_into_bookings);
 
-$insert_into_bookings->bind_param("sississiis", $tx_ref, $room_no, $room_id, $room_category, $room_rate, $client_name, $client_id, $no_of_days, $guests, $expected_checkout_date);
+$insert_into_bookings->bind_param("sississiis", $tx_ref, $room_number, $room_id, $room_category, $room_rate, $client_name, $client_id, $no_of_days, $guests, $expected_checkout_date);
 
 for ($i=0; $i <$no_of_rooms ; $i++) { 
 	$tx_ref = $booking_ref;
-	$room_no = $rooms[$i]["room_no"];
+	$room_number = $rooms[$i]["room_number"];
 	$room_id = $rooms[$i]["room_id"];
 	$room_category = $rooms[$i]["room_category"];
 	$room_rate = $rooms[$i]["room_rate"];
@@ -213,7 +214,7 @@ function receipt_body($fprinter, $rooms_arr, $room_arr_count, $cost_due, $paid_a
 	fwrite($fprinter, "\x0A");
 
 	for ($i=0; $i<$room_arr_count; $i++) {
-		$rm = $rooms_arr[$i]["room_no"] . " (" . $rooms_arr[$i]["room_category"] . ")";
+		$rm = $rooms_arr[$i]["room_number"] . " (" . $rooms_arr[$i]["room_category"] . ")";
 		if(strlen($rm) < 16) {
 		  fwrite($fprinter, $rm);
 		  for ($x=0; $x<(16-strlen($rm)); $x++){
