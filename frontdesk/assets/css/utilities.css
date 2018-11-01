@@ -44,6 +44,10 @@ li.actparent{
     box-shadow:  200px 200px 20px rgba(0,0,0, .5) inset;
     color: white !important;
 }
+li.actparent1{
+    box-shadow:  200px 200px 20px rgba(0,0,0, .2) inset;
+    color: #333 !important;
+}
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none; 

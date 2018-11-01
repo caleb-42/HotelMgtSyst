@@ -400,8 +400,8 @@
                             <textarea class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Address" name="contact_address" ></textarea>
                             <!-- <input class="form-control w-75 font-fam-Montserrat text-center d-block my-2" placeholder="Rooms" name="total_rooms_booked" /> -->
                             <div class = "row">
-                                <input ng-model = 'nyt' class="form-control col-4 font-fam-Montserrat text-center d-block my-3" placeholder="Nights" name="average_no_of_nights" ng-change = "nytdate = (nyt | intervalGetDate); guest.roomgrid.addnyts(nyt);"/>
-                                <input ng-model = 'nytdate' class="form-control offset-1 col-7 font-fam-Montserrat text-center d-block my-3" placeholder="leaving" name="leaving_date" />
+                                <input ng-model = 'guest.roomgrid.nyt' class="form-control col-4 font-fam-Montserrat text-center d-block my-3" placeholder="Nights" name="average_no_of_nights" ng-change = "guest.roomgrid.nytdate = (guest.roomgrid.nyt | intervalGetDate); guest.roomgrid.addnyts(guest.roomgrid.nyt);  guest.roomgrid.get_no_room(); guest.roomgrid.roomsHolder = guest.roomgrid.room_details[guest.roomgrid.type].roomarray"/>
+                                <input ng-model = 'guest.roomgrid.nytdate' class="form-control offset-1 col-7 font-fam-Montserrat text-center d-block my-3" placeholder="leaving" name="leaving_date" />
                             </div>
                             <!-- <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Room Outstanding" name="room_outstanding" /> -->
                             <div class="row justify-content-around w-100 py-3">
@@ -424,14 +424,14 @@
                                         <h6 class='col-3 f-15'>No. Rooms</h6>
                                     </div>
                                     <div class='row w-100 text-center b-1 pointer'>
-                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate('Deluxe'); guest.roomgrid.roomsHolder = guest.roomgrid.rooms.deluxe">Deluxe</h6>
-                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate('Deluxe')">24</p>
-                                        <span class='pr-2 py-4 pl-3 col-3'><input class='formcontrol w-100 text-center' name = 'noroom'/></span>
+                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate('deluxe'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.deluxe.roomarray">{{'deluxe' | capitalize}}</h6>
+                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate('deluxe'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.deluxe.roomarray">{{guest.roomgrid.room_details.deluxe.roomcount}}</p>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input ng-model = 'guest.roomgrid.roomtotal.deluxe' class='formcontrol w-100 text-center' name = 'noroom' ng-change = "guest.roomgrid.selectrooms('deluxe', guest.roomgrid.roomtotal.deluxe)"/></span>
                                     </div>
                                     <div class='row w-100 text-center b-1 pointer'>
-                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate('Standard'); guest.roomgrid.roomsHolder = guest.roomgrid.rooms.standard">Standard</h6>
-                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate('Standard');">37</p>
-                                        <span class='pr-2 py-4 pl-3 col-3'><input class='formcontrol w-100 text-center' name = 'noroom'/></span>
+                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate('standard'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.standard.roomarray">{{'standard' | capitalize}} </h6>
+                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate('standard'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.standard.roomarray">{{guest.roomgrid.room_details.standard.roomcount}}</p>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input ng-model = 'guest.roomgrid.roomtotal.standard' class='formcontrol w-100 text-center' name = 'noroom' ng-change = "guest.roomgrid.selectrooms('standard', guest.roomgrid.roomtotal.standard)"/></span>
                                     </div>
                                 </div>
                                 <div ng-switch-when = 'true'>
@@ -441,10 +441,10 @@
                                     </div>
                                     <div class='row w-100 text-center'>
                                         <ul class="w-100">
-                                            <li ng-repeat = 'room in guest.roomgrid.roomsHolder' class = "w-100 row py-2">
+                                            <li ng-repeat = 'room in guest.roomgrid.roomsHolder' class = "w-100 row py-2" ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.toggleroom();" ng-class = "{'sechue anim' : guest.roomgrid.reservedyes == room.room_id, 'actparent1' : room.selected }">
                                                 <span class="col-4 roomno text-left">{{room.room_number}}</span>
                                                 <span class="col-4 roomno">{{room.room_id}}</span>
-                                                <span class="col-4 nights text-right"><input ng-model = 'nytval' class='formcontrol w-100 text-center' value = {{nyt}} name = 'no_of_nights' ng-change = "room.no_of_nights = nytval"/></span>
+                                                <span class="col-4 nights text-right"><input ng-init = "guest.roomgrid.roomid[room.room_id] = guest.roomgrid.nyt" ng-model = 'guest.roomgrid.roomid[room.room_id]' class='formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "guest.roomgrid.roomid[room.room_id] = guest.roomgrid.nyt_no(guest.roomgrid.roomid[room.room_id],room.reservations, room.room_id)"/></span>
                                             </li>
                                         </ul>
                                     </div>
