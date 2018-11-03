@@ -122,6 +122,9 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     $scope.guest.roomgrid.room_details[room].roomarray[i].selected = true;
                 };
                 console.log($scope.guest.roomgrid.room_details[room]);
+                Object.values($scope.guest.roomgrid.roomtotal).forEach(function(val){
+                    
+                })
             },
             room_details : {},
             get_no_room : function (){

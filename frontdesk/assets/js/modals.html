@@ -391,8 +391,8 @@
             <!--....... Guest Start ......... -->
             <div class="w-100" ng-if="settings.modal.active == 'Guest'">
                 <div class="w-100" ng-if="settings.modal.name == 'Add Guest'">
-                    <form class="py-4 w-100 addGuestForm row justify-content-between m-0 px-5">
-                        <div class = 'w-40 pr-5'>
+                    <div class="py-4 w-100 row justify-content-between m-0 px-5">
+                        <form class = 'w-40 addGuestForm pr-5' autocomplete = "off">
                             <input class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Name"
                                 name="guest_name" />
                             <input class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Phone Number"
@@ -400,8 +400,22 @@
                             <textarea class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Address" name="contact_address" ></textarea>
                             <!-- <input class="form-control w-75 font-fam-Montserrat text-center d-block my-2" placeholder="Rooms" name="total_rooms_booked" /> -->
                             <div class = "row">
-                                <input ng-model = 'guest.roomgrid.nyt' class="form-control col-4 font-fam-Montserrat text-center d-block my-3" placeholder="Nights" name="average_no_of_nights" ng-change = "guest.roomgrid.nytdate = (guest.roomgrid.nyt | intervalGetDate); guest.roomgrid.addnyts(guest.roomgrid.nyt);  guest.roomgrid.get_no_room(); guest.roomgrid.roomsHolder = guest.roomgrid.room_details[guest.roomgrid.type].roomarray"/>
-                                <input ng-model = 'guest.roomgrid.nytdate' class="form-control offset-1 col-7 font-fam-Montserrat text-center d-block my-3" placeholder="leaving" name="leaving_date" />
+                                <input ng-model = 'guest.roomgrid.nyt' class="form-control col-5 font-fam-Montserrat text-center d-block my-2" placeholder="Nights" name="average_no_of_nights" ng-change = "guest.roomgrid.nytdate = (guest.roomgrid.nyt | intervalGetDate); guest.roomgrid.addnyts(guest.roomgrid.nyt);  guest.roomgrid.get_no_room(); guest.roomgrid.roomsHolder = guest.roomgrid.room_details[guest.roomgrid.type].roomarray"/>
+                                <input ng-model = 'guest.roomgrid.nytdate' class="form-control offset-1 col-6 font-fam-Montserrat text-center d-block my-2" placeholder="leaving" name="leaving_date" />
+                            </div>
+                            <div class="row justify-content-between">
+                                <div class = "col-5 p-0 my-3 text-center">
+                                    <input class="form-control w-100 font-fam-Montserrat text-center m-0 d-block my-3" placeholder="Deposit"
+                                    name="deposited" />
+                                </div>
+                                <div class = "col-6 p-0 text-center">
+                                    <select class="form-control methpay my-3 w-100 f-13" name="means_of_payment">
+                                        <option selected value="Cash">Cash</option>
+                                        <option value="Cheque">Cheque</option>
+                                        <option value="POS">POS</option>
+                                        <option value="Credit">Credit</option>
+                                    </select>
+                                </div>
                             </div>
                             <!-- <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Room Outstanding" name="room_outstanding" /> -->
                             <div class="row justify-content-around w-100 py-3">
@@ -414,9 +428,9 @@
                                     <label for="female" class="f-15 ml-2">Female</label>
                                 </span>
                             </div>
-                        </div>
-                        <div class = 'w-60 table-bordered'>
-                            <div ng-switch on = 'guest.roomgrid.activated'>
+                        </form>
+                        <div class = 'w-60'>
+                            <div ng-switch on = 'guest.roomgrid.activated' class = "table-bordered h-50">
                                 <div ng-switch-when = 'false'>
                                     <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
                                         <h6 class='col-3 f-15 text-left'>Category</h6>
@@ -426,12 +440,12 @@
                                     <div class='row w-100 text-center b-1 pointer'>
                                         <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate('deluxe'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.deluxe.roomarray">{{'deluxe' | capitalize}}</h6>
                                         <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate('deluxe'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.deluxe.roomarray">{{guest.roomgrid.room_details.deluxe.roomcount}}</p>
-                                        <span class='pr-2 py-4 pl-3 col-3'><input ng-model = 'guest.roomgrid.roomtotal.deluxe' class='formcontrol w-100 text-center' name = 'noroom' ng-change = "guest.roomgrid.selectrooms('deluxe', guest.roomgrid.roomtotal.deluxe)"/></span>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input ng-init = "guest.roomgrid.roomtotal.deluxe = 0" ng-model = 'guest.roomgrid.roomtotal.deluxe' class='formcontrol w-100 text-center' name = 'noroom' ng-change = "guest.roomgrid.selectrooms('deluxe', guest.roomgrid.roomtotal.deluxe)"/></span>
                                     </div>
                                     <div class='row w-100 text-center b-1 pointer'>
                                         <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate('standard'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.standard.roomarray">{{'standard' | capitalize}} </h6>
                                         <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate('standard'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.standard.roomarray">{{guest.roomgrid.room_details.standard.roomcount}}</p>
-                                        <span class='pr-2 py-4 pl-3 col-3'><input ng-model = 'guest.roomgrid.roomtotal.standard' class='formcontrol w-100 text-center' name = 'noroom' ng-change = "guest.roomgrid.selectrooms('standard', guest.roomgrid.roomtotal.standard)"/></span>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input ng-init = "guest.roomgrid.roomtotal.standard = 0" ng-model = 'guest.roomgrid.roomtotal.standard' class='formcontrol w-100 text-center' name = 'noroom' ng-change = "guest.roomgrid.selectrooms('standard', guest.roomgrid.roomtotal.standard)"/></span>
                                     </div>
                                 </div>
                                 <div ng-switch-when = 'true'>
@@ -442,16 +456,27 @@
                                     <div class='row w-100 text-center'>
                                         <ul class="w-100">
                                             <li ng-repeat = 'room in guest.roomgrid.roomsHolder' class = "w-100 row py-2" ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.toggleroom();" ng-class = "{'sechue anim' : guest.roomgrid.reservedyes == room.room_id, 'actparent1' : room.selected }">
-                                                <span class="col-4 roomno text-left">{{room.room_number}}</span>
-                                                <span class="col-4 roomno">{{room.room_id}}</span>
-                                                <span class="col-4 nights text-right"><input ng-init = "guest.roomgrid.roomid[room.room_id] = guest.roomgrid.nyt" ng-model = 'guest.roomgrid.roomid[room.room_id]' class='formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "guest.roomgrid.roomid[room.room_id] = guest.roomgrid.nyt_no(guest.roomgrid.roomid[room.room_id],room.reservations, room.room_id)"/></span>
+                                                <span class="col-2 roomno text-left">{{room.room_number}}</span>
+                                                <span class="col-3 roomno">{{room.room_rate}}</span>
+                                                <span class="col-4 roomno">{{(guest.roomgrid.roomid[room.room_id] | intervalGetDate)}}</span>
+                                                <span class="col-3 nights text-right"><input ng-init = "guest.roomgrid.roomid[room.room_id] = guest.roomgrid.nyt" ng-model = 'guest.roomgrid.roomid[room.room_id]' class='formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "guest.roomgrid.roomid[room.room_id] = guest.roomgrid.nyt_no(guest.roomgrid.roomid[room.room_id],room.reservations, room.room_id)"/></span>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row w-100">
+                                <div class = "col row">
+                                    <h6 class="col-5">Rooms</h6>
+                                    <h6 class="col-7">{{scope.guest.roomgrid.roomtotal.deluxe + scope.guest.roomgrid.roomtotal.standard}}</h6>
+                                </div>
+                                <div class = "col">
+                                    <h6 class="col-5">Cost</h6>
+                                    <h6 class="col-7">{{}}</h6>
+                                </div>
+                            </div>
                         </div>
-                    </form>
+                    </div>
                     <div class="modal-footer w-100">
                         <div class="justify-content-center w-100 d-flex flex-column">
                             <div class="py-1 row justify-content-center w-100">

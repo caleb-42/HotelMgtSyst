@@ -69,6 +69,12 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
             addGuest = function () {
                 $rootScope.settings.modal.adding = true;
                 jsonForm = $(".addGuestForm").serializeObject();
+                jsonForm.room_outstanding = 0;
+                total_rooms = 0;
+                Object.values(scope.guest.roomgrid.roomtotal).forEach(function(tot){
+                    total_rooms += tot;
+                });
+                jsonForm.total_rooms_booked = total_rooms;
                 console.log(scope.guest);
                 scope.guest.addGuest(jsonForm);
             };
