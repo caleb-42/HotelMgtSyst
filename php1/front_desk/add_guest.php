@@ -30,9 +30,9 @@ $printer = new Printer($connector);
 
 $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
- // $checkin_data = $_POST["checkin_data"];
+  $checkin_data = $_POST["checkin_data"];
 
- $checkin_data = '{"guest_name":"Ewere", "guest_type_gender": "male", "phone_number":"08023456789", "contact_address":"webplay nigeria ltd", "room_outstanding": 4000, "total_rooms_booked": 3, "total_cost": 252000, "deposited": 200000, "balance": 52000, "means_of_payment": "POS", "frontdesk_rep": "Ada", "rooms": [{"room_number": 102, "room_id": "RM_64917", "guests":3, "room_rate": 33000, "no_of_nights":4, "room_category": "deluxe", "room_total_cost" : 132000}, {"room_number": 102, "room_id": "RM_66480", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard", "room_total_cost" : 60000}, {"room_number": 102, "room_id": "RM_71638", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard", "room_total_cost" : 60000}]}';
+ /* $checkin_data = '{"guest_name":"Ewere", "guest_type_gender": "male", "phone_number":"08023456789", "contact_address":"webplay nigeria ltd", "room_outstanding": 4000, "total_rooms_booked": 3, "total_cost": 63000, "deposited": 54000, "balance": 9000, "means_of_payment": "POS", "frontdesk_rep": "Ada", "rooms": [{"room_number": 102, "room_id": "RM_64917", "guests":3, "room_rate": 33000, "no_of_nights":4, "room_category": "deluxe"}, {"room_number": 102, "room_id": "RM_66480", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard"}, {"room_number": 102, "room_id": "RM_71638", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard"}]}'; */
 /*checkin_data is the json string from the front-end the keys contain aspects of the
 transaction */
  // var_dump($checkin_data);

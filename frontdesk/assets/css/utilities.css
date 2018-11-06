@@ -79,6 +79,10 @@ li{
 .dark{
     color: rgba(0,0,0,.5) !important;
 }
+.dark-back{
+    background: rgba(0,0,0,.5) !important;
+    color : white;
+}
 .green{
     color: green !important;
 }
@@ -87,6 +91,9 @@ li{
 }
 .purp-back{
     background: rgb(153, 46, 202) !important;
+}
+.lytpurp-back{
+    background: rgba(225, 159, 255, .5) !important;
 }
 .choral{
     color: #d9534f !important;

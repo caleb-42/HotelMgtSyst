@@ -70,13 +70,45 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                 $rootScope.settings.modal.adding = true;
                 jsonForm = $(".addGuestForm").serializeObject();
                 jsonForm.room_outstanding = 0;
-                total_rooms = 0;
-                Object.values(scope.guest.roomgrid.roomtotal).forEach(function(tot){
-                    total_rooms += tot;
+                jsonForm.total_cost = scope.guest.roomgrid.roominfo.roomstotalcost;
+                jsonForm.total_rooms_booked = scope.guest.roomgrid.roominfo.selectedrooms;
+                jsonForm.balance = scope.guest.roomgrid.roominfo.roomstotalcost - jsonForm.deposited ;
+                jsonForm.frontdesk_rep = $rootScope.settings.user;
+                jsonForm.rooms = [];
+                arryy = Object.values(scope.guest.roomgrid.room_details);
+                arryy.forEach(function(rm){
+                    if(rm.roomarray){
+                        rm.roomarray.forEach(function(elem){
+                            if(elem.selected == true){
+                                elem.no_of_nights = scope.guest.roomgrid.roomid[elem.room_id];
+                                jsonForm.rooms.push(elem);
+                            }
+                        });
+                    }
                 });
-                jsonForm.total_rooms_booked = total_rooms;
-                console.log(scope.guest);
+                console.log(jsonForm);
                 scope.guest.addGuest(jsonForm);
+            };
+            checkIn = function () {
+                $rootScope.settings.modal.adding = true;
+                jsonForm = $(".CheckInForm").serializeObject();
+                jsonForm.room_outstanding = 0;
+                jsonForm.total_cost = scope.guest.roomgrid.roominfo.roomstotalcost;
+                jsonForm.total_rooms_booked = scope.guest.roomgrid.roominfo.selectedrooms;
+                jsonForm.balance = scope.guest.roomgrid.roominfo.roomstotalcost - jsonForm.deposited ;
+                jsonForm.frontdesk_rep = $rootScope.settings.user;
+                jsonForm.rooms = [];
+                arryy = Object.values(scope.guest.roomgrid.room_details);
+                arryy.forEach(function(rm){
+                    rm.roomarray.forEach(function(elem){
+                        if(elem.selected == true){
+                            elem.no_of_nights = scope.guest.roomgrid.roomid[elem.room_id];
+                            jsonForm.rooms.push(elem);
+                        }
+                    });
+                });
+                console.log(jsonForm);
+                scope.guest.checkIn(jsonForm);
             };
             updateUser = function () {
                 $rootScope.settings.modal.adding = true

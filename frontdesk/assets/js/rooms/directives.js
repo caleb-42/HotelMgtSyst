@@ -1,7 +1,7 @@
 app.directive('productlist', ['$rootScope', '$filter', function ($rootScope, $filter) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/stocks/listTemplates.php?list=stock',
+        templateUrl: './assets/js/rooms/listTemplates.php?list=stock',
 
         scope: false,
 

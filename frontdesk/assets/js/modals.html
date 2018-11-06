@@ -429,23 +429,18 @@
                                 </span>
                             </div>
                         </form>
-                        <div class = 'w-60'>
-                            <div ng-switch on = 'guest.roomgrid.activated' class = "table-bordered h-50">
+                        <div class = 'w-60 {{!guest.roomgrid.nyt ? "deactivate" : null}}' >
+                            <div ng-switch on = 'guest.roomgrid.activated' class = "table-bordered">
                                 <div ng-switch-when = 'false'>
                                     <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
                                         <h6 class='col-3 f-15 text-left'>Category</h6>
                                         <h6 class='col-6 f-15'>Rooms Available</h6>
                                         <h6 class='col-3 f-15'>No. Rooms</h6>
                                     </div>
-                                    <div class='row w-100 text-center b-1 pointer'>
-                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate('deluxe'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.deluxe.roomarray">{{'deluxe' | capitalize}}</h6>
-                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate('deluxe'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.deluxe.roomarray">{{guest.roomgrid.room_details.deluxe.roomcount}}</p>
-                                        <span class='pr-2 py-4 pl-3 col-3'><input ng-init = "guest.roomgrid.roomtotal.deluxe = 0" ng-model = 'guest.roomgrid.roomtotal.deluxe' class='formcontrol w-100 text-center' name = 'noroom' ng-change = "guest.roomgrid.selectrooms('deluxe', guest.roomgrid.roomtotal.deluxe)"/></span>
-                                    </div>
-                                    <div class='row w-100 text-center b-1 pointer'>
-                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate('standard'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.standard.roomarray">{{'standard' | capitalize}} </h6>
-                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate('standard'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.standard.roomarray">{{guest.roomgrid.room_details.standard.roomcount}}</p>
-                                        <span class='pr-2 py-4 pl-3 col-3'><input ng-init = "guest.roomgrid.roomtotal.standard = 0" ng-model = 'guest.roomgrid.roomtotal.standard' class='formcontrol w-100 text-center' name = 'noroom' ng-change = "guest.roomgrid.selectrooms('standard', guest.roomgrid.roomtotal.standard)"/></span>
+                                    <div ng-repeat = "rm in guest.roomgrid.rooms" class='row w-100 text-center b-1 pointer'>
+                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate(rm.name); guest.roomgrid.roomsHolder = guest.roomgrid.room_details[rm.name].roomarray">{{rm.name | capitalize}}</h6>
+                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate(rm.name); guest.roomgrid.roomsHolder = guest.roomgrid.room_details[rm.name].roomarray">{{guest.roomgrid.room_details[rm.name].roomcount}}</p>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input ng-model = 'guest.roomgrid.roomtotal[rm.name]' class='formcontrol w-100 text-center' name = 'noroom' ng-disabled="!guest.roomgrid.nyt" ng-change = "guest.roomgrid.selectrooms(rm.name, guest.roomgrid.roomtotal[rm.name])"/></span>
                                     </div>
                                 </div>
                                 <div ng-switch-when = 'true'>
@@ -455,24 +450,24 @@
                                     </div>
                                     <div class='row w-100 text-center'>
                                         <ul class="w-100">
-                                            <li ng-repeat = 'room in guest.roomgrid.roomsHolder' class = "w-100 row py-2" ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.toggleroom();" ng-class = "{'sechue anim' : guest.roomgrid.reservedyes == room.room_id, 'actparent1' : room.selected }">
+                                            <li ng-repeat = 'room in guest.roomgrid.roomsHolder' class = "w-100 row py-2" ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.toggleroom();" ng-class = "{'sechue anim' : guest.roomgrid.reservedyes == room.room_id, 'lytpurp-back' : room.selected }">
                                                 <span class="col-2 roomno text-left">{{room.room_number}}</span>
                                                 <span class="col-3 roomno">{{room.room_rate}}</span>
                                                 <span class="col-4 roomno">{{(guest.roomgrid.roomid[room.room_id] | intervalGetDate)}}</span>
-                                                <span class="col-3 nights text-right"><input ng-init = "guest.roomgrid.roomid[room.room_id] = guest.roomgrid.nyt" ng-model = 'guest.roomgrid.roomid[room.room_id]' class='formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "guest.roomgrid.roomid[room.room_id] = guest.roomgrid.nyt_no(guest.roomgrid.roomid[room.room_id],room.reservations, room.room_id)"/></span>
+                                                <span class="col-3 nights text-right"><input ng-init = "guest.roomgrid.roomid[room.room_id] = room.no_of_nights" ng-model = 'guest.roomgrid.roomid[room.room_id]' class='formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "guest.roomgrid.change_nyt_no(room.room_id, guest.roomgrid.roomid[room.room_id]); guest.roomgrid.roomid[room.room_id] = guest.roomgrid.nyt_no(guest.roomgrid.roomid[room.room_id],room.reservations, room.room_id); "/></span>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row w-100">
-                                <div class = "col row">
+                            <div class="row w-100 px-0 py-2 justify-content-between dark-back">
+                                <div class = "w-50 row p-0">
                                     <h6 class="col-5">Rooms</h6>
-                                    <h6 class="col-7">{{scope.guest.roomgrid.roomtotal.deluxe + scope.guest.roomgrid.roomtotal.standard}}</h6>
+                                    <h6 class="col-7 text-center">{{guest.roomgrid.roominfo.selectedrooms = guest.roomgrid.roominfo.selectedrooms ? guest.roomgrid.roominfo.selectedrooms : 0}}</h6>
                                 </div>
-                                <div class = "col">
+                                <div class = "w-50 row p-0 text-right">
                                     <h6 class="col-5">Cost</h6>
-                                    <h6 class="col-7">{{}}</h6>
+                                    <h6 class="col-7">{{guest.roomgrid.roominfo.roomstotalcost = guest.roomgrid.roominfo.roomstotalcost ? guest.roomgrid.roominfo.roomstotalcost : 0}}</h6>
                                 </div>
                             </div>
                         </div>
@@ -546,35 +541,74 @@
             <!--....... Guest End ......... -->
 
 
-            <!--....... User Start ......... -->
-            <div class="w-100" ng-if="settings.modal.active == 'User'">
-                <div class="w-100" ng-if="settings.modal.name == 'Add User'">
-                    <form class="p-4 w-100 addUserForm row justify-content-center m-0">
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Name"
-                            name="user" />
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Username"
-                            name="user_name" />
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Password"
-                            name="user_pass" />
-                        <div class="row justify-content-between w-50">
-                            <span>
-                                <input type="radio" id="admin" value="admin" name="role" />
-                                <label for="admin" class="f-15 ml-2">Admin</label>
-                            </span>
-                            <span>
-                                <input type="radio" checked value="user" name="role" id="user" />
-                                <label for="user" class="f-15 ml-2">User</label>
-                            </span>
+            <!--....... CheckIn Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'CheckIn'">
+                <div class="w-100" ng-if="settings.modal.name == 'CheckIn'">
+                    <div class="py-4 w-100 row justify-content-between m-0 px-5">
+                        <form class = 'w-40 CheckInForm pr-5' autocomplete = "off">
+                            
+                            <input ng-model = 'guest.roomgrid.nyt' class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Nights" name="average_no_of_nights" ng-change = "guest.roomgrid.nytdate = (guest.roomgrid.nyt | intervalGetDate); guest.roomgrid.addnyts(guest.roomgrid.nyt);  guest.roomgrid.get_no_room(); guest.roomgrid.roomsHolder = guest.roomgrid.room_details[guest.roomgrid.type].roomarray"/>
+                            <input ng-model = 'guest.roomgrid.nytdate' class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="leaving" name="leaving_date" />
+                            <input class="form-control w-100 font-fam-Montserrat text-center m-0 d-block my-3" placeholder="Deposit"
+                                    name="deposited" />
+                            <select class="form-control text-center methpay my-3 w-100 f-13" name="means_of_payment">
+                                <option class = "text-center" selected value="Cash">Cash</option>
+                                <option class = "text-center" value="Cheque">Cheque</option>
+                                <option class = "text-center" value="POS">POS</option>
+                                <option class = "text-center" value="Credit">Credit</option>
+                            </select>
+                        </form>
+                        <div class = 'w-60 {{!guest.roomgrid.nyt ? "deactivate" : null}}' >
+                            <div ng-switch on = 'guest.roomgrid.activated' class = "table-bordered">
+                                <div ng-switch-when = 'false'>
+                                    <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
+                                        <h6 class='col-3 f-15 text-left'>Category</h6>
+                                        <h6 class='col-6 f-15'>Rooms Available</h6>
+                                        <h6 class='col-3 f-15'>No. Rooms</h6>
+                                    </div>
+                                    <div ng-repeat = "rm in guest.roomgrid.rooms" class='row w-100 text-center b-1 pointer'>
+                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate(rm.name); guest.roomgrid.roomsHolder = guest.roomgrid.room_details[rm.name].roomarray">{{rm.name | capitalize}}</h6>
+                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate(rm.name); guest.roomgrid.roomsHolder = guest.roomgrid.room_details[rm.name].roomarray">{{guest.roomgrid.room_details[rm.name].roomcount}}</p>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input ng-model = 'guest.roomgrid.roomtotal[rm.name]' class='formcontrol w-100 text-center' name = 'noroom' ng-disabled="!guest.roomgrid.nyt" ng-change = "guest.roomgrid.selectrooms(rm.name, guest.roomgrid.roomtotal[rm.name])"/></span>
+                                    </div>
+                                </div>
+                                <div ng-switch-when = 'true'>
+                                    <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
+                                        <h6 class='col-3 f-15 text-left pointer' ng-click='guest.roomgrid.deactivate()'>Back</h6>
+                                        <h6 class='col-9 f-15 text-right'>{{guest.roomgrid.type}}</h6>
+                                    </div>
+                                    <div class='row w-100 text-center'>
+                                        <ul class="w-100">
+                                            <li ng-repeat = 'room in guest.roomgrid.roomsHolder' class = "w-100 row py-2" ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.toggleroom();" ng-class = "{'sechue anim' : guest.roomgrid.reservedyes == room.room_id, 'lytpurp-back' : room.selected }">
+                                                <span class="col-2 roomno text-left">{{room.room_number}}</span>
+                                                <span class="col-3 roomno">{{room.room_rate}}</span>
+                                                <span class="col-4 roomno">{{(guest.roomgrid.roomid[room.room_id] | intervalGetDate)}}</span>
+                                                <span class="col-3 nights text-right"><input ng-init = "guest.roomgrid.roomid[room.room_id] = room.no_of_nights" ng-model = 'guest.roomgrid.roomid[room.room_id]' class='formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "guest.roomgrid.change_nyt_no(room.room_id, guest.roomgrid.roomid[room.room_id]); guest.roomgrid.roomid[room.room_id] = guest.roomgrid.nyt_no(guest.roomgrid.roomid[room.room_id],room.reservations, room.room_id); "/></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row w-100 px-0 py-2 justify-content-between dark-back">
+                                <div class = "w-50 row p-0">
+                                    <h6 class="col-5">Rooms</h6>
+                                    <h6 class="col-7 text-center">{{guest.roomgrid.roominfo.selectedrooms = guest.roomgrid.roominfo.selectedrooms ? guest.roomgrid.roominfo.selectedrooms : 0}}</h6>
+                                </div>
+                                <div class = "w-50 row p-0 text-right">
+                                    <h6 class="col-5">Cost</h6>
+                                    <h6 class="col-7">{{guest.roomgrid.roominfo.roomstotalcost = guest.roomgrid.roominfo.roomstotalcost ? guest.roomgrid.roominfo.roomstotalcost : 0}}</h6>
+                                </div>
+                            </div>
                         </div>
-                    </form>
+                    </div>
                     <div class="modal-footer w-100">
                         <div class="justify-content-center w-100 d-flex flex-column">
                             <div class="py-1 row justify-content-center w-100">
                                 <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
                                         height="70px" /></div>
                                 <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
-                                    onclick="addUser()">
-                                    {{settings.modal.name | limitTo:3}}
+                                    onclick="checkIn()">
+                                    {{settings.modal.name}}
                                 </button>
                             </div>
                             <div class="row pt-3 justify-content-center">
@@ -633,7 +667,7 @@
                     </div>
                 </div>
             </div>
-            <!--....... User End ......... -->
+            <!--....... CheckIn End ......... -->
 
             <!--....... Customers Start ......... -->
             <div class="w-100" ng-if="settings.modal.active == 'Customers'">

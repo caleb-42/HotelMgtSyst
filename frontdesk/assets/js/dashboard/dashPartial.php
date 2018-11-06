@@ -26,8 +26,9 @@
                             <div class="userlisthd row justify-content-between">
                                 <h4 class=" my-4 py-2 font-fam-Montserrat-bold">Manage Guest</h4>
                                 <div class="my-4">
-                                    <button class="btn btn-outline-primary mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Add Guest'; settings.modal.size = 'lg'; guest.roomgrid.getrooms(['deluxe','standard']) " data-toggle="modal" data-target="#crud" >Add</button>
-                                    <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Update Guest'; settings.modal.size = 'lg'; " ng-disabled="!guest.jslist.selected">Update</button>
+                                    <button class="btn btn-outline-primary mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Add Guest'; settings.modal.size = 'lg'; guest.roomgrid.getrooms(['deluxe','standard']) " data-toggle="modal" data-target="#crud">Add</button>
+                                    <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'CheckIn'; settings.modal.name = 'CheckIn'; settings.modal.size = 'lg'; guest.roomgrid.getrooms(['deluxe','standard'])" ng-disabled="!guest.jslist.selected">CheckIn</button>
+                                    <!-- <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Update Guest'; settings.modal.size = 'lg'; " ng-disabled="!guest.jslist.selected">Update</button> -->
                                     <!-- <button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" ng-click="users.deleteUser()"  ng-disabled="!users.jslist.selected">Delete</button> -->
                                 </div>
                             </div>
