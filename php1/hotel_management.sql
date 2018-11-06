@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2018 at 11:22 AM
+-- Generation Time: Nov 06, 2018 at 01:06 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -23,11 +23,75 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `account_expenses`
+--
+
+CREATE TABLE IF NOT EXISTS `account_expenses` (
+  `id` int(11) NOT NULL,
+  `expense` varchar(200) NOT NULL,
+  `expense_description` varchar(400) NOT NULL,
+  `expense_cost` int(11) NOT NULL,
+  `amount_paid` int(11) NOT NULL,
+  `balance` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_salaries`
+--
+
+CREATE TABLE IF NOT EXISTS `account_salaries` (
+  `id` int(11) NOT NULL,
+  `staff_id` varchar(100) NOT NULL,
+  `salary_due` int(11) NOT NULL,
+  `month` varchar(100) NOT NULL,
+  `amount_paid` int(11) NOT NULL,
+  `balance` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_salary_payments`
+--
+
+CREATE TABLE IF NOT EXISTS `account_salary_payments` (
+  `id` int(11) NOT NULL,
+  `month` varchar(100) NOT NULL,
+  `staff_id` varchar(100) NOT NULL,
+  `amount_paid` int(11) NOT NULL,
+  `net_paid` int(11) NOT NULL,
+  `balance` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_staff`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_staff` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `staff_id` varchar(100) NOT NULL,
+  `staff_name` varchar(200) NOT NULL,
+  `department` varchar(100) NOT NULL,
+  `phone_number` varchar(100) NOT NULL DEFAULT '',
+  `email` varchar(100) NOT NULL DEFAULT '',
+  `contact_address` varchar(350) NOT NULL DEFAULT '',
+  `role` varchar(200) NOT NULL,
+  `current_salary` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `frontdesk_bookings`
 --
 
 CREATE TABLE IF NOT EXISTS `frontdesk_bookings` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `booking_ref` varchar(200) NOT NULL,
   `room_number` int(11) NOT NULL,
   `room_id` varchar(200) NOT NULL,
@@ -36,13 +100,36 @@ CREATE TABLE IF NOT EXISTS `frontdesk_bookings` (
   `guest_name` varchar(200) NOT NULL,
   `guest_id` varchar(200) NOT NULL,
   `no_of_nights` int(11) NOT NULL,
+  `net_cost` int(11) NOT NULL,
   `guests` int(11) NOT NULL DEFAULT '1',
   `check_in_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `expected_checkout_date` date NOT NULL,
   `expected_checkout_time` time NOT NULL,
   `checked_out` varchar(30) NOT NULL DEFAULT 'NO',
-  `check_out_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `check_out_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+
+--
+-- Dumping data for table `frontdesk_bookings`
+--
+
+INSERT INTO `frontdesk_bookings` (`id`, `booking_ref`, `room_number`, `room_id`, `room_category`, `room_rate`, `guest_name`, `guest_id`, `no_of_nights`, `net_cost`, `guests`, `check_in_date`, `expected_checkout_date`, `expected_checkout_time`, `checked_out`, `check_out_time`) VALUES
+(1, 'BK_45683', 202, 'RM_64917', 'deluxe', 33000, 'Ewere', 'LOD_4157', 4, 0, 3, '2018-10-29 13:11:47', '2018-11-02', '14:11:47', 'NO', '0000-00-00 00:00:00'),
+(2, 'BK_45683', 102, 'RM_66480', 'standard', 15000, 'Ewere', 'LOD_4157', 4, 0, 3, '2018-10-29 13:11:47', '2018-11-02', '14:11:47', 'NO', '0000-00-00 00:00:00'),
+(3, 'BK_45683', 103, 'RM_71638', 'standard', 15000, 'Ewere', 'LOD_4157', 4, 0, 3, '2018-10-29 13:11:47', '2018-11-02', '14:11:47', 'NO', '0000-00-00 00:00:00'),
+(4, 'BK_72921', 202, 'RM_64917', 'deluxe', 33000, 'Ewere', 'LOD_74919', 4, 132000, 3, '2018-10-29 13:22:41', '2018-11-02', '14:22:41', 'NO', '0000-00-00 00:00:00'),
+(5, 'BK_72921', 102, 'RM_66480', 'standard', 15000, 'Ewere', 'LOD_74919', 4, 60000, 3, '2018-10-29 13:22:41', '2018-11-02', '14:22:41', 'NO', '0000-00-00 00:00:00'),
+(6, 'BK_72921', 103, 'RM_71638', 'standard', 15000, 'Ewere', 'LOD_74919', 4, 60000, 3, '2018-10-29 13:22:41', '2018-11-02', '14:22:41', 'NO', '0000-00-00 00:00:00'),
+(7, 'BK_61513', 202, 'RM_64917', 'deluxe', 33000, 'Ewere', 'LOD_1439', 4, 132000, 3, '2018-10-29 14:25:12', '2018-11-02', '15:25:12', 'NO', '0000-00-00 00:00:00'),
+(8, 'BK_61513', 102, 'RM_66480', 'standard', 15000, 'Ewere', 'LOD_1439', 4, 60000, 3, '2018-10-29 14:25:12', '2018-11-02', '15:25:12', 'NO', '0000-00-00 00:00:00'),
+(9, 'BK_61513', 103, 'RM_71638', 'standard', 15000, 'Ewere', 'LOD_1439', 4, 60000, 3, '2018-10-29 14:25:12', '2018-11-02', '15:25:12', 'NO', '0000-00-00 00:00:00'),
+(10, 'BK_17122', 202, 'RM_64917', 'deluxe', 33000, 'Ewere', 'LOD_85838', 4, 132000, 3, '2018-10-29 14:29:04', '2018-11-02', '15:29:04', 'NO', '0000-00-00 00:00:00'),
+(11, 'BK_17122', 102, 'RM_66480', 'standard', 15000, 'Ewere', 'LOD_85838', 4, 60000, 3, '2018-10-29 14:29:04', '2018-11-02', '15:29:04', 'NO', '0000-00-00 00:00:00'),
+(12, 'BK_17122', 103, 'RM_71638', 'standard', 15000, 'Ewere', 'LOD_85838', 4, 60000, 3, '2018-10-29 14:29:04', '2018-11-02', '15:29:04', 'NO', '0000-00-00 00:00:00'),
+(13, 'BK_99636', 202, 'RM_64917', 'deluxe', 33000, 'Ewere', 'LOD_39049', 4, 132000, 3, '2018-10-29 14:32:22', '2018-11-02', '15:32:22', 'NO', '0000-00-00 00:00:00'),
+(14, 'BK_99636', 102, 'RM_66480', 'standard', 15000, 'Ewere', 'LOD_39049', 4, 60000, 3, '2018-10-29 14:32:22', '2018-11-02', '15:32:22', 'NO', '0000-00-00 00:00:00'),
+(15, 'BK_99636', 103, 'RM_71638', 'standard', 15000, 'Ewere', 'LOD_39049', 4, 60000, 3, '2018-10-29 14:32:22', '2018-11-02', '15:32:22', 'NO', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -65,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `frontdesk_guests` (
   `checked_out` varchar(50) NOT NULL DEFAULT 'NO',
   `visit_count` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=57 ;
 
 --
 -- Dumping data for table `frontdesk_guests`
@@ -113,7 +200,21 @@ INSERT INTO `frontdesk_guests` (`id`, `guest_id`, `guest_name`, `guest_type_gend
 (39, 'LOD_20626', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:43:23', 4000, 0, 'NO', 1),
 (40, 'LOD_62754', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-25 15:43:35', 4000, 0, 'NO', 1),
 (41, 'LOD_5464', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-26 10:14:09', 4000, 0, 'NO', 1),
-(42, 'LOD_6808', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-26 14:44:01', 4000, 0, 'NO', 1);
+(42, 'LOD_6808', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-26 14:44:01', 4000, 0, 'NO', 1),
+(43, 'LOD_32915', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-29 12:36:47', 4000, 0, 'NO', 1),
+(44, 'LOD_68655', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-29 12:37:33', 4000, 0, 'NO', 1),
+(45, 'LOD_73613', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-29 12:38:48', 4000, 0, 'NO', 1),
+(46, 'LOD_41612', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-29 12:42:38', 4000, 0, 'NO', 1),
+(47, 'LOD_85035', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-29 12:56:03', 4000, 0, 'NO', 1),
+(48, 'LOD_27647', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-29 12:58:05', 4000, 0, 'NO', 1),
+(49, 'LOD_13433', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-29 13:06:02', 4000, 0, 'NO', 1),
+(50, 'LOD_31219', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-29 13:08:36', 4000, 0, 'NO', 1),
+(51, 'LOD_4157', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-29 13:11:47', 4000, 0, 'NO', 1),
+(52, 'LOD_74919', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-29 13:22:41', 4000, 0, 'NO', 1),
+(53, 'LOD_1439', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-29 14:25:12', 4000, 0, 'NO', 1),
+(54, 'LOD_5989', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-29 14:28:29', 4000, 0, 'NO', 1),
+(55, 'LOD_85838', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-29 14:29:04', 4000, 0, 'NO', 1),
+(56, 'LOD_39049', 'Ewere', 'male', '08023456789', 'webplay nigeria ltd', 3, 'YES', '2018-10-29 14:32:22', 4000, 0, 'NO', 1);
 
 -- --------------------------------------------------------
 
@@ -149,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `frontdesk_payments` (
   `means_of_payment` varchar(100) NOT NULL,
   `frontdesk_rep` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `frontdesk_payments`
@@ -161,7 +262,18 @@ INSERT INTO `frontdesk_payments` (`id`, `frontdesk_txn`, `payment_index`, `txn_d
 (3, 'BK_9989', 3, '2018-10-26 11:14:09', 2000, '2018-10-26 14:57:16', 5000, 58000, 63000, 'LOD_5464', 'CASH', 'Joan'),
 (4, 'BK_9989', 4, '2018-10-26 11:14:09', 2000, '2018-10-26 14:58:36', 3000, 60000, 63000, 'LOD_5464', 'CASH', 'Joan'),
 (5, 'BK_9989', 5, '2018-10-26 11:14:09', 2000, '2018-10-26 15:00:19', 1000, 62000, 63000, 'LOD_5464', 'CASH', 'Joan'),
-(6, 'BK_9989', 6, '2018-10-26 11:14:09', 1000, '2018-10-26 15:06:19', 0, 63000, 63000, 'LOD_5464', 'CASH', 'Joan');
+(6, 'BK_9989', 6, '2018-10-26 11:14:09', 1000, '2018-10-26 15:06:19', 0, 63000, 63000, 'LOD_5464', 'CASH', 'Joan'),
+(7, 'BK_36427', 1, '2018-10-29 13:38:49', 200000, '2018-10-29 12:38:49', 52000, 200000, 252000, 'LOD_73613', 'POS', ''),
+(8, 'BK_40627', 1, '2018-10-29 13:42:38', 200000, '2018-10-29 12:42:38', 52000, 200000, 252000, 'LOD_41612', 'POS', ''),
+(9, 'BK_80034', 1, '2018-10-29 13:56:03', 200000, '2018-10-29 12:56:03', 52000, 200000, 252000, 'LOD_85035', 'POS', ''),
+(10, 'BK_27091', 1, '2018-10-29 13:58:05', 200000, '2018-10-29 12:58:05', 52000, 200000, 252000, 'LOD_27647', 'POS', ''),
+(11, 'BK_32006', 1, '2018-10-29 14:06:02', 200000, '2018-10-29 13:06:02', 52000, 200000, 252000, 'LOD_13433', 'POS', ''),
+(12, 'BK_44563', 1, '2018-10-29 14:08:36', 200000, '2018-10-29 13:08:36', 52000, 200000, 252000, 'LOD_31219', 'POS', ''),
+(13, 'BK_45683', 1, '2018-10-29 14:11:47', 200000, '2018-10-29 13:11:47', 52000, 200000, 252000, 'LOD_4157', 'POS', ''),
+(14, 'BK_72921', 1, '2018-10-29 14:22:42', 200000, '2018-10-29 13:22:42', 52000, 200000, 252000, 'LOD_74919', 'POS', ''),
+(15, 'BK_61513', 1, '2018-10-29 15:25:12', 200000, '2018-10-29 14:25:12', 52000, 200000, 252000, 'LOD_1439', 'POS', ''),
+(16, 'BK_17122', 1, '2018-10-29 15:29:04', 200000, '2018-10-29 14:29:04', 52000, 200000, 252000, 'LOD_85838', 'POS', ''),
+(17, 'BK_99636', 1, '2018-10-29 15:32:22', 200000, '2018-10-29 14:32:22', 52000, 200000, 252000, 'LOD_39049', 'POS', '');
 
 -- --------------------------------------------------------
 
@@ -173,26 +285,55 @@ CREATE TABLE IF NOT EXISTS `frontdesk_reservations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `reservation_ref` varchar(100) NOT NULL,
   `guest_name` varchar(200) NOT NULL,
+  `phone_number` varchar(100) NOT NULL DEFAULT '',
+  `email` varchar(200) NOT NULL DEFAULT '',
   `reserved_date` date NOT NULL,
   `no_of_nights` int(11) NOT NULL,
   `inquiry_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `room_id` varchar(100) NOT NULL,
+  `room_rate` int(11) NOT NULL,
+  `room_total_cost` int(11) NOT NULL,
   `room_category` varchar(200) NOT NULL,
-  `amount_paid` int(11) NOT NULL,
-  `amount_balance` int(11) NOT NULL,
   `booked` varchar(20) NOT NULL DEFAULT 'NO',
   `booking_ref` varchar(100) NOT NULL DEFAULT '',
   `cancelled` varchar(100) NOT NULL DEFAULT 'NO',
+  `deposit_confirmed` varchar(100) NOT NULL DEFAULT 'NO',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `frontdesk_reservations`
 --
 
-INSERT INTO `frontdesk_reservations` (`id`, `reservation_ref`, `guest_name`, `reserved_date`, `no_of_nights`, `inquiry_date`, `room_id`, `room_category`, `amount_paid`, `amount_balance`, `booked`, `booking_ref`, `cancelled`) VALUES
-(1, 'akja', 'john', '2018-10-30', 4, '2018-10-28 16:55:16', 'RM_25367', 'deluxe', 12000, 21000, 'NO', '', 'NO'),
-(2, 'asdnmes', 'mark', '2018-11-15', 6, '2018-10-28 16:55:16', 'RM_25367', 'deluxe', 21000, 12000, 'NO', '', 'NO');
+INSERT INTO `frontdesk_reservations` (`id`, `reservation_ref`, `guest_name`, `phone_number`, `email`, `reserved_date`, `no_of_nights`, `inquiry_date`, `room_id`, `room_rate`, `room_total_cost`, `room_category`, `booked`, `booking_ref`, `cancelled`, `deposit_confirmed`) VALUES
+(1, 'akja', 'john', '', '', '2018-10-30', 4, '2018-10-28 16:55:16', 'RM_25367', 0, 0, 'deluxe', 'NO', '', 'NO', 'no'),
+(2, 'asdnmes', 'mark', '', '', '2018-11-15', 6, '2018-10-28 16:55:16', 'RM_25367', 0, 0, 'deluxe', 'NO', '', 'NO', 'no'),
+(3, 'RESV_28039', 'Ewere', '08023456789', 'tegogs@gmail.com', '2018-11-20', 4, '2018-10-30 16:08:06', 'RM_64917', 33000, 132000, 'deluxe', 'NO', '', 'NO', 'NO'),
+(4, 'RESV_6723', 'Ewere', '08023456789', 'tegogs@gmail.com', '2018-11-20', 4, '2018-10-30 16:09:13', 'RM_64917', 33000, 132000, 'deluxe', 'NO', '', 'NO', 'NO'),
+(5, 'RESV_6723', 'Ewere', '08023456789', 'tegogs@gmail.com', '2018-11-23', 4, '2018-10-30 16:09:13', 'RM_66480', 15000, 60000, 'standard', 'NO', '', 'NO', 'NO'),
+(6, 'RESV_6723', 'Ewere', '08023456789', 'tegogs@gmail.com', '2018-11-22', 4, '2018-10-30 16:09:13', 'RM_71638', 15000, 60000, 'standard', 'NO', '', 'NO', 'NO'),
+(7, 'RESV_98424', 'Ewere', '08023456789', 'tegogs@gmail.com', '2018-11-20', 2, '2018-10-30 16:10:22', 'RM_64917', 33000, 66000, 'deluxe', 'NO', '', 'NO', 'NO'),
+(8, 'RESV_98424', 'Ewere', '08023456789', 'tegogs@gmail.com', '2018-11-23', 3, '2018-10-30 16:10:22', 'RM_66480', 15000, 45000, 'standard', 'NO', '', 'NO', 'NO'),
+(9, 'RESV_98424', 'Ewere', '08023456789', 'tegogs@gmail.com', '2018-11-22', 4, '2018-10-30 16:10:22', 'RM_71638', 15000, 60000, 'standard', 'NO', '', 'NO', 'NO');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `frontdesk_reservation_txn`
+--
+
+CREATE TABLE IF NOT EXISTS `frontdesk_reservation_txn` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reservation_ref` varchar(100) NOT NULL,
+  `total_rooms_reserved` int(11) NOT NULL,
+  `total_cost` int(11) NOT NULL,
+  `deposited` int(11) NOT NULL,
+  `balance` int(11) NOT NULL,
+  `means_of_payment` varchar(100) NOT NULL,
+  `payment_status` varchar(100) NOT NULL,
+  `frontdesk_rep` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -205,7 +346,7 @@ CREATE TABLE IF NOT EXISTS `frontdesk_rooms` (
   `room_number` int(11) NOT NULL,
   `room_id` varchar(200) NOT NULL,
   `room_rate` int(11) NOT NULL,
-  `category` varchar(100) NOT NULL,
+  `room_category` varchar(100) NOT NULL,
   `features` varchar(400) NOT NULL DEFAULT '',
   `current_guest_id` varchar(200) NOT NULL DEFAULT '',
   `guests` int(11) NOT NULL DEFAULT '0',
@@ -217,6 +358,7 @@ CREATE TABLE IF NOT EXISTS `frontdesk_rooms` (
   `reserved_by` varchar(200) NOT NULL DEFAULT '',
   `reservation_ref` varchar(100) NOT NULL DEFAULT '',
   `reservation_date` date NOT NULL DEFAULT '0000-00-00',
+  `reserved_nights` int(11) NOT NULL DEFAULT '0',
   `days_till_reservation_date` int(11) DEFAULT NULL,
   `reservation_expiry` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`id`)
@@ -226,14 +368,14 @@ CREATE TABLE IF NOT EXISTS `frontdesk_rooms` (
 -- Dumping data for table `frontdesk_rooms`
 --
 
-INSERT INTO `frontdesk_rooms` (`id`, `room_number`, `room_id`, `room_rate`, `category`, `features`, `current_guest_id`, `guests`, `booked`, `booking_ref`, `booked_on`, `booking_expires`, `reserved`, `reserved_by`, `reservation_ref`, `reservation_date`, `days_till_reservation_date`, `reservation_expiry`) VALUES
-(1, 100, 'RM_25367', 33000, 'deluxe', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
-(2, 101, 'RM_85965', 15000, 'standard', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
-(3, 102, 'RM_66480', 15000, 'standard', '', 'LOD_5464', 3, 'YES', 'BK_9989', '2018-10-26 10:14:09', '2018-10-30 11:14:09', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
-(4, 103, 'RM_71638', 15000, 'standard', '', 'LOD_5464', 3, 'YES', 'BK_9989', '2018-10-26 10:14:09', '2018-10-30 11:14:09', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
-(5, 200, 'RM_51704', 33000, 'deluxe', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
-(6, 201, 'RM_60146', 33000, 'deluxe', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', NULL, '0000-00-00'),
-(7, 202, 'RM_64917', 33000, 'deluxe', '', 'LOD_5464', 3, 'YES', 'BK_9989', '2018-10-26 10:14:09', '2018-10-30 11:14:09', 'NO', '', '', '0000-00-00', NULL, '0000-00-00');
+INSERT INTO `frontdesk_rooms` (`id`, `room_number`, `room_id`, `room_rate`, `room_category`, `features`, `current_guest_id`, `guests`, `booked`, `booking_ref`, `booked_on`, `booking_expires`, `reserved`, `reserved_by`, `reservation_ref`, `reservation_date`, `reserved_nights`, `days_till_reservation_date`, `reservation_expiry`) VALUES
+(1, 100, 'RM_25367', 33000, 'deluxe', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
+(2, 101, 'RM_85965', 15000, 'standard', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
+(3, 102, 'RM_66480', 15000, 'standard', '', 'LOD_39049', 3, 'NO', 'BK_99636', '2018-10-29 14:32:22', '2018-11-02 02:32:22', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
+(4, 103, 'RM_71638', 15000, 'standard', '', 'LOD_39049', 3, 'NO', 'BK_99636', '2018-10-29 14:32:22', '2018-11-02 02:32:22', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
+(5, 200, 'RM_51704', 33000, 'deluxe', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
+(6, 201, 'RM_60146', 33000, 'deluxe', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
+(7, 202, 'RM_64917', 33000, 'deluxe', '', 'LOD_39049', 3, 'NO', 'BK_99636', '2018-10-29 14:32:22', '2018-11-02 02:32:22', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -269,14 +411,25 @@ CREATE TABLE IF NOT EXISTS `frontdesk_txn` (
   `payment_status` varchar(100) NOT NULL,
   `frontdesk_rep` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `frontdesk_txn`
 --
 
 INSERT INTO `frontdesk_txn` (`id`, `booking_ref`, `total_rooms_booked`, `total_cost`, `deposited`, `balance`, `means_of_payment`, `payment_status`, `frontdesk_rep`) VALUES
-(1, 'BK_9989', 3, 63000, 63000, 0, 'POS', 'PAID FULL', 'Ada');
+(1, 'BK_9989', 3, 63000, 63000, 0, 'POS', 'PAID FULL', 'Ada'),
+(2, 'BK_36427', 3, 252000, 200000, 52000, 'POS', 'UNBALANCED', 'Ada'),
+(3, 'BK_40627', 3, 252000, 200000, 52000, 'POS', 'UNBALANCED', 'Ada'),
+(4, 'BK_80034', 3, 252000, 200000, 52000, 'POS', 'UNBALANCED', 'Ada'),
+(5, 'BK_27091', 3, 252000, 200000, 52000, 'POS', 'UNBALANCED', 'Ada'),
+(6, 'BK_32006', 3, 252000, 200000, 52000, 'POS', 'UNBALANCED', 'Ada'),
+(7, 'BK_44563', 3, 252000, 200000, 52000, 'POS', 'UNBALANCED', 'Ada'),
+(8, 'BK_45683', 3, 252000, 200000, 52000, 'POS', 'UNBALANCED', 'Ada'),
+(9, 'BK_72921', 3, 252000, 200000, 52000, 'POS', 'UNBALANCED', 'Ada'),
+(10, 'BK_61513', 3, 252000, 200000, 52000, 'POS', 'UNBALANCED', 'Ada'),
+(11, 'BK_17122', 3, 252000, 200000, 52000, 'POS', 'UNBALANCED', 'Ada'),
+(12, 'BK_99636', 3, 252000, 200000, 52000, 'POS', 'UNBALANCED', 'Ada');
 
 -- --------------------------------------------------------
 
