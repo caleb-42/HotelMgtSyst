@@ -1,7 +1,14 @@
 <?php
  include "../settings/connect.php"; //$database handler $dbConn or $conn
+   $column = $_POST["col"];
+   $val = $_POST["val"];
+   if (is_int($val)) {
+     $check_val = $val;
+   } else {
+    $check_val = "'" . $val . "'";
+   }
 
-  $get_bookings_sql = "SELECT * FROM frontdesk_bookings WHERE checked_out = 'NO'";
+  $get_bookings_sql = "SELECT * FROM frontdesk_bookings WHERE $column = $check_val AND checked_out = 'NO'";
   $get_bookings_result = mysqli_query($dbConn, $get_bookings_sql);
   $get_bookings_array = [];
 
