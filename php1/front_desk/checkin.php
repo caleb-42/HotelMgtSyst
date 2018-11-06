@@ -30,7 +30,7 @@ $connector = new WindowsPrintConnector($printName);
 $printer = new Printer($connector);
  // $checkin_data = $_POST["checkin_data"];
 
-$checkin_data = '{"guest_id":"LOD_5464", "guest_name":"Ewere", "total_rooms_booked": 3, "total_cost": 63000, "deposited": 54000, "balance": 9000, "means_of_payment": "POS", "frontdesk_rep": "Ada", "rooms": [{"room_number": 102, "room_id": "RM_64917", "guests":3, "room_rate": 33000, "no_of_nights":4, "room_category": "deluxe"}, {"room_number": 102, "room_id": "RM_66480", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard"}, {"room_number": 102, "room_id": "RM_71638", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard"}]}';
+$checkin_data = '{"guest_id":"LOD_5464", "guest_name":"Ewere", "total_rooms_booked": 3, "total_cost": 63000, "deposited": 54000, "balance": 9000, "means_of_payment": "POS", "frontdesk_rep": "Ada", "rooms": [{"room_number": 102, "room_id": "RM_64917", "guests":3, "room_rate": 33000, "no_of_nights":4, "room_category": "deluxe", "room_total_cost" : 132000}, {"room_number": 102, "room_id": "RM_66480", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard", "room_total_cost" : 60000}, {"room_number": 102, "room_id": "RM_71638", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard", "room_total_cost" : 60000}]}';
 /*checkin_data is the json string from the front-end the keys contain aspects of the
 /*sales_details is the json string from the front-end the keys contain aspects of the
 transaction */
@@ -84,6 +84,7 @@ $select_rooms_query->bind_param("s", $room_id); // continue from here
 	    $msg_response[0] = "ERROR";
 	    $msg_response[1] = $room_number . " is already booked";
 	    $response_message = json_encode($msg_response);
+	    $printer -> close();
  		die($response_message);
  	}
  	$compare_date = date_create($reservation_date);
@@ -93,6 +94,7 @@ $select_rooms_query->bind_param("s", $room_id); // continue from here
 	    $msg_response[0] = "ERROR";
 	    $msg_response[1] = $room_number . " has checkout date after room reservaton date";
 	    $response_message = json_encode($msg_response);
+	    $printer -> close();
  		die($response_message);
  	  }
  	}
@@ -101,11 +103,11 @@ $select_rooms_query->bind_param("s", $room_id); // continue from here
  /*room check*/
 
 /*Record sales of individual rooms*/
-$insert_into_bookings = $conn->prepare("INSERT INTO frontdesk_bookings (booking_ref, room_number, room_id, room_category, room_rate, guest_name, guest_id, no_of_nights, guests, expected_checkout_date, expected_checkout_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? ,?, CURRENT_TIME)");
-// echo mysqli_error($conn);
-// var_dump($insert_into_bookings);
+$insert_into_bookings = $conn->prepare("INSERT INTO frontdesk_bookings (booking_ref, room_number, room_id, room_category, room_rate, guest_name, guest_id, no_of_nights, net_cost, guests, expected_checkout_date, expected_checkout_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, CURRENT_TIME)");
+ // echo $conn->error;
+ // var_dump($insert_into_bookings);
 
-$insert_into_bookings->bind_param("sississiis", $tx_ref, $room_number, $room_id, $room_category, $room_rate, $client_name, $client_id, $no_of_days, $guests, $expected_checkout_date);
+$insert_into_bookings->bind_param("sississiiis", $tx_ref, $room_number, $room_id, $room_category, $room_rate, $client_name, $client_id, $no_of_days, $room_net_cost, $guests, $expected_checkout_date);
 
 for ($i=0; $i <$no_of_rooms ; $i++) { 
 	$tx_ref = $booking_ref;
@@ -116,7 +118,8 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 	$guests = $rooms[$i]["guests"];
 	$client_name = $guest_name;
 	$client_id = $guest_id;	
-	$no_of_nights = $rooms[$i]["no_of_nights"];
+	$no_of_days = $rooms[$i]["no_of_nights"];
+	$room_net_cost = $room_rate * $no_of_days;
 	$d = strtotime("+"."$no_of_nights days");
 	$expected_checkout_date = date("Y-m-d", $d);
 	$insert_into_bookings->execute();
@@ -236,10 +239,10 @@ function receipt_body($fprinter, $rooms_arr, $room_arr_count, $cost_due, $paid_a
 		  }
 	    } 
 
-	    $cost_of_rm = $rooms_arr[$i]["room_rate"];
-		fwrite($fprinter,  "N" .number_format($cost_of_rm));
+		$net_cost_of_rm = $rooms_arr[$i]["room_total_cost"];
+		fwrite($fprinter,  "N" .number_format($net_cost_of_rm));
 
-		$temp_str_len = 14 -strlen($cost_of_rm);
+		$temp_str_len = 14 -strlen($net_cost_of_rm);
 	    
 
 	    $nights = $rooms_arr[$i]["no_of_nights"];

@@ -3,7 +3,7 @@
 
   $category = $_POST["category"];
 
-  $get_rooms_sql = "SELECT * FROM frontdesk_rooms WHERE booked = 'NO' AND category = '$category'";
+  $get_rooms_sql = "SELECT * FROM frontdesk_rooms WHERE booked = 'NO' AND room_category = '$category'";
   $get_rooms_result = mysqli_query($dbConn, $get_rooms_sql);
   $get_rooms_array = [];
 
