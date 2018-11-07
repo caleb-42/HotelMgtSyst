@@ -1,4 +1,9 @@
 dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', '$timeout', function ($rootScope, $scope, jsonPost, $filter, $timeout) {
+
+    $rootScope.$on('guestselect', function(evt,param){
+        console.log($scope.guest.getRoomBooking(param));
+    });
+
     $scope.tabnav = {
         navs: {
             /* Overview: {
@@ -65,6 +70,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             },
             nyt_no : function(nyts, room_resvtn, id){
                 //$scope.guest.roomgrid.selected = 
+                $scope.guest.roomgrid.roominfo.roomstotalcost = 0;
                 if(!room_resvtn){
                     arryy = Object.values($scope.guest.roomgrid.room_details);
                     arryy.forEach(function(rm){
@@ -273,24 +279,27 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
         addGuest: function (jsonguest) {
             console.log("new Guest", jsonguest);
 
-            jsonPost.data("../php1/front_desk/add_guest.php", {
+            /* jsonPost.data("../php1/front_desk/add_guest.php", {
                 checkin_data: $filter('json')(jsonguest)
             }).then(function (response) {
                 console.log(response);
                 $rootScope.settings.modal.msgprompt(response);
                 $scope.guest.jslist.createList();
-            });
+            }); */
         },
         checkIn: function (jsonguest) {
+            //console.log("new checkIn", jsonform);
+            jsonguest.guest_id = $scope.guest.jslist.selectedObj.guest_id;
+            jsonguest.guest_name = $scope.guest.jslist.selectedObj.guest_name;
             console.log("new checkIn", jsonguest);
 
-            jsonPost.data("../php1/front_desk/checkin.php", {
+            /* jsonPost.data("../php1/front_desk/checkin.php", {
                 checkin_data: $filter('json')(jsonguest)
             }).then(function (response) {
                 console.log(response);
                 $rootScope.settings.modal.msgprompt(response);
                 $scope.guest.jslist.createList();
-            });
+            }); */
         },
         updateGuest: function (jsonguest) {
             jsonguest.id = $scope.guest.jslist.selected;
@@ -317,10 +326,26 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 $scope.guest.jslist.createList();
                 $scope.guest.jslist.toggleIn();
             });
+        },
+        getRoomBooking : function(id){
+            jsonPost.data("../php1/front_desk/list_bookings.php", {}).then(function(result){
+                response = [];
+                $scope.guest.jslist.selectedObj.rooms = [];
+                result.forEach(function(elem){
+                    //console.log(elem.checked_out, 'NO');
+                    if(elem.guest_id == id && elem.checked_out == "NO"){
+                        console.log(id, elem);
+                        $scope.guest.jslist.selectedObj.rooms.push(elem.room_number);
+                        response.push(elem);
+                    }
+                })
+                return response;
+            });
         }
     };
 
     $scope.rooms = {
+        
         itemlist: function () {
             return {
                 jsonfunc: jsonPost.data("../php1/front_desk/list_rooms.php", {})

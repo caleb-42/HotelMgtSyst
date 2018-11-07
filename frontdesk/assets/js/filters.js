@@ -36,3 +36,14 @@ app.filter('capitalize', function() {
       return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
     }
 });
+app.filter('arraytostring', function() {
+    return function(input) {
+        str = "";
+        if(Array.isArray(input)){
+            for(var i = 0; i < input.length; i++ ){
+                (i != input.length - 1) ? (str += input[i] + ", ") : (str += input[i]);
+            }
+        }
+        return str;
+    }
+});
