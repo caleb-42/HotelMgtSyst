@@ -346,7 +346,7 @@ copy($filename, $device);       //Print receipt contents
 unlink($filename);
 /*Print Frontdesk Receipts*/
 
- if($add_new_guest_result){
+ if($txn_insert_result){
 	$msg_response[0] = "OUTPUT";
 	$msg_response[1] = $guest_name . " SUCCESSFULLY ADDED";
  } else {

@@ -63,6 +63,8 @@ if ($balance == 0) {
 $payment_record_result = mysqli_query($dbConn, $payment_record_query);
 
 //var_dump($customer_ref);
-$txn_insert_query = "INSERT INTO frontdesk_reservation_txn (reservation_ref, total_rooms_reserved, total_cost, deposited, balance, means_of_payment, payment_status, frontdesk_rep) VALUES('$reservation_ref', $total_rooms_reserved, $total_cost, $amount_paid, $balance, '$means_of_payment', '$payment_status', '$frontdesk_rep')";
+$txn_insert_query = "INSERT INTO frontdesk_reservation_txn (reservation_ref, total_rooms_reserved, total_cost, deposited, balance, payment_status, frontdesk_rep) VALUES('$reservation_ref', $total_rooms_reserved, $total_cost, $amount_paid, $balance, '$payment_status', '$frontdesk_rep')";
 $txn_insert_result = mysqli_query($dbConn, $txn_insert_query);
+
+
 ?>

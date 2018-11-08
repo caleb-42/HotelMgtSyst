@@ -63,10 +63,11 @@ $select_rooms_query->bind_param("s", $room_id); // continue from here
  		$compare_checkin = date_create($booked_on);
  		$compare_checkout = date_create($booking_expires);
  		//remove if statement to prevent booked rooms from being reserved at all, for cases of booking extension
- 		if (($room_reservation_date => $compare_checkin) || ($room_reservation_date <= $compare_checkout)) {
+ 		if ((($room_reservation_date < $compare_checkin) && ($room_reservation_out_date < $compare_checkin)) || ($room_reservation_date > $compare_checkout) && ($room_reservation_out_date > $compare_checkout)) {
+ 	  } else {
  			$select_rooms_query->close();
 	        $msg_response[0] = "ERROR";
-	        $msg_response[1] = $room_number . " is already booked";
+	        $msg_response[1] = $room_number . " is already booked within reservation dates";
 	        $response_message = json_encode($msg_response);
  		    die($response_message);
  		}

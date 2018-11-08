@@ -83,6 +83,9 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 }
 $update_bookings_query->close();
 
+$check_active_guest = "SELECT * FROM frontdesk_bookings WHERE booking_ref = '$booking_ref' AND checked_out = 'NO'";
+$check_active_results = mysqli_query($dbConn, $check_active_guest);
+
 if (mysqli_num_rows($check_active_results) > 0) {
 	//do nothing
 } else {
