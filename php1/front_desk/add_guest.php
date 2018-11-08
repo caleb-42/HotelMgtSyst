@@ -146,6 +146,7 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 	$client_id = $guest_id;	
 	$no_of_days = $rooms[$i]["no_of_nights"];
 	$room_net_cost = $room_rate * $no_of_days;
+	$rooms[$i]["room_total_cost"] = $room_net_cost;
 	$d = strtotime("+"."$no_of_nights days");
 	$expected_checkout_date = date("Y-m-d", $d);
 	$insert_into_bookings_result = $insert_into_bookings->execute();

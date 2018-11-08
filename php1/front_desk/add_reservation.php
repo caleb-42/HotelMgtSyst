@@ -40,7 +40,7 @@ transaction */
  $no_of_rooms = count($rooms);
 
  /*room check*/
-$select_rooms_query = $conn->prepare("SELECT booked, room_number, reserved, reservation_date, reserved_nights  FROM frontdesk_rooms WHERE room_id = ?");
+$select_rooms_query = $conn->prepare("SELECT booked, booked_on, booking_expires, room_number, reserved, reservation_date, reserved_nights  FROM frontdesk_rooms WHERE room_id = ?");
 echo $conn->error;
 
 $select_rooms_query->bind_param("s", $room_id); // continue from here
@@ -55,16 +55,22 @@ $select_rooms_query->bind_param("s", $room_id); // continue from here
     // $check_out_date = date("Y-m-d", $d);
  	$room_id = $rooms[$i]["room_id"];
  	$select_rooms_query->execute();
- 	$select_rooms_query->bind_result($booked, $room_number, $reserved, $reservation_date, $reserved_nights);
+ 	$select_rooms_query->bind_result($booked, $booked_on, $booking_expires, $room_number, $reserved, $reservation_date, $reserved_nights);
  	$select_rooms_query->fetch();
  	// echo $room_id;
  	// echo mysqli_error($conn);
  	if ($booked == "YES") {
- 		$select_rooms_query->close();
-	    $msg_response[0] = "ERROR";
-	    $msg_response[1] = $room_number . " is already booked";
-	    $response_message = json_encode($msg_response);
- 		die($response_message);
+ 		$compare_checkin = date_create($booked_on);
+ 		$compare_checkout = date_create($booking_expires);
+ 		//remove if statement to prevent booked rooms from being reserved at all, for cases of booking extension
+ 		if ((($room_reservation_date < $compare_checkin) && ($room_reservation_out_date < $compare_checkin)) || ($room_reservation_date > $compare_checkout) && ($room_reservation_out_date > $compare_checkout)) {
+ 	  } else {
+ 			$select_rooms_query->close();
+	        $msg_response[0] = "ERROR";
+	        $msg_response[1] = $room_number . " is already booked within reservation dates";
+	        $response_message = json_encode($msg_response);
+ 		    die($response_message);
+ 		}
  	}
 
  	if ($reserved == "YES") {

@@ -35,37 +35,37 @@ $printer = new Printer($connector);
 $checkout_data = json_decode($checkout_data, true);
 
 $guest_name = $checkout_data["guest_name"];
+$booking_ref = $checkout_data["booking_ref"];
 $guest_id = $checkout_data["guest_id"];
 $rooms = $checkout_data["rooms"];
 $no_of_rooms = count($rooms);
 
 $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
+$check_active_guest = "SELECT * FROM frontdesk_bookings WHERE booking_ref = '$booking_ref' AND checked_out = 'NO'";
+$check_active_results = mysqli_query($dbConn, $check_active_guest);
+
 $check_outstanding_query = "SELECT * FROM frontdesk_guests WHERE guest_id = '$guest_id'";
 $check_outstanding_result = mysqli_query($dbConn, $check_outstanding_query);
 $outstanding_row = mysqli_fetch_assoc($check_outstanding_result);
 
-if ($outstanding_row["room_outstanding"] != 0) {
-	$msg_response[0] = "ERROR";
-	$msg_response[1] = "This guest has a booking outstanding balance";
-	$response_message = json_encode($msg_response);
-	$printer -> close();
- 	die($response_message);
+if (mysqli_num_rows($check_active_results) == $no_of_rooms) {
+	if ($outstanding_row["room_outstanding"] != 0) {
+	   $msg_response[0] = "ERROR";
+	   $msg_response[1] = "This guest has a booking outstanding balance";
+	   $response_message = json_encode($msg_response);
+	   $printer -> close();
+ 	   die($response_message);
+    }
+
+    if ($outstanding_row["restaurant_outstanding"] != 0) {
+	   $msg_response[0] = "ERROR";
+	   $msg_response[1] = "This guest has a restaurant outstanding balance";
+	   $response_message = json_encode($msg_response);
+	   $printer -> close();
+ 	   die($response_message);
+    }
 }
-
-if ($outstanding_row["restaurant_outstanding"] != 0) {
-	$msg_response[0] = "ERROR";
-	$msg_response[1] = "This guest has a restaurant outstanding balance";
-	$response_message = json_encode($msg_response);
-	$printer -> close();
- 	die($response_message);
-}
-
-$checkout_bookings_query = "UPDATE frontdesk_bookings SET checked_out ='YES', check_out_time = CURRENT_TIMESTAMP";
-$checkout_bookings_result = mysqli_query($dbConn, $checkout_bookings_query);
-
-$checkout_guest_query = "UPDATE frontdesk_guests SET checked_out ='YES', checked_in = 'NO', visit_count = visit_count + 1";
-$checkout_guest_result = mysqli_query($dbConn, $checkout_guest_query);
 
 $update_room_query = $conn->prepare("UPDATE frontdesk_rooms SET booked_on = '0', booked = 'NO', guests = 0, current_guest_id = '', booking_ref = '', booking_expires = '0' WHERE room_id = ?");
 $update_room_query->bind_param("s", $room_id);
@@ -74,6 +74,25 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 	$update_room_query->execute();
 }
 $update_room_query->close();
+
+$update_bookings_query = $conn->prepare("UPDATE frontdesk_bookings SET checked_out ='YES', check_out_time = CURRENT_TIMESTAMP WHERE room_id = ? AND booking_ref = '$booking_ref'");
+$update_bookings_query->bind_param("s", $room_id);
+for ($i=0; $i <$no_of_rooms ; $i++) {
+	$room_id = $rooms[$i]["room_id"];
+	$update_bookings_query->execute();
+}
+$update_bookings_query->close();
+
+$check_active_guest = "SELECT * FROM frontdesk_bookings WHERE booking_ref = '$booking_ref' AND checked_out = 'NO'";
+$check_active_results = mysqli_query($dbConn, $check_active_guest);
+
+if (mysqli_num_rows($check_active_results) > 0) {
+	//do nothing
+} else {
+	$checkout_guest_query = "UPDATE frontdesk_guests SET checked_out ='YES', checked_in = 'NO', visit_count = visit_count + 1 WHERE booking_ref = '$booking_ref'";
+    $checkout_guest_result = mysqli_query($dbConn, $checkout_guest_query);
+}
+
 $msg_response[0] = "OUTPUT";
 $msg_response[1] = "CHECKED OUT";
 $response_message = json_encode($msg_response);

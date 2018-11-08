@@ -11,7 +11,7 @@
     if (mysqli_num_rows($rooms_result) > 0){
  	  while($rows = mysqli_fetch_assoc($rooms_result)) {
       $room_id = $rows["room_id"];
-      $reservation_query = "SELECT * FROM frontdesk_reservations WHERE room_id = '$room_id'";
+      $reservation_query = "SELECT * FROM frontdesk_reservations WHERE room_id = '$room_id' ORDER BY reserved_date";
       $get_reservations_result = mysqli_query($connDB, $reservation_query);
       if (mysqli_num_rows($get_reservations_result) > 0) {
         $reservations_rows = [];

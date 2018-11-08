@@ -1,7 +1,7 @@
 <?php
  include "../settings/connect.php"; //$database handler $dbConn or $conn
 
-  $get_bookings_sql = "SELECT * FROM frontdesk_bookings WHERE checked_out = 'NO'";
+  $get_bookings_sql = "SELECT * FROM frontdesk_bookings";
   $get_bookings_result = mysqli_query($dbConn, $get_bookings_sql);
   $get_bookings_array = [];
 

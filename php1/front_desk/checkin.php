@@ -120,6 +120,7 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 	$client_id = $guest_id;	
 	$no_of_days = $rooms[$i]["no_of_nights"];
 	$room_net_cost = $room_rate * $no_of_days;
+	$rooms[$i]["room_total_cost"] = $room_net_cost;
 	$d = strtotime("+"."$no_of_nights days");
 	$expected_checkout_date = date("Y-m-d", $d);
 	$insert_into_bookings->execute();
@@ -345,7 +346,7 @@ copy($filename, $device);       //Print receipt contents
 unlink($filename);
 /*Print Frontdesk Receipts*/
 
- if($add_new_guest_result){
+ if($txn_insert_result){
 	$msg_response[0] = "OUTPUT";
 	$msg_response[1] = $guest_name . " SUCCESSFULLY ADDED";
  } else {
