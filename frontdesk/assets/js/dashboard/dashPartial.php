@@ -35,7 +35,6 @@
                             <jslist class="font-fam-Montserrat"></jslist>
                         </div>
                     </div>
-                    <!-- <div class="orderbtn w-100"><button class="ml-2 h-100 btn-warning px-5 font-fam-Montserrat-bold">Details</button></div> -->
                 </div>
                 <div class="orders row align-items-center anim px-2 h-25">
 
@@ -61,7 +60,6 @@
                 <div class="col-8">
                     <input class="form-control float-right anim" ng-model="searchbox.imp" />
                 </div>
-                <!-- ng-class="{vanishsearch:searchbox.iconhover}" -->
                 <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" href = "../php1/front_desk/frontdesk_logoff.php" ng-mouseenter="settings.log = false;" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a>
             </div>
         </div>

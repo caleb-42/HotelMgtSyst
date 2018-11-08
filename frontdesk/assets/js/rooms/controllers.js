@@ -1,4 +1,4 @@
-stocksApp.controller("stocks", ["$rootScope", "$scope", 'jsonPost', '$filter', function ($rootScope, $scope, jsonPost, $filter) {
+roomsApp.controller("rooms", ["$rootScope", "$scope", 'jsonPost', '$filter', function ($rootScope, $scope, jsonPost, $filter) {
     $scope.tabnav = {
         navs: {
             Products: {

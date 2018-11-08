@@ -1,4 +1,4 @@
-<div ng-controller="stocks">
+<div ng-controller="rooms">
     <div class="prime-hd anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.primeclass : 'w-100'}}">
         <div class="statusbar grn row  align-items-end pl-1">
             <div class="tabnav col-7 row">
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="prodlist h-80">
-                        <productlist></productlist>
+                       <!--  <productlist></productlist> -->
                     </div>
                 </div>
                 <div class="animate-switch" ng-switch-when="History">HomeSpan</div>
@@ -73,7 +73,7 @@
                     </div>
 
                 </div>
-                <discountlist class = "discntfade"></discountlist>
+                <!-- <discountlist class = "discntfade"></discountlist> -->
                 <div class="row w-100 justify-content-around discntfade">
                 <button class="btn w-40 btn-success f-14" ng-click="settings.modal.active = 'Discount'; settings.modal.name = 'Add Discount'; settings.modal.size = 'md' " data-toggle="modal" data-target="#crud" ng-disabled= "!productstock.jslist.selected && details.discount.selected_discount == 'item'">Add Discount</button>
                 <button class="btn w-40 btn-danger f-14" ng-click="details.discount.deleteDiscount()" ng-disabled= "!details.discount.jslist.selected">Delete Discount</button>
@@ -85,5 +85,5 @@
     </div>
     <!--main-sidebar-right end-->
     <div class="clr"></div>
-    <div class="modal fade" id="crud" role="dialog" modalentry></div>
+    <!-- <div class="modal fade" id="crud" role="dialog" modalentry></div> -->
 </div>

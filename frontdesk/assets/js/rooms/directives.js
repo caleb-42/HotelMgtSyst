@@ -74,7 +74,7 @@ app.directive('productlist', ['$rootScope', '$filter', function ($rootScope, $fi
 app.directive('discountlist', ['$rootScope', '$filter', function ($rootScope, $filter) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/stocks/listTemplates.php?list=discount',
+        templateUrl: './assets/js/rooms/listTemplates.php?list=discount',
         scope: false,
 
         link: function (scope, element, attrs) {
