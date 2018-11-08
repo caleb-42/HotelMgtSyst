@@ -70,49 +70,47 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                 $rootScope.settings.modal.adding = true;
                 jsonForm = $(".addGuestForm").serializeObject();
                 jsonForm.room_outstanding = 0;
-                jsonForm.total_cost = scope.guest.roomgrid.roominfo.roomstotalcost;
-                jsonForm.total_rooms_booked = scope.guest.roomgrid.roominfo.selectedrooms;
-                jsonForm.balance = scope.guest.roomgrid.roominfo.roomstotalcost - jsonForm.deposited ;
+                jsonForm.total_cost = scope.guest.roomgrid.room_info.cost;
+                jsonForm.total_rooms_booked = scope.guest.roomgrid.room_info.rooms;
+                jsonForm.balance = scope.guest.roomgrid.room_info.cost - jsonForm.deposited ;
                 jsonForm.frontdesk_rep = $rootScope.settings.user;
                 jsonForm.rooms = [];
-                arryy = Object.values(scope.guest.roomgrid.room_details);
+                arryy = Object.values(scope.guest.roomgrid.room_details.rooms);
                 arryy.forEach(function(rm){
-                    if(rm.roomarray){
-                        rm.roomarray.forEach(function(elem){
+                    if(rm.arr){
+                        rm.arr.forEach(function(elem){
                             if(elem.selected == true){
-                                elem.no_of_nights = scope.guest.roomgrid.roomid[elem.room_id];
+                                elem.room_total_cost = (parseInt(elem.no_of_nights) * parseInt(elem.room_rate));
                                 jsonForm.rooms.push(elem);
                             }
                         });
                     }
                 });
                 console.log(jsonForm);
-                //scope.guest.addGuest(jsonForm);
+                scope.guest.addGuest(jsonForm);
             };
             checkIn = function () {
                 $rootScope.settings.modal.adding = true;
-                json = $(".CheckInForm").serializeObject();
-                console.log(json);
-                json.room_outstanding = 0;
-                json.total_cost = scope.guest.roomgrid.roominfo.roomstotalcost;
-                json.total_rooms_booked = scope.guest.roomgrid.roominfo.selectedrooms;
-                json.balance = scope.guest.roomgrid.roominfo.roomstotalcost - json.deposited ;
-                json.frontdesk_rep = $rootScope.settings.user;
-                json.rooms = [];
-                arryy = Object.values(scope.guest.roomgrid.room_details);
+                jsonForm = $(".CheckInForm").serializeObject();
+                jsonForm.room_outstanding = 0;
+                jsonForm.total_cost = scope.guest.roomgrid.room_info.cost;
+                jsonForm.total_rooms_booked = scope.guest.roomgrid.room_info.rooms;
+                jsonForm.balance = scope.guest.roomgrid.room_info.cost - jsonForm.deposited ;
+                jsonForm.frontdesk_rep = $rootScope.settings.user;
+                jsonForm.rooms = [];
+                arryy = Object.values(scope.guest.roomgrid.room_details.rooms);
                 arryy.forEach(function(rm){
-                    console.log(rm);
-                    if(rm.roomarray){
-                        rm.roomarray.forEach(function(elem){
+                    if(rm.arr){
+                        rm.arr.forEach(function(elem){
                             if(elem.selected == true){
-                                elem.no_of_nights = scope.guest.roomgrid.roomid[elem.room_id];
-                                json.rooms.push(elem);
+                                elem.room_total_cost = (parseInt(elem.no_of_nights) * parseInt(elem.room_rate));
+                                jsonForm.rooms.push(elem);
                             }
                         });
                     }
                 });
-                console.log(json);
-                //scope.guest.checkIn(json);
+                console.log(jsonForm);
+                scope.guest.checkIn(jsonForm);
             };
             updateUser = function () {
                 $rootScope.settings.modal.adding = true
