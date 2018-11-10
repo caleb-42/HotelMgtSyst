@@ -1,10 +1,10 @@
 <?php
 include "../../settings/connect.php"; //$database handler $dbConn or $conn
 
-//$new_room = json_decode($_POST["new_room"], true);
+$new_room = json_decode($_POST["new_room"], true);
 
-$new_room = '{"room_number": 202, "room_rate": 4000, "category": "deluxe"}';
-$new_room = json_decode($new_room, true);
+//$new_room = '{"room_number": 202, "room_rate": 4000, "room_category": "deluxe"}';
+//$new_room = json_decode($new_room, true);
 // var_dump($new_room);
 
 $room_number = $new_room["room_number"];

@@ -22,32 +22,25 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                 }
             }
             $('.modal').on("shown.bs.modal", function () {
-                if ($rootScope.settings.modal.active == "Update Product") {
-                    console.log(scope.productstock);
-                    loadJson2Form(scope.productstock.jslist.selectedObj, '.inpRead');
+                if ($rootScope.settings.modal.name == "Update Room") {
+                    console.log(scope.rooms);
+                    loadJson2Form(scope.rooms.jslist.selectedObj, '.inpRead');
                 }else if ($rootScope.settings.modal.name == "Update User") {
                     console.log(scope.users);
                     loadJson2Form(scope.users.jslist.selectedObj, '.inpRead');
-                }else if ($rootScope.settings.modal.name == "Update Discount") {
-                    console.log(scope.details.discount);
-                    loadJson2Form(scope.details.discount.jslist.selectedObj, '.inpRead');
-                }else if ($rootScope.settings.modal.name == "Update Customer") {
-                    console.log(scope.customers);
-                    loadJson2Form(scope.customers.jslist.selectedObj, '.inpRead');
                 }
             });
-            updateProduct = function () {
+            updateRoom = function () {
                 $rootScope.settings.modal.adding = true
-                jsonForm = $(".updateProductForm").serializeObject();
-                jsonForm.new_current_stock = "";
-                scope.productstock.updateProduct(jsonForm);
+                jsonForm = $(".updateRoomForm").serializeObject();
+                scope.rooms.updateRoom(jsonForm);
             };
-            addProduct = function () {
+            addRoom = function () {
                 $rootScope.settings.modal.adding = true
-                jsonForm = $(".addProductForm").serializeObject();
+                jsonForm = $(".addRoomForm").serializeObject();
                 //console.log();
-                jsonForm.shelf_item = scope.productstock.jslist.shelfitem;
-                scope.productstock.addProduct(jsonForm);
+                jsonForm.room_category = scope.rooms.jslist.room_category;
+                scope.rooms.addRoom(jsonForm);
             };
             addStock = function (){
                 $rootScope.settings.modal.adding = true

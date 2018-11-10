@@ -47,7 +47,7 @@ $templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Lodge"=>"./a
     <script src="./vendors/List/List.js"></script>
 
     <!-- Custom styles for this template -->
-    <link href="./assets/css/index1.css" rel="stylesheet">
+    <link href="./assets/css/index.css" rel="stylesheet">
     <link href="./assets/css/ng-animation.css" rel="stylesheet">
     <link href="./assets/css/utilities.css" rel="stylesheet">
     <link rel="stylesheet" href="./vendors/node_modules/croppie/croppie.css" />

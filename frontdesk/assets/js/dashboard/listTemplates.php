@@ -1,8 +1,8 @@
 
 <!-- ............jslist start ..............-->
 <div class = "listcont" ng-if = "<?php echo $_GET['list']   == 'guest'?>">
-    <div class = "listhd pr-3 row">
-        <span class="{{hd.width}} f-13"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in guest.listhddata">{{hd.name}}</span>
+    <div class = "listhd pr-3 row font-fam-Montserrat-bold">
+        <span class="{{hd.width}} f-13 opac-70"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in guest.listhddata">{{hd.name}}</span>
     </div>
     <div class = "hs-45 listbody ovflo-y pb-4" >
         <ul class = "list" >
