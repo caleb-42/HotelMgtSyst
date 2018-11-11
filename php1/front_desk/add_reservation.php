@@ -5,7 +5,7 @@ $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
  // $reservation_data = $_POST["reservation_data"];
 
- $reservation_data = '{"guest_name":"Ewere", "guest_type_gender": "male", "phone_number":"08023456789", "email":"tegogs@gmail.com", "total_rooms_reserved": 3, "total_cost": 252000, "frontdesk_rep": "Ada", "amount_paid": 200000, "rooms": [{"room_id": "RM_64917", "guests":3, "room_rate": 33000, "no_of_nights":2, "room_category": "deluxe", "room_total_cost" : 132000, "room_reservation_date" : "2018-11-20"}, {"room_id": "RM_66480", "guests":3, "room_rate": 15000, "no_of_nights":3, "room_category": "standard", "room_total_cost" : 60000, "room_reservation_date" : "2018-11-23"}, {"room_id": "RM_71638", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard", "room_total_cost" : 60000, "room_reservation_date" : "2018-11-22"}]}';
+ $reservation_data = '{"guest_name":"Ewere", "guest_id": "", "guest_type_gender": "male", "phone_number":"08023456789", "email":"tegogs@gmail.com", "total_rooms_reserved": 3, "total_cost": 252000, "frontdesk_rep": "Ada", "amount_paid": 200000, "rooms": [{"room_id": "RM_64917", "guests":3, "room_rate": 33000, "no_of_nights":2, "room_category": "deluxe", "room_total_cost" : 132000, "room_reservation_date" : "2018-11-20"}, {"room_id": "RM_66480", "guests":3, "room_rate": 15000, "no_of_nights":3, "room_category": "standard", "room_total_cost" : 60000, "room_reservation_date" : "2018-11-23"}, {"room_id": "RM_71638", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard", "room_total_cost" : 60000, "room_reservation_date" : "2018-11-22"}]}';
 /*reservation_data is the json string from the front-end the keys contain aspects of the
 transaction */
  // var_dump($reservation_data);
