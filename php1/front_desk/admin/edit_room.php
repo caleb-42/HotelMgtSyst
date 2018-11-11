@@ -11,6 +11,7 @@ $room_id = $update_room["room_id"];
 $old_num = $update_room["room_number"];
 $room_number = $update_room["new_room_number"] ? $update_room["new_room_number"] : $update_room["room_number"];
 $room_rate = $update_room["new_room_rate"] ? $update_room["new_room_rate"] : $update_room["room_rate"];
+
 $room_category = $update_room["new_room_category"] ? $update_room["new_room_category"] : $update_room["room_category"];
 
 if ($old_num != $room_number) {

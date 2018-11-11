@@ -7,185 +7,23 @@
         </div>
         <div class="modal-body nopadding">
 
-            <!--....... Customer Start ......... -->
-            <div ng-if="settings.modal.active == 'customer'">
-                <div class="BuyerPanel px-4 my-4 w-100" ng-switch on='buyer.showPanel'>
-                    <div ng-switch-when='addnew' class="addNew">
-                        <div class="d-block w-100 text-center buysec"><i class="fa  d-inline-block {{buyer.customer.new.gender == 'male' ? 'avatar-img' : 'avatar-img-female'}}"></i></div>
-                        <form autocomplete="off" class="custform w-100 text-center mt-2 px-5 ">
-                            <input class=" form-control font-fam-Montserrat w-100 mt-4 text-center d-inline-block"
-                                placeholder="Name" name="full_name" ng-focus="activateAutoComplete($event)" />
-                            <input class="form-control font-fam-Montserrat w-100 mt-4 text-center d-inline-block" type="number" onkeydown="javascript: return event.keyCode !=69" placeholder="Phone Number" name="phone_number" />
-                            <input class="form-control font-fam-Montserrat w-100 mt-4 text-center d-inline-block"
-                                placeholder="Address" name="contact_address" />
-                            <!-- <input type="number" onkeydown="javascript: return event.keyCode !=69"
-                            class="form-control font-fam-Montserrat w-100 mt-4 text-center d-inline-block"
-                            placeholder="Room" name="room" /> -->
-                            <div class="w-100 d-inline-block px-5 mt-3">
-                                <span class="float-left">
-                                    <input type="radio" id="male" name="gender" value="male" ng-model="buyer.customer.new.gender" />
-                                    <label class="ml-2 d-inline-block pointer" for="male">Male</label>
-                                </span>
-                                <span class="float-right">
-                                    <input type="radio" id="female" name="gender" value="female" ng-model="buyer.customer.new.gender" />
-                                    <label class="ml-2 d-inline-block pointer" for="female">Female</label>
-                                </span>
-                            </div>
-                        </form>
-                    </div>
-                    <div ng-switch-when='search' class="customerPanel font-fam-Montserrat">
-                        <div class="searchPanel float-left w-50 pl-2 pr-3">
-                            <div>
-                                <input placeholder="Search" class="form-control customer-search m-0 w-100" ng-model="searchquery" />
-                            </div>
-                            <div class="custlist w-100 mt-3 pb-4">
-                                <div class="custlisthd w-100 px-3 py-1 wht grn">
-                                    <div class="d-inline-block w-70">Name</div>
-                                    <div class="d-inline-block w-25">Balance</div>
-                                </div>
-                                <div class="ul-con h-100" style="overflow-y:auto;">
-                                    <ul class="w-100">
-                                        <li ng-click="buyer.customer.selectCustomer(cust)" ng-style="{'background' : cust.full_name == buyer.customer.selected.full_name ? '#ccc': null}"
-                                            ng-repeat="cust in buyer.customer.customerList | filter:searchquery" class="w-100 px-3 py-1 f-13">
-                                            <div class="d-inline-block w-70">{{cust.full_name}}</div>
-                                            <div class="d-inline-block w-25">{{cust.outstanding_balance}}</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="historyPanel float-right w-50 pl-3 pr-2">
-                            <div class="w-100 row justify-content-between align-items-center">
-                                <div class="col-4 buysec"><i class="fa {{buyer.customer.selected.gender == 'male' ? 'avatar-img' : 'avatar-img-female'}}"></i></div>
-                                <h3 class="col-8">{{buyer.customer.selected.full_name}}</h3>
-                            </div>
-                            <div class="row w-100">
-                                <!-- <div class="col-4 my-3 opac-50  pl-4">Room</div>
-                                <div class="col-8 my-3 opac-50 ">{{buyer.customer.selected.room}}</div> -->
-                                <div class="col-4 my-3 opac-50  pl-4">Phone</div>
-                                <div class="col-8 my-3 opac-50 ">{{buyer.customer.selected.phone_number}}</div>
-                                <div class="col-4 my-3 opac-50  pl-4">Address</div>
-                                <div class="col-8 my-3 opac-50 ">{{buyer.customer.selected.contact_address}}</div>
-                            </div>
-                        </div>
-                        <div class="clr"></div>
-                    </div>
-                </div>
-                <div class="modal-footer w-100">
-                    <div class="justify-content-center w-100 d-flex flex-column">
-                        <div class="py-1 align-self-center row justify-content-between w-70">
-                            <button type="button" class="b-0 btn btn-warning" ng-click="buyer.customer.selected = buyer.showPanel == 'addnew' ? buyer.customer.jsonform('visitor') : buyer.customer.selectedDefault">{{buyer.showPanel
-                                == 'addnew' ? 'Select' : 'Reset'}}</button>
-                            <button type="button" ng-class="{'gone': buyer.showPanel != 'addnew'}" class="b-0 btn btn-success"
-                                ng-click="buyer.customer.makeCustomer()">Add</button>
-                            <button type="button" class="btn b-0 {{buyer.showPanel == 'addnew' ? 'btn-danger' : 'btn-info'}}"
-                                ng-click="buyer.showPanel = buyer.showPanel == 'addnew' ? 'search' : 'addnew';settings.modal.size = buyer.showPanel == 'addnew' ? 'md' : 'lg'; buyer.customer.makeCustomerList(); ">{{buyer.showPanel
-                                == 'addnew' ? 'Search' : 'New'}}</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--....... Customer End ......... -->
-
-
-            <!--....... Payment Start ......... -->
-            <div ng-if="settings.modal.active == 'payment'">
-                <div>
-                    <form autocomplete="off" id="recieptForm" class="custform w-100 text-center mt-2 ">
-
-                        <div class="buyer w-100">
-                            <h3 class="mb-4 opac-50 mt-3">{{surcharge.reciept.customer}}</h3>
-
-                            <div class="pay-method">
-                                <select ng-model="surcharge.reciept.pay_method" class="form-control methpay mx-auto my-4 w-40 f-13"
-                                    name="paymethod">
-                                    <option value="Cash">Cash</option>
-                                    <option value="Cheque">Cheque</option>
-                                    <option value="POS">POS</option>
-                                    <option value="Credit">Credit</option>
-                                </select>
-
-                            </div>
-
-                            <div class="w-100 px-4 pt-3 choralback row justify-content-around wht">
-                                <span>
-                                    <h6 class="mb-2">Sales Rep</h6>
-                                    <p>{{surcharge.reciept.sales_rep}}</p>
-                                </span>
-                                <span>
-                                    <h6 class="mb-2">Discounted Total</h6>
-                                    <p>{{surcharge.reciept.discounted_total_cost}}</p>
-                                </span>
-                            </div>
-
-                        </div>
-
-                        <div class="my-4">
-                            <div class=" hs-25 ovflo-y">
-                                <ul class="w-100 row justify-content-center ">
-                                    <li ng-repeat="prod in surcharge.reciept.item_list" class="w-75  py-2 f-17 row justify-content-between">
-                                        <h4 class="text-left text-light">{{prod.item}}</h4>
-                                        <h4 class="text-left text-light">{{prod.quantity}}</h4>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="w-100 row justify-content-between px-4">
-                                <form autocomplete="off">
-                                    <span class="px-3 w-50"><label class="font-fam-Montserrat-bold opac-50">Paid</label><input
-                                            ng-change="surcharge.reciept.outstanding_balance = surcharge.reciept.discounted_total_cost - surcharge.reciept.amount_paid "
-                                            ng-model="surcharge.reciept.amount_paid" name="paid" placeholder="Amount Paid"
-                                            class="text-center form-control"  type="number" onkeydown="javascript: return event.keyCode !=69" /></span>
-                                    <span class="px-3 w-50"><label class="font-fam-Montserrat-bold opac-50">Balance</label><input
-                                            ng-model="surcharge.reciept.outstanding_balance" readonly name="paid"
-                                            placeholder="Balance" class="text-center form-control" /></span>
-                                </form>
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
-
-                <div class="modal-footer w-100 px-5">
-                    <div class="justify-content-center w-100 d-flex flex-column">
-                        <div class="py-1 row justify-content-center w-100">
-                            <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
-                                    height="70px" /></div>
-                            <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success my-3"
-                            ng-click=" settings.modal.adding = true; surcharge.payment.receiptPrint();" >
-                                Pay
-                            </button>
-                        </div>
-                        <div class="row pt-3 justify-content-center">
-                            <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--....... Payment End ......... -->
-
-            <!--....... Product Start ......... -->
-            <div ng-if="settings.modal.active == 'Add Product'">
-                <form autocomplete="off" class="addProductForm mx-5 my-4">
-                    <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Name" name="item" />
-                    <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Stock" type="number" type="number" onkeydown="javascript: return event.keyCode !=69" name="current_stock" />
-                    <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Price" type="number" type="number" onkeydown="javascript: return event.keyCode !=69" name="current_price" />
-                    <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Description"
-                        name="description" />
-                    <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Category"
-                        name="category" />
-                    <div class="row justify-content-around my-2 align-items-center font-fam-Montserrat">
-                        <h6 class="font-fam-Montserrat-bold choral">Shelf Item</h6>
+            <!--....... Room Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'Room'">
+                <div ng-if="settings.modal.name == 'Add Room'">
+                <form autocomplete="off" class="addRoomForm mx-5 my-4">
+                    <input class="form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Number" type="number" onkeydown="javascript: return event.keyCode !=69" name="room_number" />
+                    <input class="form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Rate" type="number" onkeydown="javascript: return event.keyCode !=69" name="room_rate" />
+                    <div class="row justify-content-around my-5 align-items-center font-fam-Montserrat">
+                        <h6 class="font-fam-Montserrat-bold choral">Category</h6>
                         <span>
-                            <input type="radio" ng-model = 'productstock.jslist.shelfitem' id="yes" value="yes"  name="shelf_item" />
-                            <label for="yes" class="f-15 ml-2">Yes</label>
+                            <input type="radio" ng-model = 'rooms.jslist.room_category' id="deluxe" value="deluxe"  name="room_category" />
+                            <label for="deluxe" class="f-15 ml-2">Deluxe</label>
                         </span>
                         <span>
-                            <input type="radio" ng-model = 'productstock.jslist.shelfitem' value="no" name="shelf_item" id="no" />
-                            <label for="no" class="f-15 ml-2">No</label>
+                            <input type="radio" ng-model = 'rooms.jslist.room_category' value="standard" name="room_category" id="standard" />
+                            <label for="standard" class="f-15 ml-2">Standard</label>
                         </span>
                     </div>
-
-                    <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Type" name="type" />
                 </form>
                 <div class="modal-footer w-100">
                     <div class="justify-content-center w-100 d-flex flex-column">
@@ -193,7 +31,7 @@
                             <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
                                     height="70px" /></div>
                             <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success my-3"
-                                onclick="addProduct()">
+                                onclick="addRoom()">
                                 Add
                             </button>
                         </div>
@@ -202,45 +40,30 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div ng-if="settings.modal.active == 'Update Product'">
-                <form autocomplete="off" class="updateProductForm">
+                </div>
+                <div ng-if="settings.modal.name == 'Update Room'">
+                <form autocomplete="off" class="updateRoomForm">
                     <div class="ml-5 my-4 float-left w-40 inpRead">
                         <div class="w-100">
-                            <input class="item form-control font-fam-Montserrat text-center d-block my-4" placeholder="Name"
-                                value="rer" name="item" readonly />
-                            <input class="form-control gone font-fam-Montserrat text-center d-block my-4" placeholder="Stock"
-                                name="current_stock" readonly />
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Price"
-                                name="current_price" readonly />
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Description"
-                                name="description" readonly />
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Category"
-                                name="category" readonly />
-                            <input type="text" name="shelf_item" class="form-control gone font-fam-Montserrat text-center d-block my-4" readonly />
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Type"
-                                name="type" readonly />
+                            <input class="form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Number" type="number" onkeydown="javascript: return event.keyCode !=69" name="room_number" readonly/>
+                            <input class="form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Rate" type="number" onkeydown="javascript: return event.keyCode !=69" name="room_rate" readonly/>
+                            <input class="form-control font-fam-Montserrat text-center d-block my-5" placeholder="Category" name="room_category" readonly/>
                         </div>
                     </div>
-                    <div class="updateProductForm mr-5 my-4 float-right w-40">
+                    <div class="updateRoomForm mr-5 my-4 float-right w-40">
                         <div class="w-100">
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Name"
-                                name="new_item" />
-                            <input class="form-control gone font-fam-Montserrat text-center d-block my-4" placeholder="Stock" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_current_stock" />
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Price" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_current_price" />
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Description"
-                                name="new_description" />
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Category"
-                                name="new_category" />
-                            <div class="row gone justify-content-around my-2 align-items-center font-fam-Montserrat">
-                                <h6 class="font-fam-Montserrat-bold choral">Shelf Item</h6><span><input type="radio" id="yes"
-                                        value="yes" name="new_shelf_item" /><label for="yes" class="f-15 ml-2">Yes</label></span><span><input
-                                        type="radio" checked value="no" name="new_shelf_item" id="no" /><label for="no"
-                                        class="f-15 ml-2">No</label></span>
+                            <input class="form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Number" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_room_number" />
+                            <input class="form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Rate" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_room_rate" />
+                            <div class="row justify-content-around my-4 align-items-center font-fam-Montserrat">
+                                <span class="col-6 text-center">
+                                    <input type="radio" ng-model = 'rooms.jslist.new_room_category' id="deluxe" value="deluxe"  name="new_room_category" />
+                                    <label for="deluxe" class="f-15 ml-2">Deluxe</label>
+                                </span>
+                                <span class="col-6 text-center">
+                                    <input type="radio" ng-model = 'rooms.jslist.room_category' value="standard" name="new_room_category" id="standard" />
+                                    <label for="standard" class="f-15 ml-2 ">Standard</label>
+                                </span>
                             </div>
-
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Type"
-                                name="new_type" />
                         </div>
                     </div>
                 </form>
@@ -250,7 +73,7 @@
                             <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
                                     height="70px" /></div>
                             <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success my-3"
-                                onclick="updateProduct()">
+                                onclick="updateRoom()">
                                 Update
                             </button>
                         </div>
@@ -259,133 +82,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <!--....... Product End ......... -->
-
-
-            <!--....... Stock Start ......... -->
-            <div ng-if="settings.modal.active == 'Stock'">
-                <!--<div class = "w-100" ng-if = "settings.modal.name == 'Update Discount'">
-                    <form autocomplete="off" class="updateDiscount p-4 w-100">
-                        <div class= "float-left w-45 inpRead row m-0">
-                            <input class="discntitem form-control font-fam-Montserrat text-center d-block my-4" placeholder="Discount Item" readonly name = "discount_item"/>
-                            <input class="discntname form-control font-fam-Montserrat text-center d-block my-4" placeholder="Discount Name" readonly name = "discount_name"/>
-                            <input class="uplimit form-control font-fam-Montserrat text-center d-block my-4" placeholder="Upper Limit" readonly name = "upper_limit"/>
-                            <input class="lowlimit form-control font-fam-Montserrat text-center d-block my-4" placeholder="Lower Limit" readonly name = "lower_limit"/>
-                            <input class="discountvalue form-control font-fam-Montserrat text-center d-block my-4" placeholder="Discount Value" name = "discount_value" readonly/>
-                        </div>
-                        <div class= "float-right w-45 row m-0">
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Discount Item" name = "new_discount_item"/>
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Discount Name" name = "new_discount_name"/>
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Upper Limit" name = "new_upper_limit"/>
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Lower Limit" name = "new_lower_limit"/>
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Discount Value" name = "new_discount_value"/>
-                        </div>
-                    </form>
-                    <div class="modal-footer w-100">
-                        <div class="justify-content-center w-100 d-flex flex-column">
-                                <div class="py-1 row justify-content-center w-100">
-                                <div ng-class = "{gone : !settings.modal.adding}"><img src = "./assets/img/loader.gif" width = "100px" height = "70px"/></div>
-                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success" onclick="updateDiscount()">
-                                    {{settings.modal.name | limitTo:6}}
-                                </button>
-                            </div>
-                            <div class="row pt-3 justify-content-center"><p class = "{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p></div>
-                        </div>
-                    </div>
-                </div>-->
-                <div class="w-100" ng-if="settings.modal.name == 'Add Stock'">
-                    <form class="p-4 w-100 addStockForm row justify-content-center m-0">
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Stock No" type="number" onkeydown="javascript: return event.keyCode !=69" name="quantity" />
-                    </form>
-                    <div class="modal-footer w-100">
-                        <div class="justify-content-center w-100 d-flex flex-column">
-                            <div class="py-1 row justify-content-center w-100">
-                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
-                                        height="70px" /></div>
-                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
-                                    onclick="addStock()">
-                                    {{settings.modal.name | limitTo:3}}
-                                </button>
-                            </div>
-                            <div class="row pt-3 justify-content-center">
-                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <!--....... Stock End ......... -->
-
-
-            <!--....... Discount Start ......... -->
-            <div ng-if="settings.modal.active == 'Discount'">
-                <div class="w-100" ng-if="settings.modal.name == 'Update Discount'">
-                    <form autocomplete="off" class="updateDiscount p-4 w-100">
-                        <div class="float-left w-45 inpRead row m-0">
-                            <input class="discntitem form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Discount Item" readonly name="discount_item" />
-                            <input class="discntname form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Discount Name" readonly name="discount_name" />
-                            <input class="uplimit form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Upper Limit" readonly name="upper_limit" />
-                            <input class="lowlimit form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Lower Limit" readonly name="lower_limit" />
-                            <input class="discountvalue form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Discount Value" name="discount_value" readonly />
-                        </div>
-                        <div class="float-right w-45 row m-0">
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Discount Item"
-                                name="new_discount_item" />
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Discount Name"
-                                name="new_discount_name" />
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Upper Limit" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_upper_limit" />
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Lower Limit" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_lower_limit" />
-                            <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Discount Value" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_discount_value" />
-                        </div>
-                    </form>
-                    <div class="modal-footer w-100">
-                        <div class="justify-content-center w-100 d-flex flex-column">
-                            <div class="py-1 row justify-content-center w-100">
-                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif"
-                                        width="100px" height="70px" /></div>
-                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
-                                    onclick="updateDiscount()">
-                                    {{settings.modal.name | limitTo:6}}
-                                </button>
-                            </div>
-                            <div class="row pt-3 justify-content-center">
-                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-100" ng-if="settings.modal.name == 'Add Discount'">
-                    <form class="p-4 w-100 addDiscount row justify-content-center m-0">
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Discount Name"
-                            name="discount_name" />
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Lower Limit" type="number" onkeydown="javascript: return event.keyCode !=69" name="lower_limit" />
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Upper Limit" type="number" onkeydown="javascript: return event.keyCode !=69" name="upper_limit" />
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Discount Value" type="number" onkeydown="javascript: return event.keyCode !=69" name="discount_value" />
-                    </form>
-                    <div class="modal-footer w-100">
-                        <div class="justify-content-center w-100 d-flex flex-column">
-                            <div class="py-1 row justify-content-center w-100">
-                                <div ng-class="{gone : !settings.modal.addingg}"><img src="./assets/img/loader.gif"
-                                        width="100px" height="70px" /></div>
-                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
-                                    onclick="addDiscount()">
-                                    {{settings.modal.name | limitTo:3}}
-                                </button>
-                            </div>
-                            <div class="row pt-3 justify-content-center">
-                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--....... Discount End ......... -->
+            <!--....... Room End ......... -->
 
 
             <!--....... Guest Start ......... -->
@@ -398,9 +97,8 @@
                             <input class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Phone Number"
                                 name="phone_number" />
                             <textarea class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Address" name="contact_address" ></textarea>
-                            <!-- <input class="form-control w-75 font-fam-Montserrat text-center d-block my-2" placeholder="Rooms" name="total_rooms_booked" /> -->
                             <div class = "row">
-                                <input ng-model = 'guest.roomgrid.nyt' class="form-control col-5 font-fam-Montserrat text-center d-block my-2" placeholder="Nights" name="average_no_of_nights" ng-change = "guest.roomgrid.nytdate = (guest.roomgrid.nyt | intervalGetDate); guest.roomgrid.addnyts(guest.roomgrid.nyt);  guest.roomgrid.get_no_room(); guest.roomgrid.roomsHolder = guest.roomgrid.room_details[guest.roomgrid.type].roomarray"/>
+                                <input ng-model = 'guest.roomgrid.averagenyt' class="form-control col-5 font-fam-Montserrat text-center d-block my-2" placeholder="Nights" name="average_no_of_nights" ng-change = "guest.roomgrid.nytdate = (guest.roomgrid.averagenyt | intervalGetDate); guest.roomgrid.change_averagenyt()"/>
                                 <input ng-model = 'guest.roomgrid.nytdate' class="form-control offset-1 col-6 font-fam-Montserrat text-center d-block my-2" placeholder="leaving" name="leaving_date" />
                             </div>
                             <div class="row justify-content-between">
@@ -417,7 +115,6 @@
                                     </select>
                                 </div>
                             </div>
-                            <!-- <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Room Outstanding" name="room_outstanding" /> -->
                             <div class="row justify-content-around w-100 py-3">
                                 <span class="py-1">
                                     <input type="radio" id="male" value="male" checked name="guest_type_gender" />
@@ -429,23 +126,18 @@
                                 </span>
                             </div>
                         </form>
-                        <div class = 'w-60'>
-                            <div ng-switch on = 'guest.roomgrid.activated' class = "table-bordered h-50">
+                        <div class = 'w-60 {{!guest.roomgrid.averagenyt ? "deactivate" : null}}' >
+                            <div ng-switch on = 'guest.roomgrid.activated' class = "table-bordered">
                                 <div ng-switch-when = 'false'>
                                     <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
                                         <h6 class='col-3 f-15 text-left'>Category</h6>
                                         <h6 class='col-6 f-15'>Rooms Available</h6>
                                         <h6 class='col-3 f-15'>No. Rooms</h6>
                                     </div>
-                                    <div class='row w-100 text-center b-1 pointer'>
-                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate('deluxe'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.deluxe.roomarray">{{'deluxe' | capitalize}}</h6>
-                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate('deluxe'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.deluxe.roomarray">{{guest.roomgrid.room_details.deluxe.roomcount}}</p>
-                                        <span class='pr-2 py-4 pl-3 col-3'><input ng-init = "guest.roomgrid.roomtotal.deluxe = 0" ng-model = 'guest.roomgrid.roomtotal.deluxe' class='formcontrol w-100 text-center' name = 'noroom' ng-change = "guest.roomgrid.selectrooms('deluxe', guest.roomgrid.roomtotal.deluxe)"/></span>
-                                    </div>
-                                    <div class='row w-100 text-center b-1 pointer'>
-                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate('standard'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.standard.roomarray">{{'standard' | capitalize}} </h6>
-                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate('standard'); guest.roomgrid.roomsHolder = guest.roomgrid.room_details.standard.roomarray">{{guest.roomgrid.room_details.standard.roomcount}}</p>
-                                        <span class='pr-2 py-4 pl-3 col-3'><input ng-init = "guest.roomgrid.roomtotal.standard = 0" ng-model = 'guest.roomgrid.roomtotal.standard' class='formcontrol w-100 text-center' name = 'noroom' ng-change = "guest.roomgrid.selectrooms('standard', guest.roomgrid.roomtotal.standard)"/></span>
+                                    <div ng-repeat = "rm in guest.roomgrid.room_details.rooms" class='row w-100 text-center b-1 pointer'>
+                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate(rm.name);">{{rm.name | capitalize}}</h6>
+                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate(rm.name);">{{rm.count}}</p>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input  ng-model = "guest.roomgrid.room_details.rooms[rm.name].num" ng-change = " guest.roomgrid.room_details.selectrooms(rm.name)" class='formcontrol w-100 text-center' name = 'noroom' ng-disabled="!guest.roomgrid.averagenyt" /></span>
                                     </div>
                                 </div>
                                 <div ng-switch-when = 'true'>
@@ -455,24 +147,24 @@
                                     </div>
                                     <div class='row w-100 text-center'>
                                         <ul class="w-100">
-                                            <li ng-repeat = 'room in guest.roomgrid.roomsHolder' class = "w-100 row py-2" ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.toggleroom();" ng-class = "{'sechue anim' : guest.roomgrid.reservedyes == room.room_id, 'actparent1' : room.selected }">
-                                                <span class="col-2 roomno text-left">{{room.room_number}}</span>
-                                                <span class="col-3 roomno">{{room.room_rate}}</span>
-                                                <span class="col-4 roomno">{{(guest.roomgrid.roomid[room.room_id] | intervalGetDate)}}</span>
-                                                <span class="col-3 nights text-right"><input ng-init = "guest.roomgrid.roomid[room.room_id] = guest.roomgrid.nyt" ng-model = 'guest.roomgrid.roomid[room.room_id]' class='formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "guest.roomgrid.roomid[room.room_id] = guest.roomgrid.nyt_no(guest.roomgrid.roomid[room.room_id],room.reservations, room.room_id)"/></span>
+                                            <li ng-repeat = 'room in guest.roomgrid.room_details.rooms[guest.roomgrid.type].arr' class = "w-100 row"  ng-class = "{'sechue anim' : guest.roomgrid.reservedyes == room.room_id, 'lytpurp-back' : room.selected && guest.roomgrid.reservedyes != room.room_id}">
+                                                <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-2 py-2 roomno text-left">{{room.room_number}}</span>
+                                                <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-3 py-2 roomno">{{room.room_rate}}</span>
+                                                <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-4 py-2 roomno">{{(guest.roomgrid.roomid[room.room_id] | intervalGetDate)}}</span>
+                                                <span class="col-3 py-2 nights text-right"><input ng-model = 'guest.roomgrid.roomid[room.room_id]' ng-init = "guest.roomgrid.roomid[room.room_id] = room.no_of_nights" class='formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "guest.roomgrid.room_details.change_nyt_no(room.room_id); "/></span>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row w-100">
-                                <div class = "col row">
+                            <div class="row w-100 px-0 py-2 justify-content-between dark-back">
+                                <div class = "w-50 row p-0">
                                     <h6 class="col-5">Rooms</h6>
-                                    <h6 class="col-7">{{scope.guest.roomgrid.roomtotal.deluxe + scope.guest.roomgrid.roomtotal.standard}}</h6>
+                                    <h6 class="col-7 text-center">{{guest.roomgrid.room_info.rooms}}</h6>
                                 </div>
-                                <div class = "col">
+                                <div class = "w-50 row p-0 text-right">
                                     <h6 class="col-5">Cost</h6>
-                                    <h6 class="col-7">{{}}</h6>
+                                    <h6 class="col-7">{{guest.roomgrid.room_info.cost}}</h6>
                                 </div>
                             </div>
                         </div>
@@ -544,6 +236,86 @@
                 </div>
             </div>
             <!--....... Guest End ......... -->
+
+
+            <!--....... CheckIn Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'CheckIn'">
+                <div class="w-100" ng-if="settings.modal.name == 'CheckIn'">
+                    <div class="py-4 w-100 row justify-content-between m-0 px-5">
+                        <form class = 'w-40 CheckInForm pr-5' autocomplete = "off">
+                            <input ng-model = 'guest.roomgrid.averagenyt' class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Nights" name="average_no_of_nights" ng-change = "guest.roomgrid.nytdate = (guest.roomgrid.averagenyt | intervalGetDate); guest.roomgrid.change_averagenyt()"/>
+                            <input ng-model = 'guest.roomgrid.nytdate' class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="leaving" name="leaving_date" />
+                            <input class="form-control w-100 font-fam-Montserrat text-center m-0 d-block my-3" placeholder="Deposit"
+                                    name="deposited" />
+                            <select class="form-control text-center methpay my-3 w-100 f-13" name="means_of_payment">
+                                <option class = "text-center" selected value="Cash">Cash</option>
+                                <option class = "text-center" value="Cheque">Cheque</option>
+                                <option class = "text-center" value="POS">POS</option>
+                                <option class = "text-center" value="Credit">Credit</option>
+                            </select>
+                        </form>
+                        <div class = 'w-60 {{!guest.roomgrid.averagenyt ? "deactivate" : null}}' >
+                            <div ng-switch on = 'guest.roomgrid.activated' class = "table-bordered">
+                                <div ng-switch-when = 'false'>
+                                    <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
+                                        <h6 class='col-3 f-15 text-left'>Category</h6>
+                                        <h6 class='col-6 f-15'>Rooms Available</h6>
+                                        <h6 class='col-3 f-15'>No. Rooms</h6>
+                                    </div>
+                                    <div ng-repeat = "rm in guest.roomgrid.room_details.rooms" class='row w-100 text-center b-1 pointer'>
+                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate(rm.name);">{{rm.name | capitalize}}</h6>
+                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate(rm.name);">{{rm.count}}</p>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input  ng-model = "guest.roomgrid.room_details.rooms[rm.name].num" ng-change = " guest.roomgrid.room_details.selectrooms(rm.name)" class='formcontrol w-100 text-center' name = 'noroom' ng-disabled="!guest.roomgrid.averagenyt" /></span>
+                                    </div>
+                                </div>
+                                <div ng-switch-when = 'true'>
+                                    <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
+                                        <h6 class='col-3 f-15 text-left pointer' ng-click='guest.roomgrid.deactivate()'>Back</h6>
+                                        <h6 class='col-9 f-15 text-right'>{{guest.roomgrid.type}}</h6>
+                                    </div>
+                                    <div class='row w-100 text-center'>
+                                        <ul class="w-100">
+                                            <li ng-repeat = 'room in guest.roomgrid.room_details.rooms[guest.roomgrid.type].arr' class = "w-100 row py-2" ng-class = "{'sechue anim' : guest.roomgrid.reservedyes == room.room_id, 'lytpurp-back' : room.selected && guest.roomgrid.reservedyes != room.room_id}">
+                                                <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-2 py-2 roomno text-left">{{room.room_number}}</span>
+                                                <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-3 py-2 roomno">{{room.room_rate}}</span>
+                                                <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-4 py-2 roomno">{{(guest.roomgrid.roomid[room.room_id] | intervalGetDate)}}</span>
+                                                <span class="col-3 py-2 nights text-right"><input ng-model = 'guest.roomgrid.roomid[room.room_id]' ng-init = "guest.roomgrid.roomid[room.room_id] = room.no_of_nights" class='formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "guest.roomgrid.room_details.change_nyt_no(room.room_id); "/></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row w-100 px-0 py-2 justify-content-between dark-back">
+                                <div class = "w-50 row p-0">
+                                    <h6 class="col-5">Rooms</h6>
+                                    <h6 class="col-7 text-center">{{guest.roomgrid.room_info.rooms}}</h6>
+                                </div>
+                                <div class = "w-50 row p-0 text-right">
+                                    <h6 class="col-5">Cost</h6>
+                                    <h6 class="col-7">{{guest.roomgrid.room_info.cost}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="checkIn()">
+                                    {{settings.modal.name}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--....... CheckIn End ......... -->
 
 
             <!--....... User Start ......... -->
@@ -635,128 +407,6 @@
             </div>
             <!--....... User End ......... -->
 
-            <!--....... Customers Start ......... -->
-            <div class="w-100" ng-if="settings.modal.active == 'Customers'">
-                <div class="w-100" ng-if="settings.modal.name == 'Add Customer'">
-                    <form class="p-4 w-100 addCustomersForm row justify-content-center m-0">
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Name"
-                            name="full_name" />
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Phone"
-                            name="phone_number"  type="number" onkeydown="javascript: return event.keyCode !=69" />
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Address"
-                            name="contact_address" />
-
-                        <div class="row justify-content-between w-50 py-4">
-                            <span class="py-1">
-                                <input type="radio" id="male" value="male" name="gender" />
-                                <label for="male" class="f-15 ml-2">Male</label>
-                            </span>
-                            <span class="py-1">
-                                <input type="radio" checked value="female" name="gender" id="female" />
-                                <label for="female" class="f-15 ml-2">Female</label>
-                            </span>
-                        </div>
-                    </form>
-                    <div class="modal-footer w-100">
-                        <div class="justify-content-center w-100 d-flex flex-column">
-                            <div class="py-1 row justify-content-center w-100">
-                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
-                                        height="70px" /></div>
-                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
-                                    onclick="addCustomer('.addCustomersForm')">
-                                    {{settings.modal.name | limitTo:3}}
-                                </button>
-                            </div>
-                            <div class="row pt-3 justify-content-center">
-                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="w-100" ng-if="settings.modal.name == 'Update Customer'">
-                    <form autocomplete="off" class="updateCustomersForm p-4 w-100">
-                        <div class="float-left w-45 inpRead row m-0">
-                            <input class="form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Name"
-                                name="full_name" readonly />
-                            <input class="form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Phone"
-                                name="phone_number" readonly />
-                            <input class="form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Address"
-                                name="contact_address" readonly />
-                            <input class="form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Gender"
-                                name="gender" readonly />
-                        </div>
-                        <div class="float-right w-45 row m-0 justify-content-center">
-                            <input class="form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Name"
-                                name="new_full_name" />
-                            <input class="form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Phone"
-                                name="new_phone_number"  type="number" onkeydown="javascript: return event.keyCode !=69" />
-                            <input class="form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Address"
-                                name="new_contact_address" />
-
-                            <div class="row justify-content-between w-50 py-4">
-                                <span class="py-1">
-                                    <input type="radio" id="male" value="male" name="new_gender" />
-                                    <label for="male" class="f-15 ml-2">Male</label>
-                                </span>
-                                <span class="py-1">
-                                    <input type="radio" checked value="female" name="new_gender" id="female" />
-                                    <label for="female" class="f-15 ml-2">Female</label>
-                                </span>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="modal-footer w-100">
-                        <div class="justify-content-center w-100 d-flex flex-column">
-                            <div class="py-1 row justify-content-center w-100">
-                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
-                                        height="70px" /></div>
-
-                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
-                                    onclick="updateCustomer()">
-                                    {{settings.modal.name | limitTo:7}}
-                                </button>
-                            </div>
-                            <div class="row pt-3 justify-content-center">
-                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="w-100" ng-if="settings.modal.name == 'Debt Clear'">
-                    <form class="p-4 w-100 debtpayForm row justify-content-center m-0">
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Amount Paid" name="amount_paid" type="number" onkeydown="javascript: return event.keyCode !=69" />
-
-                        <select ng-model="listtranxs.jslist.pay_method" class="form-control methpay mx-auto my-4 w-40 f-13"
-                            name="means_of_payment">
-                            <option value="Cash">Cash</option>
-                            <option value="Cheque">Cheque</option>
-                            <option value="POS">POS</option>
-                            <option value="Credit">Credit</option>
-                        </select>
-
-
-                    </form>
-                    <div class="modal-footer w-100">
-                        <div class="justify-content-center w-100 d-flex flex-column">
-                            <div class="py-1 row justify-content-center w-100">
-                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
-                                        height="70px" /></div>
-                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success" onclick="debtpaydata()">
-                                    pay
-                                </button>
-                            </div>
-                            <div class="row pt-3 justify-content-center">
-                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-            <!--....... Customers End ......... -->
 
         </div>
     </div>

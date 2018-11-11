@@ -26,21 +26,21 @@
                             <div class="userlisthd row justify-content-between">
                                 <h4 class=" my-4 py-2 font-fam-Montserrat-bold">Manage Guest</h4>
                                 <div class="my-4">
-                                    <button class="btn btn-outline-primary mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Add Guest'; settings.modal.size = 'lg'; guest.roomgrid.getrooms(['deluxe','standard']) " data-toggle="modal" data-target="#crud" >Add</button>
-                                    <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Update Guest'; settings.modal.size = 'lg'; " ng-disabled="!guest.jslist.selected">Update</button>
+                                    <button class="btn btn-outline-primary mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Add Guest'; settings.modal.size = 'lg'; guest.roomgrid.getrooms(['deluxe','standard']) " data-toggle="modal" data-target="#crud">Add</button>
+                                    <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'CheckIn'; settings.modal.name = 'CheckIn'; settings.modal.size = 'lg'; guest.roomgrid.getrooms(['deluxe','standard'])" ng-disabled="!guest.jslist.selected">CheckIn</button>
+                                    <!-- <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Update Guest'; settings.modal.size = 'lg'; " ng-disabled="!guest.jslist.selected">Update</button> -->
                                     <!-- <button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" ng-click="users.deleteUser()"  ng-disabled="!users.jslist.selected">Delete</button> -->
                                 </div>
                             </div>
                             <jslist class="font-fam-Montserrat"></jslist>
                         </div>
                     </div>
-                    <!-- <div class="orderbtn w-100"><button class="ml-2 h-100 btn-warning px-5 font-fam-Montserrat-bold">Details</button></div> -->
                 </div>
                 <div class="orders row align-items-center anim px-2 h-25">
 
                     <div class = "row w-100">
                         <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Rooms</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.rooms : '2, 4, 7'}} </p>
+                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? (guest.jslist.selectedObj.rooms | arraytostring) : '2, 4, 7'}} </p>
                         <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Phone Number</h6>
                         <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.phone_number : '08130439102'}} </p>
                         <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Address</h6>
@@ -60,7 +60,6 @@
                 <div class="col-8">
                     <input class="form-control float-right anim" ng-model="searchbox.imp" />
                 </div>
-                <!-- ng-class="{vanishsearch:searchbox.iconhover}" -->
                 <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" href = "../php1/front_desk/frontdesk_logoff.php" ng-mouseenter="settings.log = false;" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a>
             </div>
         </div>

@@ -8,7 +8,7 @@ if(!isset($_SESSION['user_name'])){
     header("Location: ./logIn.php");
 }
 
-$templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Stocks"=>"./assets/js/stocks/stocksPartial.php","Users"=>"./assets/js/users/usersPartial.php","Records"=>"./assets/js/records/recordsPartial.php"]
+$templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Lodge"=>"./assets/js/rooms/roomsPartial.php","Users"=>"./assets/js/users/usersPartial.php","Records"=>"./assets/js/records/recordsPartial.php"]
 ?>
 
 <!doctype html>
@@ -47,7 +47,7 @@ $templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Stocks"=>"./
     <script src="./vendors/List/List.js"></script>
 
     <!-- Custom styles for this template -->
-    <link href="./assets/css/index1.css" rel="stylesheet">
+    <link href="./assets/css/index.css" rel="stylesheet">
     <link href="./assets/css/ng-animation.css" rel="stylesheet">
     <link href="./assets/css/utilities.css" rel="stylesheet">
     <link rel="stylesheet" href="./vendors/node_modules/croppie/croppie.css" />
@@ -60,8 +60,8 @@ $templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Stocks"=>"./
     <script src="./assets/js/directives.js"></script>
     <script src="./assets/js/dashboard/directives.js"></script>
     <script src="./assets/js/dashboard/controllers.js"></script>
-    <script src="./assets/js/stocks/directives.js"></script>
-    <script src="./assets/js/stocks/controllers.js"></script>
+    <script src="./assets/js/rooms/directives.js"></script>
+    <script src="./assets/js/rooms/controllers.js"></script>
     <script src="./assets/js/users/directives.js"></script>
     <script src="./assets/js/users/controllers.js"></script>
     <script src="./assets/js/records/directives.js"></script>

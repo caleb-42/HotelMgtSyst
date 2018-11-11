@@ -1,6 +1,6 @@
 <div ng-controller="users">
     <div class="prime-hd anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.primeclass : 'w-100'}}">
-        <div class="statusbar grn row  align-items-end pl-1">
+        <div class="statusbar blu row  align-items-end pl-1">
             <div class="tabnav col-5 row">
                 <button ng-repeat='nav in tabnav.navs | objtoarray' class="tabpill btnnone" ng-click="tabnav.selectNav(nav.name)" ng-class="{focus:nav.name == tabnav.selected.name}">
                 <h5>{{nav.name}}</h5>
@@ -32,11 +32,11 @@
     </div>
     <!--statusbar for primehd end-->
     <div class="main-sidebar-right hs-100 anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.rightbarclass : 'w-0 gone'}}">
-        <div class="statusbar grn row align-items-end justify-content-center">
+        <div class="statusbar blu row align-items-end justify-content-center">
             <h4 class="text-center wht">Sessions <i class="fa fa-book"></i></h4>
         </div>
         <!--statusbar for main-sidebar-right end -->
-        <div class="sidebar-body" ng-switch on="tabnav.selected.name">
+        <div class="sidebar-body whtback" ng-switch on="tabnav.selected.name">
             <div ng-switch-default>
                 <div class = "sessions p-4 w-100">
                     

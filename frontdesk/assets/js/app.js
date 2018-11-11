@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngAnimate', 'ngRoute', 'ngSanitize', 'dashApp', 'stocksApp', 'usersApp', 'recordsApp', 'ngCroppie']);
+var app = angular.module('app', ['ngAnimate', 'ngRoute', 'ngSanitize', 'dashApp', 'roomsApp', 'usersApp', 'recordsApp', 'ngCroppie']);
 
 app.controller("appctrl", ["$rootScope", "$scope", function ($rootScope, $scope) {
     $rootScope.settings = {
@@ -49,7 +49,7 @@ app.controller("appctrl", ["$rootScope", "$scope", function ($rootScope, $scope)
                     innerHtml: '<img width = 15px height = 20px style="margin-top:-20px;" src = "assets/img/moneybag-08.png"/>',
                 },
                 {
-                    name: "Stocks",
+                    name: "Lodge",
                     listClass: "anim",
                     iconClass: "mr-3 fa fa-foursquare",
                     innerHtml: '',
@@ -79,6 +79,6 @@ app.controller("appctrl", ["$rootScope", "$scope", function ($rootScope, $scope)
 }]);
 
 var dashApp = angular.module('dashApp', []);
-var stocksApp = angular.module('stocksApp', []);
+var roomsApp = angular.module('roomsApp', []);
 var usersApp = angular.module('usersApp', []);
 var recordsApp = angular.module('recordsApp', []);

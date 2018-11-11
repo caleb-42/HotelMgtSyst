@@ -43,6 +43,7 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
                     scope.guest.jslist.selected = id;
                     scope.guest.jslist.selectedObj = scope.guest.jslist.newItemArray[index];
                     console.log(scope.guest.jslist.newItemArray[index]);
+                    $rootScope.$emit('guestselect', scope.guest.jslist.selected)
                 },
                 toggleOut : function(){
                     $(".listcont").fadeOut(200);

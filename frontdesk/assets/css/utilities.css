@@ -11,6 +11,27 @@
     font-family: 'Calibri';
     src: url('../../vendors/fonts/Calibri/calibrib.ttf') format('truetype');
 }
+.sechue {
+    background: #d9534f !important;
+    color: white;
+}
+.tabpill {
+    color: white !important;
+    text-align: center;
+    width: 130px;
+    padding: 10px;
+}
+
+.tabpill.focus {
+    color: #509CCB !important;
+    background: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.btn.sechue:hover {
+    background: #b73434 !important;
+    color: white;
+}
 .nopadding {
     padding: 0 !important;
     margin: 0 !important;
@@ -79,6 +100,10 @@ li{
 .dark{
     color: rgba(0,0,0,.5) !important;
 }
+.dark-back{
+    background: rgba(0,0,0,.5) !important;
+    color : white;
+}
 .green{
     color: green !important;
 }
@@ -87,6 +112,9 @@ li{
 }
 .purp-back{
     background: rgb(153, 46, 202) !important;
+}
+.lytpurp-back{
+    background: rgba(225, 159, 255, .5) !important;
 }
 .choral{
     color: #d9534f !important;
