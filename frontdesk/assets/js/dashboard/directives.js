@@ -43,7 +43,7 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
                     scope.guest.jslist.selected = id;
                     scope.guest.jslist.selectedObj = scope.guest.jslist.newItemArray[index];
                     console.log(scope.guest.jslist.newItemArray[index]);
-                    $rootScope.$emit('guestselect', scope.guest.jslist.selected)
+                    $rootScope.$emit('guestselect', scope.guest.jslist.selectedObj)
                 },
                 toggleOut : function(){
                     $(".listcont").fadeOut(200);
@@ -56,6 +56,7 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
         }
     };
 }]);
+
 
 dashApp.directive('roomgrid', ['$rootScope', function ($rootScope) {
     return {
@@ -118,9 +119,7 @@ dashApp.directive('accordion', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
         templateUrl: './assets/js/dashboard/listTemplates.php?list=accordion',
-        scope: {
-            
-        },
+        scope: false,
         link: function (scope, element, attrs) {
             scope.type = attrs.type;
         }

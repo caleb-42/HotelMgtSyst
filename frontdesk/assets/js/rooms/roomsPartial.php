@@ -11,11 +11,11 @@
                 <div class="col-8">
                     <input class="form-control float-right anim" ng-model="searchbox.imp" /></div>
                 <!-- ng-class="{vanishsearch:searchbox.iconhover}" -->
-                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" ng-mouseenter="settings.log = false;" href = "../php1/restaurant_bar/restaurant_logoff.php" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm btn-outline-secondary wht mb-2">{{settings.log ? settings.user : 'log out'}}</a></div>
+                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" ng-mouseenter="settings.log = false;" href = "../php1/front_desk/frontdesk_logoff.php" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a></div>
             </div>
 
         </div>
-        <div class="prime-body">
+        <div class="prime-body {{tabnav.selected.options.rightbar ? '' : 'pr-0'}}">
             <div class="animate-switch-container" ng-switch on="tabnav.selected.name">
                 <div class="animate-switch Rooms px-4 h-100" ng-switch-default>
                     <div class="prodlisthd row justify-content-between">

@@ -10,11 +10,11 @@ roomsApp.controller("rooms", ["$rootScope", "$scope", 'jsonPost', '$filter', fun
             Rooms: {
                 name: 'Rooms',
                 options: {
-                    rightbar: {
+                    rightbar: false/* {
                         present: true,
                         rightbarclass: 'w-30',
                         primeclass: 'w-70'
-                    }
+                    } */
                 }
             },
             /* History: {
@@ -27,11 +27,11 @@ roomsApp.controller("rooms", ["$rootScope", "$scope", 'jsonPost', '$filter', fun
         selected: {
             name: 'Rooms',
             options: {
-                rightbar: {
+                rightbar: false/* {
                     present: true,
                     rightbarclass: 'w-30',
                     primeclass: 'w-70'
-                }
+                } */
             }
         },
         selectNav: function (navname) {

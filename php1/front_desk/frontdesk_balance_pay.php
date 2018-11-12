@@ -30,10 +30,10 @@ $printer = new Printer($connector);
 
 $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
-$payment_details = '{"booking_ref": "BK_9989", "means_of_payment": "CASH", "amount_paid": 1000, "frontdesk_rep": "Joan", "guest_name": "Ewere"}';
+//$payment_details = '{"booking_ref": "BK_9989", "means_of_payment": "CASH", "amount_paid": 1000, "frontdesk_rep": "Joan", "guest_name": "Ewere"}';
 
 
-// $payment_details = $_POST["payment_details"];
+$payment_details = $_POST["payment_details"];
 
 $payment_details = json_decode($payment_details, true);
 

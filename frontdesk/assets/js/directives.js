@@ -105,6 +105,10 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                 console.log(jsonForm);
                 scope.guest.checkIn(jsonForm);
             };
+            checkOut = function () {
+                
+                scope.guest.checkOut();
+            };
             updateUser = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".updateUserForm").serializeObject();

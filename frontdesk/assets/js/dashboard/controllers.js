@@ -1,7 +1,11 @@
 dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', '$timeout', function ($rootScope, $scope, jsonPost, $filter, $timeout) {
 
     $rootScope.$on('guestselect', function(evt,param){
-        console.log($scope.guest.getRoomBooking(param));
+        console.log($scope.guest.getRoomBooking(param.guest_id));
+        $scope.booking.itemlist(param.guest_id).jsonfunc.then(function(result){
+            $scope.booking.rooms = result ? result : [];
+            console.log(result);
+        });
     });
 
     $scope.tabnav = {
@@ -15,11 +19,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             Guests: {
                 name: 'Guests',
                 options: {
-                    rightbar: {
-                        present: true,
-                        rightbarclass: 'w-30',
-                        primeclass: 'w-70'
-                    }
+                    rightbar: false
                 }
             },
             Rooms: {
@@ -42,17 +42,31 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
         selected: {
             name: 'Guests',
             options: {
-                rightbar: {
-                    present: true,
-                    rightbarclass: 'w-30',
-                    primeclass: 'w-70'
-                }
+                rightbar: false
             }
         },
         selectNav: function (navname) {
             $scope.tabnav.selected = $scope.tabnav.navs[navname];
         }
     };
+    $scope.booking = {
+        itemlist: function (id) {
+            return {
+                jsonfunc: jsonPost.data("../php1/front_desk/list_bookings_custom.php", {
+                    col : 'guest_id',
+                    val : id
+                })
+            }
+        },
+        select : function(item){
+            arr = $scope.booking.selected.find(function(elem, index){
+                if(elem.room_id == item.room_id) $scope.booking.selected.splice(index,1);
+                return elem.room_id == item.room_id;
+            });
+            if(!arr) $scope.booking.selected.push({room_id : item.room_id, booking_ref : item.booking_ref});
+        },
+        selected : []
+    }
     $scope.guest = {
         itemlist: function () {
             return {
@@ -251,6 +265,21 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 $scope.guest.jslist.createList();
             });
         },
+        checkOut: function(){
+            jsonguest = $scope.guest.jslist.selectedObj;
+            jsonguest.frontdesk_rep = $rootScope.settings.user;
+            jsonguest.rooms = $scope.booking.selected;
+            jsonguest.booking_ref = $scope.booking.selected[0].booking_ref;
+            console.log("new checkOut", jsonguest);
+
+            jsonPost.data("../php1/front_desk/checkOut.php", {
+                checkout_data: $filter('json')(jsonguest)
+            }).then(function (response) {
+                console.log(response);
+                $rootScope.settings.modal.msgprompt(response);
+                $scope.guest.jslist.createList();
+            });
+        },
         updateGuest: function (jsonguest) {
             jsonguest.id = $scope.guest.jslist.selected;
             console.log("new product", jsonguest);
@@ -278,17 +307,16 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             });
         },
         getRoomBooking : function(id){
-            jsonPost.data("../php1/front_desk/list_bookings.php", {}).then(function(result){
+            $scope.booking.itemlist(id).jsonfunc.then(function(result){
                 response = [];
                 $scope.guest.jslist.selectedObj.rooms = [];
-                result.forEach(function(elem){
-                    //console.log(elem.checked_out, 'NO');
-                    if(elem.guest_id == id && elem.checked_out == "NO"){
+                if(result){
+                    result.forEach(function(elem){
                         console.log(id, elem);
                         $scope.guest.jslist.selectedObj.rooms.push(elem.room_number);
                         response.push(elem);
-                    }
-                })
+                    });
+                }
                 return response;
             });
         }
