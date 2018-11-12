@@ -131,7 +131,7 @@ $select_rooms_query->bind_param("s", $room_id); // continue from here
 /*Record sales of individual rooms*/
 $insert_into_bookings = $conn->prepare("INSERT INTO frontdesk_bookings (booking_ref, room_number, room_id, room_category, room_rate, guest_name, guest_id, no_of_nights, net_cost, guests, expected_checkout_date, expected_checkout_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, CURRENT_TIME)");
  echo $conn->error;
- var_dump($insert_into_bookings);
+ //var_dump($insert_into_bookings);
 
 $insert_into_bookings->bind_param("sississiiis", $tx_ref, $room_number, $room_id, $room_category, $room_rate, $client_name, $client_id, $no_of_days, $room_net_cost, $guests, $expected_checkout_date);
 
@@ -150,7 +150,7 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 	$d = strtotime("+"."$no_of_nights days");
 	$expected_checkout_date = date("Y-m-d", $d);
 	$insert_into_bookings_result = $insert_into_bookings->execute();
-	var_dump($insert_into_bookings_result);
+	//var_dump($insert_into_bookings_result);
 	echo $conn->error;
 }
 $insert_into_bookings->close();
@@ -159,7 +159,7 @@ $update_room_query = $conn->prepare("UPDATE frontdesk_rooms SET booked_on = CURR
 $update_room_query->bind_param("issss", $guests, $current_guest_id, $bk_ref, $booking_expires, $room_id);
 for ($i=0; $i <$no_of_rooms ; $i++) {
 	$no_of_nights = $rooms[$i]["no_of_nights"];
-	var_dump($no_of_nights);
+	//var_dump($no_of_nights);
 	$d = strtotime("+"."$no_of_nights days");
 	$booking_expires = date("Y-m-d h:i:s", $d);
 	$room_id = $rooms[$i]["room_id"];

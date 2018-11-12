@@ -1,7 +1,7 @@
 <?php
  include "../settings/connect.php"; //$database handler $dbConn or $conn
 
- $reservation_data = '{"reservation_ref":"RESV_6723", "amount_paid": 63000, "total_cost":171000, "means_of_payment":"INTERNET TRANSFER", "email":"tegogs@gmail.com", "phone_number":"08057254789","guest_id":"", "frontdesk_rep":"Ada", "total_rooms_reserved": 3, "rooms": [{"room_id": "RM_64917", "guests":3, "room_rate": 33000, "no_of_nights":2, "room_category": "deluxe", "room_total_cost" : 66000, "room_reservation_date" : "2018-11-20"}, {"room_id": "RM_66480", "guests":3, "room_rate": 15000, "no_of_nights":3, "room_category": "standard", "room_total_cost" : 45000, "room_reservation_date" : "2018-11-23"}, {"room_id": "RM_71638", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard", "room_total_cost" : 60000, "room_reservation_date" : "2018-11-22"}]}';
+ $reservation_data = '{"reservation_ref":"RESV_6723", "amount_paid": 63000, "total_cost":171000, "means_of_payment":"INTERNET TRANSFER", "email":"tegogs@gmail.com", "phone_number":"08057254789","guest_id":"", "frontdesk_rep":"Ada", "total_rooms_reserved": 3, "rooms": [{"room_id": "RM_64917", "room_rate": 33000}, {"room_id": "RM_66480", "room_rate": 15000}, {"room_id": "RM_71638", "room_rate": 15000}]}';
 
 $reservation_data = json_decode($reservation_data, true);
 $msg_response=["OUTPUT", "NOTHING HAPPENED"];
@@ -24,24 +24,10 @@ for ($i=0; $i < $net_room_rate; $i++) {
 }
 
 if ($amount_paid > $net_room_rate) {
-	$msg_response["ERROR", "Deposit must be at least equal to single nights of reserved rooms"];
+	$msg_response["ERROR", "Deposit must be at least equal to single night(s) of reserved room(s)"];
 	$response_message = json_encode($msg_response);
 	die($response_message);
 }
-
- $rand_id = mt_rand(0, 100000);
- $booking_ref = "BK_" . $rand_id;
-
- $duplicate_id_query = "SELECT * FROM frontdesk_bookings WHERE booking_ref = '$booking_ref'";
- $duplicate_id_result = mysqli_query($dbConn, $duplicate_id_query);
-
- while (mysqli_num_rows($duplicate_id_result) > 0) {
-	$rand_id = mt_rand(0, 100000);
-    $booking_ref = "BK_" . $rand_id;
-
-    $duplicate_id_query = "SELECT * FROM frontdesk_bookings WHERE booking_ref = '$booking_ref'";
-    $duplicate_id_result = mysqli_query($dbConn, $duplicate_id_query);
- }
 
 $update_reservation_query ="UPDATE frontdesk_reservations SET deposit_confirmed = 'YES' WHERE reservation_ref = '$reservation_ref'";
 
@@ -66,5 +52,14 @@ $payment_record_result = mysqli_query($dbConn, $payment_record_query);
 $txn_insert_query = "INSERT INTO frontdesk_reservation_txn (reservation_ref, total_rooms_reserved, total_cost, deposited, balance, payment_status, frontdesk_rep) VALUES('$reservation_ref', $total_rooms_reserved, $total_cost, $amount_paid, $balance, '$payment_status', '$frontdesk_rep')";
 $txn_insert_result = mysqli_query($dbConn, $txn_insert_query);
 
+if(!($txn_insert_result)){
+	$msg_response[0] = "OUTPUT";
+	$msg_response[1] = "CONFIRM RESERVATION";
+} else {
+	$msg_response[0] = "ERROR";
+	$msg_response[1] = "SOMETHING WENT WRONG";
+}
 
+$response_message = json_encode($msg_response);
+echo $response_message;
 ?>

@@ -93,6 +93,8 @@ if (mysqli_num_rows($check_active_results) > 0) {
     $checkout_guest_result = mysqli_query($dbConn, $checkout_guest_query);
 }
 
+$printer -> close();
+
 $msg_response[0] = "OUTPUT";
 $msg_response[1] = "CHECKED OUT";
 $response_message = json_encode($msg_response);
