@@ -114,32 +114,9 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                 jsonForm = $(".updateUserForm").serializeObject();
                 scope.users.updateUser(jsonForm);
             };
-            addDiscount = function (){
+            payBalance = function () {
                 $rootScope.settings.modal.adding = true
-                jsonForm = $(".addDiscount").serializeObject();
-                jsonForm.upper_limit = jsonForm.upper_limit == "" ? 0 : jsonForm.upper_limit;
-                scope.details.discount.addDiscount(jsonForm,scope.details.discount.selected_discount );
-            };
-            updateDiscount = function () {
-                $rootScope.settings.modal.adding = true
-                jsonForm = $(".updateDiscount").serializeObject();
-                scope.details.discount.updateDiscount(jsonForm,scope.details.discount.selected_discount);
-            };
-            addCustomer = function (form){
-                $rootScope.settings.modal.adding = true
-                if(form == '.addCustomersForm'){
-                    jsonForm = $(form).serializeObject();
-                    scope.customers.addCustomer(jsonForm);
-                }
-            };
-            updateCustomer = function () {
-                $rootScope.settings.modal.adding = true
-                jsonForm = $(".updateCustomersForm").serializeObject();
-                scope.customers.updateCustomer(jsonForm);
-            };
-            debtpaydata = function () {
-                $rootScope.settings.modal.adding = true
-                jsonForm = $(".debtpayForm").serializeObject();
+                jsonForm = $(".PayBalanceForm").serializeObject();
                 console.log(jsonForm, parseInt(jsonForm.amount_paid));
                 if(parseInt(jsonForm.amount_paid) < 1 || jsonForm.amount_paid == ''){
                     $rootScope.settings.modal.msgprompt(['ERROR', 'FILL AMOUNT PAID WITH A VALUE']);
@@ -147,7 +124,7 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                     $rootScope.$apply();
                     return;
                 }
-                scope.listtranxs.debtpay(jsonForm);
+                scope.guest.payBalance(jsonForm);
             };
             if (scope.sidebarnav.navig.activeNav == "Sales") {
                 scope.buyer.customer.jsonform = function (a) {

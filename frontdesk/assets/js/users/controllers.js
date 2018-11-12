@@ -74,7 +74,7 @@ usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', fun
     $scope.sessions = {
         itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/front_desk/admin/list_sessions.php", {})
+                jsonfunc: jsonPost.data("../php1/front_desk/admin/list_session.php", {})
             }
         }
     }

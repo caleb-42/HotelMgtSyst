@@ -280,6 +280,20 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 $scope.guest.jslist.createList();
             });
         },
+        payBalance: function(jsonguest){
+            jsonguest.booking_ref = $scope.booking.rooms[0].booking_ref;
+            jsonguest.guest_name = $scope.booking.rooms[0].guest_name;
+            jsonguest.frontdesk_rep = $rootScope.settings.user;
+            console.log("new payment", jsonguest);
+
+            jsonPost.data("../php1/front_desk/frontdesk_balance_pay.php", {
+                payment_details: $filter('json')(jsonguest)
+            }).then(function (response) {
+                console.log(response);
+                $rootScope.settings.modal.msgprompt(response);
+                $scope.guest.jslist.createList();
+            });
+        },
         updateGuest: function (jsonguest) {
             jsonguest.id = $scope.guest.jslist.selected;
             console.log("new product", jsonguest);

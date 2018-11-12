@@ -46,7 +46,7 @@ app.controller("appctrl", ["$rootScope", "$scope", function ($rootScope, $scope)
                     name: "Sales",
                     listClass: "anim",
                     iconClass: "mr-3",
-                    innerHtml: '<img width = 25px height = 30px style="margin-top:-20px;" src = "assets/img/moneybag-08.png"/>',
+                    innerHtml: '<img width = 15px height = 20px style="margin-top:-20px;" src = "assets/img/moneybag-08.png"/>',
                 },
                 {
                     name: "Stocks",

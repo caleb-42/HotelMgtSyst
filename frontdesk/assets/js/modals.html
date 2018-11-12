@@ -317,6 +317,40 @@
             </div>
             <!--....... CheckIn End ......... -->
 
+            <!--....... Pay Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'Pay'">
+                <div class="w-100" ng-if="settings.modal.name == 'Pay Balance'">
+                    <div class="py-4 w-100 row justify-content-center m-0 px-5">
+                        <form class = 'w-70 PayBalanceForm' autocomplete = "off">
+                            <input class="form-control w-100 font-fam-Montserrat text-center d-block my-5" placeholder="Payment" name="amount_paid" />
+                            <select class="form-control text-center methpay my-5 w-100 f-13" name="means_of_payment">
+                                <option class = "text-center" selected value="Cash">Cash</option>
+                                <option class = "text-center" value="Cheque">Cheque</option>
+                                <option class = "text-center" value="POS">POS</option>
+                                <option class = "text-center" value="Credit">Credit</option>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="payBalance()">
+                                    {{settings.modal.name | limitTo:3}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--....... Pay End ......... -->
+
             <!--....... CheckOut Start .........-->
             <div class="w-100" ng-if="settings.modal.active == 'CheckOut'">
                 <div class="w-100" ng-if="settings.modal.name == 'CheckOut'">
