@@ -28,9 +28,9 @@ $biz_contact = $shop_contact . "\n";
 $connector = new WindowsPrintConnector($printName);
 $printer = new Printer($connector);
 
- $checkout_data = '{"booking_ref":"BK_9989", "guest_name":"Ewere", "guest_type_gender": "male", "guest_id":"LOD_5464", "room_outstanding": 4000, "total_rooms_booked": 3, "frontdesk_rep": "Ada", "restaurant_outstanding": 4000, "rooms": [{"room_id": "RM_64917"}, {"room_id": "RM_66480"}, {"room_id": "RM_71638"}]}';
+ /* $checkout_data = '{"booking_ref":"BK_9989", "guest_name":"Ewere", "guest_type_gender": "male", "guest_id":"LOD_5464", "room_outstanding": 4000, "total_rooms_booked": 3, "frontdesk_rep": "Ada", "restaurant_outstanding": 4000, "rooms": [{"room_id": "RM_64917"}, {"room_id": "RM_66480"}, {"room_id": "RM_71638"}]}'; */
 
- // $checkout_data = $_POST["checkout_data"];
+$checkout_data = $_POST["checkout_data"];
 
 $checkout_data = json_decode($checkout_data, true);
 

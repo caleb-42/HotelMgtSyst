@@ -30,10 +30,10 @@ $printer = new Printer($connector);
 
 $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
-$payment_details = '{"booking_ref": "BK_9989", "means_of_payment": "CASH", "amount_paid": 1000, "frontdesk_rep": "Joan", "guest_name": "Ewere"}';
+//$payment_details = '{"booking_ref": "BK_9989", "means_of_payment": "CASH", "amount_paid": 1000, "frontdesk_rep": "Joan", "guest_name": "Ewere"}';
 
 
-// $payment_details = $_POST["payment_details"];
+$payment_details = $_POST["payment_details"];
 
 $payment_details = json_decode($payment_details, true);
 
@@ -94,7 +94,7 @@ if (!($new_balance)) {
 
 $update_txn = "UPDATE frontdesk_txn SET payment_status = '$payment_status', deposited = $net_paid, balance = $new_balance WHERE booking_ref ='$booking_ref'";
 $update_txn_result = mysqli_query($dbConn, $update_txn);
-echo mysqli_error($dbConn);
+//echo mysqli_error($dbConn);
 
 $update_guest_outstanding = "UPDATE frontdesk_guest SET room_outstanding = room_outstanding - $amount_paid WHERE guest_id  = '$guest_id'";
 $update_outstanding_result = mysqli_query($dbConn, $update_guest_outstanding);
@@ -219,8 +219,8 @@ if($update_txn_result && $update_payment_result){
 	$msg_response[0] = "ERROR";
 	$msg_response[1] = "SOMETHING WENT WRONG";
 }
-var_dump($update_txn_result);
-var_dump($update_payment_result);
+//var_dump($update_txn_result);
+//var_dump($update_payment_result);
 
 $response_message = json_encode($msg_response);
 echo $response_message;

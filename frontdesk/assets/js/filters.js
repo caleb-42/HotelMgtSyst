@@ -47,3 +47,11 @@ app.filter('arraytostring', function() {
         return str;
     }
 });
+app.filter('objInArray', function() {
+    return function(input, obj, prop) {
+        arr = input.find(function(elem){
+            return elem[prop] == obj;
+        });
+        return arr;
+    }
+});

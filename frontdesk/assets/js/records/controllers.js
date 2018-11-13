@@ -2,7 +2,7 @@ recordsApp.controller("records", ["$rootScope", "$scope", 'jsonPost', '$filter',
     $scope.tabnav = {
         navs: {
             Sales: {
-                name: 'Sales',
+                name: 'Bookings',
                 options: {
                     rightbar : {
                         present: true,
@@ -29,7 +29,7 @@ recordsApp.controller("records", ["$rootScope", "$scope", 'jsonPost', '$filter',
             }
         },
         selected: {
-            name: 'Sales',
+            name: 'Bookings',
             options: {
                 rightbar : {
                     present: true,

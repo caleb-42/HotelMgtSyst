@@ -11,7 +11,7 @@
             <div class="col-8">
                     <input class="form-control float-right anim" ng-model="searchbox.imp" /></div>
                 <!-- ng-class="{vanishsearch:searchbox.iconhover}" -->
-                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" ng-mouseenter="settings.log = false;" href = "../php1/restaurant_bar/restaurant_logoff.php" class = "anim btn w-100 pointer font-fam-Montserrat-bold btn-sm btn-outline-secondary wht mb-2">{{settings.log ? settings.user : 'log out'}}</a></div>
+                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" ng-mouseenter="settings.log = false;" href = "../php1/front_desk/frontdesk_logoff.php" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a></div>
             </div>
 
         </div>
@@ -36,9 +36,9 @@
             <h4 class="text-center wht">Sessions <i class="fa fa-book"></i></h4>
         </div>
         <!--statusbar for main-sidebar-right end -->
-        <div class="sidebar-body whtback" ng-switch on="tabnav.selected.name">
+        <div class="sidebar-body h-100 whtback" ng-switch on="tabnav.selected.name">
             <div ng-switch-default>
-                <div class = "sessions p-4 w-100">
+                <div class = "sessions h-100 p-4 w-100">
                     
                 <sessionlist></sessionlist>
                 </div>
