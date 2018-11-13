@@ -89,7 +89,7 @@ $check_active_results = mysqli_query($dbConn, $check_active_guest);
 if (mysqli_num_rows($check_active_results) > 0) {
 	//do nothing
 } else {
-	$checkout_guest_query = "UPDATE frontdesk_guests SET checked_out ='YES', checked_in = 'NO', visit_count = visit_count + 1 WHERE booking_ref = '$booking_ref'";
+	$checkout_guest_query = "UPDATE frontdesk_guests SET checked_out ='YES', checked_in = 'NO', visit_count = visit_count + 1, total_rooms_booked = total_rooms_booked - $no_of_rooms WHERE booking_ref = '$booking_ref'";
     $checkout_guest_result = mysqli_query($dbConn, $checkout_guest_query);
 }
 
@@ -98,4 +98,5 @@ $printer -> close();
 $msg_response[0] = "OUTPUT";
 $msg_response[1] = "CHECKED OUT";
 $response_message = json_encode($msg_response);
+echo $response_message;
 ?>
