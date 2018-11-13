@@ -1,7 +1,7 @@
 
 <div class = "listcont" ng-if = "<?php echo $_GET['list']   == 'users'?>">
-    <div class = "listhd pr-3 row">
-        <span class="{{hd.width}}"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in users.listhddata">{{hd.name}}</span>
+    <div class = "listhd row font-fam-Montserrat-bold">
+        <span class="{{hd.width}} f-13 opac-70"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in users.listhddata">{{hd.name}}</span>
     </div>
     <div class = "hs-60 listbody ovflo-y pb-4" >
         <ul class = "list" >
@@ -18,8 +18,8 @@
         <h4 class=" text-center w-100 "> Select A User</h4>
     </div>
     <div class = "listcont {{!users.jslist.selected ? 'gone' : 'notgone'}}">
-        <div class = "listhd pr-3 row">
-            <span class="{{hd.width}}"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in sessions.listhddata">{{hd.name}}</span>
+        <div class = "listhd pr-3 row font-fam-Montserrat-bold">
+            <span class="{{hd.width}} f-13 opac-70"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in sessions.listhddata">{{hd.name}}</span>
         </div>
         <div class = "hs-70 listbody ovflo-y pb-4" >
             <ul class = "list" >

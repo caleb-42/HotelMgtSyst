@@ -1,20 +1,21 @@
 
-<div class = "listcont h-100" ng-if = "<?php echo $_GET['list']   == 'sales'?>">
-    <div class = "listhd pr-3 row">
-        <span class="{{hd.width}}"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in salesHistory.listhddata ">{{hd.name}}</span>
+<div class = "listcont h-100" ng-if = "<?php echo $_GET['list']   == 'booking'?>">
+    <div class = "listhd pr-3 row font-fam-Montserrat-bold">
+        <span class="{{hd.width}} f-13 opac-70"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in listbookings.listhddata ">{{hd.name}}</span>
     </div>
     <div class = "h-80 listbody ovflo-y pb-4" >
         <ul class = "list" >
-            <li class = "itemlistrow row align-items-center f-12" ng-repeat = "hist in (salesHistory.jslist.newItemArray = (salesHistory.jslist.values | filter:searchbox.imp))" ng-click = "salesHistory.jslist.select($index, hist.txn_ref)" ng-class = "{'actparent' : salesHistory.jslist.selected == hist.txn_ref}">
-                <span class = "custref col-1">{{hist.txn_ref}}</span>
-                <span class = "text-center paymeth col-2">{{hist.pay_method}}</span>
-                <span class = "text-center items col-1">{{hist.total_items}}</span>
-                <span class = "text-center cost col-1">{{hist.total_cost}}</span>
-                <span class = "text-center discost col-1">{{hist.discounted_total_cost}}</span>
-                <span class = "text-center discnt col-1">{{hist.transaction_discount}}</span>
-                <span class = "text-center deposit col-2">{{hist.deposited}}</span>
-                <span class = "text-center bal col-1">{{hist.balance}}</span>
-                <span class = "text-center status col-2">{{hist.payment_status}}</span>
+            <li class = "itemlistrow row align-items-center f-12" ng-repeat = "hist in (listbookings.jslist.newItemArray = (listbookings.jslist.values | filter:searchbox.imp))">
+                <span class = "text-center paymeth col-1">{{hist.booking_ref}}</span>
+                <span class = "text-center paymeth col-1">{{hist.room_number}}</span>
+                <span class = "text-center paymeth col-1">{{hist.room_category}}</span>
+                <span class = "text-center paymeth col-1">{{hist.room_rate}}</span>
+                <span class = "text-center paymeth col-1">{{hist.guest_name}}</span>
+                <span class = "text-center items col-1">{{hist.no_of_nights}}</span>
+                <span class = "text-center cost col-1">{{hist.guests}}</span>
+                <span class = "text-center discost col-2">{{hist.check_in_date}}</span>
+                <span class = "text-center discnt col-2">{{hist.check_out_time}}</span>
+                <span class = "text-center deposit col-1">{{hist.checked_out}}</span>
             </li>
         </ul>
     </div>

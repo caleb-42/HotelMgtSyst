@@ -11,7 +11,7 @@
                 <span class = "text-center role col-2">{{gst.guest_type_gender}}</span>
                 <span class = "text-center role col-2">{{gst.total_rooms_booked}}</span>
                 <span class = "text-center role col-2">{{gst.visit_count}}</span>
-                <span class = "text-center role col-3">{{gst.room_outstanding + gst.restaurant_outstanding}}</span>
+                <span class = "text-center role col-3">{{((gst.room_outstanding | intString) + (gst.restaurant_outstanding | intString) | number)}}</span>
             </li>
         </ul>
     </div>
@@ -124,30 +124,9 @@
 <!-- ............room start ..............-->
 <div class = "h-100 w-100 p-4" ng-if = "<?php echo $_GET['list']  == 'roomgrid' ?>">
     <div class = "itemboxhd ovflo-y h-100 w-100">
-        <div class = "itembox " ng-repeat = "items in (rooms.jslist.newItemArray = (rooms.jslist.values | filter:searchquery))"  >
+        <div class = "itembox btn {{items.booked == 'YES' ? 'sechue' : ''}}" ng-repeat = "items in (rooms.jslist.newItemArray = (rooms.jslist.values | filter:searchbox.imp))"  >
             <h5>{{items.room_number}}</h5>
         </div>
     </div>
 </div>
 <!-- ............room end ..............-->
-
-<!-- ............booking start ..............-->
-<div ng-if = "<?php echo $_GET['list']   == 'booking'?>">
-    <!-- <div class = "row hs-80 {{guest.jslist.selected ? 'gone' : 'align-items-center'}} relatv ">
-        <h4 class=" text-center w-100 "> Select A Guest</h4>
-    </div>
-    <div class = "listcont {{!guest.jslist.selected ? 'gone' : 'notgone'}}">
-        <div class = "listhd pr-3 row">
-            <span class="{{hd.width}}"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in booking.listhddata">{{hd.name}}</span>
-        </div>
-        <div class = "hs-70 listbody ovflo-y pb-4" >
-            <ul class = "list" >
-                <li class = "itemlistrow row align-items-center f-12" ng-repeat = "book in booking.jslist.values">
-                    <span class = " login col-6">{{book.logged_on_time}}</span>
-                    <span class = "text-center logoff col-6">{{book.logged_off_time}}</span>
-                </li>
-            </ul>
-        </div>
-    </div> -->
-</div>
-<!-- ............booking end ..............-->

@@ -70,7 +70,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
     $scope.guest = {
         itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/front_desk/list_guests.php", {})
+                jsonfunc: jsonPost.data("../php1/front_desk/list_guests_all.php", {})
             }
         },
         roomgrid:{
@@ -247,6 +247,9 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 checkin_data: $filter('json')(jsonguest)
             }).then(function (response) {
                 console.log(response);
+                $scope.guest.roomgrid.averagenyt = 0;
+                $scope.guest.roomgrid.room_info.rooms = 0;
+                $scope.guest.roomgrid.room_info.cost = 0;
                 $rootScope.settings.modal.msgprompt(response);
                 $scope.guest.jslist.createList();
             });
@@ -260,6 +263,9 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             jsonPost.data("../php1/front_desk/checkin.php", {
                 checkin_data: $filter('json')(jsonguest)
             }).then(function (response) {
+                $scope.guest.roomgrid.averagenyt = 0;
+                $scope.guest.roomgrid.room_info.rooms = 0;
+                $scope.guest.roomgrid.room_info.cost = 0;
                 console.log(response);
                 $rootScope.settings.modal.msgprompt(response);
                 $scope.guest.jslist.createList();
@@ -276,6 +282,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 checkout_data: $filter('json')(jsonguest)
             }).then(function (response) {
                 console.log(response);
+                $scope.booking.selected = [];
                 $rootScope.settings.modal.msgprompt(response);
                 $scope.guest.jslist.createList();
             });
