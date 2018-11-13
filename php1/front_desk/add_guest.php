@@ -43,12 +43,13 @@ transaction */
  $guest_type_gender = $checkin_data["guest_type_gender"]; // guest_type_gender = 'company' or 'male' or 'female'
  $phone_number = $checkin_data["phone_number"];
  $contact_address = $checkin_data["contact_address"];
- $room_outstanding = $checkin_data["room_outstanding"];
+ $room_outstanding = 0;
 
  $total_rooms_booked = $checkin_data["total_rooms_booked"];
  $total_cost = $checkin_data["total_cost"];
  $deposited = $checkin_data["deposited"];
  $balance = $checkin_data["balance"];
+ $room_outstanding = $room_outstanding + $balance ;
  $means_of_payment = $checkin_data["means_of_payment"];
  $frontdesk_rep = $checkin_data["frontdesk_rep"];
  $rooms = $checkin_data["rooms"];
@@ -70,7 +71,7 @@ transaction */
 
  $add_new_guest_query = "INSERT INTO frontdesk_guests (guest_id, guest_name, guest_type_gender, phone_number, contact_address, room_outstanding,  total_rooms_booked) VALUES('$guest_id', '$guest_name', '$guest_type_gender', '$phone_number', '$contact_address', $room_outstanding, $total_rooms_booked)";
  $add_new_guest_result = mysqli_query($dbConn, $add_new_guest_query);
- echo $add_new_guest_query;
+ // echo $add_new_guest_query;
 
  $rand_id = mt_rand(0, 100000);
  $booking_ref = "BK_" . $rand_id;
@@ -130,8 +131,8 @@ $select_rooms_query->bind_param("s", $room_id); // continue from here
 
 /*Record sales of individual rooms*/
 $insert_into_bookings = $conn->prepare("INSERT INTO frontdesk_bookings (booking_ref, room_number, room_id, room_category, room_rate, guest_name, guest_id, no_of_nights, net_cost, guests, expected_checkout_date, expected_checkout_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, CURRENT_TIME)");
- echo $conn->error;
- //var_dump($insert_into_bookings);
+ // echo $conn->error;
+ // //var_dump($insert_into_bookings);
 
 $insert_into_bookings->bind_param("sississiiis", $tx_ref, $room_number, $room_id, $room_category, $room_rate, $client_name, $client_id, $no_of_days, $room_net_cost, $guests, $expected_checkout_date);
 
@@ -151,7 +152,7 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 	$expected_checkout_date = date("Y-m-d", $d);
 	$insert_into_bookings_result = $insert_into_bookings->execute();
 	//var_dump($insert_into_bookings_result);
-	echo $conn->error;
+	// echo $conn->error;
 }
 $insert_into_bookings->close();
 

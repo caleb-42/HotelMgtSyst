@@ -161,6 +161,9 @@ $payment_record_result = mysqli_query($dbConn, $payment_record_query);
 $txn_insert_query = "INSERT INTO frontdesk_txn (booking_ref, total_rooms_booked, total_cost, deposited, balance, means_of_payment, payment_status, frontdesk_rep) VALUES('$booking_ref', $total_rooms_booked, $total_cost, $deposited, $balance, '$means_of_payment', '$payment_status', '$frontdesk_rep')";
 $txn_insert_result = mysqli_query($dbConn, $txn_insert_query);
 
+$update_guest_outstanding = "UPDATE frontdesk_guest SET room_outstanding = room_outstanding + $balance WHERE guest_id = '$guest_id'";
+$update_outstanding_result = mysqli_query($dbConn, $update_guest_outstanding);
+
 
 /*Print Frontdesk Receipts*/
 
