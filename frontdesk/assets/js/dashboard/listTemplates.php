@@ -11,7 +11,7 @@
                 <span class = "text-center role col-2">{{gst.guest_type_gender}}</span>
                 <span class = "text-center role col-2">{{gst.total_rooms_booked}}</span>
                 <span class = "text-center role col-2">{{gst.visit_count}}</span>
-                <span class = "text-center role col-3">{{gst.room_outstanding + gst.restaurant_outstanding}}</span>
+                <span class = "text-center role col-3">{{((gst.room_outstanding | intString) + (gst.restaurant_outstanding | intString) | number)}}</span>
             </li>
         </ul>
     </div>
@@ -124,7 +124,7 @@
 <!-- ............room start ..............-->
 <div class = "h-100 w-100 p-4" ng-if = "<?php echo $_GET['list']  == 'roomgrid' ?>">
     <div class = "itemboxhd ovflo-y h-100 w-100">
-        <div class = "itembox " ng-repeat = "items in (rooms.jslist.newItemArray = (rooms.jslist.values | filter:searchquery))"  >
+        <div class = "itembox {{items.booked == 'YES' ? 'sechue' : ''}}" ng-repeat = "items in (rooms.jslist.newItemArray = (rooms.jslist.values | filter:searchbox.imp))"  >
             <h5>{{items.room_number}}</h5>
         </div>
     </div>

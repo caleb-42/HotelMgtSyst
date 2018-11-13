@@ -1,13 +1,13 @@
 <div ng-controller="users">
     <div class="prime-hd anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.primeclass : 'w-100'}}">
         <div class="statusbar blu row  align-items-end pl-1">
-            <div class="tabnav col-5 row">
+            <div class="tabnav col-7 row">
                 <button ng-repeat='nav in tabnav.navs | objtoarray' class="tabpill btnnone" ng-click="tabnav.selectNav(nav.name)" ng-class="{focus:nav.name == tabnav.selected.name}">
                 <h5>{{nav.name}}</h5>
             </button>
             </div>
             <!--tabnav end-->
-            <div class="searchbox col-7 h-100 row  align-items-end pb-1">
+            <div class="searchbox col-5 h-100 row  align-items-end pb-1">
             <div class="col-8">
                     <input class="form-control float-right anim" ng-model="searchbox.imp" /></div>
                 <!-- ng-class="{vanishsearch:searchbox.iconhover}" -->

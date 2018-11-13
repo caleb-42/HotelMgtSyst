@@ -55,3 +55,8 @@ app.filter('objInArray', function() {
         return arr;
     }
 });
+app.filter('intString', function() {
+    return function(input) {
+        return parseInt(input);
+    }
+});
