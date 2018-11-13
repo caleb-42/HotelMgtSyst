@@ -70,7 +70,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
     $scope.guest = {
         itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/front_desk/list_guests.php", {})
+                jsonfunc: jsonPost.data("../php1/front_desk/list_guests_all.php", {})
             }
         },
         roomgrid:{
