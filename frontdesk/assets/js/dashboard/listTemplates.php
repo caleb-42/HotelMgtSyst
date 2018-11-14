@@ -4,7 +4,7 @@
     <div class = "listhd pr-3 row font-fam-Montserrat-bold">
         <span class="{{hd.width}} f-13 opac-70"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in guest.listhddata">{{hd.name}}</span>
     </div>
-    <div class = "hs-45 listbody ovflo-y pb-4" >
+    <div class = "hs-40 listbody ovflo-y pb-4" >
         <ul class = "list" >
             <li class = "anim-fast itemlistrow row align-items-center f-12" ng-repeat = "gst in (guest.jslist.newItemArray = (guest.jslist.values | filter:searchbox.imp))" ng-click = "guest.jslist.select($index, gst.guest_id)" ng-class = "{'actparent' :guest.jslist.selected == gst.guest_id}">
                 <span class = "username col-3">{{gst.guest_name}}</span>
@@ -124,8 +124,9 @@
 <!-- ............room start ..............-->
 <div class = "h-100 w-100 p-4" ng-if = "<?php echo $_GET['list']  == 'roomgrid' ?>">
     <div class = "itemboxhd ovflo-y h-100 w-100">
-        <div class = "itembox btn {{items.booked == 'YES' ? 'sechue' : ''}}" ng-repeat = "items in (rooms.jslist.newItemArray = (rooms.jslist.values | filter:searchbox.imp))"  >
+        <div class = "itembox {{items.booked == 'YES' ? 'lytpurp-back1' : ''}} b-rad" ng-repeat = "items in (rooms.jslist.newItemArray = (rooms.jslist.values | filter:searchbox.imp))" ng-click = "rooms.jslist.select($index, items.room_id)" ng-class = "{'actparent' :rooms.jslist.selected == items.room_id}" >
             <h5>{{items.room_number}}</h5>
+            
         </div>
     </div>
 </div>

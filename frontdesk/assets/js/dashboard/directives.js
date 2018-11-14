@@ -13,6 +13,9 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
                     jsonlist.then(function (result) {
                         console.log(result);
                         scope.guest.jslist.values = result;
+                        scope.guest.jslist.values.forEach(function(elem){
+                            elem.value = elem.guest_name;
+                        });
                         scope.guest.jslist.selected = null;
                     });
                     scope.guest.listhddata = [
@@ -50,7 +53,8 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
                 },
                 toggleIn : function(){
                     $(".listcont").delay(500).fadeIn(200);
-                }
+                },
+                gender : 'male'
             }
             scope.guest.jslist.createList();
         }
@@ -101,7 +105,7 @@ dashApp.directive('roomgrid', ['$rootScope', function ($rootScope) {
                 select: function (index, id) {
                     scope.rooms.jslist.selected = id;
                     scope.rooms.jslist.selectedObj = scope.rooms.jslist.newItemArray[index];
-                    console.log(scope.rooms.jslist.newItemArray[index]);
+                    console.log(scope.rooms.jslist.newItemArray[index]);$rootScope.$emit('roomselect', scope.rooms.jslist.selectedObj)
                 },
                 toggleOut : function(){
                     $(".listcont").fadeOut(200);

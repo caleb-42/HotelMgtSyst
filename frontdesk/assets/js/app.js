@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngAnimate', 'ngRoute', 'ngSanitize', 'dashApp', 'roomsApp', 'usersApp', 'recordsApp', 'ngCroppie']);
+var app = angular.module('app', ['ngAnimate', 'ngRoute', 'ngSanitize', 'dashApp', 'roomsApp', 'usersApp', 'recordsApp', 'ngCroppie','720kb.datepicker']);
 
 app.controller("appctrl", ["$rootScope", "$scope", function ($rootScope, $scope) {
     $rootScope.settings = {
@@ -27,13 +27,35 @@ app.controller("appctrl", ["$rootScope", "$scope", function ($rootScope, $scope)
                 }
             }
         },
+        date : new Date().toString(),
         userDefinition : function (user, role) {
             $rootScope.settings.user = user;
             $rootScope.settings.role = role;
         },        
         user: "",
         role: "",
-        log: true
+        log: true,
+        AutoComplete : {
+            obj: {},
+            activate  : function(input, dataSource, prop) {
+                console.log(dataSource);
+                if (!$(input).autocomplete("instance")) {
+                    $(input.currentTarget).autocomplete({
+                        source: dataSource,
+
+                        select: function (event, ui) {
+                            for (var p = 0; p < dataSource.length; p++) {
+                                
+                                if (dataSource[p][prop] == ui.item.label) {
+                                    $rootScope.settings.AutoComplete.obj = dataSource[p];
+                                    $rootScope.$apply();
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        }
     }
     $scope.sidebarnav = {
         navig: {
