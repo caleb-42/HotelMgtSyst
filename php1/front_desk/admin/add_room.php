@@ -29,19 +29,20 @@ $duplicate_check_query = "SELECT * FROM frontdesk_rooms WHERE room_number = '$ro
 $duplicate_check_result = mysqli_query($dbConn, $duplicate_check_query);
 
 if (mysqli_num_rows($duplicate_check_result) > 0) {
-	$msg_response = "A listed room_number already exist with the same number and room_category";
+	$msg_response = ["ERROR", "A listed room_number already exist with the same number and room_category"];
+	$response_msg = json_encode($msg_response);
 	$row = mysqli_fetch_assoc($duplicate_check_result);
-	var_dump($row);
-	die($msg_response);
+	die($response_msg);
 }
 
-	$add_item_query = "INSERT INTO frontdesk_rooms (room_number, room_rate, room_category, room_id) VALUES ($room_number, room_rate, '$room_category', '$room_id')";
+	$add_item_query = "INSERT INTO frontdesk_rooms (room_number, room_rate, room_category, room_id) VALUES ($room_number, $room_rate, '$room_category', '$room_id')";
 
 $add_item_result = mysqli_query($dbConn, $add_item_query);
 
 if ($add_item_result) {
-	$msg_response = $room_number . " was successfully added as a hotel room";
+	$msg_response = ["OUTPUT", "$room_number  was successfully added as a hotel room"];
+	$response_msg = json_encode($msg_response);
 } 
 
-echo $msg_response;
+echo $response_msg;
 ?>

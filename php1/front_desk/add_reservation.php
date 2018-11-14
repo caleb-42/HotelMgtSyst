@@ -34,8 +34,6 @@ transaction */
 
  $total_rooms_reserved = $reservation_data["total_rooms_reserved"];
  $total_cost = $reservation_data["total_cost"];
- $amount_paid = $reservation_data["amount_paid"];
- $balance = $total_cost - $amount_paid;
  $frontdesk_rep = $reservation_data["frontdesk_rep"];
  $rooms = $reservation_data["rooms"];
  $no_of_rooms = count($rooms);
@@ -45,6 +43,7 @@ $select_rooms_query = $conn->prepare("SELECT booked, booked_on, booking_expires,
 echo $conn->error;
 
 $select_rooms_query->bind_param("s", $room_id); // continue from here
+$reservation_conflict = [];
 
  for ($i=0; $i<$no_of_rooms; $i++) {
  	$no_of_nights = $rooms[$i]["no_of_nights"];
@@ -66,11 +65,11 @@ $select_rooms_query->bind_param("s", $room_id); // continue from here
  		//remove if statement to prevent booked rooms from being reserved at all, for cases of booking extension
  		if ((($room_reservation_date < $compare_checkin) && ($room_reservation_out_date < $compare_checkin)) || ($room_reservation_date > $compare_checkout) && ($room_reservation_out_date > $compare_checkout)) {
  	  } else {
- 			$select_rooms_query->close();
-	        $msg_response[0] = "ERROR";
-	        $msg_response[1] = $room_number . " is already booked within reservation dates";
-	        $response_message = json_encode($msg_response);
- 		    die($response_message);
+ 			$reservation_conflict[] = $room_number;
+	      //   $msg_response[0] = "ERROR";
+	      //   $msg_response[1] = $room_number . " is already booked within reservation dates";
+	      //   $response_message = json_encode($msg_response);
+ 		    // die($response_message);
  		}
  	}
 
@@ -80,18 +79,26 @@ $select_rooms_query->bind_param("s", $room_id); // continue from here
  	     date_add($compare_checkout, date_interval_create_from_date_string("$reserved_nights days"));
  	  if ((($room_reservation_date < $compare_checkin) && ($room_reservation_out_date < $compare_checkin)) || ($room_reservation_date > $compare_checkout) && ($room_reservation_out_date > $compare_checkout)) {
  	  } else {
- 	  	   $select_rooms_query->close();
-	       $msg_response[0] = "ERROR";
-	       $msg_response[1] = $room_number . " has a reservation during the selected check-in and check-out";
-	       $response_message = json_encode($msg_response);
- 		   die($response_message);
+ 	  	   $reservation_conflict[] = $room_number;
+	     //   $msg_response[0] = "ERROR";
+	     //   $msg_response[1] = $room_number . " has a reservation during the selected check-in and check-out";
+	     //   $response_message = json_encode($msg_response);
+ 		   // die($response_message);
  	  }
  	}
  }
+ 
  $select_rooms_query->close();
+ if (count($reservation_conflict)) {
+ 	    $reservation_conflicts = implode(", ", $reservation_conflict)
+ 	    $msg_response[0] = "ERROR";
+	    $msg_response[1] = "Room(s) " . $reservation_conflicts . " have reservation conflict(s)";
+	    $response_message = json_encode($msg_response);
+ 		die($response_message);
+ }
  /*room check*/
 
- $insert_into_reservation = $conn->prepare("INSERT INTO frontdesk_reservations (reservation_ref, guest_name, guest_id, phone_number, email, reserved_date, no_of_nights, room_id, room_number, room_rate, room_total_cost, room_category) VALUES('$reservation_ref', '$guest_name', '$guest_id', '$phone_number', '$email', ?, ?, ?, ?, ?, ?, ?)");
+ $insert_into_reservation = $conn->prepare("INSERT INTO frontdesk_reservations (reservation_ref, guest_name, guest_id, phone_number, email, frontdesk_rep, reserved_date, no_of_nights, room_id, room_number, room_rate, room_total_cost, room_category) VALUES('$reservation_ref', '$guest_name', '$guest_id', '$phone_number', '$email', '$frontdesk_rep', ?, ?, ?, ?, ?, ?, ?)");
  echo $conn->error;
 
  $insert_into_reservation->bind_param("sisiiis", $room_reservation_date, $no_of_nights, $room_id, $room_number, $room_rate, $room_total_cost, $room_category);

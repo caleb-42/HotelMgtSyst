@@ -42,7 +42,7 @@ $no_of_rooms = count($rooms);
 
 $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
-$check_active_guest = "SELECT * FROM frontdesk_bookings WHERE booking_ref = '$booking_ref' AND checked_out = 'NO'";
+$check_active_guest = "SELECT * FROM frontdesk_bookings WHERE guest_id = '$guest_id' AND checked_out = 'NO'";
 $check_active_results = mysqli_query($dbConn, $check_active_guest);
 
 $check_outstanding_query = "SELECT * FROM frontdesk_guests WHERE guest_id = '$guest_id'";
@@ -52,7 +52,7 @@ $outstanding_row = mysqli_fetch_assoc($check_outstanding_result);
 if (mysqli_num_rows($check_active_results) == $no_of_rooms) {
 	if ($outstanding_row["room_outstanding"] != 0) {
 	   $msg_response[0] = "ERROR";
-	   $msg_response[1] = "This guest has a booking outstanding balance";
+	   $msg_response[1] = "This guest has outstanding room balances" . $no_of_rooms . " and " . mysqli_num_rows($check_active_results);
 	   $response_message = json_encode($msg_response);
 	   $printer -> close();
  	   die($response_message);
@@ -83,7 +83,7 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 }
 $update_bookings_query->close();
 
-$check_active_guest = "SELECT * FROM frontdesk_bookings WHERE booking_ref = '$booking_ref' AND checked_out = 'NO'";
+$check_active_guest = "SELECT * FROM frontdesk_bookings WHERE guest_id = '$guest_id' AND checked_out = 'NO'";
 $check_active_results = mysqli_query($dbConn, $check_active_guest);
 
 if (mysqli_num_rows($check_active_results) > 0) {
@@ -96,7 +96,7 @@ $checkout_guest_result = mysqli_query($dbConn, $checkout_guest_query);
 $printer -> close();
 
 $msg_response[0] = "OUTPUT";
-$msg_response[1] = "CHECKED OUT";
+$msg_response[1] = "CHECKED OUT " . mysqli_error($dbConn);
 $response_message = json_encode($msg_response);
 echo $response_message;
 ?>

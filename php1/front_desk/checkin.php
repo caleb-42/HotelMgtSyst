@@ -158,10 +158,10 @@ if ($balance == 0) {
 $payment_record_result = mysqli_query($dbConn, $payment_record_query);
 
 //var_dump($customer_ref);
-$txn_insert_query = "INSERT INTO frontdesk_txn (booking_ref, total_rooms_booked, total_cost, deposited, balance, means_of_payment, payment_status, frontdesk_rep) VALUES('$booking_ref', $total_rooms_booked, $total_cost, $deposited, $balance, '$means_of_payment', '$payment_status', '$frontdesk_rep')";
+$txn_insert_query = "INSERT INTO frontdesk_txn (booking_ref, guest_id, total_rooms_booked, total_cost, deposited, balance, means_of_payment, payment_status, frontdesk_rep) VALUES('$booking_ref', '$guest_id', $total_rooms_booked, $total_cost, $deposited, $balance, '$means_of_payment', '$payment_status', '$frontdesk_rep')";
 $txn_insert_result = mysqli_query($dbConn, $txn_insert_query);
 
-$update_guest_outstanding = "UPDATE frontdesk_guest SET room_outstanding = room_outstanding + $balance WHERE guest_id = '$guest_id'";
+$update_guest_outstanding = "UPDATE frontdesk_guests SET room_outstanding = room_outstanding + $balance, total_rooms_booked = total_rooms_booked + $total_rooms_booked WHERE guest_id = '$guest_id'";
 $update_outstanding_result = mysqli_query($dbConn, $update_guest_outstanding);
 
 
@@ -351,7 +351,7 @@ unlink($filename);
 
  if($txn_insert_result){
 	$msg_response[0] = "OUTPUT";
-	$msg_response[1] = $guest_name . " SUCCESSFULLY ADDED";
+	$msg_response[1] = $guest_name . " SUCCESSFULLY ADDED". mysqli_error($dbConn);
  } else {
 	$msg_response[0] = "ERROR";
 	$msg_response[1] = "SOMETHING WENT WRONG". mysqli_error($dbConn);
