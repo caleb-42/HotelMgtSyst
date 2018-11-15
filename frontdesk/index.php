@@ -52,6 +52,7 @@ $templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Lodge"=>"./a
     <link href="./assets/css/utilities.css" rel="stylesheet">
     <link rel="stylesheet" href="./vendors/node_modules/croppie/croppie.css" />
     <link rel="stylesheet" href="./vendors/node_modules/ng-croppie/unminified/ng-croppie.css" />
+    <link rel="stylesheet" href="./vendors/node_modules/angularjs-datepicker/src/css/angular-datepicker.css" />
 
     <!-- Custom scripts for this template -->
     <script src="./assets/js/app.js"></script>
@@ -67,6 +68,7 @@ $templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Lodge"=>"./a
     <script src="./assets/js/records/directives.js"></script>
     <script src="./assets/js/records/controllers.js"></script>
     <script src="./vendors/node_modules/ng-croppie/unminified/ng-croppie.js"></script>
+    <script src="./vendors/node_modules/angularjs-datepicker/src/js/angular-datepicker.js"></script>
 </head>
 
 <body>

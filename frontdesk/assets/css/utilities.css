@@ -116,6 +116,9 @@ li{
 .lytpurp-back{
     background: rgba(225, 159, 255, .5) !important;
 }
+.lytpurp-back1{
+    background: rgba(225, 159, 255, .7) !important;
+}
 .choral{
     color: #d9534f !important;
 }
@@ -331,6 +334,9 @@ button.btnnone{
 .w-80{
     width: 80% !important;
 }
+.w-55{
+    width: 55% !important;
+}
 .w-45{
     width: 45% !important;
 }
@@ -458,6 +464,9 @@ button.btnnone{
 .pointer-disabled{
     pointer-events: none;
     cursor: not-allowed;
+}
+.b-rad {
+    border-radius: 5% !important;
 }
 @keyframes fadeInFromNone{
     from {opacity: 0;}

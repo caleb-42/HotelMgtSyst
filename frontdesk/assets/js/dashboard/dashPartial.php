@@ -22,12 +22,35 @@
     <div class="prime-body {{tabnav.selected.options.rightbar ? '' : 'p-0'}}">
         <div class="animate-switch-container" ng-switch on="tabnav.selected.name">
             <div class="animate-switch" ng-switch-when="Rooms">
+                <div class="guests prime-footer anim h-60">
+                    <div class=" itemlayout w-100 h-93">
+                        <div class="mb-5 item-container">
+                            <div class="userlisthd row justify-content-between px-4">
+                                <h4 class=" mt-4 py-2 font-fam-Montserrat-bold">Manage Rooms</h4>
+                                <div class="mt-4">
+                                    <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation'; settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';rooms.roomgrid.getrooms(['deluxe','standard']) " data-toggle="modal" data-target="#crud">Add Reservation</button>
+                                </div>
+                            </div>
+                                <roomgrid></roomgrid>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center py-4 anim px-2 h-40">
 
-                <roomgrid></roomgrid>
+                    <div class = "row w-100">
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 br-1 m-0 pb-3 px-3">Current Guest</h6>
+                        <p class = " col-8 f-13 opac-70 m-0 pb-2 px-3">{{rooms.current_guest.guest_name}} </p>
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 pb-3 br-1 m-0 px-3">Phone Number</h6>
+                        <p class = " col-8 f-13 opac-70 m-0 pb-2 px-3">{{rooms.current_guest.phone_number}} </p>
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 pb-3 br-1 m-0 px-3">Room Outstanding</h6>
+                        <p class = "  col-8  f-13 opac-70 m-0 pb-2 px-3">{{rooms.current_guest.room_outstanding}} </p>
+                    </div>
+
+                </div>
 
             </div>
-            <div class="animate-switch Sales h-100" ng-switch-when = "Guests">
-                <div class="products  anim h-75">
+            <div class="animate-switch Guests h-100" ng-switch-when = "Guests">
+                <div class="guests  prime-footer anim h-80">
                     <div class="p-3 px-4 itemlayout w-100 h-93">
                         <div class="mb-5 item-container">
                             <div class="userlisthd row justify-content-between">
@@ -37,15 +60,13 @@
                                     <button class="btn btn-outline-warning mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Pay'; settings.modal.name = 'Pay Balance'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud" ng-disabled="!guest.jslist.selected">Pay</button>
                                     <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'CheckIn'; settings.modal.name = 'CheckIn'; settings.modal.size = 'lg'; guest.roomgrid.getrooms(['deluxe','standard'])" ng-disabled="!guest.jslist.selected">Check In</button>
                                     <button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'CheckOut'; settings.modal.name = 'CheckOut'; settings.modal.size = 'lg';" ng-disabled="!guest.jslist.selected">Check Out</button>
-                                    <!-- <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Update Guest'; settings.modal.size = 'lg'; " ng-disabled="!guest.jslist.selected">Update</button> -->
-                                    <!-- <button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" ng-click="users.deleteUser()"  ng-disabled="!users.jslist.selected">Delete</button> -->
                                 </div>
                             </div>
                             <jslist class="font-fam-Montserrat"></jslist>
                         </div>
                     </div>
                 </div>
-                <div class="orders row align-items-center anim px-2 h-25">
+                <div class="orders row align-items-center anim px-2 h-20">
 
                     <div class = "row w-100">
                         <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Rooms</h6>

@@ -62,7 +62,7 @@ body {
 .itembox {
   width: 111px;
   height: 111px;
-  margin: 15px;
+  margin: 0 30px 30px 0;
   background: #ccc;
   color: #555;
   text-align: center;
@@ -103,6 +103,24 @@ div.actparent {
 
 .report {
   font-weight: 500; }
+
+.prime-footer {
+  border-bottom: 12px solid #eee; }
+
+._720kb-datepicker-calendar {
+  min-width: 300% !important; }
+  ._720kb-datepicker-calendar-month span {
+    color: #fff !important;
+    margin-left: 20px !important; }
+  ._720kb-datepicker-calendar-header:nth-child(even) {
+    background: #e9ecee !important; }
+  ._720kb-datepicker-calendar-header:nth-child(odd) {
+    background: #509CCB !important; }
+  ._720kb-datepicker-calendar-header a:hover {
+    background: #333 !important; }
+  ._720kb-datepicker-calendar-day._720kb-datepicker-today {
+    background: #363636 !important;
+    color: white !important; }
 
 .hamburger-inner,
 .hamburger-inner::before,

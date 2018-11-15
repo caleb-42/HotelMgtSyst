@@ -14,8 +14,8 @@ app.filter('objtoarray', function(){
     }
 });
 app.filter('intervalGetDate', function(){
-    return function(input){
-        today = new Date();
+    return function(input, startdate){
+        today = startdate ?  new Date(startdate) :  new Date();
         if(!input){
             dd = today.getDate();
             mm = today.getMonth() + 1;

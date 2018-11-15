@@ -42,17 +42,6 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                 jsonForm.room_category = scope.rooms.jslist.room_category;
                 scope.rooms.addRoom(jsonForm);
             };
-            addStock = function (){
-                $rootScope.settings.modal.adding = true
-                jsonForm = $(".addStockForm").serializeObject();
-                if(parseInt(jsonForm.quantity) < 1 || jsonForm.quantity == ''){
-                    $rootScope.settings.modal.msgprompt(['ERROR', 'FILL STOCK WITH A POSITIVE VALUE']);
-                    //console.log($rootScope.settings.modal.msg);
-                    $rootScope.$apply();
-                    return;
-                }
-                scope.stock.addStock(jsonForm);
-            }
             addUser = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".addUserForm").serializeObject();
@@ -105,8 +94,39 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                 console.log(jsonForm);
                 scope.guest.checkIn(jsonForm);
             };
+            addReservation = function () {
+                $rootScope.settings.modal.adding = true;
+                jsonForm = $(".addReservationForm").serializeObject();
+                arr = scope.guest.jslist.values.find(function(elem){
+                    if((elem.guest_name == jsonForm.guest_name) && (elem.guest_id == $rootScope.settings.AutoComplete.obj.guest_id)){
+                        jsonForm.guest_id = elem.guest_id;
+                    }
+                    return (elem.guest_name == jsonForm.guest_name) && (elem.guest_id == $rootScope.settings.AutoComplete.obj.guest_id);
+                });
+
+                if(!arr){
+                    jsonForm.guest_id = "";
+                }
+                jsonForm.amount_paid = 0;
+                jsonForm.total_cost = scope.rooms.roomgrid.room_info.cost;
+                jsonForm.total_rooms_booked = scope.rooms.roomgrid.room_info.rooms;
+                jsonForm.frontdesk_rep = $rootScope.settings.user;
+                jsonForm.rooms = [];
+                arryy = Object.values(scope.rooms.roomgrid.room_details.rooms);
+                arryy.forEach(function(rm){
+                    if(rm.arr){
+                        rm.arr.forEach(function(elem){
+                            if(elem.selected == true){
+                                elem.room_total_cost = (parseInt(elem.no_of_nights) * parseInt(elem.room_rate));
+                                jsonForm.rooms.push(elem);
+                            }
+                        });
+                    }
+                });
+                console.log(jsonForm);
+                scope.rooms.addReservation(jsonForm);
+            };
             checkOut = function () {
-                
                 scope.guest.checkOut();
             };
             updateUser = function () {
@@ -126,40 +146,6 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                 }
                 scope.guest.payBalance(jsonForm);
             };
-            if (scope.sidebarnav.navig.activeNav == "Sales") {
-                scope.buyer.customer.jsonform = function (a) {
-                    jsonForm = $(".custform").serializeObject();
-                    jsonForm.type = a;
-                    jsonForm.outstanding_balance = 0;
-                    jsonForm = $("[name = full_name]").val() == "" ? scope.buyer.customer.selectedDefault : jsonForm;
-                    $('#Customer').modal('hide');
-                    return jsonForm;
-                }
-                $rootScope.activateAutoComplete = function (a) {
-                    /*scope.buyer.customer.new.sex = "female";*/
-                        console.log("json1[p].gender");
-                    if (!$(a).autocomplete("instance")) {
-                        $(a.currentTarget).autocomplete({
-                            source: scope.buyer.customer.getLodgers,
-
-                            select: function (event, ui) {
-                                for (var p = 0; p < json1.length; p++) {
-                                    // console.log(json1[p].name, ui.item.label);
-                                    if (json1[p].full_name == ui.item.label) {
-                                        $("input[name = phone_number]").val(json1[p].phone_number);
-                                        $("input[name = contact_address]").val(json1[p].contact_address);
-                                        $("input[name = room]").val(json1[p].room);
-                                        console.log(json1[p].gender);
-                                        scope.buyer.customer.new.gender = json1[p].gender;
-                                        scope.$apply();
-                                        /*$("input[name = sex]").val();*/
-                                    }
-                                }
-                            }
-                        });
-                    }
-                }
-            }
             $rootScope.settings.modal.close = function () {
                 $(".report").fadeIn(100, function () {
                     $(".report").delay(1500).fadeOut(100, function(){
@@ -187,3 +173,16 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
         }
     };
 }]);
+/* app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jsonPost, $filter) {
+    return {
+        restrict: 'A',
+        template : '',
+        scope: {
+            
+        },
+        link: function (scope, element, attrs) {
+
+        }
+
+    }
+}]); */
