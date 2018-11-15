@@ -26,9 +26,12 @@ transaction */
     $duplicate_id_result = mysqli_query($dbConn, $duplicate_id_query);
  }
 
- $guest_name = mysqli_real_escape_string($dbConn, $reservation_data["guest_name"]);
- $guest_id = mysqli_real_escape_string($dbConn, $reservation_data["guest_id"]);
- $email = mysqli_real_escape_string($dbConn, $reservation_data["email"]);
+ $guest_name = $reservation_data["guest_name"];
+ $guest_name = mysqli_real_escape_string($dbConn, $guest_name);
+ $guest_id = $reservation_data["guest_id"];
+ $guest_id = mysqli_real_escape_string($dbConn, $guest_id);
+ $email = $reservation_data["email"];
+ $email = mysqli_real_escape_string($dbConn, $email);
  $guest_type_gender = $reservation_data["guest_type_gender"]; // guest_type_gender = 'company' or 'male' or 'female'
  $phone_number = mysqli_real_escape_string($dbConn, $reservation_data["phone_number"]);
 
