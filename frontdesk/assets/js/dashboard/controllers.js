@@ -299,6 +299,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
         payBalance: function(jsonguest){
             jsonguest.booking_ref = $scope.booking.rooms[0].booking_ref;
             jsonguest.guest_name = $scope.booking.rooms[0].guest_name;
+            jsonguest.guest_id = $scope.booking.rooms[0].guest_id;
             jsonguest.frontdesk_rep = $rootScope.settings.user;
             console.log("new payment", jsonguest);
 
@@ -338,6 +339,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
         },
         getRoomBooking : function(id){
             $scope.booking.itemlist(id).jsonfunc.then(function(result){
+                console.log(result);
                 response = [];
                 $scope.guest.jslist.selectedObj.rooms = [];
                 if(result){
@@ -357,6 +359,28 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
         itemlist: function () {
             return {
                 jsonfunc: jsonPost.data("../php1/front_desk/list_rooms.php", {})
+            }
+        },
+        reservations: {
+            reservation_list : [],
+            listReservation: function () {
+                /* jsonPost.data("../php1/front_desk/list_reservations.php", {}).then(function(result){
+                    result.find(f)
+                }); */
+            },
+            addReservation : function (jsonresvtn) {
+                console.log("new Reservation", jsonresvtn);
+    
+                jsonPost.data("../php1/front_desk/add_reservation.php", {
+                    reservation_data: $filter('json')(jsonresvtn)
+                }).then(function (response) {
+                    console.log(response);
+                    $scope.rooms.roomgrid.averagenyt = 0;
+                    $scope.rooms.roomgrid.room_info.rooms = 0;
+                    $scope.rooms.roomgrid.room_info.cost = 0;
+                    $rootScope.settings.modal.msgprompt(response);
+                    $scope.rooms.jslist.createList();
+                });
             }
         },
         roomgrid:{
@@ -543,20 +567,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 })
             })
         },
-        addReservation : function (jsonresvtn) {
-            console.log("new Reservation", jsonresvtn);
-
-            jsonPost.data("../php1/front_desk/add_reservation.php", {
-                reservation_data: $filter('json')(jsonresvtn)
-            }).then(function (response) {
-                console.log(response);
-                $scope.rooms.roomgrid.averagenyt = 0;
-                $scope.rooms.roomgrid.room_info.rooms = 0;
-                $scope.rooms.roomgrid.room_info.cost = 0;
-                $rootScope.settings.modal.msgprompt(response);
-                $scope.rooms.jslist.createList();
-            });
-        },
+        
 
     };
 }]);

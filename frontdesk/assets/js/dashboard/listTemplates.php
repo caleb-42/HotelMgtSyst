@@ -75,19 +75,12 @@
             <div class="card">
                 <div class="card-header" id="headingOne">
                     <h5 class="mb-0 pointer p-3 py-2 f-17 collapsed font-fam-Montserrat-bold blac opac-70" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Check In
+                        List Reservations
                     </h5>
                 </div>
 
                 <div id="collapseOne" class="collapse show px-1" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body py-3 px-4 hs-55 ovflo-y row align-items-center">
-                        <!-- <div class = "row py-3">
-                            <label class = "f-13 col-4">Phone No.</label>
-                            <input name = "guest_name" class = "form-control col-8"/></div>
-                        <div class = "row py-3">
-                            <label class = "f-13 col-4">Address</label>
-                            <Textarea name = "guest_name" class = "form-control col-8" rows = "4"></Textarea>
-                        </div> -->
                         
                     </div>
                 </div>
@@ -124,7 +117,7 @@
 <!-- ............room start ..............-->
 <div class = "h-100 w-100 p-4" ng-if = "<?php echo $_GET['list']  == 'roomgrid' ?>">
     <div class = "itemboxhd ovflo-y h-100 w-100">
-        <div class = "itembox {{items.booked == 'YES' ? 'lytpurp-back1' : ''}} b-rad" ng-repeat = "items in (rooms.jslist.newItemArray = (rooms.jslist.values | filter:searchbox.imp))" ng-click = "rooms.jslist.select($index, items.room_id)" ng-class = "{'actparent' :rooms.jslist.selected == items.room_id}" >
+        <div class = "anim itembox {{items.booked == 'YES' ? 'lytpurp-back1' : ''}} b-rad" ng-repeat = "items in (rooms.jslist.newItemArray = (rooms.jslist.values | filter:searchbox.imp))" ng-click = "rooms.jslist.select($index, items.room_id)" ng-class = "{'actparent' :rooms.jslist.selected == items.room_id}" >
             <h5>{{items.room_number}}</h5>
             
         </div>

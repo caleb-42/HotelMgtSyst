@@ -60,3 +60,15 @@ app.filter('intString', function() {
         return parseInt(input);
     }
 });
+app.filter('duplicatekey', function() {
+    return function(input, obj) {
+        arr = Object.keys(obj);
+        for(var j = 0; j < arr.length; j++){
+            for(var i = 0; i < input.length; i++){
+                input[i][arr[j]] = input[i][obj[arr[j]]];
+            }
+        }
+        //console.log(input);
+        return input;
+    }
+});

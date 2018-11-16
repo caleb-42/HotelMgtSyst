@@ -124,7 +124,7 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                     }
                 });
                 console.log(jsonForm);
-                scope.rooms.addReservation(jsonForm);
+                scope.rooms.reservations.addReservation(jsonForm);
             };
             checkOut = function () {
                 scope.guest.checkOut();
