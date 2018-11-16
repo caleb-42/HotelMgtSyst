@@ -52,7 +52,7 @@ $guest_name = $payment_details["guest_name"];
 $guest_id = $payment_details["guest_id"];
 $guest_txn = [];
 
-$get_outstanding = "SELECT * FROM frontdesk_guest WHERE guest_id = '$guest_id'";
+$get_outstanding = "SELECT * FROM frontdesk_guests WHERE guest_id = '$guest_id'";
 $outstanding_result = mysqli_query($dbConn, $get_outstanding);
 $outstanding_row = mysqli_fetch_assoc($outstanding_result);
 $outstanding_bal = intval($outstanding_row["room_outstanding"]);
@@ -67,15 +67,21 @@ if ($amount_paid > $outstanding_bal) {
 
 $get_guest_outstanding = "SELECT * FROM frontdesk_txn WHERE guest_id = '$guest_id' AND balance != 0 ORDER BY balance DESC";
 $get_guest_result = mysqli_query($dbConn, $get_guest_outstanding);
-if (mysqli_num_rows($get_guest_result) < 0) {
+if (mysqli_num_rows($get_guest_result) == 0) {
     $msg_response[0] = "ERROR";
-    $msg_response[1] = "This guest does not have an outstanding room booking balance";
+    $msg_response[1] = "This guest does not have an outstanding room booking balance " . mysqli_num_rows($get_guest_result);
     $response_message = json_encode($msg_response);
     $printer -> close();
     die($response_message);
 } else {
   while ($rows = mysqli_fetch_assoc($get_guest_result)) {
     $guest_txn[] = $rows;
+    // $msg_response[0] = "ERROR";
+    // $msg_response[1] = "This guest has an outstanding room booking balance " . mysqli_num_rows($get_guest_result);
+    // $response_message = json_encode($msg_response);
+    // $printer -> close();
+    // die($response_message);
+    //var_dump($guest_txn);
   }
 }
 $deposit_extra = 1;
@@ -86,6 +92,13 @@ for ($i=0; $deposit_extra > 0; $i++) {
   $booking_ref = $guest_txn[$i]["booking_ref"];
   $last_payment_id_query = "SELECT MAX(id) AS id FROM frontdesk_payments WHERE frontdesk_txn = '$booking_ref'";
   $last_payment_id_result = mysqli_query($dbConn, $last_payment_id_query);
+  if ($i == 100) {
+    $msg_response[0] = "ERROR";
+    $msg_response[1] = "endlesloop";
+    $response_message = json_encode($msg_response);
+    $printer -> close();
+    die($response_message);
+  }
 
   $payment_id_row = mysqli_fetch_array($last_payment_id_result);
   $payment_id = intval($payment_id_row["id"]);
@@ -123,7 +136,7 @@ for ($i=0; $deposit_extra > 0; $i++) {
     $update_txn = "UPDATE frontdesk_txn SET payment_status = '$payment_status', deposited = $net_paid, balance = $new_balance WHERE booking_ref ='$booking_ref'";
     $update_txn_result = mysqli_query($dbConn, $update_txn);
 
-    $update_guest_outstanding = "UPDATE frontdesk_guest SET room_outstanding = room_outstanding - $amount_paid WHERE guest_id  = '$guest_id'";
+    $update_guest_outstanding = "UPDATE frontdesk_guests SET room_outstanding = room_outstanding - $amount_paid WHERE guest_id  = '$guest_id'";
     $update_outstanding_result = mysqli_query($dbConn, $update_guest_outstanding);
   } else {
       $net_paid = intval($last_payment_details["txn_worth"]);
@@ -147,14 +160,14 @@ for ($i=0; $deposit_extra > 0; $i++) {
       $update_txn = "UPDATE frontdesk_txn SET payment_status = '$payment_status', deposited = $net_paid, balance = $new_balance WHERE booking_ref ='$booking_ref'";
       $update_txn_result = mysqli_query($dbConn, $update_txn);
 
-      $update_guest_outstanding = "UPDATE frontdesk_guest SET room_outstanding = room_outstanding - $new_pay WHERE guest_id  = '$guest_id'";
+      $update_guest_outstanding = "UPDATE frontdesk_guests SET room_outstanding = room_outstanding - $new_pay WHERE guest_id  = '$guest_id'";
       $update_outstanding_result = mysqli_query($dbConn, $update_guest_outstanding);
 
       $amount_paid = $amount_paid - intval($last_payment_details["amount_balance"]);
   }
 }
 
-$get_outstanding = "SELECT * FROM frontdesk_guest WHERE guest_id = '$guest_id'";
+$get_outstanding = "SELECT * FROM frontdesk_guests WHERE guest_id = '$guest_id'";
 $outstanding_result = mysqli_query($dbConn, $get_outstanding);
 $outstanding_row = mysqli_fetch_assoc($outstanding_result);
 $outstanding_bal = intval($outstanding_row["room_outstanding"]);
@@ -212,7 +225,7 @@ $outstanding_bal = intval($outstanding_row["room_outstanding"]);
 // $update_txn_result = mysqli_query($dbConn, $update_txn);
 //echo mysqli_error($dbConn);
 
-// $update_guest_outstanding = "UPDATE frontdesk_guest SET room_outstanding = room_outstanding - $amount_paid WHERE guest_id  = '$guest_id'";
+// $update_guest_outstanding = "UPDATE frontdesk_guests SET room_outstanding = room_outstanding - $amount_paid WHERE guest_id  = '$guest_id'";
 // $update_outstanding_result = mysqli_query($dbConn, $update_guest_outstanding);
 
 
