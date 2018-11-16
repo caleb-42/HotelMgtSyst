@@ -242,10 +242,10 @@
                 <div class="w-100" ng-if="settings.modal.name == 'Add Reservation'">
                     <div class="pt-4 pb-2 w-100 row justify-content-between m-0 px-5">
                         <form class = 'w-50 addReservationForm pr-5' autocomplete = "off">
-                            <input class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Name"
-                                name="guest_name" ng-focus="settings.AutoComplete.activate($event,guest.jslist.values, 'guest_name')"/>
+                            <input ng-model = "settings.AutoComplete.obj.guest_name" class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Name"
+                                name="guest_name" ng-focus="settings.AutoComplete.activate($event, (guest.jslist.values | duplicatekey: {value : 'guest_name'}), 'guest_name')"/>
                             <input ng-model = "settings.AutoComplete.obj.phone_number" class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Phone Number"
-                                name="phone_number" />
+                                name="phone_number" ng-focus="settings.AutoComplete.activate($event, (guest.jslist.values | duplicatekey: {value : 'phone_number'}), 'phone_number')"/>
                             <textarea ng-model = "settings.AutoComplete.obj.contact_address" class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Address" name="contact_address" ></textarea>
                             <div class = "row">
                                 <datepicker date-set= "{{settings.date}}" date-format="yyyy-MM-dd" class="col-4 my-2 p-0 text-center" selector="form-control">

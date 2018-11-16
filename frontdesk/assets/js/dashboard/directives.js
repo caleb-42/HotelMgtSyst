@@ -13,9 +13,9 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
                     jsonlist.then(function (result) {
                         console.log(result);
                         scope.guest.jslist.values = result;
-                        scope.guest.jslist.values.forEach(function(elem){
+                        /* scope.guest.jslist.values.forEach(function(elem){
                             elem.value = elem.guest_name;
-                        });
+                        }); */
                         scope.guest.jslist.selected = null;
                     });
                     scope.guest.listhddata = [
