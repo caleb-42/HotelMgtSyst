@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<div ng-if = "<?php echo $_GET['list']   == 'sessions'?>">
+<div ng-if = "<?php echo $_GET['list'] == 'sessions'?>">
     <div class = "row hs-80 {{users.jslist.selected ? 'gone' : 'align-items-center'}} relatv ">
         <h4 class=" text-center w-100 "> Select A User</h4>
     </div>

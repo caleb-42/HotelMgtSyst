@@ -36,8 +36,8 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 options: {
                     rightbar: {
                         present: true,
-                        rightbarclass: 'w-30',
-                        primeclass: 'w-70'
+                        rightbarclass: 'w-35',
+                        primeclass: 'w-65'
                     }
                 }
             },
@@ -364,10 +364,37 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
         reservations: {
             reservation_list : [],
             listReservation: function () {
-                /* jsonPost.data("../php1/front_desk/list_reservations.php", {}).then(function(result){
-                    result.find(f)
-                }); */
+                console.log('arr');
+                jsonPost.data("../php1/front_desk/list_reservations.php", {}).then(function(result){
+                    $scope.rooms.reservations.reservation_list = [];
+                    result.forEach(function(elem){
+                        (elem.deposit_confirmed != 'YES' && elem.booked != 'YES' && elem.room_id == $scope.rooms.jslist.selected) ? $scope.rooms.reservations.reservation_list.push(elem) : null;
+                    });
+                    console.log($scope.rooms.reservations.reservation_list);
+                });
             },
+            listhddata: [
+                {
+                    name: "Guest",
+                    width: "col-2",
+                },
+                {
+                    name: "Start",
+                    width: "col-3",
+                },
+                {
+                    name: "Nyts",
+                    width: "col-1",
+                },
+                {
+                    name: "Leave",
+                    width: "col-3",
+                },
+                {
+                    name: "Cost",
+                    width: "col-3",
+                }
+            ],
             addReservation : function (jsonresvtn) {
                 console.log("new Reservation", jsonresvtn);
     
