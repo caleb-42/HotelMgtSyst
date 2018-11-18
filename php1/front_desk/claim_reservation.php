@@ -29,11 +29,13 @@ $biz_contact = $shop_contact . "\n";
 $connector = new WindowsPrintConnector($printName);
 $printer = new Printer($connector);
 
- // $reservation_data = '{"reservation_ref":"RESV_6723", "amount_paid": 63000, "total_cost":171000, "means_of_payment":"INTERNET TRANSFER", "guest_id":"", "frontdesk_rep":"Ada", "total_rooms_reserved": 3, "guest_name":"James Baldwin"}';
+ // $reservation_data = '{"reservation_ref":"RESV_6723", "amount_paid": 63000, "total_cost":171000, "means_of_payment":"INTERNET TRANSFER", "guest_id":"", "frontdesk_rep":"Ada", "guest_name":"James Baldwin", "rooms":[{"room_id":"RM_23454"}, {"room_id":"RM_23454"}, {"room_id":"RM_23454"}]}';
 
  $reservation_data = json_decode($reservation_data, true);
  $msg_response = ["OUTPUT", "NOTHING HAPPENED"];
  $reservations = [];
+ $rooms = $reservation_data["rooms"];
+ $no_of_rooms = count($rooms);
 
  $reservation_ref = $reservation_data["reservation_ref"];
 
@@ -46,6 +48,21 @@ $printer = new Printer($connector);
 	$printer -> close();
  	die($response_message);
  }
+
+ $rand_id = mt_rand(0, 100000);
+ $booking_ref = "BK_" . $rand_id;
+
+ $duplicate_id_query = "SELECT * FROM frontdesk_bookings WHERE booking_ref = '$booking_ref'";
+ $duplicate_id_result = mysqli_query($dbConn, $duplicate_id_query);
+
+ while (mysqli_num_rows($duplicate_id_result) > 0) {
+	$rand_id = mt_rand(0, 100000);
+    $booking_ref = "BK_" . $rand_id;
+
+    $duplicate_id_query = "SELECT * FROM frontdesk_bookings WHERE booking_ref = '$booking_ref'";
+    $duplicate_id_result = mysqli_query($dbConn, $duplicate_id_query);
+ }
+
 
  $guest_id = $reservation_data["guest_id"];
 
@@ -63,6 +80,20 @@ $printer = new Printer($connector);
        $duplicate_id_query = "SELECT * FROM frontdesk_guests WHERE guest_id = '$guest_id'";
        $duplicate_id_result = mysqli_query($dbConn, $duplicate_id_query);
     }
+ }
+
+ $get_reservations_query = $conn->prepare("SELECT no_of_nights, reserved_date FROM frontdesk_reservations WHERE reservation_ref = '$reservation_ref' AND room_id = ? AND booked = 'NO'");
+ $get_reservations_query->bind_param("s", $room_id);
+
+ for ($i=0; $i < $no_of_rooms ; $i++) { 
+ 	$room_id = $rooms[$i]["room_id"];
+ 	$get_reservations_query->execute();
+ 	$get_reservations_query->bind_result($no_of_nights, $reserved_date);
+ 	$get_reservations_query->fetch();
+ 	$room_reservation_date = $rooms[$i]["reserved_date"];
+ 	$room_reservation_date = date_create($room_reservation_date);
+ 	$room_reservation_out_date = $room_reservation_date;
+ 	date_add($room_reservation_out_date, date_interval_create_from_date_string("$no_of_nights days"));
  }
 
  $get_reservations = "SELECT * FROM frontdesk_reservations WHERE reservation_ref = '$reservation_ref'";
@@ -108,18 +139,18 @@ $insert_into_bookings = $conn->prepare("INSERT INTO frontdesk_bookings (booking_
 
 $insert_into_bookings->bind_param("sississiiis", $tx_ref, $room_number, $room_id, $room_category, $room_rate, $client_name, $client_id, $no_of_days, $room_net_cost, $guests, $expected_checkout_date);
 
-for ($i=0; $i <$no_of_rooms ; $i++) { 
+for ($i=0; $i <$no_of_reservations; $i++) { 
 	$tx_ref = $reservation_ref;
-	$room_number = $rooms[$i]["room_number"];
-	$room_id = $rooms[$i]["room_id"];
-	$room_category = $rooms[$i]["room_category"];
-	$room_rate = $rooms[$i]["room_rate"];
-	$guests = $rooms[$i]["guests"];
+	$room_number = $reservations[$i]["room_number"];
+	$room_id = $reservations[$i]["room_id"];
+	$room_category = $reservations[$i]["room_category"];
+	$room_rate = $reservations[$i]["room_rate"];
+	$guests = $reservations[$i]["guests"];
 	$client_name = $guest_name;
 	$client_id = $guest_id;	
-	$no_of_days = $rooms[$i]["no_of_nights"];
+	$no_of_days = $reservations[$i]["no_of_nights"];
 	$room_net_cost = $room_rate * $no_of_days;
-	$rooms[$i]["room_total_cost"] = $room_net_cost;
+	$reservations[$i]["room_total_cost"] = $room_net_cost;
 	$d = strtotime("+"."$no_of_nights days");
 	$expected_checkout_date = date("Y-m-d", $d);
 	$insert_into_bookings->execute();
