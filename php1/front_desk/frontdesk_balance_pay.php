@@ -167,68 +167,6 @@ for ($i=0; $deposit_extra > 0; $i++) {
   }
 }
 
-$get_outstanding = "SELECT * FROM frontdesk_guests WHERE guest_id = '$guest_id'";
-$outstanding_result = mysqli_query($dbConn, $get_outstanding);
-$outstanding_row = mysqli_fetch_assoc($outstanding_result);
-$outstanding_bal = intval($outstanding_row["room_outstanding"]);
-
-// $last_payment_id_query = "SELECT MAX(id) AS id FROM frontdesk_payments WHERE frontdesk_txn = '$booking_ref'";
-// $last_payment_id_result = mysqli_query($dbConn, $last_payment_id_query);
-
-// $payment_id_row = mysqli_fetch_array($last_payment_id_result);
-// $payment_id = intval($payment_id_row["id"]);
-
-// $last_payment = "SELECT * FROM frontdesk_payments WHERE id = $payment_id";
-// $last_payment_result = mysqli_query($dbConn, $last_payment);
-
-// $last_payment_details = mysqli_fetch_assoc($last_payment_result);
-// $new_balance = intval($last_payment_details["amount_balance"]) - $amount_paid;
-// $payment_index = intval($last_payment_details["payment_index"]) + 1;
-
-// $txn_date = $last_payment_details["txn_date"];
-// $net_paid = intval($last_payment_details["net_paid"]) + $amount_paid;
-
-// $txn_worth = intval($last_payment_details["txn_worth"]);
-// $guest_id = $last_payment_details["guest_id"];
-// $total_cost = $last_payment_details["txn_worth"];
-// if ($last_payment_details["amount_balance"] == 0) {
-// 	$msg_response[0] = "ERROR";
-// 	$msg_response[1] = "This transaction has already been fully paid for";
-// 	$response_message = json_encode($msg_response);
-// 	$printer -> close();
-//  	die($response_message);
-// }
-
-// if ($new_balance < 0) {
-// 	$msg_response[0] = "ERROR";
-// 	$msg_response[1] = "This transaction is being over paid for, please adjust payment details";
-// 	$response_message = json_encode($msg_response);
-// 	$printer -> close();
-//  	die($response_message);
-// }
-
-// echo $guest_id;
-// exit;
-
-
-// $udpate_payment = "INSERT INTO frontdesk_payments (frontdesk_txn, txn_date, amount_paid, date_of_payment, amount_balance, net_paid, txn_worth, guest_id, means_of_payment, frontdesk_rep, payment_index) VALUES ('$booking_ref', '$txn_date', $amount_paid, CURRENT_TIMESTAMP, $new_balance, $net_paid, $txn_worth, '$guest_id', '$means_of_payment', '$frontdesk_rep', $payment_index)";
-
-// $update_payment_result = mysqli_query($dbConn, $udpate_payment);
-
-// if (!($new_balance)) {
-// 	$payment_status = "PAID FULL";
-// } else {
-// 	$payment_status = "UNBALANCED";
-// }
-
-// $update_txn = "UPDATE frontdesk_txn SET payment_status = '$payment_status', deposited = $net_paid, balance = $new_balance WHERE booking_ref ='$booking_ref'";
-// $update_txn_result = mysqli_query($dbConn, $update_txn);
-//echo mysqli_error($dbConn);
-
-// $update_guest_outstanding = "UPDATE frontdesk_guests SET room_outstanding = room_outstanding - $amount_paid WHERE guest_id  = '$guest_id'";
-// $update_outstanding_result = mysqli_query($dbConn, $update_guest_outstanding);
-
-
 $fp = fopen("new_pay.txt", "w+");
 
 $highSeparator = "--------------------------------\n";

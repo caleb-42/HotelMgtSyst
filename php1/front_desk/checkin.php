@@ -351,7 +351,7 @@ unlink($filename);
 
  if($txn_insert_result){
 	$msg_response[0] = "OUTPUT";
-	$msg_response[1] = $guest_name . " SUCCESSFULLY ADDED". mysqli_error($dbConn);
+	$msg_response[1] = $guest_name . " SUCCESSFULLY BOOKED". mysqli_error($dbConn);
  } else {
 	$msg_response[0] = "ERROR";
 	$msg_response[1] = "SOMETHING WENT WRONG". mysqli_error($dbConn);
