@@ -117,11 +117,11 @@
                             </div>
                             <div class="row justify-content-around w-100 py-3">
                                 <span class="py-1">
-                                    <input type="radio" id="male" value="male" checked name="guest_type_gender" />
+                                    <input type="radio" ng-model = "guest.guest_type_gender" id="male" value="male" checked name="guest_type_gender" />
                                     <label for="male" class="f-15 ml-2">Male</label>
                                 </span>
                                 <span class="py-1">
-                                    <input type="radio" value="female" name="guest_type_gender" id="female" />
+                                    <input type="radio" value="female" ng-model = "guest.guest_type_gender" name= "guest_type_gender" id="female" />
                                     <label for="female" class="f-15 ml-2">Female</label>
                                 </span>
                             </div>
@@ -303,20 +303,20 @@
                                         <h6 class='col-9 f-15 text-right'>{{rooms.roomgrid.type}}</h6>
                                     </div>
                                     <div class='row w-100 px-3 py-1 dark-back  m-0'>
-                                        <span class="col-1 p-0 text-left f-13">No.</span>
-                                        <span class="col-2 p-0 text-center f-13">Rate</span>
-                                        <span class="col-3 p-0 text-center f-13">Start</span>
+                                        <span class="col-2 p-0 text-left f-13">No.</span>
+                                        <span class="col-3 p-0 text-center f-13">Rate</span>
+                                        <span class="col-3 gone p-0 text-center f-13">Start</span>
                                         <span class="col-4 p-0 text-center f-13">Leave</span>
-                                        <span class="col-2 p-0 text-center f-13">Nights</span>
+                                        <span class="col-3 p-0 text-center f-13">Nights</span>
                                     </div>
                                     <div class='row w-100 text-center'>
                                         <ul class="w-100">
                                             <li ng-repeat = 'room in rooms.roomgrid.room_details.rooms[rooms.roomgrid.type].arr' class = "w-100 row px-3"  ng-class = "{'sechue anim' : rooms.roomgrid.reservedyes == room.room_id, 'lytpurp-back' : room.selected && rooms.roomgrid.reservedyes != room.room_id}">
-                                                <span ng-click = "room.selected = room.selected ? false : true; rooms.roomgrid.room_details.toggleroom();" class="col-1 px-0 f-13 py-2 roomno text-left">{{room.room_number}}</span>
-                                                <span ng-click = "room.selected = room.selected ? false : true; rooms.roomgrid.room_details.toggleroom();" class="col-2 px-0 f-13 py-2 roomno">{{room.room_rate}}</span>
-                                                <span date-set= "{{settings.date}}" date-format="yyyy-MM-dd" class="col-3 px-0 f-13 py-2 roomno"><input ng-model = 'rooms.roomgrid.roomdate[room.room_id]' ng-init = "rooms.roomgrid.roomdate[room.room_id] = room.room_reservation_date" class='formcontrol w-100 text-center' name = 'room_reservation_date' ng-change = "rooms.roomgrid.room_details.change_nyt_no(room.room_id); "/></span>
+                                                <span ng-click = "room.selected = room.selected ? false : true; rooms.roomgrid.room_details.toggleroom();" class="col-2 px-0 f-13 py-2 roomno text-left">{{room.room_number}}</span>
+                                                <span ng-click = "room.selected = room.selected ? false : true; rooms.roomgrid.room_details.toggleroom();" class="col-3 px-0 f-13 py-2 roomno">{{room.room_rate}}</span>
+                                                <span date-set= "{{settings.date}}" date-format="yyyy-MM-dd" class="col-3 gone px-0 f-13 py-2 roomno"><input ng-model = 'rooms.roomgrid.roomdate[room.room_id]' ng-init = "rooms.roomgrid.roomdate[room.room_id] = room.room_reservation_date" class='formcontrol w-100 text-center' name = 'room_reservation_date' ng-change = "rooms.roomgrid.room_details.change_nyt_no(room.room_id); "/></span>
                                                 <span ng-click = "room.selected = room.selected ? false : true; rooms.roomgrid.room_details.toggleroom();" class="col-4 px-0 f-13 py-2 roomno text-center">{{(rooms.roomgrid.roomid[room.room_id] | intervalGetDate: rooms.roomgrid.roomdate[room.room_id])}}</span>
-                                                <span class="col-2 f-13 px-0 py-2 nights text-right"><input ng-model = 'rooms.roomgrid.roomid[room.room_id]' ng-init = "rooms.roomgrid.roomid[room.room_id] = room.no_of_nights" class='formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "rooms.roomgrid.room_details.change_nyt_no(room.room_id); "/></span>
+                                                <span class="col-3 f-13 px-0 py-2 nights text-right"><input ng-model = 'rooms.roomgrid.roomid[room.room_id]' ng-init = "rooms.roomgrid.roomid[room.room_id] = room.no_of_nights" class='formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "rooms.roomgrid.room_details.change_nyt_no(room.room_id); "/></span>
                                             </li>
                                         </ul>
                                     </div>

@@ -29,13 +29,14 @@ $biz_contact = $shop_contact . "\n";
 $connector = new WindowsPrintConnector($printName);
 $printer = new Printer($connector);
 
- // $reservation_data = '{"reservation_ref":"RESV_6723", "amount_paid": 63000, "total_cost":171000, "means_of_payment":"INTERNET TRANSFER", "guest_id":"", "frontdesk_rep":"Ada", "guest_name":"James Baldwin", "rooms":[{"room_id":"RM_23454"}, {"room_id":"RM_23454"}, {"room_id":"RM_23454"}]}';
+ // $reservation_data = '{"reservation_ref":"RESV_6723", "guest_id":"", "frontdesk_rep":"Ada", "guest_name":"James Baldwin", "rooms":[{"room_id":"RM_23454"}, {"room_id":"RM_23454"}, {"room_id":"RM_23454"}]}';
 
  $reservation_data = json_decode($reservation_data, true);
  $msg_response = ["OUTPUT", "NOTHING HAPPENED"];
  $reservations = [];
  $rooms = $reservation_data["rooms"];
  $no_of_rooms = count($rooms);
+ $guest_name = $reservation_data["guest_name"];
 
  $reservation_ref = $reservation_data["reservation_ref"];
 
@@ -82,90 +83,103 @@ $printer = new Printer($connector);
     }
  }
 
- $get_reservations_query = $conn->prepare("SELECT no_of_nights, reserved_date FROM frontdesk_reservations WHERE reservation_ref = '$reservation_ref' AND room_id = ? AND booked = 'NO'");
+ $get_reservations_query = $conn->prepare("SELECT no_of_nights, reserved_date, booked, cancelled, room_number, room_category, room_rate, room_total_cost, guests FROM frontdesk_reservations WHERE reservation_ref = '$reservation_ref' AND room_id = ?");
  $get_reservations_query->bind_param("s", $room_id);
+
+ $expired_reservations = [];
+ $booked_reservations = [];
+ $cancelled_reservations = [];
 
  for ($i=0; $i < $no_of_rooms ; $i++) { 
  	$room_id = $rooms[$i]["room_id"];
  	$get_reservations_query->execute();
- 	$get_reservations_query->bind_result($no_of_nights, $reserved_date);
+ 	$get_reservations_query->bind_result($no_of_nights, $reserved_date, $booked, $cancelled, $room_number, $room_category, $room_rate, $room_total_cost, $guests);
  	$get_reservations_query->fetch();
  	$room_reservation_date = $rooms[$i]["reserved_date"];
  	$room_reservation_date = date_create($room_reservation_date);
  	$room_reservation_out_date = $room_reservation_date;
  	date_add($room_reservation_out_date, date_interval_create_from_date_string("$no_of_nights days"));
- }
-
- $get_reservations = "SELECT * FROM frontdesk_reservations WHERE reservation_ref = '$reservation_ref'";
- $get_reservations_result = mysqli_query($dbConn, $get_reservations);
-
- if (mysqli_num_rows($get_reservations_result) > 0){
- 	  while($rows = mysqli_fetch_assoc($get_reservations_result)) {
- 		$reservations[] = $rows;
- 	  }
- }
- $no_of_reservations = count($reservations);
-
-$select_rooms_query = $conn->prepare("SELECT booked, room_number FROM frontdesk_rooms WHERE room_id = ?");
-// var_dump($select_rooms_query);
-
-$select_rooms_query->bind_param("s", $room_id); // continue from here
-
- for ($i=0; $i<$no_of_reservations; $i++) {
- 	$no_of_nights = $reservations[$i]["no_of_nights"];
-    $d = strtotime("+"."$no_of_nights days");
-    $check_out_date = date("Y-m-d", $d);
- 	$room_id = $reservations[$i]["room_id"];
- 	$select_rooms_query->execute();
- 	$select_rooms_query->bind_result($booked, $room_number);
- 	$select_rooms_query->fetch();
- 	// echo $room_id;
- 	// echo mysqli_error($conn);
- 	if ($booked == "YES") {
- 		$select_rooms_query->close();
-	    $msg_response[0] = "ERROR";
-	    $msg_response[1] = $room_number . " is already booked";
-	    $response_message = json_encode($msg_response);
-	    $printer -> close();
- 		die($response_message);
+ 	$rooms[$i]["reserved_out_date"] = $room_reservation_out_date;
+ 	$today = date("Y-m-d");
+ 	if ($room_reservation_out_date <= $today) {
+ 		$expired_reservations[] = $room_id;
  	}
+ 	if ($cancelled == "CANCELLED") {
+ 		$cancelled_reservations[] = $room_id
+ 	}
+ 	if ($booked == "BOOKED") {
+ 		$booked_reservations[] = $room_id
+ 	}
+ 	$rooms[$i]["no_of_nights"] = $no_of_nights;
+ 	$rooms[$i]["reserved_date"] = $reserved_date;
+ 	$rooms[$i]["booked"] = $booked;
+ 	$rooms[$i]["cancelled"] = $cancelled;
+ 	$rooms[$i]["room_number"] = $room_number;
+ 	$rooms[$i]["room_category"] = $room_category;
+ 	$rooms[$i]["room_rate"] = $room_rate;
+ 	$rooms[$i]["room_total_cost"] = $room_total_cost;
+ 	$rooms[$i]["guests"] = $guests;
  }
- $select_rooms_query->close();
 
- /*Record sales of individual rooms*/
-$insert_into_bookings = $conn->prepare("INSERT INTO frontdesk_bookings (booking_ref, room_number, room_id, room_category, room_rate, guest_name, guest_id, no_of_nights, net_cost, guests, expected_checkout_date, expected_checkout_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, CURRENT_TIME)");
- // echo $conn->error;
- // var_dump($insert_into_bookings);
 
-$insert_into_bookings->bind_param("sississiiis", $tx_ref, $room_number, $room_id, $room_category, $room_rate, $client_name, $client_id, $no_of_days, $room_net_cost, $guests, $expected_checkout_date);
+ if (count($expired_reservations) == 0) {
+ 	$list_expired_reservations = implode(", ", $expired_reservations);
+ 	$msg_response[0] = "ERROR";
+	$msg_response[1] = "$list_expired_reservations have/has expired reservations";
+	$response_message = json_encode($msg_response);
+	$printer -> close();
+ 	die($response_message);
+ }
 
-for ($i=0; $i <$no_of_reservations; $i++) { 
-	$tx_ref = $reservation_ref;
-	$room_number = $reservations[$i]["room_number"];
-	$room_id = $reservations[$i]["room_id"];
-	$room_category = $reservations[$i]["room_category"];
-	$room_rate = $reservations[$i]["room_rate"];
-	$guests = $reservations[$i]["guests"];
+  if (count($cancelled_reservations) == 0) {
+ 	$list_cancelled_reservations = implode(", ", $cancelled_reservations);
+ 	$msg_response[0] = "ERROR";
+	$msg_response[1] = "$list_cancelled_reservations have/has cancelled reservations";
+	$response_message = json_encode($msg_response);
+	$printer -> close();
+ 	die($response_message);
+ }
+
+  if (count($expired_reservations) == 0) {
+ 	$list_booked_reservations = implode(", ", $booked_reservations);
+ 	$msg_response[0] = "ERROR";
+	$msg_response[1] = "$list_booked_reservations have/has been booked";
+	$response_message = json_encode($msg_response);
+	$printer -> close();
+ 	die($response_message);
+ }
+
+ $insert_into_bookings = $conn->prepare("INSERT INTO frontdesk_bookings (booking_ref, reservation_ref, room_number, room_id, room_category, room_rate, guest_name, guest_id, no_of_nights, net_cost, guests, expected_checkout_date, expected_checkout_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, CURRENT_TIME)");
+
+$insert_into_bookings->bind_param("sississiiis", $tx_ref, $reserve_ref, $room_number, $room_id, $room_category, $room_rate, $client_name, $client_id, $no_of_days, $room_net_cost, $guests, $expected_checkout_date);
+
+for ($i=0; $i <$no_of_rooms; $i++) { 
+	$tx_ref = $booking_ref;
+	$reserve_ref = $reservation_ref;
+	$room_number = $rooms[$i]["room_number"];
+	$room_id = $rooms[$i]["room_id"];
+	$room_category = $rooms[$i]["room_category"];
+	$room_rate = $rooms[$i]["room_rate"];
+	$guests = $rooms[$i]["guests"];
 	$client_name = $guest_name;
 	$client_id = $guest_id;	
-	$no_of_days = $reservations[$i]["no_of_nights"];
+	$no_of_days = $rooms[$i]["no_of_nights"];
 	$room_net_cost = $room_rate * $no_of_days;
-	$reservations[$i]["room_total_cost"] = $room_net_cost;
-	$d = strtotime("+"."$no_of_nights days");
-	$expected_checkout_date = date("Y-m-d", $d);
+	$rooms[$i]["room_total_cost"] = $room_net_cost;
+	$expected_checkout_date =  $rooms[$i]["reserved_out_date"];
 	$insert_into_bookings->execute();
 }
 $insert_into_bookings->close();
 
 $update_room_query = $conn->prepare("UPDATE frontdesk_rooms SET booked_on = CURRENT_TIMESTAMP, booked = 'YES', guests = ?, current_guest_id = ?, booking_ref = ?, booking_expires = ? WHERE room_id = ?");
 $update_room_query->bind_param("issss", $guests, $current_guest_id, $bk_ref, $booking_expires, $room_id);
-for ($i=0; $i <$no_of_reservations ; $i++) {
-	$no_of_nights = $reservations[$i]["no_of_nights"];
+for ($i=0; $i <$no_of_rooms ; $i++) {
+	$no_of_nights = $rooms[$i]["no_of_nights"];
 	$d = strtotime("+"."$no_of_nights days");
 	$booking_expires = date("Y-m-d h:i:s", $d);
-	$room_id = $reservations[$i]["room_id"];
-	$guests = $reservations[$i]["guests"];
-	$bk_ref = $reservation_ref;
+	$room_id = $rooms[$i]["room_id"];
+	$guests = $rooms[$i]["guests"];
+	$bk_ref = $booking_ref;
 	$current_guest_id = $guest_id;
 	$update_room_query->execute();
 }

@@ -53,6 +53,7 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                 jsonForm = $(".addGuestForm").serializeObject();
                 jsonForm.room_outstanding = 0;
                 jsonForm.total_cost = scope.guest.roomgrid.room_info.cost;
+                jsonForm.guest_type_gender = scope.guest.guest_type_gender;
                 jsonForm.total_rooms_booked = scope.guest.roomgrid.room_info.rooms;
                 jsonForm.balance = scope.guest.roomgrid.room_info.cost - jsonForm.deposited ;
                 jsonForm.frontdesk_rep = $rootScope.settings.user;

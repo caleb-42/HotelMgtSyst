@@ -528,7 +528,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             },
             getrooms : function(roomCat){
                 roomCat.forEach(function(cat){
-                    jsonPost.data("../php1/front_desk/frontdesk_rooms_by_category.php", {
+                    jsonPost.data("../php1/front_desk/list_rooms_for_reservations.php", {
                         category : cat
                     }).then(function(result){
                         $scope.rooms.roomgrid.room_details.rooms[cat] = {name: cat, arr: $scope.rooms.roomgrid.resvtn_room(result)};
@@ -546,13 +546,29 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 for(var i = 0; i < arr.length; i++){
                     elem = arr[i];
                     console.log(elem.reservations);
+                    bookedon = new Date(elem.booked_on);
+                    bookedoff = new Date(elem.booking_expires);
+
+                    date1 = new Date($scope.rooms.roomgrid.nytdate);
+
+                    date3 = new Date($scope.rooms.roomgrid.nytstartdate);
+
+                    if(((date3 >= bookedon && date3 <= bookedoff) || (date1 >= bookedon && date1 <= bookedoff)) && elem.booked_on != '0000-00-00 00:00:00'){
+                        console.log('aawwee');
+                        elem.can_be_booked = false;
+                        break;
+                    }
+                    
+
                     if(elem.reservations){
                         for(var j = 0; j < elem.reservations.length; j++){
                             resvtn = elem.reservations[j];
-                            date1 = new Date($scope.rooms.roomgrid.nytdate);
+                            
                             date2 = new Date(resvtn.reserved_date);
-                            date3 = $scope.rooms.roomgrid.nytstartdate;
+                            
                             date4 = new Date($filter('intervalGetDate')(resvtn.no_of_nights, resvtn.reserved_date));
+                            
+                            console.log(date1,date2,date3,date4);
                             
                             if((date3 >= date2 && date3 <= date4) || (date1 >= date2 && date1 <= date4)){
                                 elem.can_be_booked = false;
