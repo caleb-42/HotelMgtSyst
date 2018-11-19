@@ -354,6 +354,89 @@
             </div>
             <!--....... Reservation End ......... -->
 
+            <!--....... Update Reservation Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'Update Reservation'">
+                <div class="w-100">
+                    <form autocomplete="off" class="UnconfirmedReservationForm p-4 w-100" ng-if="settings.modal.name == 'Unconfirmed Reservation'">
+                        <div class="float-left w-45 inpRead row m-0">
+                            <input class="user form-control font-fam-Montserrat text-center d-block my-4" placeholder="User"
+                                name="user" readonly />
+                            <input class="user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Username" name="user_name" readonly />
+                            <input class="role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Role"
+                                name="role" readonly />
+                            <input class="password form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Password" name="pass" readonly />
+                        </div>
+                        <div class="float-right w-45 row m-0 justify-content-center">
+                            <input class="user form-control font-fam-Montserrat text-center d-block my-4" placeholder="User"
+                                name="new_user" />
+                            <input class="user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Username" name="new_user_name" />
+                            <div class="row justify-content-between w-50 py-4">
+                                <span class="py-1">
+                                    <input type="radio" id="admin" value="admin" name="new_role" />
+                                    <label for="admin" class="f-15 ml-2">Admin</label>
+                                </span>
+                                <span class="py-1">
+                                    <input type="radio" checked value="user" name="new_role" id="user" />
+                                    <label for="user" class="f-15 ml-2">User</label>
+                                </span>
+                            </div>
+                            <input class="password form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Password" name="new_password" />
+                        </div>
+                    </form>
+                    <form autocomplete="off" class="ConfirmedReservationForm p-4 w-100" ng-if="settings.modal.name == 'Confirmed Reservation'">
+                        <div class="float-left w-45 inpRead row m-0">
+                            <input class="user form-control font-fam-Montserrat text-center d-block my-4" placeholder="User"
+                                name="user" readonly />
+                            <input class="user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Username" name="user_name" readonly />
+                            <input class="role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Role"
+                                name="role" readonly />
+                            <input class="password form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Password" name="pass" readonly />
+                        </div>
+                        <div class="float-right w-45 row m-0 justify-content-center">
+                            <input class="user form-control font-fam-Montserrat text-center d-block my-4" placeholder="User"
+                                name="new_user" />
+                            <input class="user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Username" name="new_user_name" />
+                            <div class="row justify-content-between w-50 py-4">
+                                <span class="py-1">
+                                    <input type="radio" id="admin" value="admin" name="new_role" />
+                                    <label for="admin" class="f-15 ml-2">Admin</label>
+                                </span>
+                                <span class="py-1">
+                                    <input type="radio" checked value="user" name="new_role" id="user" />
+                                    <label for="user" class="f-15 ml-2">User</label>
+                                </span>
+                            </div>
+                            <input class="password form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Password" name="new_password" />
+                        </div>
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="updateReservation()">
+                                    {{settings.modal.name | limitTo:7}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--....... Update Reservation End ......... -->
+
             <!--....... CheckIn Start ......... -->
             <div class="w-100" ng-if="settings.modal.active == 'CheckIn'">
                 <div class="w-100" ng-if="settings.modal.name == 'CheckIn'">

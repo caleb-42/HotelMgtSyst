@@ -32,6 +32,10 @@
     background: #b73434 !important;
     color: white;
 }
+.btn.purp-back:hover {
+    background: rgb(90, 23, 121) !important;
+    color: white;
+}
 .nopadding {
     padding: 0 !important;
     margin: 0 !important;
@@ -123,7 +127,7 @@ li{
     color: #d9534f !important;
 }
 .orange{
-    background: #f0ad4e;
+    background: #f0ad4e !important;
     color: #fff;
 }
 .orange-clr{
