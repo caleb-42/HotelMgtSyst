@@ -75,7 +75,7 @@
             <div class="card">
                 <div class="card-header" id="headingOne">
                     <h5 class="mb-0 pointer p-3 py-2 f-17 collapsed font-fam-Montserrat-bold blac opac-70" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        List Reservations
+                        Unconfirmed Reservations
                     </h5>
                 </div>
 
@@ -85,13 +85,18 @@
                             <h6 class=" text-center w-100 "> Select A Room</h6>
                         </div>
                         <div class = "listcont w-100 {{!rooms.jslist.selected ? 'gone' : 'notgone'}}">
+                            <div class = "row w-100 justify-content-between pb-3">
+                            <button class="btn btn-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Update Reservation'; settings.modal.name = 'Unconfirmed Reservation'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud" ng-disabled="!rooms.reservations.temp_reservation.selected">Update</button>
+                            <input class="form-control w-40 text-center anim" ng-model="searchbox.inp"  placeholder = "Search"/>
+                            <button class="btn btn-danger mx-1 font-fam-Montserrat f-12" ng-click=" " data-toggle="modal" data-target="#crud" ng-disabled="!rooms.reservations.temp_reservation.selected">Delete</button>
+                            </div>
                             <div class = "listhd row font-fam-Montserrat-bold w-100 px-2">
                                 <span class="{{hd.width}} f-13 opac-70 p-0"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in rooms.reservations.listhddata">{{hd.name}}</span>
                             </div>
                             <div class = "h-70 listbody ovflo-y pb-4" >
                                 <ul class = "list" >
-                                    <li class = "itemlistrow row align-items-center px-2 f-12" ng-repeat = "reservation in 
-                        rooms.reservations.reservation_list">
+                                    <li ng-click = "rooms.reservations.temp_reservation.select($index, reservation.reservation_ref)" class = "itemlistrow row align-items-center px-2 f-12" ng-repeat = "reservation in rooms.reservations.temp_reservation.newItemArray = ( 
+                        rooms.reservations.temp_reservation.reservation_list | filter:searchbox.inp)" ng-class = "{'actparent' :rooms.reservations.temp_reservation.selected == reservation.reservation_ref}">
                                         <span class = " login col-2 p-0">{{reservation.guest_name}}</span>
                                         <span class = "text-center logoff col-3 p-0">{{reservation.reserved_date}}</span>
                                         <span class = "text-center logoff col-1 p-0">{{reservation.no_of_nights}}</span>
@@ -108,19 +113,44 @@
             <div class="card">
                 <div class="card-header " id="headingTwo">
                     <h5 class="mb-0 pointer p-3 f-17 collapsed font-fam-Montserrat-bold blac opac-70" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Update Guest Info
+                        Confirmed Reservation
                     </h5>
                 </div>
                 <div id="collapseTwo" class="collapse px-2" aria-labelledby="headingTwo" data-parent="#accordionExample">
                     <div class="card-body py-3 px-4 hs-55 ovflo-y font-fam-Montserrat">
-
+                    <div class = "row w-100 h-80 {{rooms.jslist.selected ? 'gone' : 'align-items-center'}} relatv ">
+                            <h6 class=" text-center w-100 "> Select A Room</h6>
+                        </div>
+                        <div class = "listcont w-100 {{!rooms.jslist.selected ? 'gone' : 'notgone'}}">
+                            <div class = "row w-100 justify-content-between pb-3">
+                            <button class="btn btn-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Update Reservation'; settings.modal.name = 'Unconfirmed Reservation'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud" ng-disabled="!rooms.reservations.temp_reservation.selected">Update</button>
+                            <input class="form-control w-40 text-center anim" ng-model="searchbox.inp"  placeholder = "Search"/>
+                            <button class="btn btn-danger mx-1 font-fam-Montserrat f-12" ng-click=" " data-toggle="modal" data-target="#crud" ng-disabled="!rooms.reservations.temp_reservation.selected">Delete</button>
+                            </div>
+                            <div class = "listhd row font-fam-Montserrat-bold w-100 px-2">
+                                <span class="{{hd.width}} f-13 opac-70 p-0"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in rooms.reservations.listhddata">{{hd.name}}</span>
+                            </div>
+                            <div class = "h-70 listbody ovflo-y pb-4" >
+                                <ul class = "list" >
+                                    <li ng-click = "rooms.reservations.temp_reservation.select($index, reservation.reservation_ref)" class = "itemlistrow row align-items-center px-2 f-12" ng-repeat = "reservation in rooms.reservations.temp_reservation.newItemArray = ( 
+                        rooms.reservations.temp_reservation.reservation_list | filter:searchbox.inp)" ng-class = "{'actparent' :rooms.reservations.temp_reservation.selected == reservation.reservation_ref}">
+                                        <span class = " login col-2 p-0">{{reservation.guest_name}}</span>
+                                        <span class = "text-center logoff col-3 p-0">{{reservation.reserved_date}}</span>
+                                        <span class = "text-center logoff col-1 p-0">{{reservation.no_of_nights}}</span>
+                                        <span class = "text-center logoff col-3 p-0">{{reservation.no_of_nights | intervalGetDate: reservation.reserved_date}}</span>
+                                        <span class = "text-center logoff col-3 p-0">{{reservation.room_total_cost}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="card">
                 <div class="card-header" id="headingThree">
                     <h5 class="mb-0 pointer p-3 f-17 collapsed font-fam-Montserrat-bold blac opac-70" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Check out
+                        Features
                     </h5>
                 </div>
                 <div id="collapseThree" class="collapse px-2" aria-labelledby="headingThree" data-parent="#accordionExample">
@@ -137,7 +167,7 @@
 <!-- ............room start ..............-->
 <div class = "h-100 w-100 p-4" ng-if = "<?php echo $_GET['list']  == 'roomgrid' ?>">
     <div class = "itemboxhd ovflo-y h-100 w-100">
-        <div class = "anim itembox {{items.booked == 'YES' ? 'lytpurp-back1' : ''}} b-rad" ng-repeat = "items in (rooms.jslist.newItemArray = (rooms.jslist.values | filter:searchbox.imp))" ng-click = "rooms.jslist.select($index, items.room_id); rooms.reservations.listReservation()" ng-class = "{'actparent' :rooms.jslist.selected == items.room_id}" >
+        <div class = "anim itembox {{items.booked == 'YES' ? 'lytpurp-back1' : ''}} b-rad" ng-repeat = "items in (rooms.jslist.newItemArray = (rooms.jslist.values | filter:searchbox.imp))" ng-click = "rooms.jslist.select($index, items.room_id); rooms.reservations.temp_reservation.listReservation()" ng-class = "{'orange' :rooms.jslist.selected == items.room_id}" >
             <h5>{{items.room_number}}</h5>
             
         </div>

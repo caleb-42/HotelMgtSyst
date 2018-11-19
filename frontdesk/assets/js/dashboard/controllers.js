@@ -362,17 +362,6 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             }
         },
         reservations: {
-            reservation_list : [],
-            listReservation: function () {
-                console.log('arr');
-                jsonPost.data("../php1/front_desk/list_reservations.php", {}).then(function(result){
-                    $scope.rooms.reservations.reservation_list = [];
-                    result.forEach(function(elem){
-                        (elem.deposit_confirmed != 'YES' && elem.booked != 'YES' && elem.room_id == $scope.rooms.jslist.selected) ? $scope.rooms.reservations.reservation_list.push(elem) : null;
-                    });
-                    console.log($scope.rooms.reservations.reservation_list);
-                });
-            },
             listhddata: [
                 {
                     name: "Guest",
@@ -395,20 +384,43 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     width: "col-3",
                 }
             ],
-            addReservation : function (jsonresvtn) {
-                console.log("new Reservation", jsonresvtn);
-    
-                jsonPost.data("../php1/front_desk/add_reservation.php", {
-                    reservation_data: $filter('json')(jsonresvtn)
-                }).then(function (response) {
-                    console.log(response);
-                    $scope.rooms.roomgrid.averagenyt = 0;
-                    $scope.rooms.roomgrid.room_info.rooms = 0;
-                    $scope.rooms.roomgrid.room_info.cost = 0;
-                    $rootScope.settings.modal.msgprompt(response);
-                    $scope.rooms.jslist.createList();
+            
+            listReservation: function (type) {
+                console.log('arr');
+                jsonPost.data("../php1/front_desk/list_reservations.php", {}).then(function(result){
+                    $scope.rooms.reservations.temp_reservation.reservation_list = [];
+                    result.forEach(function(elem){
+                        if(type == 'unconfirm'){
+
+                        }
+                        (elem.deposit_confirmed != 'YES' && elem.booked != 'YES' && elem.room_id == $scope.rooms.jslist.selected) ? $scope.rooms.reservations.temp_reservation.reservation_list.push(elem) : null;
+                    });
+                    console.log($scope.rooms.reservations.temp_reservation.reservation_list);
                 });
+            },
+            temp_reservation: {
+                reservation_list : [],
+                addReservation : function (jsonresvtn) {
+                    console.log("new Reservation", jsonresvtn);
+        
+                    jsonPost.data("../php1/front_desk/add_reservation.php", {
+                        reservation_data: $filter('json')(jsonresvtn)
+                    }).then(function (response) {
+                        console.log(response);
+                        $scope.rooms.roomgrid.averagenyt = 0;
+                        $scope.rooms.roomgrid.room_info.rooms = 0;
+                        $scope.rooms.roomgrid.room_info.cost = 0;
+                        $rootScope.settings.modal.msgprompt(response);
+                        $scope.rooms.jslist.createList();
+                    });
+                },
+                select: function (index, id) {
+                    $scope.rooms.reservations.temp_reservation.selected = id;
+                    $scope.rooms.reservations.temp_reservation.selectedObj = $scope.rooms.reservations.temp_reservation.newItemArray[index];
+                    console.log($scope.rooms.reservations.temp_reservation.newItemArray[index]);
+                },
             }
+            
         },
         roomgrid:{
             type: '',
