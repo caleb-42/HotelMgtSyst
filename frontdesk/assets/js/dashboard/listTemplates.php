@@ -144,7 +144,7 @@
                                 </ul>
                             </div>
                         </div> 
-                        <div class = "w-100 align-self-end btn-block"><button class = "btn w-100 purp-back wht opac-50" ng-disabled="!rooms.reservations.confirmed_reservation.selected">Claim</button></div> 
+                        <div class = "w-100 align-self-end btn-block"><button class = "btn w-100 purp-back wht opac-50" ng-disabled="!rooms.reservations.confirmed_reservation.selected" ng-click = "rooms.reservations.confirmed_reservation.claim();" >Claim</button></div> 
                         </div> 
                     </div>       
                         <!-- <div class = "w-100 align-self-end btn-block"><button class = "btn w-100 purp-back wht opac-70">Confirm</button></div> 

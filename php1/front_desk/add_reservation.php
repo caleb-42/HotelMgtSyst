@@ -5,7 +5,7 @@ $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
 $reservation_data = $_POST["reservation_data"];
 
-  // $reservation_data = '{"guest_name":"Ewere", "guest_id": "", "guest_type_gender": "male", "phone_number":"08023456789", "email":"tegogs@gmail.com",  "total_cost": 252000, "frontdesk_rep": "Ada", "amount_paid": 200000, "rooms": [{"room_number": 101, "room_id": "RM_20325", "guests":3, "room_rate": 20000, "no_of_nights":2, "room_category": "standard", "room_total_cost" : 40000, "room_reservation_date" : "2018-11-20"}, {"room_number": 102, "room_id": "RM_40891", "guests":3, "room_rate": 20000, "no_of_nights":3, "room_category": "standard", "room_total_cost" : 60000, "room_reservation_date" : "2018-11-20"}, {"room_number": 202, "room_id": "RM_50984", "guests":3, "room_rate": 35000, "no_of_nights":4, "room_category": "standard", "room_total_cost" : 140000, "room_reservation_date" : "2018-11-20"}]}'; 
+  // $reservation_data = '{"guest_name":"Ewere", "guest_id": "", "guest_type_gender": "male", "phone_number":"08023456789", "email":"tegogs@gmail.com",  "frontdesk_rep": "Ada", "rooms": [{"room_number": 101, "room_id": "RM_20325", "guests":3, "room_rate": 20000, "no_of_nights":2, "room_category": "standard", "room_reservation_date" : "2018-11-20"}, {"room_number": 102, "room_id": "RM_40891", "guests":3, "room_rate": 20000, "no_of_nights":3, "room_category": "standard", "room_reservation_date" : "2018-11-20"}, {"room_number": 202, "room_id": "RM_50984", "guests":3, "room_rate": 35000, "no_of_nights":4, "room_category": "standard", "room_reservation_date" : "2018-11-20"}]}'; 
 /*reservation_data is the json string from the front-end the keys contain aspects of the
 transaction */
  // var_dump($reservation_data);
@@ -35,7 +35,6 @@ transaction */
  $guest_type_gender = $reservation_data["guest_type_gender"]; // guest_type_gender = 'company' or 'male' or 'female'
  $phone_number = mysqli_real_escape_string($dbConn, $reservation_data["phone_number"]);
 
- $total_cost = $reservation_data["total_cost"];
  $frontdesk_rep = $reservation_data["frontdesk_rep"];
  $rooms = $reservation_data["rooms"];
  $no_of_rooms = count($rooms);

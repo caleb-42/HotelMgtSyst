@@ -370,8 +370,8 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     $scope.rooms.reservations.temp_reservation.reservation_list = [];
                     $scope.rooms.reservations.confirmed_reservation.reservation_list = [];
                     result.forEach(function(elem){
-                        (elem.deposit_confirmed == 'NO' && elem.room_id == $scope.rooms.jslist.selected) ? $scope.rooms.reservations.temp_reservation.reservation_list.push(elem) : null;
-                        (elem.deposit_confirmed == 'YES' && elem.room_id == $scope.rooms.jslist.selected) ? $scope.rooms.reservations.confirmed_reservation.reservation_list.push(elem) : null;
+                        (elem.booked == 'NO' &&elem.deposit_confirmed == 'NO' && elem.room_id == $scope.rooms.jslist.selected) ? $scope.rooms.reservations.temp_reservation.reservation_list.push(elem) : null;
+                        (elem.booked == 'NO' &&elem.deposit_confirmed == 'YES' && elem.room_id == $scope.rooms.jslist.selected) ? $scope.rooms.reservations.confirmed_reservation.reservation_list.push(elem) : null;
                         
                     });
                     console.log($scope.rooms.reservations.temp_reservation.reservation_list);
@@ -420,6 +420,18 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     $scope.rooms.reservations.confirmed_reservation.selectedObj = $scope.rooms.reservations.confirmed_reservation.newItemArray[index];
                     console.log($scope.rooms.reservations.confirmed_reservation.newItemArray[index]);
                 },
+                claim : function(){
+                    jsonclaim = $scope.rooms.reservations.confirmed_reservation.selectedObj;
+                    jsonclaim.frontdesk_rep = $rootScope.settings.user;
+                    console.log(jsonclaim);
+                    jsonPost.data("../php1/front_desk/claim_reservation.php", {
+                     reservation_data: $filter('json')(jsonclaim)
+                     }).then(function (response) {
+                         console.log(response);
+                         $rootScope.settings.modal.msgprompt(response);
+                         $scope.rooms.jslist.createList();
+                     });
+                }
             },
             temp_reservation: {
                 listhddata: [
