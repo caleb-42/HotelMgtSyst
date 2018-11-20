@@ -194,6 +194,14 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 }
 $update_room_query->close();
 
+$update_reservation_query = $conn->prepare("UPDATE frontdesk_rooms SET booked = 'YES', booking_ref = '$booking_ref', guest_id = '$guest_id' WHERE room_id = ? AND reservation_ref = '$reservation_ref'");
+$update_reservation_query->bind_param("s", $room_id);
+for ($i=0; $i <$no_of_rooms ; $i++) {
+	$room_id = $rooms[$i]["room_id"];
+	$update_reservation_query->execute();
+}
+$update_reservation_query->close();
+
 $get_reservation_details = "SELECT * FROM frontdesk_reservation_txn WHERE reservation_ref = '$reservation_ref'";
 $reservation_details = mysqli_query($dbConn, $get_reservation_details);
 $reservation_row = mysqli_fetch_assoc($reservation_details);
