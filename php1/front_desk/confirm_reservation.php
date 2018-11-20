@@ -15,7 +15,7 @@ $no_of_rooms = 0;
 $rooms = [];
 $net_room_rate = o;
 
-$get_all_ref_details_sql = "SELECT * FROM frontdesk_reservations WHERE deposit_confirmed = 'NO' AND reservation_ref = '$reservation_ref'";
+$get_all_ref_details_sql = "SELECT * FROM frontdesk_reservations WHERE deposit_confirmed = 'NO' AND reservation_ref = '$reservation_ref' AND cancelled != 'YES'";
 $get_all_ref_results = mysqli_query($dbConn, $get_all_ref_details_sql);
 if (mysqli_num_rows($get_all_ref_results)) {
 	$no_of_rooms = mysqli_num_rows($get_all_ref_results);
@@ -31,7 +31,7 @@ if (mysqli_num_rows($get_all_ref_results)) {
 		$email = $row["email"];
 	}
 } else {
-	$msg_response=["ERROR", "NOTHING TO CONFIRM"];
+	$msg_response=["ERROR", "Already confirmed or cancelled reservation"];
 	$response_message = json_encode($msg_response);
 	die($response_message);
 }

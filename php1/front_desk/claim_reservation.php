@@ -36,7 +36,7 @@ $printer = new Printer($connector);
 
  $reservation_ref = $reservation_data["reservation_ref"];
 
-$get_all_ref_details_sql = "SELECT * FROM frontdesk_reservations WHERE deposit_confirmed = 'YES' AND reservation_ref = '$reservation_ref'";
+$get_all_ref_details_sql = "SELECT * FROM frontdesk_reservations WHERE deposit_confirmed = 'YES' AND reservation_ref = '$reservation_ref' AND cancelled != 'YES'";
 $get_all_ref_results = mysqli_query($dbConn, $get_all_ref_details_sql);
 if (mysqli_num_rows($get_all_ref_results)) {
 	$no_of_rooms = mysqli_num_rows($get_all_ref_results);
@@ -47,7 +47,7 @@ if (mysqli_num_rows($get_all_ref_results)) {
 		$guest_name = $row["guest_name"];
 	}
 } else {
-	$msg_response=["ERROR", "This reservation has not been confirmed"];
+	$msg_response=["ERROR", "This reservation has not been confirmed or has been cancelled"];
 	$response_message = json_encode($msg_response);
 	die($response_message);
 }
