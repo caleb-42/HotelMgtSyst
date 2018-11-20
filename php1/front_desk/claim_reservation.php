@@ -29,27 +29,31 @@ $biz_contact = $shop_contact . "\n";
 $connector = new WindowsPrintConnector($printName);
 $printer = new Printer($connector);
 
- // $reservation_data = '{"reservation_ref":"RESV_22097", "guest_id":"", "frontdesk_rep":"Ada", "guest_name":"James Baldwin", "rooms": [{"room_id": "RM_20325"}, {"room_id": "RM_40891"}, {"room_id": "RM_50984"}]}';
+ // $reservation_data = '{"reservation_ref":"RESV_22097", "frontdesk_rep":"Ada"}';
  $reservation_data = $_POST["reservation_data"];
  $reservation_data = json_decode($reservation_data, true);
  $msg_response = ["OUTPUT", "NOTHING HAPPENED"];
- $reservations = [];
- $rooms = $reservation_data["rooms"];
- $no_of_rooms = count($rooms);
- $guest_name = $reservation_data["guest_name"];
- $frontdesk_rep = $reservation_data["frontdesk_rep"];
 
  $reservation_ref = $reservation_data["reservation_ref"];
 
- $check_confirmed_query = "SELECT * FROM frontdesk_reservations WHERE reservation_ref = '$reservation_ref' AND deposit_confirmed = 'YES'";
- $check_confirmed_result = mysqli_query($dbConn, $check_confirmed_query);
- if (!(mysqli_num_rows($check_confirmed_result))) {
- 	$msg_response[0] = "ERROR";
-	$msg_response[1] = "This reservation has not been confirmed";
+$get_all_ref_details_sql = "SELECT * FROM frontdesk_reservations WHERE deposit_confirmed = 'YES' AND reservation_ref = '$reservation_ref'";
+$get_all_ref_results = mysqli_query($dbConn, $get_all_ref_details_sql);
+if (mysqli_num_rows($get_all_ref_results)) {
+	$no_of_rooms = mysqli_num_rows($get_all_ref_results);
+	$i = 0;
+	while ($row = mysqli_fetch_assoc($get_all_ref_results)) {
+		$rooms[$i]["room_id"] = $row["room_id"];
+		$guest_id = $row["guest_id"];
+		$guest_name = $row["guest_name"];
+	}
+} else {
+	$msg_response=["ERROR", "This reservation has not been confirmed"];
 	$response_message = json_encode($msg_response);
-	$printer -> close();
- 	die($response_message);
- }
+	die($response_message);
+}
+
+ $reservations = [];
+ $frontdesk_rep = $reservation_data["frontdesk_rep"];
 
  $rand_id = mt_rand(0, 100000);
  $booking_ref = "BK_" . $rand_id;
@@ -64,9 +68,6 @@ $printer = new Printer($connector);
     $duplicate_id_query = "SELECT * FROM frontdesk_bookings WHERE booking_ref = '$booking_ref'";
     $duplicate_id_result = mysqli_query($dbConn, $duplicate_id_query);
  }
-
-
- $guest_id = $reservation_data["guest_id"];
 
  if ($guest_id == "") {
  	$rand_id = mt_rand(0, 100000);
