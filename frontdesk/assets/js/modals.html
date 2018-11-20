@@ -355,8 +355,12 @@
                     <form class="p-4 w-100 ConfirmReservationForm row justify-content-center m-0">
                         <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Amount Paid"
                             name="amount_paid" />
-                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Means of Payment"
-                            name="means_of_payment" />
+                        <select class="form-control methpay w-75 my-4 f-13" name="means_of_payment">
+                            <option selected value="Cash">Cash</option>
+                            <option value="Cheque">Cheque</option>
+                            <option value="POS">POS</option>
+                            <option value="Credit">Credit</option>
+                        </select>
                     </form>
                     <div class="modal-footer w-100">
                         <div class="justify-content-center w-100 d-flex flex-column">

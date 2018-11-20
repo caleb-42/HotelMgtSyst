@@ -368,6 +368,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 console.log('arr');
                 jsonPost.data("../php1/front_desk/list_reservations.php", {}).then(function(result){
                     $scope.rooms.reservations.temp_reservation.reservation_list = [];
+                    $scope.rooms.reservations.confirmed_reservation.reservation_list = [];
                     result.forEach(function(elem){
                         (elem.deposit_confirmed == 'NO' && elem.room_id == $scope.rooms.jslist.selected) ? $scope.rooms.reservations.temp_reservation.reservation_list.push(elem) : null;
                         (elem.deposit_confirmed == 'YES' && elem.room_id == $scope.rooms.jslist.selected) ? $scope.rooms.reservations.confirmed_reservation.reservation_list.push(elem) : null;
@@ -450,10 +451,18 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     console.log($scope.rooms.reservations.temp_reservation.newItemArray[index]);
                 },
                 confirm : function(jsonform){
-                   console.log(jsonform);
                    jsonconfirm = $scope.rooms.reservations.temp_reservation.selectedObj;
                    jsonconfirm.amount_paid = jsonform.amount_paid;
                    jsonconfirm.means_of_payment = jsonform.means_of_payment;
+                   jsonconfirm.frontdesk_rep = $rootScope.settings.user;
+                   console.log(jsonconfirm);
+                   jsonPost.data("../php1/front_desk/confirm_reservation.php", {
+                    reservation_data: $filter('json')(jsonconfirm)
+                    }).then(function (response) {
+                        console.log(response);
+                        $rootScope.settings.modal.msgprompt(response);
+                        $scope.rooms.jslist.createList();
+                    });
                 }
             }
             
