@@ -48,6 +48,11 @@ transaction */
  $total_rooms_booked = $checkin_data["total_rooms_booked"];
  $total_cost = $checkin_data["total_cost"];
  $deposited = $checkin_data["deposited"];
+
+ if ($deposited == "") {
+ 	$deposited = 0;
+ }
+
  $balance = $checkin_data["balance"];
  $room_outstanding = $room_outstanding + $balance ;
  $means_of_payment = $checkin_data["means_of_payment"];
@@ -203,7 +208,7 @@ $separator =     "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n";
 $separatorSolid = "________________________________\n";
 $doubleSeparator = "= = = = = = = = = = = = = = = = \n";
 
-$receiptNo = "RECEIPT NO.:" . $booking_ref ."            ";
+$receiptNo = "BOOKING REF.:" . $booking_ref ."            ";
 $current_date = date("D M d, Y g:i a");
 $receipt_time = "Receipt Generated on:\n" . $current_date . "\n";
 
