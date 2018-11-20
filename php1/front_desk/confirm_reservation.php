@@ -13,7 +13,7 @@ $reservation_ref = $reservation_data["reservation_ref"];
 $total_cost = 0;
 $no_of_rooms = 0;
 $rooms = [];
-$net_room_rate = o;
+$net_room_rate = 0;
 
 $get_all_ref_details_sql = "SELECT * FROM frontdesk_reservations WHERE deposit_confirmed = 'NO' AND reservation_ref = '$reservation_ref' AND cancelled != 'YES'";
 $get_all_ref_results = mysqli_query($dbConn, $get_all_ref_details_sql);
