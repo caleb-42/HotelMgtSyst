@@ -5,7 +5,7 @@ $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
 $reservation_data = $_POST["reservation_data"];
 
- /* $reservation_data = '{"guest_name":"Ewere", "guest_id": "", "guest_type_gender": "male", "phone_number":"08023456789", "email":"tegogs@gmail.com",  "total_cost": 252000, "frontdesk_rep": "Ada", "amount_paid": 200000, "rooms": [{"room_number": 402, "room_id": "RM_64917", "guests":3, "room_rate": 33000, "no_of_nights":2, "room_category": "deluxe", "room_total_cost" : 132000, "room_reservation_date" : "2018-11-20"}, {"room_number": 402, "room_id": "RM_66480", "guests":3, "room_rate": 15000, "no_of_nights":3, "room_category": "standard", "room_total_cost" : 60000, "room_reservation_date" : "2018-11-23"}, {"room_number": 402, "room_id": "RM_71638", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard", "room_total_cost" : 60000, "room_reservation_date" : "2018-11-22"}]}'; */
+  // $reservation_data = '{"guest_name":"Ewere", "guest_id": "", "guest_type_gender": "male", "phone_number":"08023456789", "email":"tegogs@gmail.com",  "total_cost": 252000, "frontdesk_rep": "Ada", "amount_paid": 200000, "rooms": [{"room_number": 101, "room_id": "RM_20325", "guests":3, "room_rate": 20000, "no_of_nights":2, "room_category": "standard", "room_total_cost" : 40000, "room_reservation_date" : "2018-11-20"}, {"room_number": 102, "room_id": "RM_40891", "guests":3, "room_rate": 20000, "no_of_nights":3, "room_category": "standard", "room_total_cost" : 60000, "room_reservation_date" : "2018-11-20"}, {"room_number": 202, "room_id": "RM_50984", "guests":3, "room_rate": 35000, "no_of_nights":4, "room_category": "standard", "room_total_cost" : 140000, "room_reservation_date" : "2018-11-20"}]}'; 
 /*reservation_data is the json string from the front-end the keys contain aspects of the
 transaction */
  // var_dump($reservation_data);
@@ -42,7 +42,7 @@ transaction */
 
  /*room check*/
 $select_rooms_query = $conn->prepare("SELECT booked, booked_on, booking_expires, room_number, reserved, reservation_date, reserved_nights  FROM frontdesk_rooms WHERE room_id = ?");
-echo $conn->error;
+// echo $conn->error;
 
 $select_rooms_query->bind_param("s", $room_id); // continue from here
 $reservation_conflict = [];

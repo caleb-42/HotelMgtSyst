@@ -362,63 +362,99 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             }
         },
         reservations: {
-            listhddata: [
-                {
-                    name: "Guest",
-                    width: "col-2",
-                },
-                {
-                    name: "Start",
-                    width: "col-3",
-                },
-                {
-                    name: "Nyts",
-                    width: "col-1",
-                },
-                {
-                    name: "Leave",
-                    width: "col-3",
-                },
-                {
-                    name: "Cost",
-                    width: "col-3",
-                }
-            ],
             
-            listReservation: function (type) {
+            
+            listReservation: function () {
                 console.log('arr');
                 jsonPost.data("../php1/front_desk/list_reservations.php", {}).then(function(result){
                     $scope.rooms.reservations.temp_reservation.reservation_list = [];
                     result.forEach(function(elem){
-                        if(type == 'unconfirm'){
-
-                        }
-                        (elem.deposit_confirmed != 'YES' && elem.booked != 'YES' && elem.room_id == $scope.rooms.jslist.selected) ? $scope.rooms.reservations.temp_reservation.reservation_list.push(elem) : null;
+                        (elem.deposit_confirmed == 'NO' && elem.room_id == $scope.rooms.jslist.selected) ? $scope.rooms.reservations.temp_reservation.reservation_list.push(elem) : null;
+                        (elem.deposit_confirmed == 'YES' && elem.room_id == $scope.rooms.jslist.selected) ? $scope.rooms.reservations.confirmed_reservation.reservation_list.push(elem) : null;
+                        
                     });
                     console.log($scope.rooms.reservations.temp_reservation.reservation_list);
                 });
             },
-            temp_reservation: {
+            addReservation : function (jsonresvtn) {
+                console.log("new Reservation", jsonresvtn);
+    
+                jsonPost.data("../php1/front_desk/add_reservation.php", {
+                    reservation_data: $filter('json')(jsonresvtn)
+                }).then(function (response) {
+                    console.log(response);
+                    $scope.rooms.roomgrid.averagenyt = 0;
+                    $scope.rooms.roomgrid.room_info.rooms = 0;
+                    $scope.rooms.roomgrid.room_info.cost = 0;
+                    $rootScope.settings.modal.msgprompt(response);
+                    $scope.rooms.jslist.createList();
+                });
+            },
+            confirmed_reservation : {
+                listhddata: [
+                    {
+                        name: "Guest",
+                        width: "col-2",
+                    },
+                    {
+                        name: "Start",
+                        width: "col-3",
+                    },
+                    {
+                        name: "Nyts",
+                        width: "col-1",
+                    },
+                    {
+                        name: "Paid",
+                        width: "col-3",
+                    },
+                    {
+                        name: "Cost",
+                        width: "col-3",
+                    }
+                ],
                 reservation_list : [],
-                addReservation : function (jsonresvtn) {
-                    console.log("new Reservation", jsonresvtn);
-        
-                    jsonPost.data("../php1/front_desk/add_reservation.php", {
-                        reservation_data: $filter('json')(jsonresvtn)
-                    }).then(function (response) {
-                        console.log(response);
-                        $scope.rooms.roomgrid.averagenyt = 0;
-                        $scope.rooms.roomgrid.room_info.rooms = 0;
-                        $scope.rooms.roomgrid.room_info.cost = 0;
-                        $rootScope.settings.modal.msgprompt(response);
-                        $scope.rooms.jslist.createList();
-                    });
+                select: function (index, id) {
+                    $scope.rooms.reservations.confirmed_reservation.selected = id;
+                    $scope.rooms.reservations.confirmed_reservation.selectedObj = $scope.rooms.reservations.confirmed_reservation.newItemArray[index];
+                    console.log($scope.rooms.reservations.confirmed_reservation.newItemArray[index]);
                 },
+            },
+            temp_reservation: {
+                listhddata: [
+                    {
+                        name: "Guest",
+                        width: "col-2",
+                    },
+                    {
+                        name: "Start",
+                        width: "col-3",
+                    },
+                    {
+                        name: "Nyts",
+                        width: "col-1",
+                    },
+                    {
+                        name: "Leave",
+                        width: "col-3",
+                    },
+                    {
+                        name: "Cost",
+                        width: "col-3",
+                    }
+                ],
+                reservation_list : [],
                 select: function (index, id) {
                     $scope.rooms.reservations.temp_reservation.selected = id;
                     $scope.rooms.reservations.temp_reservation.selectedObj = $scope.rooms.reservations.temp_reservation.newItemArray[index];
                     console.log($scope.rooms.reservations.temp_reservation.newItemArray[index]);
                 },
+                confirm : function(jsonform){
+                   console.log(jsonform);
+                   jsonconfirm = $scope.rooms.reservations.temp_reservation.selectedObj;
+                   jsonconfirm.amount_paid = jsonform.amount_paid;
+                   jsonconfirm.means_of_payment = jsonform.means_of_payment;
+                }
             }
             
         },

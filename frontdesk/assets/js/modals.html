@@ -351,6 +351,30 @@
 
                     </div>
                 </div>
+                <div class="w-100" ng-if="settings.modal.name == 'Confirm Reservation'">
+                    <form class="p-4 w-100 ConfirmReservationForm row justify-content-center m-0">
+                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Amount Paid"
+                            name="amount_paid" />
+                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Means of Payment"
+                            name="means_of_payment" />
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="confirmReservation()">
+                                    {{settings.modal.name | limitTo:7}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
             <!--....... Reservation End ......... -->
 

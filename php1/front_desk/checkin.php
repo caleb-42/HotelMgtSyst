@@ -176,7 +176,7 @@ $separator =     "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n";
 $separatorSolid = "________________________________\n";
 $doubleSeparator = "= = = = = = = = = = = = = = = = \n";
 
-$receiptNo = "RECEIPT NO.:" . $booking_ref ."            ";
+$receiptNo = "BOOKING REF.:" . $booking_ref ."         ";
 $current_date = date("D M d, Y g:i a");
 $receipt_time = "Receipt Generated on:\n" . $current_date . "\n";
 

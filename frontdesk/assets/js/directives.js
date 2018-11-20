@@ -30,6 +30,11 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                     loadJson2Form(scope.users.jslist.selectedObj, '.inpRead');
                 }
             });
+            confirmReservation = function(){
+                $rootScope.settings.modal.adding = true
+                jsonForm = $(".ConfirmReservationForm").serializeObject();
+                scope.rooms.reservations.temp_reservation.confirm(jsonForm);
+            }
             updateRoom = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".updateRoomForm").serializeObject();

@@ -21,8 +21,9 @@
 
     <div class="prime-body {{tabnav.selected.options.rightbar ? '' : 'p-0'}}">
         <div class="animate-switch-container" ng-switch on="tabnav.selected.name">
-            <div class="animate-switch" ng-switch-when="Rooms">
-                <div class="guests prime-footer anim h-60">
+
+            <div class="animate-switch h-100" ng-switch-when="Rooms">
+                <div class="guests prime-footer anim h-80">
                     <div class=" itemlayout w-100 h-93">
                         <div class="mb-5 item-container">
                             <div class="userlisthd row justify-content-between px-4">
@@ -35,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row align-items-center py-4 anim px-2 h-40">
+                <div class="row align-items-center anim py-3 px-2 h-20 relatv">
 
                     <div class = "row w-100">
                         <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 br-1 m-0 pb-3 px-3">Current Guest</h6>
@@ -45,9 +46,13 @@
                         <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 pb-3 br-1 m-0 px-3">Room Outstanding</h6>
                         <p class = "  col-8  f-13 opac-70 m-0 pb-2 px-3">{{rooms.current_guest.room_outstanding}} </p>
                     </div>
+                    <!-- <div class = "row w-40 dark-back py-3 h-100 abs" style = "top:0; right:0; bottom: -10px;">
+                        <div class = "row {{rooms.reservations.confirmed_reservation.selected ? 'gone' : 'align-items-center'}} relatv  w-100 h-100">
+                            <h4 class="font-fam-Montserrat wht font-weight-bold opac-70 text-center w-100 ">Resevations</h4>
+                        </div>
+                    </div> -->
 
                 </div>
-
             </div>
             <div class="animate-switch Guests h-100" ng-switch-when = "Guests">
                 <div class="guests  prime-footer anim h-80">
