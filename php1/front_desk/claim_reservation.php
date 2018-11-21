@@ -29,12 +29,15 @@ $biz_contact = $shop_contact . "\n";
 $connector = new WindowsPrintConnector($printName);
 $printer = new Printer($connector);
 
- // $reservation_data = '{"reservation_ref":"RESV_22097", "frontdesk_rep":"Ada"}';
+ // $reservation_data = '{"reservation_ref":"RESV_22097", "frontdesk_rep":"Ada", "contact_address": "51 Adesuwa Rd", "guest_type_gender" : "male"}';
  $reservation_data = $_POST["reservation_data"];
  $reservation_data = json_decode($reservation_data, true);
  $msg_response = ["OUTPUT", "NOTHING HAPPENED"];
 
  $reservation_ref = $reservation_data["reservation_ref"];
+ $contact_address = $reservation_data["contact_address"];
+ $guest_type_gender = $reservation_data["guest_type_gender"];
+ $new_guest = "";
 
 $get_all_ref_details_sql = "SELECT * FROM frontdesk_reservations WHERE deposit_confirmed = 'YES' AND reservation_ref = '$reservation_ref' AND cancelled != 'YES'";
 $get_all_ref_results = mysqli_query($dbConn, $get_all_ref_details_sql);
@@ -70,6 +73,7 @@ if (mysqli_num_rows($get_all_ref_results)) {
  }
 
  if ($guest_id == "") {
+ 	$new_guest = 1;
  	$rand_id = mt_rand(0, 100000);
     $guest_id = "LOD_" . $rand_id;
 
@@ -206,9 +210,15 @@ $get_reservation_details = "SELECT * FROM frontdesk_reservation_txn WHERE reserv
 $reservation_details = mysqli_query($dbConn, $get_reservation_details);
 $reservation_row = mysqli_fetch_assoc($reservation_details);
 
-$total_cost = $reservation_row["total_cost"];
-$deposited = $reservation_row["deposited"];
+$total_cost = intval($reservation_row["total_cost"]);
+$deposited = intval($reservation_row["deposited"]);
+$room_outstanding = intval($total_cost) - intval($deposited);
 $means_of_payment = $reservation_row["means_of_payment"];
+
+if ($new_guest) {
+	$add_new_guest_query = "INSERT INTO frontdesk_guests (guest_id, guest_name, guest_type_gender, phone_number, contact_address, room_outstanding,  total_rooms_booked) VALUES('$guest_id', '$guest_name', '$guest_type_gender', '$phone_number', '$contact_address', $room_outstanding, $no_of_rooms)";
+    $add_new_guest_result = mysqli_query($dbConn, $add_new_guest_query);
+}
 
 /*Print Frontdesk Receipts*/
 
