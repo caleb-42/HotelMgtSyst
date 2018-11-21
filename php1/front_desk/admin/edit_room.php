@@ -27,7 +27,7 @@ if ($old_num != $room_number) {
     }
 }
 
-$update_room_query = "UPDATE frontdesk_rooms SET room_number = $room_number, room_rate = $room_rate, room_category = '$room_category' WHERE room_id = '$room_id'";
+$update_room_query = "UPDATE frontdesk_rooms SET room_number = $room_number, room_rate = $room_rate, room_category = '$room_category', features = '$features' WHERE room_id = '$room_id'";
 
 $update_room_result = mysqli_query($dbConn, $update_room_query);
 

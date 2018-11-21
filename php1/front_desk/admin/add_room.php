@@ -10,6 +10,7 @@ $new_room = json_decode($_POST["new_room"], true);
 $room_number = $new_room["room_number"];
 $room_rate = $new_room["room_rate"];
 $room_category = $new_room["room_category"];
+$features = $new_room["features"];
 $occupancy = 0;
 $current_guest_id = "";
 $extra_guests = 0;
@@ -35,7 +36,7 @@ if (mysqli_num_rows($duplicate_check_result) > 0) {
 	die($response_msg);
 }
 
-	$add_item_query = "INSERT INTO frontdesk_rooms (room_number, room_rate, room_category, room_id) VALUES ($room_number, $room_rate, '$room_category', '$room_id')";
+	$add_item_query = "INSERT INTO frontdesk_rooms (room_number, room_rate, room_category, room_id, features) VALUES ($room_number, $room_rate, '$room_category', '$room_id', '$features')";
 
 $add_item_result = mysqli_query($dbConn, $add_item_query);
 
