@@ -20,7 +20,7 @@ $contact_address = mysqli_real_escape_string($dbConn, $contact_address);
 $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
 
-if ($guest_name == "" || $phone_number == "" || $contact_address == "") {
+if ($guest_name == "") {
 	$msg_response[0] = "ERROR";
 	$msg_response[1] = "The fields 'guest name', 'phone number', 'contact address' are all compulsory";
 	$response_message = json_encode($msg_response);
