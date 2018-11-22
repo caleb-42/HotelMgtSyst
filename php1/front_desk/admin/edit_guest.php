@@ -22,7 +22,7 @@ $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
 if ($guest_name == "") {
 	$msg_response[0] = "ERROR";
-	$msg_response[1] = "The fields 'guest name', 'phone number', 'contact address' are all compulsory";
+	$msg_response[1] = "The field 'guest name', is compulsory";
 	$response_message = json_encode($msg_response);
 	die($response_message);
 }

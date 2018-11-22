@@ -48,6 +48,7 @@ if (mysqli_num_rows($get_all_ref_results)) {
 		$rooms[$i]["room_id"] = $row["room_id"];
 		$guest_id = $row["guest_id"];
 		$guest_name = $row["guest_name"];
+		$phone_number = $row["phone_number"];
 	}
 } else {
 	$msg_response=["ERROR", "This reservation has not been confirmed or has been cancelled"];
