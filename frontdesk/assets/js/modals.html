@@ -384,70 +384,62 @@
 
                     </div>
                 </div>
-            </div>
-            <!--....... Reservation End ......... -->
-
-            <!--....... Update Reservation Start ......... -->
-            <div class="w-100" ng-if="settings.modal.active == 'Update Reservation'">
-                <div class="w-100">
-                    <form autocomplete="off" class="UnconfirmedReservationForm p-4 w-100" ng-if="settings.modal.name == 'Unconfirmed Reservation'">
-                        <div class="float-left w-45 inpRead row m-0">
-                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="User"
-                                name="user" readonly />
-                            <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Username" name="user_name" readonly />
-                            <input class="clearinput role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Role"
-                                name="role" readonly />
-                            <input class="clearinput password form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Password" name="pass" readonly />
-                        </div>
-                        <div class="float-right w-45 row m-0 justify-content-center">
-                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="User"
-                                name="new_user" />
-                            <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Username" name="new_user_name" />
-                            <div class="row justify-content-between w-50 py-4">
+                <div class="w-100" ng-if="settings.modal.name == 'Claim Reservation'">
+                    <form class="p-4 w-100 ClaimReservationForm row justify-content-center m-0">
+                        <textarea class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Address" name="contact_address" ></textarea>
+                        <input class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Phone Number"
+                                name="phone_number" />
+                        <div class="row justify-content-around w-100 py-3">
                                 <span class="py-1">
-                                    <input type="radio" class="clearinput " id="admin" value="admin" name="new_role" />
-                                    <label for="admin" class=" f-15 ml-2">Admin</label>
+                                    <input type="radio" class="clearinput " ng-model = "reservation.guest_type_gender" id="male" value="male" checked name="guest_type_gender" />
+                                    <label for="male" class="f-15 ml-2">Male</label>
                                 </span>
                                 <span class="py-1">
-                                    <input type="radio" class="clearinput " checked value="user" name="new_role" id="user" />
-                                    <label for="user" class=" f-15 ml-2">User</label>
+                                    <input type="radio" class="clearinput " value="female" ng-model = "reservation.guest_type_gender" name= "guest_type_gender" id="female" />
+                                    <label for="female" class="f-15 ml-2">Female</label>
                                 </span>
                             </div>
-                            <input class="clearinput password form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Password" name="new_password" />
-                        </div>
                     </form>
-                    <form autocomplete="off" class="ConfirmedReservationForm p-4 w-100" ng-if="settings.modal.name == 'Confirmed Reservation'">
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="claimReservation()">
+                                    {{settings.modal.name | limitTo:5}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="w-100" >
+                    <form autocomplete="off" class="UpdateReservationForm p-4 w-100" ng-if="settings.modal.name == 'Update Reservation'">
                         <div class="float-left w-45 inpRead row m-0">
-                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="User"
-                                name="user" readonly />
+                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="Name"
+                                name="guest_name" readonly />
                             <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Username" name="user_name" readonly />
-                            <input class="clearinput role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Role"
-                                name="role" readonly />
+                                placeholder="Phone Number" name="phone_number" readonly />
+                            <input class="clearinput role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Email"
+                                name="email" readonly />
                             <input class="clearinput password form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Password" name="pass" readonly />
+                                placeholder="Reserved Date" name="reserved_date" readonly />
                         </div>
                         <div class="float-right w-45 row m-0 justify-content-center">
-                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="User"
-                                name="new_user" />
+                                <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="Name"
+                                name="new_guest_name" />
                             <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Username" name="new_user_name" />
-                            <div class="row justify-content-between w-50 py-4">
-                                <span class="py-1">
-                                    <input type="radio" class="clearinput " id="admin" value="admin" name="new_role" />
-                                    <label for="admin" class=" f-15 ml-2">Admin</label>
-                                </span>
-                                <span class="py-1">
-                                    <input type="radio" checked value="user" class="clearinput " name="new_role" id="user" />
-                                    <label for="user" class=" f-15 ml-2">User</label>
-                                </span>
-                            </div>
-                            <input class="clearinput password form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Password" name="new_password" />
+                                placeholder="Phone Number" name="new_phone_number" />
+                            <input class="clearinput role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Email"
+                                name="new_email" />
+                            <datepicker date-set= "{{settings.date}}" date-format="yyyy-MM-dd" class="my-2 p-0 text-center" selector="form-control">
+                                    <input class=" clearinput password form-control font-fam-Montserrat text-center d-block mt-4"
+                                placeholder="Reserved Date" name="new_reserved_date" />
+                            </datepicker>
                         </div>
                     </form>
                     <div class="modal-footer w-100">
@@ -458,6 +450,43 @@
 
                                 <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
                                     onclick="updateReservation()">
+                                    {{settings.modal.name | limitTo:7}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--....... Reservation End ......... -->
+
+            <!--....... Update Reservation Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'Resvtn'">
+                <div class="w-100">
+                    <form autocomplete="off" class="UpdateResvtnForm p-4 w-100">
+                        <div class="float-left w-45 inpRead row m-0">
+                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="Room Number"
+                                name="room_number" readonly />
+                            <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Nights" name="no_of_nights" readonly />
+                        </div>
+                        <div class="float-right w-45 row m-0 justify-content-center">
+                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="Room Number"
+                                name="new_room_number"  />
+                            <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Nights" name="new_no_of_nights"  />
+                        </div>
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="updateResvtn()">
                                     {{settings.modal.name | limitTo:7}}
                                 </button>
                             </div>

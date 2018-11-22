@@ -33,12 +33,30 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                 } else if ($rootScope.settings.modal.name == "Update Guest") {
                     console.log(scope.users);
                     loadJson2Form(scope.guest.jslist.selectedObj, '.inpRead');
+                } else if ($rootScope.settings.modal.name == "Update Reservation") {
+                    console.log(scope.reservation);
+                    loadJson2Form(scope.reservation.jslist.selectedObj, '.inpRead');
+                } else if ($rootScope.settings.modal.name == "Update Single Reservation") {
+                    console.log(scope.resvtn);
+                    loadJson2Form(scope.resvtn.jslist.selectedObj, '.inpRead');
+                } else if ($rootScope.settings.modal.name == "Update Unconfirmed Reservation") {
+                    console.log(scope.rooms.reservation);
+                    loadJson2Form(scope.rooms.reservations.temp_reservation.selectedObj, '.inpRead');
+                } else if ($rootScope.settings.modal.name == "Update Confirmed Reservation") {
+                    console.log(scope.rooms.reservation);
+                    loadJson2Form(scope.rooms.reservations.confirmed_reservation.selectedObj, '.inpRead');
                 }
             });
             confirmReservation = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".ConfirmReservationForm").serializeObject();
-                scope.rooms.reservations.temp_reservation.confirm(jsonForm);
+                scope.reservation.confirm(jsonForm);
+            }
+            claimReservation = function () {
+                $rootScope.settings.modal.adding = true
+                jsonForm = $(".ClaimReservationForm").serializeObject();
+                jsonForm.guest_type_gender = scope.reservation.guest_type_gender;
+                scope.reservation.claim(jsonForm);
             }
             updateRoom = function () {
                 $rootScope.settings.modal.adding = true
@@ -89,6 +107,30 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                 jsonForm.new_guest_type_gender = scope.guest.guest_type_gender;
                 console.log(jsonForm);
                 scope.guest.updateGuest(jsonForm);
+            };
+            updateReservation = function () {
+                $rootScope.settings.modal.adding = true;
+                jsonForm = $(".UpdateReservationForm").serializeObject();
+                console.log(jsonForm);
+                scope.reservation.updateReservation(jsonForm);
+            };
+            updateResvtn = function () {
+                $rootScope.settings.modal.adding = true;
+                jsonForm = $(".UpdateResvtnForm").serializeObject();
+
+                console.log(jsonForm);
+                switch($rootScope.settings.modal.name){
+                    case "Update Single Reservation":
+                        scope.resvtn.updateResvtn(jsonForm);
+                    break;
+                    case "Update Unconfirmed Reservation":
+                        scope.rooms.reservations.temp_reservation.updateResvtn(jsonForm);
+                    break;
+                    case "Update Confirmed Reservation":
+                        scope.rooms.reservations.confirmed_reservation.updateResvtn(jsonForm);
+                    break;
+                }
+                
             };
             checkIn = function () {
                 $rootScope.settings.modal.adding = true;

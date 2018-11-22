@@ -108,7 +108,7 @@ div.actparent {
   border-bottom: 12px solid #eee; }
 
 ._720kb-datepicker-calendar {
-  min-width: 300% !important; }
+  min-width: 300px !important; }
   ._720kb-datepicker-calendar-month span {
     color: #fff !important;
     margin-left: 20px !important; }

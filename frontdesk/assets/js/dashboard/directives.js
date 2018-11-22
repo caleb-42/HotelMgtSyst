@@ -94,8 +94,8 @@ app.directive('reservationlist', ['$rootScope', function ($rootScope) {
                     });
                     scope.reservation.listhddata = [
                         {
-                            name: "Name",
-                            width: "col-3",
+                            name: "Resvtn ID",
+                            width: "col-2",
                         },
                         {
                             name: "GuestID",
@@ -103,11 +103,15 @@ app.directive('reservationlist', ['$rootScope', function ($rootScope) {
                         },
                         {
                             name: "Inquiry Date",
-                            width: "col-4",
+                            width: "col-3",
                         },
                         {
                             name: "Start Date",
                             width: "col-3",
+                        },
+                        {
+                            name: "State",
+                            width: "col-2",
                         }
                     ];
                 },
@@ -188,6 +192,19 @@ app.directive('resvtnlist', ['$rootScope', function ($rootScope) {
                             width: "col-3",
                         }
                     ];
+                },
+                select: function (index, id) {
+                    console.log(id);
+                    scope.resvtn.jslist.selected = id;
+                    scope.resvtn.jslist.selectedObj = scope.resvtn.jslist.newItemArray[index];
+                    console.log(scope.resvtn.jslist.newItemArray[index]);
+                    
+                },
+                toggleOut : function(){
+                    $(".listcont").fadeOut(200);
+                },
+                toggleIn : function(){
+                    $(".listcont").delay(500).fadeIn(200);
                 }
             }
             scope.resvtn.jslist.createList();

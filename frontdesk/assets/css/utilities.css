@@ -133,6 +133,12 @@ li{
 .orange-clr{
     color: #f0ad4e;
 }
+.dark-orange-clr{
+    color: #e6931f;
+}
+.dark-orange{
+    background: #ee9e2d !important;
+}
 
 .btn-outline-purp {
     background: rgb(153, 46, 202) !important;
@@ -257,8 +263,15 @@ input::placeholder, textarea::placeholder {
     color: #fff;
     background-color: #f0ad4e;
     border-color: #f0ad4e;
-  }
-  
+}
+.lyt-grn {
+    background: rgba(87, 209, 107, 0.9) !important;
+    color : #333;
+}
+.lyt-red {
+    background: rgba(226, 81, 100, 0.9) !important;
+    color : #333;
+}
 .custom-btn-outline-warning:hover {
     color: #f0ad4e;
     background-image: none;
