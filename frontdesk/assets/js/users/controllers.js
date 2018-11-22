@@ -27,6 +27,7 @@ usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', fun
         }
     };
     $scope.users = {
+        jslist:{},
         itemlist: function () {
             return {
                 jsonfunc: jsonPost.data("../php1/front_desk/admin/list_users.php", {})

@@ -61,6 +61,156 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
     };
 }]);
 
+app.directive('reservationlist', ['$rootScope', function ($rootScope) {
+    return {
+        restrict: 'E',
+        templateUrl: './assets/js/dashboard/listTemplates.php?list=reservation',
+
+        scope: false,
+
+        link: function (scope, element, attrs) {
+            scope.reservation.jslist = {
+                createList: function () {
+                    listdetails = scope.reservation.itemlist();
+                    jsonlist = listdetails.jsonfunc;
+                    jsonlist.then(function (result) {
+                        resvtn = result;
+                        newresvtn = [];
+                        resvtn.forEach(function(rtn){
+                            count = true;
+                            for(var i = 0; i < newresvtn.length; i++){
+                                res = newresvtn[i];
+                                if(rtn.reservation_ref == res.reservation_ref && rtn.guest_id == res.guest_id){
+                                    count = false;
+                                }
+                            };
+                            if(count){
+                                newresvtn.push(rtn);
+                            }
+                        });
+                        scope.reservation.jslist.values = newresvtn;
+                        console.log(newresvtn);
+                        scope.reservation.jslist.selected = null;
+                    });
+                    scope.reservation.listhddata = [
+                        {
+                            name: "Resvtn ID",
+                            width: "col-2",
+                        },
+                        {
+                            name: "GuestID",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Inquiry Date",
+                            width: "col-3",
+                        },
+                        {
+                            name: "Start Date",
+                            width: "col-3",
+                        },
+                        {
+                            name: "State",
+                            width: "col-2",
+                        }
+                    ];
+                },
+                select: function (index, id) {
+                    console.log(id);
+                    scope.reservation.jslist.selected = id;
+                    scope.reservation.jslist.selectedObj = scope.reservation.jslist.newItemArray[index];
+                    console.log(scope.reservation.jslist.newItemArray[index]);
+                    $rootScope.$emit('reservationselect', scope.reservation.jslist.selectedObj);
+                    scope.resvtn.jslist.createList();
+                },
+                toggleOut : function(){
+                    $(".listcont").fadeOut(200);
+                },
+                toggleIn : function(){
+                    $(".listcont").delay(500).fadeIn(200);
+                },
+                gender : 'male'
+            }
+            scope.reservation.jslist.createList();
+        }
+    };
+}]);
+
+
+app.directive('resvtnlist', ['$rootScope', function ($rootScope) {
+    return {
+        restrict: 'E',
+        templateUrl: './assets/js/dashboard/listTemplates.php?list=resvtn',
+
+        scope: false,
+
+        link: function (scope, element, attrs) {
+            scope.resvtn.jslist = {
+                createList: function () {
+                    if(!scope.reservation.jslist.selected){
+                        return;
+                    }
+                    listdetails = scope.reservation.itemlist();
+                    jsonlist = listdetails.jsonfunc;
+                    resultfiltered = [];
+
+                    jsonlist.then(function (result) {
+                        if (!result) {
+                            return 0;
+                        }
+                        console.log(result);
+                        result.forEach(function (element) {
+                            if (element.reservation_ref == scope.reservation.jslist.selectedObj.reservation_ref && element.guest_name == scope.reservation.jslist.selectedObj.guest_name) {
+                                resultfiltered.push(element);
+                                console.log(element);
+                            }else{
+                                return;
+                            }
+                        });
+                        scope.resvtn.jslist.values = resultfiltered;
+                        //scope.reservation.jslist.selected = null;
+                    });
+                    scope.resvtn.listhddata = [
+                        {
+                            name: "Room No.",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Room Rate",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Total",
+                            width: "col-3",
+                        },
+                        {
+                            name: "Nights",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Leave",
+                            width: "col-3",
+                        }
+                    ];
+                },
+                select: function (index, id) {
+                    console.log(id);
+                    scope.resvtn.jslist.selected = id;
+                    scope.resvtn.jslist.selectedObj = scope.resvtn.jslist.newItemArray[index];
+                    console.log(scope.resvtn.jslist.newItemArray[index]);
+                    
+                },
+                toggleOut : function(){
+                    $(".listcont").fadeOut(200);
+                },
+                toggleIn : function(){
+                    $(".listcont").delay(500).fadeIn(200);
+                }
+            }
+            scope.resvtn.jslist.createList();
+        }
+    };
+}]);
 
 dashApp.directive('roomgrid', ['$rootScope', function ($rootScope) {
     return {
@@ -77,7 +227,7 @@ dashApp.directive('roomgrid', ['$rootScope', function ($rootScope) {
                     jsonlist.then(function (result) {
                         console.log(result);
                         scope.rooms.jslist.values = result;
-                        scope.rooms.jslist.selected = null;
+                        /* scope.rooms.jslist.selected = null; */
                     });
                     scope.rooms.listhddata = [
                         {

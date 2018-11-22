@@ -29,7 +29,7 @@
                             <div class="userlisthd row justify-content-between px-4">
                                 <h4 class=" mt-4 py-2 font-fam-Montserrat-bold">Manage Rooms</h4>
                                 <div class="mt-4">
-                                    <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation'; settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';rooms.roomgrid.getrooms(['deluxe','standard']) " data-toggle="modal" data-target="#crud">Add Reservation</button>
+                                    <!-- <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation';settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';rooms.roomgrid.getrooms(['deluxe','standard']);  guest.getguest({value : 'guest_name'});" data-toggle="modal" data-target="#crud">Add Reservation</button> -->
                                 </div>
                             </div>
                                 <roomgrid></roomgrid>
@@ -61,8 +61,9 @@
                             <div class="userlisthd row justify-content-between">
                                 <h4 class=" my-4 py-2 font-fam-Montserrat-bold">Manage Guest</h4>
                                 <div class="my-4">
-                                    <button class="btn btn-outline-primary mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Add Guest'; settings.modal.size = 'lg'; guest.roomgrid.getrooms(['deluxe','standard']) " data-toggle="modal" data-target="#crud">Add</button>
-                                    <button class="btn btn-outline-warning mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Pay'; settings.modal.name = 'Pay Balance'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud" ng-disabled="!guest.jslist.selected">Pay</button>
+                                    <button class="btn btn-info mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Add Guest'; settings.modal.size = 'lg'; guest.roomgrid.getrooms(['deluxe','standard']) " data-toggle="modal" data-target="#crud">Add</button>
+                                    <button class="btn  purp-back wht opac-50 mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Update Guest'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud">Update</button>
+                                    <button class="btn btn-warning mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Pay'; settings.modal.name = 'Pay Balance'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud" ng-disabled="!guest.jslist.selected">Pay</button>
                                     <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'CheckIn'; settings.modal.name = 'CheckIn'; settings.modal.size = 'lg'; guest.roomgrid.getrooms(['deluxe','standard'])" ng-disabled="!guest.jslist.selected">Check In</button>
                                     <button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'CheckOut'; settings.modal.name = 'CheckOut'; settings.modal.size = 'lg';" ng-disabled="!guest.jslist.selected">Check Out</button>
                                 </div>
@@ -83,6 +84,36 @@
                     </div>
 
                 </div>
+            </div>
+            <div class="animate-switch Reservation h-100" ng-switch-when = "Reservation">
+                <div class="reservation  anim h-100">
+                    <div class="p-3 px-4 itemlayout w-100 h-93">
+                        <div class="mb-5 item-container">
+                            <div class="userlisthd row justify-content-between">
+                                <h4 class=" my-4 py-2 font-fam-Montserrat-bold">Manage Reservation</h4>
+                                <div class="my-4">
+                                    <button class="btn btn-info mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation';settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';reservation.roomgrid.getrooms(['deluxe','standard']);  guest.getguest({value : 'guest_name'});" data-toggle="modal" data-target="#crud">Add</button>
+                                    <button class="btn btn-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation'; settings.modal.name = 'Update Reservation'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud" ng-disabled="!reservation.jslist.selected" >Update</button>
+                                    <button class = "btn purp-back wht opac-70 font-fam-Montserrat f-12" ng-disabled="!reservation.jslist.selected || reservation.jslist.selectedObj.booked == 'YES'" ng-click = "reservation.state()" data-toggle="modal" data-target="#crud">{{reservation.jslist.selectedObj.deposit_confirmed == 'NO' ? 'Confirm' : 'Claim'}}</button>
+                                    <button class = "btn btn-danger font-fam-Montserrat f-12" ng-disabled="!reservation.jslist.selected" ng-click = "reservation.deleteReservation()">Cancel</button>
+                                </div>
+                            </div>
+                            <reservationlist class="font-fam-Montserrat"></reservationlist>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="orders row align-items-center anim px-2 h-20">
+
+                    <div class = "row w-100">
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Rooms</h6>
+                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{reservation.jslist.selectedObj ? (guest.jslist.selectedObj.rooms | arraytostring) : '2, 4, 7'}} </p>
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Phone Number</h6>
+                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.phone_number : '08130439102'}} </p>
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Address</h6>
+                        <p class = "  col-8  f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.contact_address : 'Conversion of Architectural Blueprints to well-designed Structural layouts (foundaton, beams, columns and bases, slabs'}} </p>
+                    </div>
+
+                </div> -->
             </div>
         </div>
     </div>
@@ -108,6 +139,9 @@
         <div ng-switch-when = "Rooms" class = " whtback hs-100 anim animate-switch">
             <!--<ordersgrid list = "sales.order.list"></ordersgrid>-->
             <accordion type = "rooms"></accordion>
+        </div>
+        <div ng-switch-when = "Reservation" class = "p-4 whtback hs-100 anim animate-switch">
+            <resvtnlist></resvtnlist>
         </div>
     </div>
 

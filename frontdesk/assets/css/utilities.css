@@ -133,6 +133,27 @@ li{
 .orange-clr{
     color: #f0ad4e;
 }
+.dark-orange-clr{
+    color: #e6931f;
+}
+.dark-orange{
+    background: #ee9e2d !important;
+}
+
+.btn-outline-purp {
+    background: rgb(153, 46, 202) !important;
+    background-image: none;
+    background-color: transparent;
+    border-color:rgb(153, 46, 202) !important;
+    color: rgb(153, 46, 202) !important;
+}
+  
+.btn-outline-purp:hover {
+    background: rgb(153, 46, 202) !important;
+    background-color:rgb(153, 46, 202) !important;
+    border-color: rgb(153, 46, 202) !important;
+    color: #fff;
+}
 .choralback{
     background: #d9534f !important;
 }
@@ -242,8 +263,15 @@ input::placeholder, textarea::placeholder {
     color: #fff;
     background-color: #f0ad4e;
     border-color: #f0ad4e;
-  }
-  
+}
+.lyt-grn {
+    background: rgba(87, 209, 107, 0.9) !important;
+    color : #333;
+}
+.lyt-red {
+    background: rgba(226, 81, 100, 0.9) !important;
+    color : #333;
+}
 .custom-btn-outline-warning:hover {
     color: #f0ad4e;
     background-image: none;
@@ -471,6 +499,9 @@ button.btnnone{
 }
 .b-rad {
     border-radius: 5% !important;
+}
+.bpx-rad {
+    border-radius: 5px !important;
 }
 @keyframes fadeInFromNone{
     from {opacity: 0;}
