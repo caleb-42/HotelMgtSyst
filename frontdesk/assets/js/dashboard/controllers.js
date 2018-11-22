@@ -425,8 +425,11 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             jsonresvtn = {}
             jsonresvtn.reservation_ref = $scope.reservation.jslist.selectedObj.reservation_ref;
             console.log("new resvtn", jsonresvtn);
+            jsonform = {
+                reservations : [jsonresvtn]
+            }
             jsonPost.data("../php1/front_desk/delete_reservation.php", {
-                reservations: [$filter('json')(jsonresvtn)]
+                reservation_ref: $filter('json')(jsonform)
             }).then(function (response) {
                 $scope.reservation.jslist.toggleOut();
                 console.log(response);
@@ -698,8 +701,11 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     }
                 });
                 console.log("new resvtn", jsonresvtn);
+                jsonform = {
+                    reservations : [jsonresvtn]
+                }
                 jsonPost.data("../php1/front_desk/del_reservation_room.php", {
-                    reservations: $filter('json')([jsonresvtn])
+                    reservation_ref: $filter('json')(jsonform)
                 }).then(function (response) {
                     $scope.reservation.jslist.toggleOut();
                     console.log(response);
@@ -802,8 +808,11 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                             }
                         });
                         console.log("new resvtn", jsonresvtn);
+                        jsonform = {
+                            reservations : [jsonresvtn]
+                        }
                         jsonPost.data("../php1/front_desk/del_reservation_room.php", {
-                            reservations: $filter('json')([jsonresvtn])
+                            reservation_ref: $filter('json')(jsonform)
                         }).then(function (response) {
                             $scope.rooms.jslist.toggleOut();
                             console.log(response);
@@ -883,8 +892,11 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                             }
                         });
                         console.log("new resvtn", jsonresvtn);
+                        jsonform = {
+                            reservations : [jsonresvtn]
+                        }
                         jsonPost.data("../php1/front_desk/del_reservation_room.php", {
-                            reservations: $filter('json')([jsonresvtn])
+                            reservation_ref: $filter('json')(jsonform)
                         }).then(function (response) {
                             $scope.rooms.jslist.toggleOut();
                             console.log(response);
