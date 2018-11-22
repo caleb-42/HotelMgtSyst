@@ -133,6 +133,21 @@ li{
 .orange-clr{
     color: #f0ad4e;
 }
+
+.btn-outline-purp {
+    background: rgb(153, 46, 202) !important;
+    background-image: none;
+    background-color: transparent;
+    border-color:rgb(153, 46, 202) !important;
+    color: rgb(153, 46, 202) !important;
+}
+  
+.btn-outline-purp:hover {
+    background: rgb(153, 46, 202) !important;
+    background-color:rgb(153, 46, 202) !important;
+    border-color: rgb(153, 46, 202) !important;
+    color: #fff;
+}
 .choralback{
     background: #d9534f !important;
 }
@@ -471,6 +486,9 @@ button.btnnone{
 }
 .b-rad {
     border-radius: 5% !important;
+}
+.bpx-rad {
+    border-radius: 5px !important;
 }
 @keyframes fadeInFromNone{
     from {opacity: 0;}

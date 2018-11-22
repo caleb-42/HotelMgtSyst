@@ -18,6 +18,55 @@
 </div>
 <!-- ............jslist start ..............-->
 
+<!-- ............jslist start ..............-->
+<div class = "listcont" ng-if = "<?php echo $_GET['list']   == 'reservation'?>">
+    <div class = "listhd pr-3 row font-fam-Montserrat-bold">
+        <span class="{{hd.width}} f-13 opac-70"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in reservation.listhddata">{{hd.name}}</span>
+    </div>
+    <div class = "hs-60 listbody ovflo-y pb-4" >
+        <ul class = "list" >
+            <li class = "anim-fast itemlistrow row align-items-center f-12" ng-repeat = "resevtn in (reservation.jslist.newItemArray = (reservation.jslist.values | filter:searchbox.imp))" ng-click = "reservation.jslist.select($index, resevtn.reservation_ref)" ng-class = "{'actparent' :reservation.jslist.selected == resevtn.reservation_ref}">
+                <span class = "username col-3">{{resevtn.guest_name}}</span>
+                <span class = "text-center role col-2">{{resevtn.guest_id}}</span>
+                <span class = "text-center logoff col-4">{{resevtn.inquiry_date}}</span>
+                <span class = "text-center logoff col-3">{{resevtn.reserved_date}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- ............jslist start ..............-->
+
+<div ng-if = "<?php echo $_GET['list'] == 'resvtn'?>">
+    <div class = "row hs-80 {{reservation.jslist.selected ? 'gone' : 'align-items-center'}} relatv ">
+        <h4 class=" text-center w-100 "> Select Reservation</h4>
+    </div>
+    <div class = "listcont {{!reservation.jslist.selected ? 'gone' : 'notgone'}}">
+        <div class= "w-100">
+            <div class = "w-100 row purp-back wht opac-50 px-1 py-2 bpx-rad font-fam-Montserrat-bold f-14" style = "margin-bottom: 10px !important;">
+                <span class = "text-left col-4">Phone No.</span>
+                <span class = "text-right col-8">{{reservation.jslist.selectedObj.phone_number}}</span>
+            </div>
+            <div class = "w-100 row purp-back wht opac-50 px-1 py-2 bpx-rad font-fam-Montserrat-bold f-14" style = "margin-bottom: 10px !important;">
+                <span class = "text-left col-4">Email</span>
+                <span class = "text-right col-8">{{reservation.jslist.selectedObj.email}}</span>
+            </div>
+        </div>
+        <div class = "listhd pr-2 row font-fam-Montserrat-bold">
+            <span class="{{hd.width}} f-13 opac-70"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in resvtn.listhddata">{{hd.name}}</span>
+        </div>
+        <div class = "hs-50 listbody ovflo-y pb-4" >
+            <ul class = "list" >
+                <li class = "itemlistrow row align-items-center f-12" ng-repeat = "rvtn in resvtn.jslist.values">
+                    <span class = " login col-2">{{rvtn.room_number}}</span>
+                    <span class = "text-center logoff col-2">{{rvtn.room_rate}}</span>
+                    <span class = "text-center logoff col-3">{{rvtn.room_total_cost}}</span>
+                    <span class = "text-center logoff col-2">{{rvtn.no_of_nights}}</span>
+                    <span class = "text-center logoff col-3">{{rvtn.no_of_nights | intervalGetDate: rvtn.reserved_date}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 <!-- ............accordion start ..............-->
 <div class = "h-100" ng-if = "<?php echo $_GET['list']  == 'accordion' ?>">
@@ -159,7 +208,13 @@
                 </div>
                 <div id="collapseThree" class="collapse px-2" aria-labelledby="headingThree" data-parent="#accordionExample">
                     <div class="card-body py-3 px-4 hs-55 ovflo-y font-fam-Montserrat">
-                       
+                        <div class = "row w-100 h-100 {{rooms.jslist.selected ? 'gone' : 'align-items-center'}} relatv ">
+                            <h6 class="blu-clr font-weight-bold opac-70 text-center w-100 "> Select A Room</h6>
+                        </div>
+                        <div class = "listcont w-100 {{!rooms.jslist.selected ? 'gone' : 'notgone'}}">
+                        
+                            <div ng-repeat = "feat in (rooms.jslist.selectedObj.features | explodeToList : '/')" class="row pb-2"><span class = "text-left col-2" ng-if = "feat">{{$index + 1}}. </span><span class = "text-left col-10">{{feat}}</span></div>
+                        </div>
                     </div>
                 </div>
             </div>

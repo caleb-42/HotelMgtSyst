@@ -18,6 +18,7 @@ app.controller("appctrl", ["$rootScope", "$scope", function ($rootScope, $scope)
                     $rootScope.settings.modal.msg = arr[1];
                     if(arr[0] == "OUTPUT"){
                         $rootScope.settings.modal.msgcolor = "green";
+                        /* $rootScope.settings.AutoComplete.obj = {}; */
                         $rootScope.settings.modal.close();
                     }else{
                         $rootScope.settings.modal.msgcolor = "choral";
@@ -37,17 +38,23 @@ app.controller("appctrl", ["$rootScope", "$scope", function ($rootScope, $scope)
         log: true,
         AutoComplete : {
             obj: {},
-            activate  : function(input, dataSource, prop) {
-                console.log(dataSource);
+            activate  : function(input, datas, dataSources, prop) {
+                dataSource = dataSources.slice();
                 if (!$(input).autocomplete("instance")) {
                     $(input.currentTarget).autocomplete({
                         source: dataSource,
 
                         select: function (event, ui) {
-                            for (var p = 0; p < dataSource.length; p++) {
-                                
-                                if (dataSource[p][prop] == ui.item.label) {
-                                    $rootScope.settings.AutoComplete.obj = dataSource[p];
+                            data = datas.slice();
+                            for (var p = 0; p < data.length; p++) {
+                                console.log(data);
+                                ans = data[p][prop];
+                                console.log(ans, ui.item.label);
+                                if (data[p][prop] == ui.item.label) {
+                                    //console.log(dataSource);
+                                    $rootScope.settings.AutoComplete.obj = {};
+                                    $rootScope.settings.AutoComplete.obj = Object.assign({}, data[p]);
+                                    console.log($rootScope.settings.AutoComplete.obj);
                                     $rootScope.$apply();
                                 }
                             }

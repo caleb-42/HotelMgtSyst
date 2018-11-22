@@ -62,13 +62,23 @@ app.filter('intString', function() {
 });
 app.filter('duplicatekey', function() {
     return function(input, obj) {
-        arr = Object.keys(obj);
-        for(var j = 0; j < arr.length; j++){
-            for(var i = 0; i < input.length; i++){
-                input[i][arr[j]] = input[i][obj[arr[j]]];
-            }
+        console.log(input);
+        arr = [];
+        for(var j = 0; j < input.length; j++){
+            arr.push(input[j][obj.value]);
         }
-        //console.log(input);
-        return input;
+        console.log(arr);
+        dataSource = arr.slice();
+        return dataSource;
+    }
+});
+app.filter('explodeToList', function() {
+    return function(input, delimiter) {
+        if(!input){
+            return [];
+        }
+        arr = input.split("/");
+
+        return arr;
     }
 });
