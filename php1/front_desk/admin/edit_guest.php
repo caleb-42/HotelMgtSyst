@@ -28,7 +28,7 @@ if ($guest_name == "") {
 }
 
 
-	$update_guest_query = "UPDATE frontdesk_guests SET guest_name = '$guest_name', guest_type_gender = '$guest_type_gender', phone_number = '$phone_number', contact_address = '$contact_address' WHERE id = $id";
+	$update_guest_query = "UPDATE frontdesk_guests SET guest_name = '$guest_name', guest_type_gender = '$guest_type_gender', phone_number = '$phone_number', contact_address = '$contact_address' WHERE guest_id = '$id'";
 
 $update_guest_result = mysqli_query($dbConn, $update_guest_query);
 
@@ -37,10 +37,9 @@ if($update_guest_result){
 	$msg_response[1] = "SUCCESSFULLY UPDATED";
 } else {
 	$msg_response[0] = "ERROR";
-	$msg_response[1] = "SOMETHING WENT WRONG";
+	$msg_response[1] = "SOMETHING WENT WRONG " . mysqli_error($dbConn);
 }
 
 $response_message = json_encode($msg_response);
 echo $response_message;
-?>
 ?>
