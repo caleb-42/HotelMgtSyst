@@ -666,6 +666,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
         updateResvtn : function (jsonresvtn) {
             jsonresvtn.reservation_ref = $scope.resvtn.jslist.selectedObj.reservation_ref;
             jsonresvtn.new_room_id = '';
+            jsonresvtn.reserved_date = $scope.resvtn.jslist.selectedObj.reserved_date;
 
             jsonresvtn.room_id = $scope.resvtn.jslist.selectedObj.room_id;
 
@@ -771,6 +772,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 updateResvtn : function (jsonresvtn) {
                     jsonresvtn.reservation_ref = $scope.rooms.reservations.confirmed_reservation.selectedObj.reservation_ref;
                     jsonresvtn.new_room_id = '';
+                    jsonresvtn.reserved_date = $scope.rooms.reservations.confirmed_reservation.selectedObj.reserved_date;
 
                     jsonresvtn.room_id = $scope.rooms.reservations.confirmed_reservation.selectedObj.room_id;
                     
@@ -855,6 +857,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 updateResvtn : function (jsonresvtn) {
                     jsonresvtn.reservation_ref = $scope.rooms.reservations.temp_reservation.selectedObj.reservation_ref;
                     jsonresvtn.new_room_id = '';
+                    jsonresvtn.reserved_date = $scope.rooms.reservations.temp_reservation.selectedObj.reserved_date;
 
                     jsonresvtn.room_id = $scope.rooms.reservations.temp_reservation.selectedObj.room_id;
                     
