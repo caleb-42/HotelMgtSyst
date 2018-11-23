@@ -17,21 +17,21 @@ $no_of_reservations = count($del_array);
 $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
 
-$del_reservations_query = $conn->prepare("DELETE FROM frontdesk_resevations WHERE reservation_ref = ? AND room_id = ?");
+$del_reservations_query = $conn->prepare("DELETE FROM frontdesk_reservations WHERE reservation_ref = ? AND room_id = ?");
 $del_reservations_query->bind_param("ss", $reservation_ref, $room_id);
 
 for ($i=0; $i < $no_of_reservations; $i++) { 
  	$reservation_ref = $del_array[$i]["reservation_ref"];
  	$room_id = $del_array[$i]["room_id"];
  	$del_reservations_query->execute();
- 	$deleted[] = $room_id;
+ 	$deleted[] = $room_id . $conn->error;
 }
 $del_reservations_query->close();
 $deleted_reservations = json_encode($deleted);
-
+ //echo $conn->error;
 if(count($deleted)){
 	$msg_response[0] = "OUTPUT";
-	$msg_response[1] = "SUCCESSFULLY DELETED";
+	$msg_response[1] = "SUCCESSFULLY DELETED " . $deleted_reservations;
 } else {
 	$msg_response[0] = "ERROR";
 	$msg_response[1] = "SOMETHING WENT WRONG";
