@@ -572,7 +572,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
 
             },
             averagenyt : 0,
-            nytstartdate : 0,
+            nytstartdate : $filter('intervalGetDate')(0,$rootScope.settings.date),
             nytdate : $filter('intervalGetDate')(0),
             activate: function(room_type){
                 //$scope.reservation.rooms[room_type] = 
@@ -796,7 +796,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                             res = $rootScope.settings.modal.msgprompt(response);
                             res ? $scope.rooms.jslist.createList() : null;
                             $scope.rooms.jslist.toggleIn();
-                            $scope.rooms.listReservation();
+                            $scope.rooms.reservations.listReservation();
                         });
                     });
                 },
@@ -821,6 +821,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                             $scope.rooms.jslist.toggleOut();
                             console.log(response);
                             $scope.rooms.jslist.createList();
+                            $scope.rooms.reservations.listReservation();
                             $scope.rooms.jslist.toggleIn();
                         });
                     });
@@ -881,7 +882,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                             res = $rootScope.settings.modal.msgprompt(response);
                             res ? $scope.rooms.jslist.createList() : null;
                             $scope.rooms.jslist.toggleIn();
-                            $scope.rooms.listReservation();
+                            $scope.rooms.reservations.listReservation();
                         });
                     });
                 },
@@ -906,6 +907,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                             $scope.rooms.jslist.toggleOut();
                             console.log(response);
                             $scope.rooms.jslist.createList();
+                            $scope.rooms.reservations.listReservation();
                             $scope.rooms.jslist.toggleIn();
                         });
                     });
@@ -1018,7 +1020,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
 
             },
             averagenyt : 0,
-            nytstartdate : 0,
+            nytstartdate :  $rootScope.settings.date ,
             nytdate : $filter('intervalGetDate')(0),
             activate: function(room_type){
                 //$scope.rooms.rooms[room_type] = 

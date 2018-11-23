@@ -253,7 +253,7 @@
                                 name="phone_number" ng-focus="settings.AutoComplete.activate($event, guest.jslist.values,(guest.jslist.values | duplicatekey: {value : 'phone_number'}), 'phone_number')"/>
                             <textarea ng-model = "settings.AutoComplete.obj.contact_address" class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Address" name="contact_address" ></textarea>
                             <div class = "row">
-                                <datepicker date-set= "{{settings.date}}" date-format="yyyy-MM-dd" class="col-4 my-2 p-0 text-center" selector="form-control">
+                                <datepicker  date-min-limit = "{{settings.ydate}}" date-format="yyyy-MM-dd" class="col-4 my-2 p-0 text-center" selector="form-control">
                                     <label class="font-fam-Montserrat opac-50">Start</label>
                                     <input ng-model = 'reservation.roomgrid.nytstartdate' class="f-14 w-100 form-control text-center d-block " placeholder="Start" name="start_date"  ng-change = "reservation.roomgrid.nytdate = (reservation.roomgrid.averagenyt | intervalGetDate: reservation.roomgrid.nytstartdate); reservation.roomgrid.change_averagenyt()"/>
                                 </datepicker>
@@ -436,7 +436,7 @@
                                 placeholder="Phone Number" name="new_phone_number" />
                             <input class="clearinput role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Email"
                                 name="new_email" />
-                            <datepicker date-format="yyyy-MM-dd" class="my-2 p-0 text-center" selector="form-control">
+                            <datepicker date-min-limit = "{{settings.ydate}}" date-format="yyyy-MM-dd" class="my-2 p-0 text-center" selector="form-control">
                                     <input class=" clearinput password form-control font-fam-Montserrat text-center d-block mt-4"
                                 placeholder="Reserved Date" name="new_reserved_date" />
                             </datepicker>

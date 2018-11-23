@@ -1,6 +1,6 @@
 var app = angular.module('app', ['ngAnimate', 'ngRoute', 'ngSanitize', 'dashApp', 'roomsApp', 'usersApp', 'recordsApp', 'ngCroppie','720kb.datepicker']);
 
-app.controller("appctrl", ["$rootScope", "$scope", function ($rootScope, $scope) {
+app.controller("appctrl", ["$rootScope", "$scope","$filter", function ($rootScope, $scope, $filter) {
     $rootScope.settings = {
         modal: {
             active: "",
@@ -34,6 +34,7 @@ app.controller("appctrl", ["$rootScope", "$scope", function ($rootScope, $scope)
             }
         },
         date : new Date().toString(),
+        ydate : $filter('intervalGetDate')(-1, new Date().toString()),
         userDefinition : function (user, role) {
             $rootScope.settings.user = user;
             $rootScope.settings.role = role;
