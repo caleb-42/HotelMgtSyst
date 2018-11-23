@@ -13,24 +13,20 @@ $new_room_id = $update_reservation["new_room_id"];
 $reserved_date = $update_reservation["reserved_date"];
 $no_of_nights = $update_reservation["new_no_of_nights"] ? $update_reservation["new_no_of_nights"] : $update_reservation["no_of_nights"];
 
-$guest_name = mysqli_real_escape_string($dbConn, $guest_name);
-$phone_number = mysqli_real_escape_string($dbConn, $phone_number);
-$email = mysqli_real_escape_string($dbConn, $email);
-
 $reservation_conflict = [];
 
 $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
 if (($new_room_id != $room_id) AND ($new_room_id != "")) {
-	$check_duplicate_room_sql = "SELECT * FROM frontdesk_reservation WHERE reservation_ref = '$reservation_ref' AND room_id = '$new_room_id'";
+	$check_duplicate_room_sql = "SELECT * FROM frontdesk_reservations WHERE reservation_ref = '$reservation_ref' AND room_id = '$new_room_id'";
 	$check_duplicate_room = mysqli_query($dbConn, $check_duplicate_room_sql);
 	if (mysqli_num_rows($check_duplicate_room) > 0) {
-		$msg_response=["ERROR", "The new room already has a reservation with this reservation_ref"];
+		$msg_response=["ERROR", "The new room already has a reservation with this reservation_ref "];
 		$response_message = json_encode($msg_response);
 		die($response_message);
 	}
 
-	$check_conflict_sql = "SELECT * FROM frontdesk_reservation WHERE reservation_ref != '$reservation_ref' AND room_id = '$new_room_id'";
+	$check_conflict_sql = "SELECT * FROM frontdesk_reservations WHERE reservation_ref != '$reservation_ref' AND room_id = '$new_room_id'";
 	$conflict_room = mysqli_query($dbConn, $check_conflict_sql);
 	if (mysqli_num_rows($conflict_room) > 0) {
 		$room_reservation_date = $reserved_date;
@@ -50,7 +46,7 @@ if (($new_room_id != $room_id) AND ($new_room_id != "")) {
 	}
 }
 
-if ($new_room_id = "") {
+if ($new_room_id == "") {
 	$new_room_id = $room_id;
 }
 
@@ -63,7 +59,7 @@ $room_category = $room["room_category"];
 $booked = $room["booked"];
 $booked_on = $room["booked_on"];
 $booking_ref = $room["booking_ref"];
-$booked_expires = $room["booked_expires"];
+$booking_expires = $room["booking_expires"];
 
    $room_reservation_date = $reserved_date;
    $room_reservation_date = date_create($room_reservation_date);
@@ -105,10 +101,10 @@ $update_reservation_result = mysqli_query($dbConn, $update_reservation_query);
 
 if($update_reservation_result){
 	$msg_response[0] = "OUTPUT";
-	$msg_response[1] = "SUCCESSFULLY UPDATED";
+	$msg_response[1] = "SUCCESSFULLY UPDATED ";
 } else {
 	$msg_response[0] = "ERROR";
-	$msg_response[1] = "SOMETHING WENT WRONG " . mysqli_error($dbConn);
+	$msg_response[1] = "SOMETHING WENT WRONG ". " halo " . mysqli_error($dbConn);
 }
 
 $response_message = json_encode($msg_response);

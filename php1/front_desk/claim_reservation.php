@@ -38,6 +38,7 @@ $printer = new Printer($connector);
  $contact_address = $reservation_data["contact_address"];
  $guest_type_gender = $reservation_data["guest_type_gender"];
  $new_guest = "";
+ $rooms = [];
 
 $get_all_ref_details_sql = "SELECT * FROM frontdesk_reservations WHERE deposit_confirmed = 'YES' AND reservation_ref = '$reservation_ref' AND cancelled != 'YES'";
 $get_all_ref_results = mysqli_query($dbConn, $get_all_ref_details_sql);
@@ -49,6 +50,7 @@ if (mysqli_num_rows($get_all_ref_results)) {
 		$guest_id = $row["guest_id"];
 		$guest_name = $row["guest_name"];
 		$phone_number = $row["phone_number"];
+		$i++;
 	}
 } else {
 	$msg_response=["ERROR", "This reservation has not been confirmed or has been cancelled"];
