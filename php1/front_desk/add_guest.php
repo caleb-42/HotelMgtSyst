@@ -161,10 +161,11 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 }
 $insert_into_bookings->close();
 
-$update_room_query = $conn->prepare("UPDATE frontdesk_rooms SET booked_on = CURRENT_TIMESTAMP, booked = 'YES', guests = ?, current_guest_id = ?, booking_ref = ?, booking_expires = ? WHERE room_id = ?");
-$update_room_query->bind_param("issss", $guests, $current_guest_id, $bk_ref, $booking_expires, $room_id);
+$update_room_query = $conn->prepare("UPDATE frontdesk_rooms SET booked_on = CURRENT_TIMESTAMP, booked = 'YES', guests = ?, current_guest_id = ?, booking_ref = ?, booking_expires = ?, booked_nights = ? WHERE room_id = ?");
+$update_room_query->bind_param("issssi", $guests, $current_guest_id, $bk_ref, $booking_expires, $room_id, $booked_nights);
 for ($i=0; $i <$no_of_rooms ; $i++) {
 	$no_of_nights = $rooms[$i]["no_of_nights"];
+	$booked_nights = $no_of_nights;
 	//var_dump($no_of_nights);
 	$d = strtotime("+"."$no_of_nights days");
 	$booking_expires = date("Y-m-d h:i:s", $d);

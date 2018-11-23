@@ -3,15 +3,15 @@
  
 $update_reservation = json_decode($_POST["update_reservation"], true);
 
-// $update_guest = '{"guest_name": "sprite", "guest_type_gender": "soft-drink", "category": "drinks", "description": "plastic (33cl)", "current_price": 200, "discount_rate": 0, "discount_criteria":0, "discount_available":"no", "shelf_item": "yes", "current_stock": 50}';
-// $update_guest = json_decode($update_guest, true);
-// var_dump($update_guest);
+// $update_reservation = '{"guest_name": "sprite", "guest_type_gender": "soft-drink", "category": "drinks", "description": "plastic (33cl)", "current_price": 200, "discount_rate": 0, "discount_criteria":0, "discount_available":"no", "shelf_item": "yes", "current_stock": 50}';
+// $update_reservation = json_decode($update_reservation, true);
+// var_dump($update_reservation);
 
 $reservation_ref = $update_reservation["reservation_ref"];
-$guest_name = $update_guest["new_guest_name"] ? $update_guest["new_guest_name"] : $update_guest["guest_name"];
-$phone_number = $update_guest["new_phone_number"] ? $update_guest["new_phone_number"] : $update_guest["phone_number"];
-$email = $update_guest["new_email"] ? $update_guest["new_email"] : $update_guest["email"];
-$reserved_date = $update_guest["new_reserved_date"] ? $update_guest["new_reserved_date"] : $update_guest["reserved_date"];
+$guest_name = $update_reservation["new_guest_name"] ? $update_reservation["new_guest_name"] : $update_reservation["guest_name"];
+$phone_number = $update_reservation["new_phone_number"] ? $update_reservation["new_phone_number"] : $update_reservation["phone_number"];
+$email = $update_reservation["new_email"] ? $update_reservation["new_email"] : $update_reservation["email"];
+$reserved_date = $update_reservation["new_reserved_date"] ? $update_reservation["new_reserved_date"] : $update_reservation["reserved_date"];
 
 $guest_name = mysqli_real_escape_string($dbConn, $guest_name);
 $phone_number = mysqli_real_escape_string($dbConn, $phone_number);
@@ -88,9 +88,9 @@ for ($i=0; $i<$no_of_rooms; $i++) {
  /*room check*/
 
 
-if ($guest_name == "" || $phone_number == "" || $email == "") {
+if ($guest_name == "" || (($phone_number == "") && ($email == ""))) {
 	$msg_response[0] = "ERROR";
-	$msg_response[1] = "The fields 'guest name', 'phone number', 'email' are all compulsory";
+	$msg_response[1] = "The fields 'guest name', 'phone number' or 'email' are compulsory";
 	$response_message = json_encode($msg_response);
 	die($response_message);
 }
@@ -98,9 +98,9 @@ if ($guest_name == "" || $phone_number == "" || $email == "") {
 
 	$update_reservation_query = "UPDATE frontdesk_reservations SET guest_name = '$guest_name', reserved_date = '$reserved_date', phone_number = '$phone_number', no_of_nights = $no_of_nights, email = '$email', room_id = '$room_id', room_rate = $room_rate, room_number = $room_number, room_category = '$room_category', room_total_cost = $room_total_cost WHERE reservation_ref = '$reservation_ref'";
 
-$update_guest_result = mysqli_query($dbConn, $update_guest_query);
+$update_reservation_result = mysqli_query($dbConn, $update_reservation_query);
 
-if($update_guest_result){
+if($update_reservation_result){
 	$msg_response[0] = "OUTPUT";
 	$msg_response[1] = "SUCCESSFULLY UPDATED";
 } else {
