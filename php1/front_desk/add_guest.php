@@ -119,19 +119,39 @@ $select_rooms_query->bind_param("s", $room_id); // continue from here
 	    $response_message = json_encode($msg_response);
  		die($response_message);
  	}
- 	$compare_date = date_create($reservation_date);
- 	if ($reserved == "YES") {
- 	  if ($check_out_date > $compare_date) {
- 		$select_rooms_query->close();
-	    $msg_response[0] = "ERROR";
-	    $msg_response[1] = $room_number . " has checkout date after room reservaton date";
-	    $printer -> close();
-	    $response_message = json_encode($msg_response);
- 		die($response_message);
- 	  }
- 	}
  }
  $select_rooms_query->close();
+
+ $reservation_conflict = [];
+ for ($i=0; $i < $no_of_rooms ; $i++) {
+ 	$today = date("Y-m-d");
+ 	$no_of_nights = $rooms[$i]["no_of_nights"];
+    $d = strtotime("+"."$no_of_nights days");
+    $check_out_date = date("Y-m-d", $d);
+ 	$room_id = $rooms[$i]["room_id"];
+ 	$check_conflict_sql = "SELECT * FROM frontdesk_reservations WHERE reservation_ref != '$reservation_ref' AND room_id = '$room_id'";
+	$conflict_room = mysqli_query($dbConn, $check_conflict_sql);
+	if (mysqli_num_rows($conflict_room) > 0) {
+		while ($row = mysqli_fetch_assoc($conflict_room)) {
+			$compare_checkin = date_create($row["reserved_date"]);
+		    $compare_checkout = $compare_checkin;
+		    $reserved_nights = $row["no_of_nights"];
+		   date_add($compare_checkout, date_interval_create_from_date_string("$reserved_nights days"));
+		   if ((($today < $compare_checkin) && ($check_out_date < $compare_checkin)) || ($today > $compare_checkout) && ($check_out_date > $compare_checkout)) {
+ 	       } else {
+ 	  	       $reservation_conflict[] = $row["reservation_ref"] . " / " . $rooms[$i]["room_number"];
+ 	       }
+		}
+	}
+ }
+
+  if (count($reservation_conflict)) {
+ 	    $reservation_conflicts = implode(", ", $reservation_conflict);
+ 	    $msg_response[0] = "ERROR";
+	    $msg_response[1] = $reservation_conflicts . " conflicts";
+	    $response_message = json_encode($msg_response);
+ 		die($response_message);
+ }
  /*room check*/
 
 /*Record sales of individual rooms*/
