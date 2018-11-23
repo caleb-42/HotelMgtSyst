@@ -41,9 +41,9 @@ for ($i=0; $i<$no_of_rooms; $i++) {
    $select_rooms_query->bind_param("s", $rm_id); // continue from here
     // $d = strtotime("+"."$no_of_nights days");
     // $check_out_date = date("Y-m-d", $d);
-   $rm_id = $room[$i]["room_id"];
-   $no_of_nights = $room[$i]["no_of_nights"];
-   $room_number = $room[$i]["room_number"];
+   $rm_id = $rooms[$i]["room_id"];
+   $no_of_nights = $rooms[$i]["no_of_nights"];
+   $room_number = $rooms[$i]["room_number"];
    $select_rooms_query->execute();
    $select_rooms_query->bind_result($booked, $booked_on, $booking_expires, $room_number, $reserved, $reservation_date, $reserved_nights);
    $select_rooms_query->fetch();
@@ -66,9 +66,9 @@ for ($i=0; $i<$no_of_rooms; $i++) {
 $select_rooms_query->close();
 
 for ($i=0; $i <$no_of_rooms ; $i++) {
-	$rm_id = $room[$i]["room_id"];
-	$no_of_nights = $room[$i]["no_of_nights"];
-	$room_number = $room[$i]["room_number"];
+	$rm_id = $rooms[$i]["room_id"];
+	$no_of_nights = $rooms[$i]["no_of_nights"];
+	$room_number = $rooms[$i]["room_number"];
 	$room_reservation_date = $reserved_date;
    $room_reservation_date = date_create($room_reservation_date);
    $room_reservation_out_date = $room_reservation_date;
@@ -78,7 +78,7 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 	$select_reservations_query->execute();
 	$reservation_result = $select_reservations_query->get_result();
 	if (mysqli_num_rows($reservation_result) > 0) {
-	  while ($row = $reservation_result->fetch_array(MYSQLI_ASSOC) {
+	  while ($row = $reservation_result->fetch_array(MYSQLI_ASSOC)) {
 		$compare_checkin = date_create($row["reserved_date"]);
 		$compare_checkout = $compare_checkin;
 		$reserved_nights = $row["no_of_nights"];
@@ -109,7 +109,7 @@ if ($guest_name == "" || (($phone_number == "") && ($email == ""))) {
 }
 
 
-	$update_reservation_query = "UPDATE frontdesk_reservations SET guest_name = '$guest_name', reserved_date = '$reserved_date', phone_number = '$phone_number', no_of_nights = $no_of_nights, email = '$email' WHERE reservation_ref = '$reservation_ref'";
+	$update_reservation_query = "UPDATE frontdesk_reservations SET guest_name = '$guest_name', reserved_date = '$reserved_date', phone_number = '$phone_number', email = '$email' WHERE reservation_ref = '$reservation_ref'";
 
 $update_reservation_result = mysqli_query($dbConn, $update_reservation_query);
 
