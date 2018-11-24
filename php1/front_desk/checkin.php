@@ -102,7 +102,7 @@ $select_rooms_query->bind_param("s", $room_id); // continue from here
 	if (mysqli_num_rows($conflict_room) > 0) {
 		while ($row = mysqli_fetch_assoc($conflict_room)) {
 			$compare_checkin = date_create($row["reserved_date"]);
-		    $compare_checkout = $compare_checkin;
+		    $compare_checkout = date_create($row["reserved_date"]);
 		    $reserved_nights = $row["no_of_nights"];
 		   date_add($compare_checkout, date_interval_create_from_date_string("$reserved_nights days"));
 		   if ((($today < $compare_checkin) && ($check_out_date < $compare_checkin)) || ($today > $compare_checkout) && ($check_out_date > $compare_checkout)) {

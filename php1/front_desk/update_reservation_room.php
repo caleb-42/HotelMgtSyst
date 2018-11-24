@@ -31,11 +31,11 @@ if (($new_room_id != $room_id) AND ($new_room_id != "")) {
 	if (mysqli_num_rows($conflict_room) > 0) {
 		$room_reservation_date = $reserved_date;
         $room_reservation_date = date_create($room_reservation_date);
-        $room_reservation_out_date = $room_reservation_date;
+        $room_reservation_out_date = date_create($reserved_date);
         date_add($room_reservation_out_date, date_interval_create_from_date_string("$no_of_nights days"));
 		while ($row = mysqli_fetch_assoc($conflict_room)) {
 			$compare_checkin = date_create($row["reserved_date"]);
-		    $compare_checkout = $compare_checkin;
+		    $compare_checkout = date_create($row["reserved_date"]);
 		    $reserved_nights = $row["no_of_nights"];
 		   date_add($compare_checkout, date_interval_create_from_date_string("$reserved_nights days"));
 		   if ((($room_reservation_date < $compare_checkin) && ($room_reservation_out_date < $compare_checkin)) || ($room_reservation_date > $compare_checkout) && ($room_reservation_out_date > $compare_checkout)) {
@@ -63,7 +63,7 @@ $booking_expires = $room["booking_expires"];
 
    $room_reservation_date = $reserved_date;
    $room_reservation_date = date_create($room_reservation_date);
-   $room_reservation_out_date = $room_reservation_date;
+   $room_reservation_out_date = date_create($reserved_date);
    date_add($room_reservation_out_date, date_interval_create_from_date_string("$no_of_nights days"));
  	// echo $room_id;
  	// echo mysqli_error($conn);

@@ -70,8 +70,9 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 	$no_of_nights = $rooms[$i]["no_of_nights"];
 	$room_number = $rooms[$i]["room_number"];
 	$room_reservation_date = $reserved_date;
+	$room_reservation_out_date = $reserved_date;
    $room_reservation_date = date_create($room_reservation_date);
-   $room_reservation_out_date = $room_reservation_date;
+   $room_reservation_out_date = date_create($room_reservation_out_date);
    date_add($room_reservation_out_date, date_interval_create_from_date_string("$no_of_nights days"));
 	$select_reservations_query = $conn->prepare("SELECT reserved_date, no_of_nights FROM frontdesk_reservations WHERE room_id = ? AND reservation_ref != '$reservation_ref'");
 	$select_reservations_query->bind_param("s", $rm_id);
@@ -80,7 +81,7 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 	if (mysqli_num_rows($reservation_result) > 0) {
 	  while ($row = $reservation_result->fetch_array(MYSQLI_ASSOC)) {
 		$compare_checkin = date_create($row["reserved_date"]);
-		$compare_checkout = $compare_checkin;
+		$compare_checkout = date_create($row["reserved_date"]);
 		$reserved_nights = $row["no_of_nights"];
 		date_add($compare_checkout, date_interval_create_from_date_string("$reserved_nights days"));
 		if ((($room_reservation_date < $compare_checkin) && ($room_reservation_out_date < $compare_checkin)) || ($room_reservation_date > $compare_checkout) && ($room_reservation_out_date > $compare_checkout)) {
