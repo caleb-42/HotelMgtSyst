@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2018 at 03:28 PM
+-- Generation Time: Nov 24, 2018 at 04:22 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -68,6 +68,45 @@ CREATE TABLE IF NOT EXISTS `account_salary_payments` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `account_sessions`
+--
+
+CREATE TABLE IF NOT EXISTS `account_sessions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(100) NOT NULL,
+  `role` varchar(100) NOT NULL,
+  `logged_on_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `logged_off_time` timestamp NOT NULL,
+  `logged_on_state` varchar(50) NOT NULL,
+  `duration` time NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_users`
+--
+
+CREATE TABLE IF NOT EXISTS `account_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(100) NOT NULL,
+  `user` varchar(30) NOT NULL,
+  `role` varchar(20) NOT NULL,
+  `password` char(60) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `account_users`
+--
+
+INSERT INTO `account_users` (`id`, `user_name`, `user`, `role`, `password`) VALUES
+(1, 'admin', 'Admin', 'admin', '$2y$11$08a5e2f2a4f3cf5d52989uezmO8uyWJpL5ifsvJHnQpC9026fnHB.');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `admin_staff`
 --
 
@@ -83,6 +122,28 @@ CREATE TABLE IF NOT EXISTS `admin_staff` (
   `current_salary` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_users`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(100) NOT NULL,
+  `user` varchar(30) NOT NULL,
+  `role` varchar(20) NOT NULL,
+  `password` char(60) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `admin_users`
+--
+
+INSERT INTO `admin_users` (`id`, `user_name`, `user`, `role`, `password`) VALUES
+(1, 'admin', 'Admin', 'admin', '$2y$11$08a5e2f2a4f3cf5d52989uezmO8uyWJpL5ifsvJHnQpC9026fnHB.');
 
 -- --------------------------------------------------------
 
@@ -253,9 +314,9 @@ CREATE TABLE IF NOT EXISTS `frontdesk_rooms` (
 
 INSERT INTO `frontdesk_rooms` (`id`, `room_number`, `room_id`, `room_rate`, `room_category`, `features`, `current_guest_id`, `guests`, `booked`, `booking_ref`, `booked_on`, `booking_expires`, `reserved`, `reserved_by`, `reservation_ref`, `reservation_date`, `reserved_nights`, `days_till_reservation_date`, `reservation_expiry`) VALUES
 (1, 101, 'RM_20325', 20000, 'standard', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
-(2, 102, 'RM_40891', 20000, 'standard', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
+(2, 102, 'RM_40891', 20000, 'standard', '', 'LOD_67129', 1, 'YES', 'BK_49439', '2018-11-23 15:27:19', '2018-11-29 03:27:19', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
 (3, 103, 'RM_76950', 20000, 'standard', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
-(4, 104, 'RM_12224', 20000, 'standard', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
+(4, 104, 'RM_12224', 20000, 'standard', '', 'LOD_67129', 1, 'YES', 'BK_49439', '2018-11-23 15:27:19', '2018-11-30 03:27:19', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
 (5, 105, 'RM_28549', 20000, 'standard', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
 (6, 201, 'RM_36388', 35000, 'deluxe', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
 (7, 202, 'RM_50984', 35000, 'deluxe', '', '', 0, 'NO', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'NO', '', '', '0000-00-00', 0, NULL, '0000-00-00'),
@@ -320,7 +381,7 @@ CREATE TABLE IF NOT EXISTS `frontdesk_users` (
 --
 
 INSERT INTO `frontdesk_users` (`id`, `user_name`, `user`, `role`, `password`) VALUES
-(1, 'admin', 'Admin', 'admin', '$2y$11$7853161f6499ecca3308bOlIEPtYYesbxRdjayzLU/nc34uXHrWyi');
+(1, 'admin', 'Admin', 'admin', '$2y$11$08a5e2f2a4f3cf5d52989uezmO8uyWJpL5ifsvJHnQpC9026fnHB.');
 
 -- --------------------------------------------------------
 
