@@ -100,11 +100,11 @@
                             <input class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Name"
                                 name="guest_name" />
                             <input class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Phone Number"
-                                name="phone_number" />
+                                name="phone_number" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" name="room_number" />
                             <textarea class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Address" name="contact_address" ></textarea>
                             <div class = "row">
-                                <input ng-model = 'guest.roomgrid.averagenyt' class="form-control col-5 font-fam-Montserrat text-center d-block my-2" placeholder="Nights" name="average_no_of_nights" ng-change = "guest.roomgrid.nytdate = (guest.roomgrid.averagenyt | intervalGetDate); guest.roomgrid.change_averagenyt()"/>
-                                <input ng-model = 'guest.roomgrid.nytdate' class="form-control offset-1 col-6 font-fam-Montserrat text-center d-block my-2" placeholder="leaving" name="leaving_date" />
+                                <input ng-model = 'guest.roomgrid.averagenyt' class="form-control col-5 font-fam-Montserrat text-center d-block my-2" placeholder="Nights" name="average_no_of_nights" ng-change = "guest.roomgrid.nytdate = (guest.roomgrid.averagenyt | intervalGetDate); guest.roomgrid.change_averagenyt()" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
+                                <input ng-model = 'guest.roomgrid.nytdate' class="form-control offset-1 col-6 font-fam-Montserrat text-center d-block my-2" placeholder="leaving" name="leaving_date" onkeydown="javascript: return false" />
                             </div>
                             <div class="row justify-content-between">
                                 <div class = "col-5 p-0 my-3 text-center">
@@ -142,7 +142,7 @@
                                     <div ng-repeat = "rm in guest.roomgrid.room_details.rooms" class='row w-100 text-center b-1 pointer'>
                                         <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate(rm.name);">{{rm.name | capitalize}}</h6>
                                         <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate(rm.name);">{{rm.count}}</p>
-                                        <span class='pr-2 py-4 pl-3 col-3'><input  ng-model = "guest.roomgrid.room_details.rooms[rm.name].num" ng-change = " guest.roomgrid.room_details.selectrooms(rm.name)" class='clearinput formcontrol w-100 text-center' name = 'noroom' ng-disabled="!guest.roomgrid.averagenyt" /></span>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input  ng-model = "guest.roomgrid.room_details.rooms[rm.name].num" ng-change = " guest.roomgrid.room_details.selectrooms(rm.name)" class='clearinput formcontrol w-100 text-center' name = 'noroom' ng-disabled="!guest.roomgrid.averagenyt"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"/></span>
                                     </div>
                                 </div>
                                 <div ng-switch-when = 'true'>
@@ -156,7 +156,7 @@
                                                 <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-2 py-2 roomno text-left">{{room.room_number}}</span>
                                                 <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-3 py-2 roomno">{{room.room_rate}}</span>
                                                 <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-4 py-2 roomno">{{(guest.roomgrid.roomid[room.room_id] | intervalGetDate)}}</span>
-                                                <span class="col-3 py-2 nights text-right"><input ng-model = 'guest.roomgrid.roomid[room.room_id]' ng-init = "guest.roomgrid.roomid[room.room_id] = room.no_of_nights" class='clearinput formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "guest.roomgrid.room_details.change_nyt_no(room.room_id); "/></span>
+                                                <span class="col-3 py-2 nights text-right"><input ng-model = 'guest.roomgrid.roomid[room.room_id]' ng-init = "guest.roomgrid.roomid[room.room_id] = room.no_of_nights" class='clearinput formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "guest.roomgrid.room_details.change_nyt_no(room.room_id); " type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"/></span>
                                             </li>
                                         </ul>
                                     </div>
@@ -209,7 +209,7 @@
                             <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
                                 placeholder="Address" name="new_contact_address"  />
                             <input class="clearinput password form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Phone Number" name="new_phone_number" />
+                                placeholder="Phone Number" name="new_phone_number" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
                             <div class="row justify-content-between w-50 py-4">
                                 <span class="py-1">
                                     <input type="radio" class="clearinput " id="male" value="male" name="new_guest_type_gender"  ng-model = "guest.guest_type_gender"/>
@@ -250,16 +250,16 @@
                             <input ng-model = "settings.AutoComplete.obj.guest_name" class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Name"
                                 name="guest_name" ng-focus="settings.AutoComplete.activate($event, guest.arr, guest.namesarr, 'guest_name')"/>
                             <input ng-model = "settings.AutoComplete.obj.phone_number" class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Phone Number"
-                                name="phone_number" ng-focus="settings.AutoComplete.activate($event, guest.jslist.values,(guest.jslist.values | duplicatekey: {value : 'phone_number'}), 'phone_number')"/>
+                                name="phone_number" ng-focus="settings.AutoComplete.activate($event, guest.jslist.values,(guest.jslist.values | duplicatekey: {value : 'phone_number'}), 'phone_number')" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
                             <textarea ng-model = "settings.AutoComplete.obj.contact_address" class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Address" name="contact_address" ></textarea>
                             <div class = "row">
                                 <datepicker  date-min-limit = "{{settings.ydate}}" date-format="yyyy-MM-dd" class="col-4 my-2 p-0 text-center" selector="form-control">
                                     <label class="font-fam-Montserrat opac-50">Start</label>
-                                    <input ng-model = 'reservation.roomgrid.nytstartdate' class="f-14 w-100 form-control text-center d-block " placeholder="Start" name="start_date"  ng-change = "reservation.roomgrid.nytdate = (reservation.roomgrid.averagenyt | intervalGetDate: reservation.roomgrid.nytstartdate); reservation.roomgrid.change_averagenyt()"/>
+                                    <input ng-model = 'reservation.roomgrid.nytstartdate' class="f-14 w-100 form-control text-center d-block " placeholder="Start" name="start_date"  ng-change = "reservation.roomgrid.nytdate = (reservation.roomgrid.averagenyt | intervalGetDate: reservation.roomgrid.nytstartdate); reservation.roomgrid.change_averagenyt()" onkeydown="javascript: return false"/>
                                 </datepicker>
                                 <div class="offset-1 col-2 my-2 p-0 f-13 text-center">
                                     <label class="font-fam-Montserrat opac-50">Nights</label>
-                                    <input ng-model = 'reservation.roomgrid.averagenyt' class="f-14 w-100 form-control text-center d-block" placeholder="Nights" name="average_no_of_nights" ng-change = "reservation.roomgrid.nytdate = (reservation.roomgrid.averagenyt | intervalGetDate: reservation.roomgrid.nytstartdate); reservation.roomgrid.change_averagenyt()"/>
+                                    <input ng-model = 'reservation.roomgrid.averagenyt' class="f-14 w-100 form-control text-center d-block" placeholder="Nights" name="average_no_of_nights" ng-change = "reservation.roomgrid.nytdate = (reservation.roomgrid.averagenyt | intervalGetDate: reservation.roomgrid.nytstartdate); reservation.roomgrid.change_averagenyt()" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"/>
                                 </div>
                                 <div class="offset-1 col-4 my-2 p-0 f-13 text-center">
                                     <label class="font-fam-Montserrat opac-50">Leaving</label>
@@ -299,7 +299,7 @@
                                     <div ng-repeat = "rm in reservation.roomgrid.room_details.rooms" class='row w-100 text-center b-1 pointer'>
                                         <h6 class='col-3 py-4 f-14 text-left' ng-click = "reservation.roomgrid.activate(rm.name);">{{rm.name | capitalize}}</h6>
                                         <p class='col-6 py-4 f-13' ng-click = "reservation.roomgrid.activate(rm.name);">{{rm.count}}</p>
-                                        <span class='pr-2 py-4 pl-3 col-3'><input  ng-model = "reservation.roomgrid.room_details.rooms[rm.name].num" ng-change = " reservation.roomgrid.room_details.selectrooms(rm.name)" class='clearinput formcontrol w-100 text-center' name = 'noroom' ng-disabled="!reservation.roomgrid.averagenyt && !reservation.roomgrid.nytstartdate" /></span>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input  ng-model = "reservation.roomgrid.room_details.rooms[rm.name].num" ng-change = " reservation.roomgrid.room_details.selectrooms(rm.name)" class='clearinput formcontrol w-100 text-center' name = 'noroom' ng-disabled="!reservation.roomgrid.averagenyt && !reservation.roomgrid.nytstartdate" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"/></span>
                                     </div>
                                 </div>
                                 <div ng-switch-when = 'true'>
@@ -321,7 +321,7 @@
                                                 <span ng-click = "room.selected = room.selected ? false : true; reservation.roomgrid.room_details.toggleroom();" class="col-3 px-0 f-13 py-2 roomno">{{room.room_rate}}</span>
                                                 <span date-set= "{{settings.date}}" date-format="yyyy-MM-dd" class="col-3 gone px-0 f-13 py-2 roomno"><input ng-model = 'reservation.roomgrid.roomdate[room.room_id]' ng-init = "reservation.roomgrid.roomdate[room.room_id] = room.room_reservation_date" class='clearinput formcontrol w-100 text-center' name = 'room_reservation_date' ng-change = "reservation.roomgrid.room_details.change_nyt_no(room.room_id); "/></span>
                                                 <span ng-click = "room.selected = room.selected ? false : true; reservation.roomgrid.room_details.toggleroom();" class="col-4 px-0 f-13 py-2 roomno text-center">{{(reservation.roomgrid.roomid[room.room_id] | intervalGetDate: reservation.roomgrid.roomdate[room.room_id])}}</span>
-                                                <span class="col-3 f-13 px-0 py-2 nights text-right"><input ng-model = 'reservation.roomgrid.roomid[room.room_id]' ng-init = "reservation.roomgrid.roomid[room.room_id] = room.no_of_nights" class='clearinput formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "reservation.roomgrid.room_details.change_nyt_no(room.room_id); "/></span>
+                                                <span class="col-3 f-13 px-0 py-2 nights text-right"><input ng-model = 'reservation.roomgrid.roomid[room.room_id]' ng-init = "reservation.roomgrid.roomid[room.room_id] = room.no_of_nights" class='clearinput formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "reservation.roomgrid.room_details.change_nyt_no(room.room_id); "  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"/></span>
                                             </li>
                                         </ul>
                                     </div>
@@ -359,7 +359,7 @@
                 <div class="w-100" ng-if="settings.modal.name == 'Confirm Reservation'">
                     <form class="p-4 w-100 ConfirmReservationForm row justify-content-center m-0">
                         <input class="clearinput form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Amount Paid"
-                            name="amount_paid" />
+                            name="amount_paid"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"/>
                         <select class="form-control methpay w-75 my-4 f-13" name="means_of_payment">
                             <option selected value="Cash">Cash</option>
                             <option value="Cheque">Cheque</option>
@@ -388,7 +388,7 @@
                     <form class="p-4 w-100 ClaimReservationForm row justify-content-center m-0">
                         <textarea class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Address" name="contact_address" ></textarea>
                         <input class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Phone Number"
-                                name="phone_number" />
+                                name="phone_number"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
                         <div class="row justify-content-around w-100 py-3">
                                 <span class="py-1">
                                     <input type="radio" class="clearinput " ng-model = "reservation.guest_type_gender" id="male" value="male" checked name="guest_type_gender" />
@@ -433,12 +433,12 @@
                                 <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="Name"
                                 name="new_guest_name" />
                             <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Phone Number" name="new_phone_number" />
+                                placeholder="Phone Number" name="new_phone_number"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
                             <input class="clearinput role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Email"
                                 name="new_email" />
                             <datepicker date-min-limit = "{{settings.ydate}}" date-format="yyyy-MM-dd" class="my-2 p-0 text-center" selector="form-control">
-                                    <input class=" clearinput password form-control font-fam-Montserrat text-center d-block mt-4"
-                                placeholder="Reserved Date" name="new_reserved_date" />
+                                    <input class=" clearinput password form-control font-fam-Montserrat text-center d-block mt-3"
+                                placeholder="Reserved Date" name="new_reserved_date"  onkeydown="javascript: return false"/>
                             </datepicker>
                         </div>
                     </form>
@@ -473,10 +473,14 @@
                                 placeholder="Nights" name="no_of_nights" readonly />
                         </div>
                         <div class="float-right w-45 row m-0 justify-content-center">
-                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="Room Number"
-                                name="new_room_number"  />
+                            <!-- <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="Room Number"
+                                name="new_room_number"  /> -->
+                            <select class="clearinput form-control roomno font-fam-Montserrat d-block my-4 f-13" name="new_room_number">
+                                <option value = "">None</option>
+                                <option ng-repeat = "rm in rooms.allrooms" value= {{rm.room_number}}>{{rm.room_number}}</option>
+                            </select>
                             <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Nights" name="new_no_of_nights"  />
+                                placeholder="Nights" name="new_no_of_nights"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
                         </div>
                     </form>
                     <div class="modal-footer w-100">

@@ -82,3 +82,18 @@ app.filter('explodeToList', function() {
         return arr;
     }
 });
+app.filter('filterObj', function() {
+    return function(input, id, prop) {
+        obj = {};
+        prop.forEach(function(elem){
+            obj[elem] = null;
+        });
+        input.forEach(function(elem){
+            if(elem[prop[0]] == id){
+                obj = elem;
+            }
+        });
+
+        return obj;
+    }
+});
