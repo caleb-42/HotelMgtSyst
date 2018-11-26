@@ -1,7 +1,7 @@
 <?php
  include "../settings/connect.php"; //$database handler $dbConn or $conn
  //$add_expense = $_POST["add_expense"];
- $add_expense = '{"expense":"Electricity", "expense_description":"February", "expense_cost": 5000, "amount_paid": 5000, "balance": 0, "date": "2018-09-23"}';
+ $add_expense = '{"expense":"Electricity", "expense_description":"February", "expense_cost": 5000, "amount_paid": 5000, "balance": 0, "date": "2018-09-23", "means_of_payment": "CASH"}';
  $add_expense = json_encode($add_expense, true);
 
  $msg_response=["OUTPUT", "NOTHING HAPPENED"];
@@ -60,17 +60,19 @@ while (mysqli_num_rows($duplicate_ref_result) > 0) {
     $duplicate_ref_result = mysqli_query($dbConn, $duplicate_check_query);
 }
 
-$insert_into_expense = "INSERT INTO account_expenses (expenses, expense_ref, expense_description, date_of_payment, expense_cost, amount_paid, balance) VALUES ('$expenses', '$exp_ref', '$expense_date', '$expense_description', $expense_cost, $amount_paid, $balance)";
+$insert_into_expense = "INSERT INTO account_expenses (expenses, expense_ref, expense_description, expense_cost, amount_paid, balance) VALUES ('$expenses', '$exp_ref', '$expense_description', $expense_cost, $amount_paid, $balance)";
 $insert_expense_result = mysqli_query($dbConn, $insert_into_expense);
 
-if($insert_expense_result){
+$insert_into_payments = "INSERT INTO account_expenses_payments (expense_ref, txn_date, amount_paid, date_of_payment, balance, net_paid, txn_worth, means_of_payment) VALUES ('$expense_ref', '$expense_date', $amount_paid, '$expense_date', $balance, $amount_paid, $expense_cost, '$means_of_payment')";
+$insert_into_payments_result = mysqli_query($dbConn, $insert_into_payments);
+
+if($insert_expense_result && $insert_into_payments_result){
 	$msg_response[0] = "OUTPUT";
 	$msg_response[1] = "SUCCESSFULLY ADDED";
 } else {
 	$msg_response[0] = "ERROR";
 	$msg_response[1] = "SOMETHING WENT WRONG";
 }
-
 $response_message = json_encode($msg_response);
 echo $response_message;
 

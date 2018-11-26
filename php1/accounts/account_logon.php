@@ -44,6 +44,6 @@ if (!verify($password, $hashedPassword)) {
 	session_start();
 	$_SESSION["user_name"] = $username;
 	$_SESSION["role"] = $role;
-	header("Location: ../../account/index.php");
+	header("Location: ../../accounts/index.php");
 }
 ?>

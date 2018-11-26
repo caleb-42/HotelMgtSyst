@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2018 at 12:40 PM
+-- Generation Time: Nov 26, 2018 at 03:02 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -31,11 +31,30 @@ CREATE TABLE IF NOT EXISTS `account_expenses` (
   `expense` varchar(200) NOT NULL,
   `expense_ref` varchar(100) NOT NULL,
   `expense_description` varchar(400) NOT NULL,
-  `date_of_payment` date NOT NULL,
   `expense_cost` int(11) NOT NULL,
   `amount_paid` int(11) NOT NULL,
   `balance` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_expense_payments`
+--
+
+CREATE TABLE IF NOT EXISTS `account_expense_payments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `expense_ref` varchar(100) NOT NULL,
+  `payment_index` int(11) NOT NULL DEFAULT '1',
+  `txn_date` date NOT NULL,
+  `amount_paid` int(11) NOT NULL,
+  `date_of_payment` date NOT NULL,
+  `balance` int(11) NOT NULL,
+  `net_paid` int(11) NOT NULL,
+  `txn_worth` int(11) NOT NULL,
+  `means_of_payment` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -267,14 +286,7 @@ CREATE TABLE IF NOT EXISTS `frontdesk_reservations` (
   `deposit_confirmed` varchar(100) NOT NULL DEFAULT 'NO',
   `frontdesk_rep` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
-
---
--- Dumping data for table `frontdesk_reservations`
---
-
-INSERT INTO `frontdesk_reservations` (`id`, `reservation_ref`, `guest_name`, `guest_id`, `phone_number`, `email`, `reserved_date`, `no_of_nights`, `inquiry_date`, `room_id`, `room_number`, `room_rate`, `room_total_cost`, `room_category`, `booked`, `booking_ref`, `cancelled`, `deposit_confirmed`, `frontdesk_rep`) VALUES
-(1, 'RESV_18118', 'Joy Adesuwa', '', '09098407742', 'joy@gmail.com', '2018-11-26', 4, '2018-11-26 10:52:46', 'RM_20325', 101, 20000, 80000, 'standard', 'NO', '', 'NO', 'YES', 'admin');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
