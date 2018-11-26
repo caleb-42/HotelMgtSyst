@@ -34,7 +34,7 @@ $date=date("D M d, Y g:i a");
             <div class = "adminform row justify-content-center" style="height: 100vh;">
                 <form autocomplete="off" role="form" method="post" action = "../php1/front_desk/frontdesk_logon.php" class="align-self-center">
                     <div class="formhd text-center px-4 pt-4">
-                        <img  class = "" width = 140px height = 100px src = "assets/img/icon.png"/>
+                        <img  class = "ml-2" width = 140px height = 100px src = "assets/img/icon.png"/>
                         <!-- <h5 class = "Title mb-4 pb-1 mx-5 mt-3 wht font-fam-Calibri">Front<b>Desk</b></h5> -->
                         <img  class = "my-4 ml-2" width = 280px height = 65px src = "assets/img/title.png"/>
                         <div class="row mb-4 pb-2">
@@ -70,7 +70,7 @@ $date=date("D M d, Y g:i a");
                 </form>
             </div>
         </div>
-        <footer class="f-12">
+        <footer class="f-12 wht">
             <p class = "text-center">&copy; 2012 - <?php echo date('Y') ?> Webplay Nig Ltd. All Rights Reserved.</p>
             <p class = "text-center"><?php echo $date ?></p>
         </footer>

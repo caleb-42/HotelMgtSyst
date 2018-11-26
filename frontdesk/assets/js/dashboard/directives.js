@@ -74,8 +74,12 @@ app.directive('reservationlist', ['$rootScope', function ($rootScope) {
                     listdetails = scope.reservation.itemlist();
                     jsonlist = listdetails.jsonfunc;
                     jsonlist.then(function (result) {
+                        scope.reservation.jslist.values = [];
                         resvtn = result;
                         newresvtn = [];
+                        if(!resvtn){
+                            return;
+                        }
                         resvtn.forEach(function(rtn){
                             count = true;
                             for(var i = 0; i < newresvtn.length; i++){
@@ -157,6 +161,7 @@ app.directive('resvtnlist', ['$rootScope', function ($rootScope) {
                     resultfiltered = [];
 
                     jsonlist.then(function (result) {
+                        scope.resvtn.jslist.values = [];
                         if (!result) {
                             return 0;
                         }
