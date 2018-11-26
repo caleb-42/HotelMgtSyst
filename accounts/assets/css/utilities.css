@@ -23,7 +23,7 @@
 }
 
 .tabpill.focus {
-    color: #509CCB !important;
+    color:  rgba(183,42,63,1) !important;
     background: white;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -97,6 +97,9 @@ li{
 }
 .wht{
     color: white !important;
+}
+.wht-back{
+    background: white !important;
 }
 .blac{
     color: black !important;
@@ -290,12 +293,12 @@ input::placeholder, textarea::placeholder {
     background-color: #f0ad4e;
     border-color: #f0ad4e;
   }
-.blu{
-    background: #509CCB;
+.darkred{
+    background: rgba(183,42,63,1);
 /*    font-weight: 700;*/
 }
-.blu-clr{
-    color: #509CCB;
+.darkred-clr{
+    color: rgba(183,42,63,1) !important;
 /*    font-weight: 700;*/
 }
 .btn-darkgrn:hover{

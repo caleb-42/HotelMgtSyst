@@ -85,6 +85,9 @@ app.filter('explodeToList', function() {
 app.filter('filterObj', function() {
     return function(input, id, prop) {
         obj = {};
+        if(!input && typeof(input) != "array"){
+            return obj;
+        }
         prop.forEach(function(elem){
             obj[elem] = null;
         });

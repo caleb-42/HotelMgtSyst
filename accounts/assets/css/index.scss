@@ -10,6 +10,7 @@ body {
     overflow: hidden;
     background: #eee;
 }
+
 .wrapper.toggled {
     padding-left: 250px !important;
 
@@ -106,14 +107,14 @@ body {
     border-bottom: 1px solid #ccc;
 }
 .listcont li.actparent{
-    color: white !important;
+    color: #fff !important;
     /*box-shadow:  200px 200px 20px rgba(217, 83, 79, .9) inset !important;*/
-    box-shadow:  200px 200px 20px rgba(80, 156, 203, .8) inset !important;
+    box-shadow:  200px 200px 20px rgba(218, 108, 18, 0.8) inset !important;
 }
 div.actparent{
-    color: white !important;
+    color: #fff !important;
     /*box-shadow:  200px 200px 20px rgba(217, 83, 79, .9) inset !important;*/
-    box-shadow:  200px 200px 20px rgba(80, 156, 203, .8) inset !important;
+    box-shadow:  200px 200px 20px rgba(183,42,63,.2)  inset !important;
 }
 .listhd {
     background: #ddd;

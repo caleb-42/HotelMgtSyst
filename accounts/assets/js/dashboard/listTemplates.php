@@ -1,17 +1,17 @@
 
 <!-- ............jslist start ..............-->
-<div class = "listcont" ng-if = "<?php echo $_GET['list']   == 'guest'?>">
+<div class = "listcont" ng-if = "<?php echo $_GET['list']   == 'expenses'?>">
     <div class = "listhd pr-3 row font-fam-Montserrat-bold">
-        <span class="{{hd.width}} f-13 opac-70"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in guest.listhddata">{{hd.name}}</span>
+        <span class="{{hd.width}} f-13 opac-70"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in expenses.listhddata">{{hd.name}}</span>
     </div>
     <div class = "hs-40 listbody ovflo-y pb-4" >
         <ul class = "list" >
-            <li class = "anim-fast itemlistrow row align-items-center f-12" ng-repeat = "gst in (guest.jslist.newItemArray = (guest.jslist.values | filter:searchbox.imp))" ng-click = "guest.jslist.select($index, gst.guest_id)" ng-class = "{'actparent' :guest.jslist.selected == gst.guest_id}">
-                <span class = "username col-3">{{gst.guest_name}}</span>
-                <span class = "text-center role col-2">{{gst.guest_type_gender}}</span>
-                <span class = "text-center role col-2">{{gst.total_rooms_booked}}</span>
-                <span class = "text-center role col-2">{{gst.visit_count}}</span>
-                <span class = "text-center role col-3">{{((gst.room_outstanding | intString) + (gst.restaurant_outstanding | intString) | number)}}</span>
+            <li class = "anim-fast itemlistrow row align-items-center f-12" ng-repeat = "exp in (expenses.jslist.newItemArray = (expenses.jslist.values | filter:searchbox.imp))" ng-click = "expenses.jslist.select($index, gst.expense_ref)" ng-class = "{'actparent' :expenses.jslist.selected == gst.expense_ref}">
+                <span class = "username col-3">{{exp.expense}}</span>
+                <span class = "text-center role col-2">{{exp.expense_description}}</span>
+                <span class = "text-center role col-2">{{exp.expense_cost}}</span>
+                <span class = "text-center role col-2">{{exp.amount_paid}}</span>
+                <span class = "text-center role col-3">{{exp.balance}}</span>
             </li>
         </ul>
     </div>
@@ -19,23 +19,26 @@
 <!-- ............jslist start ..............-->
 
 <!-- ............jslist start ..............-->
-<div class = "listcont" ng-if = "<?php echo $_GET['list']   == 'reservation'?>">
+<!-- <div class = "listcont" ng-if = "<?php echo $_GET['list']   == 'revenue'?>">
     <div class = "listhd pr-3 row font-fam-Montserrat-bold">
-        <span class="{{hd.width}} f-13 opac-70"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in reservation.listhddata">{{hd.name}}</span>
+        <span class="{{hd.width}} f-13 opac-70"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in revenue.listhddata">{{hd.name}}</span>
     </div>
-    <div class = "hs-60 listbody ovflo-y pb-4" >
+    <div class = "hs-40 listbody ovflo-y pb-4" >
         <ul class = "list" >
-            <li class = "anim-fast itemlistrow row align-items-center f-12" ng-repeat = "resevtn in (reservation.jslist.newItemArray = (reservation.jslist.values | filter:searchbox.imp))" ng-click = "reservation.jslist.select($index, resevtn.reservation_ref)" ng-class = "{'actparent' :reservation.jslist.selected == resevtn.reservation_ref}">
-                <span class = "username col-2">{{resevtn.reservation_ref}}</span>
-                <span class = "text-center role col-2">{{resevtn.guest_id}}</span>
-                <span class = "text-center logoff col-3">{{resevtn.inquiry_date}}</span>
-                <span class = "text-center logoff col-3">{{resevtn.reserved_date}}</span>
-                <span class = "text-center logoff col-2">{{resevtn.deposit_confirmed == 'YES' ? (resevtn.booked == 'YES' ? 'booked' : 'confirmed') : 'unconfirmed'}}</span>
+            <li class = "anim-fast itemlistrow row align-items-center f-12" ng-repeat = "rev in (revenue.jslist.newItemArray = (revenue.jslist.values | filter:searchbox.imp))" ng-click = "revenue.jslist.select($index, rev.expense_ref)" ng-class = "{'actparent' :revenue.jslist.selected == rev.expense_ref}">
+                <span class = "username col-3">{{rev.expense}}</span>
+                <span class = "text-center role col-2">{{rev.expense_description}}</span>
+                <span class = "text-center role col-2">{{rev.expense_cost}}</span>
+                <span class = "text-center role col-2">{{rev.amount_paid}}</span>
+                <span class = "text-center role col-3">{{rev.balance}}</span>
             </li>
         </ul>
     </div>
-</div>
+</div> -->
 <!-- ............jslist start ..............-->
+
+
+
 
 <div ng-if = "<?php echo $_GET['list'] == 'resvtn'?>">
     <div class = "row hs-80 {{reservation.jslist.selected ? 'gone' : 'align-items-center'}} relatv ">
@@ -137,7 +140,7 @@
                 <div id="collapseOne" class="row collapse show px-1" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body py-3 px-4 hs-55 row align-items-start relatv">
                         <div class = "font-fam-Montserrat row w-100 h-80 {{rooms.jslist.selected ? 'gone' : 'align-items-center'}} relatv ">
-                            <h6 class="blu-clr font-weight-bold opac-70 text-center w-100 "> Select A Room</h6>
+                            <h6 class="darkred-clr font-weight-bold opac-70 text-center w-100 "> Select A Room</h6>
                         </div>
                         <div class = "listcont w-100 {{!rooms.jslist.selected ? 'gone' : 'notgone'}}">
                             <div class = "row w-100 justify-content-between pb-3">
@@ -175,7 +178,7 @@
                 <div id="collapseTwo" class="collapse px-2" aria-labelledby="headingTwo" data-parent="#accordionExample">
                     <div class="card-body row py-3 px-4 hs-55  font-fam-Montserrat">
                         <div class = "row w-100 h-80 {{rooms.jslist.selected ? 'gone' : 'align-items-center'}} relatv ">
-                            <h6 class="blu-clr font-weight-bold opac-70 text-center w-100 "> Select A Room</h6>
+                            <h6 class="darkred-clr font-weight-bold opac-70 text-center w-100 "> Select A Room</h6>
                         </div>
                         <div class = "listcont w-100 {{!rooms.jslist.selected ? 'gone' : 'notgone'}}">
                             <div class = "row w-100 justify-content-between pb-3">
@@ -215,7 +218,7 @@
                 <div id="collapseThree" class="collapse px-2" aria-labelledby="headingThree" data-parent="#accordionExample">
                     <div class="card-body py-3 px-4 hs-55 ovflo-y font-fam-Montserrat">
                         <div class = "row w-100 h-100 {{rooms.jslist.selected ? 'gone' : 'align-items-center'}} relatv ">
-                            <h6 class="blu-clr font-weight-bold opac-70 text-center w-100 "> Select A Room</h6>
+                            <h6 class="darkred-clr font-weight-bold opac-70 text-center w-100 "> Select A Room</h6>
                         </div>
                         <div class = "listcont w-100 {{!rooms.jslist.selected ? 'gone' : 'notgone'}}">
                         

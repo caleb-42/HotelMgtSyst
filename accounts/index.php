@@ -8,7 +8,7 @@ if(!isset($_SESSION['user_name'])){
     header("Location: ./logIn.php");
 }
 
-$templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Lodge"=>"./assets/js/rooms/roomsPartial.php","Users"=>"./assets/js/users/usersPartial.php","Records"=>"./assets/js/records/recordsPartial.php"]
+$templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Revenue"=>"./assets/js/revenue/revenuePartial.php","Lodge"=>"./assets/js/rooms/roomsPartial.php","Users"=>"./assets/js/users/usersPartial.php"]
 ?>
 
 <!doctype html>
@@ -20,7 +20,7 @@ $templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Lodge"=>"./a
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>FrontDesk</title>
+    <title>Accounts</title>
 
     <!-- Angular core -->
     <script src="./vendors/angular/angular.min.js"></script>
@@ -65,8 +65,8 @@ $templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Lodge"=>"./a
     <script src="./assets/js/rooms/controllers.js"></script>
     <script src="./assets/js/users/directives.js"></script>
     <script src="./assets/js/users/controllers.js"></script>
-    <script src="./assets/js/records/directives.js"></script>
-    <script src="./assets/js/records/controllers.js"></script>
+    <script src="./assets/js/revenue/directives.js"></script>
+    <script src="./assets/js/revenue/controllers.js"></script>
     <script src="./vendors/node_modules/ng-croppie/unminified/ng-croppie.js"></script>
     <script src="./vendors/node_modules/angularjs-datepicker/src/js/angular-datepicker.js"></script>
 </head>

@@ -1,5 +1,5 @@
 <?php
-  include "../../settings/connect.php"; //$database handler $dbConn or $conn
+  include "../settings/connect.php"; //$database handler $dbConn or $conn
 
   $get_items_sql = "SELECT * FROM account_expenses";
   $get_items_result = mysqli_query($dbConn, $get_items_sql);
