@@ -17,7 +17,7 @@ $no_of_reservations = count($del_array);
 $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
 
-$del_reservations_query = $conn->prepare("DELETE FROM frontdesk_resevations WHERE reservation_ref = ?");
+$del_reservations_query = $conn->prepare("DELETE FROM frontdesk_reservations WHERE reservation_ref = ?");
 $del_reservations_query->bind_param("s", $reservation_ref);
 
 for ($i=0; $i < $no_of_reservations; $i++) { 

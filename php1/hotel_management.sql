@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2018 at 04:22 PM
+-- Generation Time: Nov 26, 2018 at 12:40 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -29,7 +29,9 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `account_expenses` (
   `id` int(11) NOT NULL,
   `expense` varchar(200) NOT NULL,
+  `expense_ref` varchar(100) NOT NULL,
   `expense_description` varchar(400) NOT NULL,
+  `date_of_payment` date NOT NULL,
   `expense_cost` int(11) NOT NULL,
   `amount_paid` int(11) NOT NULL,
   `balance` int(11) NOT NULL
@@ -229,7 +231,14 @@ CREATE TABLE IF NOT EXISTS `frontdesk_payments` (
   `means_of_payment` varchar(100) NOT NULL,
   `frontdesk_rep` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `frontdesk_payments`
+--
+
+INSERT INTO `frontdesk_payments` (`id`, `frontdesk_txn`, `payment_index`, `txn_date`, `amount_paid`, `date_of_payment`, `amount_balance`, `net_paid`, `txn_worth`, `guest_id`, `means_of_payment`, `frontdesk_rep`) VALUES
+(1, 'RESV_18118', 1, '2018-11-26 11:53:22', 30000, '2018-11-26 10:53:22', 50000, 30000, 80000, '', 'Cash', '');
 
 -- --------------------------------------------------------
 
@@ -258,7 +267,14 @@ CREATE TABLE IF NOT EXISTS `frontdesk_reservations` (
   `deposit_confirmed` varchar(100) NOT NULL DEFAULT 'NO',
   `frontdesk_rep` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `frontdesk_reservations`
+--
+
+INSERT INTO `frontdesk_reservations` (`id`, `reservation_ref`, `guest_name`, `guest_id`, `phone_number`, `email`, `reserved_date`, `no_of_nights`, `inquiry_date`, `room_id`, `room_number`, `room_rate`, `room_total_cost`, `room_category`, `booked`, `booking_ref`, `cancelled`, `deposit_confirmed`, `frontdesk_rep`) VALUES
+(1, 'RESV_18118', 'Joy Adesuwa', '', '09098407742', 'joy@gmail.com', '2018-11-26', 4, '2018-11-26 10:52:46', 'RM_20325', 101, 20000, 80000, 'standard', 'NO', '', 'NO', 'YES', 'admin');
 
 -- --------------------------------------------------------
 
@@ -277,7 +293,14 @@ CREATE TABLE IF NOT EXISTS `frontdesk_reservation_txn` (
   `payment_status` varchar(100) NOT NULL,
   `frontdesk_rep` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `frontdesk_reservation_txn`
+--
+
+INSERT INTO `frontdesk_reservation_txn` (`id`, `reservation_ref`, `total_rooms_reserved`, `total_cost`, `deposited`, `balance`, `means_of_payment`, `payment_status`, `frontdesk_rep`) VALUES
+(1, 'RESV_18118', 1, 80000, 30000, 50000, 'Cash', 'UNBALANCED', 'admin');
 
 -- --------------------------------------------------------
 
