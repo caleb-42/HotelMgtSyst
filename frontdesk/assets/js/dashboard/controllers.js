@@ -856,6 +856,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     
                     $scope.reservation.itemlist().jsonfunc.then(function(result){
                         newresvtn = [];
+                        if(!result){return;}
                         result.forEach(function(rtn){
                             count = true;
                             for(var i = 0; i < newresvtn.length; i++){
