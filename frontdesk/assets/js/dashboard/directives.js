@@ -16,7 +16,7 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
                         /* scope.guest.jslist.values.forEach(function(elem){
                             elem.value = elem.guest_name;
                         }); */
-                        scope.guest.jslist.selected = null;
+                        //scope.guest.jslist.selected = null;
                     });
                     scope.guest.listhddata = [
                         {
@@ -90,7 +90,7 @@ app.directive('reservationlist', ['$rootScope', function ($rootScope) {
                         });
                         scope.reservation.jslist.values = newresvtn;
                         console.log(newresvtn);
-                        scope.reservation.jslist.selected = null;
+                        //scope.reservation.jslist.selected = null;
                     });
                     scope.reservation.listhddata = [
                         {
@@ -122,6 +122,8 @@ app.directive('reservationlist', ['$rootScope', function ($rootScope) {
                     console.log(scope.reservation.jslist.newItemArray[index]);
                     $rootScope.$emit('reservationselect', scope.reservation.jslist.selectedObj);
                     scope.resvtn.jslist.createList();
+                    scope.resvtn.jslist.selectedObj = {};
+                    scope.resvtn.jslist.selected = null;
                 },
                 toggleOut : function(){
                     $(".listcont").fadeOut(200);
@@ -255,7 +257,11 @@ dashApp.directive('roomgrid', ['$rootScope', function ($rootScope) {
                 select: function (index, id) {
                     scope.rooms.jslist.selected = id;
                     scope.rooms.jslist.selectedObj = scope.rooms.jslist.newItemArray[index];
-                    console.log(scope.rooms.jslist.newItemArray[index]);$rootScope.$emit('roomselect', scope.rooms.jslist.selectedObj)
+                    console.log(scope.rooms.jslist.newItemArray[index]);$rootScope.$emit('roomselect', scope.rooms.jslist.selectedObj);
+                    scope.rooms.reservations.confirmed_reservation.selectedObj = {}
+                    scope.rooms.reservations.confirmed_reservation.selected = null;
+                    scope.rooms.reservations.temp_reservation.selectedObj = {}
+                    scope.rooms.reservations.temp_reservation.selected = null;
                 },
                 toggleOut : function(){
                     $(".listcont").fadeOut(200);

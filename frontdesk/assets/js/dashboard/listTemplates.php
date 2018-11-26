@@ -53,7 +53,7 @@
             </div>
         </div>
         <div class = "row w-100 justify-content-between pb-3">
-            <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Resvtn'; settings.modal.name = 'Update Single Reservation'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud" ng-disabled="!resvtn.jslist.selected">Update</button>
+            <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" ng-click="rooms.getallrooms(); settings.modal.active = 'Resvtn'; settings.modal.name = 'Update Single Reservation'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud" ng-disabled="!resvtn.jslist.selected">Update</button>
             <input class="form-control w-40 text-center anim" ng-model="searchbox.inp"  placeholder = "Search"/>
             <button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" ng-click="resvtn.deleteResvtn()" ng-disabled="!resvtn.jslist.selected">Delete</button>
         </div>
@@ -141,7 +141,7 @@
                         </div>
                         <div class = "listcont w-100 {{!rooms.jslist.selected ? 'gone' : 'notgone'}}">
                             <div class = "row w-100 justify-content-between pb-3">
-                            <button class="btn btn-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Resvtn'; settings.modal.name = 'Update Unconfirmed Reservation'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud" ng-disabled="!rooms.reservations.temp_reservation.selected">Update</button>
+                            <button class="btn btn-success mx-1 font-fam-Montserrat f-12" ng-click="rooms.getallrooms(); settings.modal.active = 'Resvtn'; settings.modal.name = 'Update Unconfirmed Reservation'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud" ng-disabled="!rooms.reservations.temp_reservation.selected">Update</button>
                             <input class="form-control w-40 text-center anim" ng-model="searchbox.inp"  placeholder = "Search"/>
                             <button class="btn btn-danger mx-1 font-fam-Montserrat f-12" ng-click="rooms.reservations.temp_reservation.deleteResvtn()" ng-disabled="!rooms.reservations.temp_reservation.selected">Delete</button>
                             </div>
@@ -179,7 +179,7 @@
                         </div>
                         <div class = "listcont w-100 {{!rooms.jslist.selected ? 'gone' : 'notgone'}}">
                             <div class = "row w-100 justify-content-between pb-3">
-                                <button class="btn btn-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Resvtn'; settings.modal.name = 'Update Confirmed Reservation'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud" ng-disabled="!rooms.reservations.confirmed_reservation.selected">Update</button>
+                                <button class="btn btn-success mx-1 font-fam-Montserrat f-12" ng-click="rooms.getallrooms(); settings.modal.active = 'Resvtn'; settings.modal.name = 'Update Confirmed Reservation'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud" ng-disabled="!rooms.reservations.confirmed_reservation.selected">Update</button>
                                 <input class="form-control w-40 text-center anim" ng-model="searchbox.inp"  placeholder = "Search"/>
                                 <button class="btn btn-danger mx-1 font-fam-Montserrat f-12" ng-click="rooms.reservations.confirmed_reservation.deleteResvtn()" ng-disabled="!rooms.reservations.confirmed_reservation.selected">Delete</button>
                             </div>

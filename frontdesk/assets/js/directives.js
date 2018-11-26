@@ -1,4 +1,4 @@
-app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jsonPost, $filter) {
+app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($rootScope, jsonPost, $filter) {
     return {
         restrict: 'A',
         //template: modalTemplate,
@@ -40,10 +40,10 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                     console.log(scope.resvtn);
                     loadJson2Form(scope.resvtn.jslist.selectedObj, '.inpRead');
                 } else if ($rootScope.settings.modal.name == "Update Unconfirmed Reservation") {
-                    console.log(scope.rooms.reservation);
+                    console.log(scope.rooms.reservations.temp_reservation.reservation_list);
                     loadJson2Form(scope.rooms.reservations.temp_reservation.selectedObj, '.inpRead');
                 } else if ($rootScope.settings.modal.name == "Update Confirmed Reservation") {
-                    console.log(scope.rooms.reservation);
+                    console.log(scope.rooms.reservations.confirmed_reservation.reservation_list);
                     loadJson2Form(scope.rooms.reservations.confirmed_reservation.selectedObj, '.inpRead');
                 }
             });
@@ -104,7 +104,7 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
             updateGuest = function () {
                 $rootScope.settings.modal.adding = true;
                 jsonForm = $(".updateGuestForm").serializeObject();
-                jsonForm.new_guest_type_gender = scope.guest.guest_type_gender;
+                jsonForm.new_guest_type_gender = scope.guest.guest_type_gender ? scope.guest.guest_type_gender : jsonForm.guest_type_gender;
                 console.log(jsonForm);
                 scope.guest.updateGuest(jsonForm);
             };
@@ -227,15 +227,29 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                 $rootScope.settings.modal.active = "";
                 $rootScope.settings.AutoComplete.obj = {};
                 $(".modal .clearinput").val("");
+                reset();
             });
             $('.modal .close').on('click', function () {
                 $rootScope.settings.modal.msg = '';
                 $rootScope.settings.modal.active = "";
                 $rootScope.settings.AutoComplete.obj = {};
                 $(".modal .clearinput").val("");
+                reset();
             });
+            function reset(){
+                if(scope.reservation && scope.guest){
+                    scope.reservation.roomgrid.activated = false;
+                    scope.guest.roomgrid.activated = false;
+                    scope.guest.roomgrid.averagenyt = 0;
+                    scope.guest.roomgrid.nytdate = $filter('intervalGetDate')(0,$rootScope.settings.date);
+                    scope.reservation.roomgrid.averagenyt = 0;
+                    scope.reservation.roomgrid.nytstartdate = $filter('intervalGetDate')(0,$rootScope.settings.date);
+                    scope.reservation.roomgrid.nytdate = $filter('intervalGetDate')(0,$rootScope.settings.date);
+                }
+                
+            }
         }
-    };
+    }
 }]);
 /* app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jsonPost, $filter) {
     return {
