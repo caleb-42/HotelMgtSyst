@@ -852,7 +852,6 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     $scope.reservation.jslist.toggleOut();
                     console.log(response);
                     $scope.reservation.jslist.createList();
-                    $scope.resvtn.jslist.createList();
                     
                     $scope.reservation.itemlist().jsonfunc.then(function(result){
                         newresvtn = [];

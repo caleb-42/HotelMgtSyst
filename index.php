@@ -1,3 +1,3 @@
 <?php
-    header("Location:  ./frontdesk/index.php");
+    header("Location:  ./accounts/index.php");
 ?>
