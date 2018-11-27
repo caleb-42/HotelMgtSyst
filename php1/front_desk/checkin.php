@@ -29,7 +29,7 @@ $biz_contact = $shop_contact . "\n";
 $connector = new WindowsPrintConnector($printName);
 $printer = new Printer($connector);
 $checkin_data = $_POST["checkin_data"];
-
+$msg_response=["OUTPUT", "NOTHING HAPPENED"];
 /* $checkin_data = '{"guest_id":"LOD_5464", "guest_name":"Ewere", "total_rooms_booked": 3, "total_cost": 63000, "deposited": 54000, "balance": 9000, "means_of_payment": "POS", "frontdesk_rep": "Ada", "rooms": [{"room_number": 102, "room_id": "RM_64917", "guests":3, "room_rate": 33000, "no_of_nights":4, "room_category": "deluxe"}, {"room_number": 102, "room_id": "RM_66480", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard"}, {"room_number": 102, "room_id": "RM_71638", "guests":3, "room_rate": 15000, "no_of_nights":4, "room_category": "standard"}]}'; */
 /*checkin_data is the json string from the front-end the keys contain aspects of the
 /*sales_details is the json string from the front-end the keys contain aspects of the
@@ -46,6 +46,13 @@ transaction */
  $frontdesk_rep = $checkin_data["frontdesk_rep"];
  $rooms = $checkin_data["rooms"];
  $no_of_rooms = count($rooms);
+
+ if (($no_of_rooms == 0) || ($no_of_rooms == "")) {
+ 	$msg_response[0] = "ERROR";
+    $msg_response[1] = "No room selected";
+    $response_message = json_encode($msg_response);
+    die($response_message);
+ }
 
  $rand_id = mt_rand(0, 100000);
  $booking_ref = "BK_" . $rand_id;
@@ -97,7 +104,7 @@ $select_rooms_query->bind_param("s", $room_id); // continue from here
     $d = strtotime("+"."$no_of_nights days");
     $check_out_date = date("Y-m-d", $d);
  	$room_id = $rooms[$i]["room_id"];
- 	$check_conflict_sql = "SELECT * FROM frontdesk_reservations WHERE reservation_ref != '$reservation_ref' AND room_id = '$room_id'";
+ 	$check_conflict_sql = "SELECT * FROM frontdesk_reservations WHERE room_id = '$room_id'";
 	$conflict_room = mysqli_query($dbConn, $check_conflict_sql);
 	if (mysqli_num_rows($conflict_room) > 0) {
 		while ($row = mysqli_fetch_assoc($conflict_room)) {
@@ -147,11 +154,10 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 }
 $insert_into_bookings->close();
 
-$update_room_query = $conn->prepare("UPDATE frontdesk_rooms SET booked_on = CURRENT_TIMESTAMP, booked = 'YES', guests = ?, current_guest_id = ?, booking_ref = ?, booking_expires = ?, booked_nights = ? WHERE room_id = ?");
-$update_room_query->bind_param("issssi", $guests, $current_guest_id, $bk_ref, $booking_expires, $room_id, $booked_nights);
+$update_room_query = $conn->prepare("UPDATE frontdesk_rooms SET booked_on = CURRENT_TIMESTAMP, booked = 'YES', guests = ?, current_guest_id = ?, booking_ref = ?, booking_expires = ? WHERE room_id = ?");
+$update_room_query->bind_param("issss", $guests, $current_guest_id, $bk_ref, $booking_expires, $room_id);
 for ($i=0; $i <$no_of_rooms ; $i++) {
 	$no_of_nights = $rooms[$i]["no_of_nights"];
-	$booked_nights = $no_of_nights;
 	$d = strtotime("+"."$no_of_nights days");
 	$booking_expires = date("Y-m-d h:i:s", $d);
 	$room_id = $rooms[$i]["room_id"];

@@ -60,6 +60,13 @@ transaction */
  $rooms = $checkin_data["rooms"];
  $no_of_rooms = count($rooms);
 
+ if (($no_of_rooms == 0) || ($no_of_rooms == "")) {
+ 	$msg_response[0] = "ERROR";
+    $msg_response[1] = "No room selected";
+    $response_message = json_encode($msg_response);
+    die($response_message);
+ }
+ 
  $rand_id = mt_rand(0, 100000);
  $guest_id = "LOD_" . $rand_id;
 
@@ -129,7 +136,7 @@ $select_rooms_query->bind_param("s", $room_id); // continue from here
     $d = strtotime("+"."$no_of_nights days");
     $check_out_date = date("Y-m-d", $d);
  	$room_id = $rooms[$i]["room_id"];
- 	$check_conflict_sql = "SELECT * FROM frontdesk_reservations WHERE reservation_ref != '$reservation_ref' AND room_id = '$room_id'";
+ 	$check_conflict_sql = "SELECT * FROM frontdesk_reservations WHERE room_id = '$room_id'";
 	$conflict_room = mysqli_query($dbConn, $check_conflict_sql);
 	if (mysqli_num_rows($conflict_room) > 0) {
 		while ($row = mysqli_fetch_assoc($conflict_room)) {
@@ -181,8 +188,9 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 }
 $insert_into_bookings->close();
 
-$update_room_query = $conn->prepare("UPDATE frontdesk_rooms SET booked_on = CURRENT_TIMESTAMP, booked = 'YES', guests = ?, current_guest_id = ?, booking_ref = ?, booking_expires = ?, booked_nights = ? WHERE room_id = ?");
-$update_room_query->bind_param("issssi", $guests, $current_guest_id, $bk_ref, $booking_expires, $room_id, $booked_nights);
+$update_room_query = $conn->prepare("UPDATE frontdesk_rooms SET booked_on = CURRENT_TIMESTAMP, booked = 'YES', guests = ?, current_guest_id = ?, booking_ref = ?, booking_expires = ? WHERE room_id = ?");
+echo $conn->error;
+$update_room_query->bind_param("issss", $guests, $current_guest_id, $bk_ref, $booking_expires, $room_id);
 for ($i=0; $i <$no_of_rooms ; $i++) {
 	$no_of_nights = $rooms[$i]["no_of_nights"];
 	$booked_nights = $no_of_nights;
