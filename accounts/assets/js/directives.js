@@ -77,29 +77,15 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
                 console.log(scope.users);
                 scope.users.addUser(jsonForm);
             };
-            addGuest = function () {
+            addExpenses = function () {
                 $rootScope.settings.modal.adding = true;
-                jsonForm = $(".addGuestForm").serializeObject();
-                jsonForm.room_outstanding = 0;
-                jsonForm.total_cost = scope.guest.roomgrid.room_info.cost;
-                jsonForm.guest_type_gender = scope.guest.guest_type_gender;
-                jsonForm.total_rooms_booked = scope.guest.roomgrid.room_info.rooms;
-                jsonForm.balance = scope.guest.roomgrid.room_info.cost - jsonForm.deposited;
-                jsonForm.frontdesk_rep = $rootScope.settings.user;
-                jsonForm.rooms = [];
-                arryy = Object.values(scope.guest.roomgrid.room_details.rooms);
-                arryy.forEach(function (rm) {
-                    if (rm.arr) {
-                        rm.arr.forEach(function (elem) {
-                            if (elem.selected == true) {
-                                elem.room_total_cost = (parseInt(elem.no_of_nights) * parseInt(elem.room_rate));
-                                jsonForm.rooms.push(elem);
-                            }
-                        });
-                    }
-                });
-                console.log(jsonForm);
-                scope.guest.addGuest(jsonForm);
+                jsonForm = $(".addExpensesForm").serializeObject();
+                scope.expenses.addExpenses(jsonForm);
+            };
+            payExpenses = function () {
+                $rootScope.settings.modal.adding = true;
+                jsonForm = $(".payExpensesForm").serializeObject();
+                scope.expenses.payExpenses(jsonForm);
             };
             updateGuest = function () {
                 $rootScope.settings.modal.adding = true;

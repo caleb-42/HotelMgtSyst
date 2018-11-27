@@ -3,6 +3,7 @@
  //$add_expense = $_POST["add_expense"];
  $add_expense = '{"expense":"Electricity", "expense_description":"February", "expense_cost": 5000, "amount_paid": 5000, "balance": 0, "date": "2018-09-23", "means_of_payment": "CASH"}';
  $add_expense = json_decode($add_expense, true);
+ 
 
  $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 

@@ -1,7 +1,7 @@
 app.directive('bookinghistory', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/records/listTemplates.php?list=booking',
+        templateUrl: './assets/js/revenue/listTemplates.php?list=booking',
 
         scope: false,
 

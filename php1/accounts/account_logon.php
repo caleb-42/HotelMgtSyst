@@ -30,7 +30,7 @@ $stmt->close();
 if (!verify($password, $hashedPassword)) {
 	$username = "";
 	$password = "";
-	header("Location:  ../../account/login.php?output=Login failed, please retry with a valid username and password");
+	header("Location:  ../../accounts/login.php?output=Login failed, please retry with a valid username and password");
 } else {
 	$sql_log_out = "SELECT * FROM account_sessions WHERE user_name = '$username' AND role = '$role' AND logged_on_state = 'LOGGED IN'";
 	$sql_log_out_result = mysqli_query($dbConn, $sql_log_out);

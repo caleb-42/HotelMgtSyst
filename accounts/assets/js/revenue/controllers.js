@@ -1,4 +1,4 @@
-recordsApp.controller("records", ["$rootScope", "$scope", 'jsonPost', '$filter',  function ($rootScope, $scope, jsonPost, $filter) {
+revenueApp.controller("revenue", ["$rootScope", "$scope", 'jsonPost', '$filter',  function ($rootScope, $scope, jsonPost, $filter) {
     $scope.tabnav = {
         navs: {
             Bookings: {
@@ -32,7 +32,7 @@ recordsApp.controller("records", ["$rootScope", "$scope", 'jsonPost', '$filter',
     
 }]);
 
-recordsApp.controller("bookinghistory", ["$rootScope", "$scope", 'jsonPost', '$filter', function ($rootScope, $scope, jsonPost, $filter) {
+revenueApp.controller("bookinghistory", ["$rootScope", "$scope", 'jsonPost', '$filter', function ($rootScope, $scope, jsonPost, $filter) {
     $scope.listbookings = {
         itemlist: function () {
             return {

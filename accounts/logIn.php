@@ -32,7 +32,7 @@ $date=date("D M d, Y g:i a");
     <body>
         <div class="container">
             <div class = "adminform row justify-content-center" style="height: 100vh;">
-                <form autocomplete="off" role="form" method="post" action = "../php1/front_desk/frontdesk_logon.php" class="align-self-center">
+                <form autocomplete="off" role="form" method="post" action = "../php1/accounts/account_logon.php" class="align-self-center">
                     <div class="formhd text-center px-4 pt-4">
                         <img  class = "ml-2" width = 140px height = 100px src = "assets/img/icon.png"/>
                         <!-- <h5 class = "Title mb-4 pb-1 mx-5 mt-3 wht font-fam-Calibri">Front<b>Desk</b></h5> -->
@@ -47,7 +47,7 @@ $date=date("D M d, Y g:i a");
                         <div style = "margin-top:-20px;" class="text-center row w-100 justify-content-center" ><img id="sendGif" class=""  style = "" src="assets/img/loadersquash1.gif" width="100px" height="100px" />
                         </div>
                         <div class="row justify-content-center w-100" style="margin-top:-66px !important;" >
-                            <p id="output" class="str text-center " style="opacity:.8; font-size:17px; font-weight: 700" ><?php $output = ""; if(array_key_exists("output", $_GET)){
+                            <p id="output" class="str text-center wht" style="opacity:.8; font-size:17px; font-weight: 700" ><?php $output = ""; if(array_key_exists("output", $_GET)){
                                 $output = $_GET["output"] ? $_GET["output"] : "";
                             } echo "<script type = 'text/javascript'>
             jQuery(function(){
