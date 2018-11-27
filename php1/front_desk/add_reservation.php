@@ -39,6 +39,13 @@ transaction */
  $rooms = $reservation_data["rooms"];
  $no_of_rooms = count($rooms);
 
+  if (($no_of_rooms == 0) || ($no_of_rooms == "")) {
+ 	$msg_response[0] = "ERROR";
+    $msg_response[1] = "No room selected";
+    $response_message = json_encode($msg_response);
+    die($response_message);
+ }
+
  /*room check*/
 $select_rooms_query = $conn->prepare("SELECT booked, booked_on, booking_expires, room_number, reserved, reservation_date, reserved_nights  FROM frontdesk_rooms WHERE room_id = ?");
 // echo $conn->error;
