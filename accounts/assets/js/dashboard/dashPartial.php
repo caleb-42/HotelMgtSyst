@@ -58,7 +58,7 @@
                                 <div class="my-4">
                                     <button class="btn btn-info mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Expenses'; settings.modal.name = 'Add Expenses'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud">Add</button>
                                     <button class="btn  purp-back wht opac-50 mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Expenses'; settings.modal.name = 'Update Expenses'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud" ng-disabled="!expenses.jslist.selected">Update</button>
-                                    <button class="btn btn-success wht opac-50 mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Expenses'; settings.modal.name = 'Pay Expense'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud" ng-disabled="!expenses.jslist.selected">Pay</button>
+                                    <button class="btn btn-success wht opac-70 mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Expenses'; settings.modal.name = 'Pay Expense'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud" ng-disabled="!expenses.jslist.selected">Pay</button>
                                 </div>
                             </div>
                             <jslist class="font-fam-Montserrat"></jslist>

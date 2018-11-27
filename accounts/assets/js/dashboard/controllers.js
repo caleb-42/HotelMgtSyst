@@ -99,6 +99,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             console.log("new Expense", jsonexpense);
             //return;     
             jsonexpense.expense_ref = $scope.expenses.jslist.selected;
+            jsonexpense.date_of_payment = $scope.expenses.jslist.selected;
             jsonPost.data("../php1/accounts/expense_pay.php", {
                 payment_details: $filter('json')(jsonexpense)
             }).then(function (response) {
