@@ -1,7 +1,7 @@
 <?php
   include "../settings/connect.php"; //$database handler $dbConn or $conn
-  //$range_details = $_POST["range_details"];
-   $range_details = '{"table": "frontdesk", "from_date": "2018-11-26", "to_date": "2018-11-27"}';
+  $range_details = $_POST["range_details"];
+   //$range_details = '{"table": "frontdesk", "from_date": "2018-11-26", "to_date": "2018-11-27"}';
    $range_details = json_decode($range_details, true);
    $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
@@ -68,7 +68,7 @@
 
   $frontdesk_revenues = get_all_revenues($get_revenues_result, $get_revenues_array);
 
-  if ($_SERVER["REQUEST_METHOD"] != "POST") {
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	echo $frontdesk_revenues;
   } else {
   	echo "UNAUTHORIZED ACCESS";
