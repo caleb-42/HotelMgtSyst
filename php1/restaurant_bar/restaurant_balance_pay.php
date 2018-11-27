@@ -24,7 +24,7 @@ $net_paid = intval($last_payment_details["net_paid"]) + $amount_paid;
 
 $txn_worth = intval($last_payment_details["txn_worth"]);
 $customer_id = $last_payment_details["customer_id"];
-
+$msg_response=["OUTPUT", "NOTHING HAPPENED"];
 // echo $customer_id;
 // exit;
 
@@ -55,8 +55,6 @@ if (substr($customer_id, 0, 3) == "LOD") {
 	$update_customer_outstanding = "UPDATE restaurant_customers SET outstanding_balance = $new_outstanding WHERE customer_id = '$customer_id'";
     $update_outstanding_result = mysqli_query($dbConn, $update_customer_outstanding);
 }
-
-$msg_response="";
 
 if($update_txn_result && $update_payment_result){
 	$msg_response[0] = "OUTPUT";
