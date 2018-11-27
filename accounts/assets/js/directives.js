@@ -223,14 +223,9 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
                 reset();
             });
             function reset(){
-                if(scope.reservation && scope.guest){
-                    scope.reservation.roomgrid.activated = false;
-                    scope.guest.roomgrid.activated = false;
-                    scope.guest.roomgrid.averagenyt = 0;
-                    scope.guest.roomgrid.nytdate = $filter('intervalGetDate')(0,$rootScope.settings.date);
-                    scope.reservation.roomgrid.averagenyt = 0;
-                    scope.reservation.roomgrid.nytstartdate = $filter('intervalGetDate')(0,$rootScope.settings.date);
-                    scope.reservation.roomgrid.nytdate = $filter('intervalGetDate')(0,$rootScope.settings.date);
+                if(scope.expenses){
+                    scope.expenses.jslist.cost = 0;
+                    scope.expenses.jslist.paid = 0;
                 }
                 
             }

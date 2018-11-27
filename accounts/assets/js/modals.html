@@ -107,15 +107,15 @@
                             <div class = "row w-100">
                                 <div class="col-4 mb-3 pl-0 pr-3 text-center">
                                     <label class="font-fam-Montserrat opac-70 f-13 font-weight-bold">Cost</label>
-                                    <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block" placeholder="Cost" name="expense_cost" ng-model = "expenses.jslist.cost" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
+                                    <input class=" user-name form-control font-fam-Montserrat text-center d-block" placeholder="Cost" name="expense_cost" ng-init = "expenses.jslist.cost = 0" ng-model = "expenses.jslist.cost" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
                                 </div>
                                 <div class="col-4 mb-3 px-2 text-center">
                                     <label class="font-fam-Montserrat opac-70 f-13 font-weight-bold">Paid</label>
-                                    <input ng-model = "expenses.jslist.paid" class="clearinput user-name form-control font-fam-Montserrat text-center d-block" placeholder="Paid" name="amount_paid"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
+                                    <input ng-init = "expenses.jslist.paid = 0" ng-model = "expenses.jslist.paid" class=" user-name form-control font-fam-Montserrat text-center d-block" placeholder="Paid" name="amount_paid"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
                                 </div>
                                 <div class="col-4 mb-3 pr-0 pl-3 text-center">
                                     <label class="font-fam-Montserrat opac-70 f-13 font-weight-bold">Balance</label>
-                                    <input value = "{{expenses.jslist.cost - expenses.jslist.paid}}" class="clearinput user-name form-control font-fam-Montserrat text-center d-block" placeholder="balance" name="balance"  type="number" readonly/>
+                                    <input value = "{{expenses.jslist.cost - expenses.jslist.paid}}" class=" user-name form-control font-fam-Montserrat text-center d-block" placeholder="balance" name="balance"  type="number" readonly/>
                                 </div>
                                 
                             </div>
@@ -149,7 +149,11 @@
                 <div class="w-100" ng-if="settings.modal.name == 'Pay Expense'">
                     <div class="py-4 w-100 row justify-content-between m-0 px-5">
                         <form class = 'w-100 payExpensesForm' autocomplete = "off">
-                            <input class="w-100 my-5 clearinput user-name form-control font-fam-Montserrat text-center d-block" placeholder="Cost" name="amount_paid" ng-model = "expenses.jslist.cost" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
+                            <datepicker date-min-limit = "{{settings.ydate}}" date-format="yyyy-MM-dd" class="mb-5 p-0 text-center" selector="form-control">
+                                <input class=" clearinput password form-control font-fam-Montserrat text-center d-block"
+                                    placeholder="Date" name="date_of_payment"  onkeydown="javascript: return false"/>
+                            </datepicker>
+                            <input class="w-100 my-5 clearinput user-name form-control font-fam-Montserrat text-center d-block" placeholder="Cost" name="amount_paid" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
                             <select class="form-control methpay my-5 w-100 f-13" name="means_of_payment">
                                 <option selected value="Cash">Cash</option>
                                 <option value="Cheque">Cheque</option>
