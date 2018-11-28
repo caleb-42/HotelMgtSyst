@@ -22,17 +22,17 @@
     <div class="prime-body {{tabnav.selected.options.rightbar ? '' : 'p-0'}}">
         <div class="animate-switch-container" ng-switch on="tabnav.selected.name">
             
-            <div class="animate-switch h-100" ng-switch-when="Revenue">
-                <div class="guests prime-footer anim h-80">
-                    <div class=" itemlayout w-100 h-93">
+            <div class="animate-switch h-100" ng-switch-when="Debts">
+                <div class="debts prime-footer anim h-80">
+                    <div class="p-3 px-4  itemlayout w-100 h-93">
                         <div class="mb-5 item-container">
-                            <div class="userlisthd row justify-content-between px-4">
-                                <h4 class=" mt-4 py-2 font-fam-Montserrat-bold">Manage Rooms</h4>
+                            <div class="userlisthd row justify-content-between">
+                                <h4 class=" mt-4 py-2 font-fam-Montserrat-bold">Manage Debts</h4>
                                 <div class="mt-4">
-                                    <!-- <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation';settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';rooms.roomgrid.getrooms(['deluxe','standard']);  guest.getguest({value : 'guest_name'});" data-toggle="modal" data-target="#crud">Add Reservation</button> -->
+                                    <button class="btn btn-success wht opac-70 mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Debts'; settings.modal.name = 'Pay Debts'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud" ng-disabled="!debts.jslist.selected">Pay</button>
                                 </div>
                             </div>
-                                <!-- <revenuelist class="font-fam-Montserrat"></revenuelist -->>
+                            <debtlist class="font-fam-Montserrat"></debtlist>
                         </div>
                     </div>
                 </div>
@@ -49,16 +49,15 @@
 
                 </div>
             </div>
-            <div class="animate-switch Guests h-100" ng-switch-when = "Expenses">
-                <div class="guests  prime-footer anim h-80">
+            <div class="animate-switch Expenses h-100" ng-switch-when = "Expenses">
+                <div class="expenses prime-footer anim h-80">
                     <div class="p-3 px-4 itemlayout w-100 h-93">
                         <div class="mb-5 item-container">
                             <div class="userlisthd row justify-content-between">
                                 <h4 class=" my-4 py-2 font-fam-Montserrat-bold">Manage Expenses</h4>
                                 <div class="my-4">
                                     <button class="btn btn-info mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Expenses'; settings.modal.name = 'Add Expenses'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud">Add</button>
-                                    <button class="btn  purp-back wht opac-50 mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Expenses'; settings.modal.name = 'Update Expenses'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud" ng-disabled="!expenses.jslist.selected">Update</button>
-                                    <button class="btn btn-success wht opac-70 mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Expenses'; settings.modal.name = 'Pay Expense'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud" ng-disabled="!expenses.jslist.selected">Pay</button>
+                                    <button class="btn  purp-back wht opac-50 mx-1 font-fam-Montserrat f-12" ng-click="expenses.deleteExpenses()" ng-disabled="!expenses.jslist.selected">Delete</button>
                                 </div>
                             </div>
                             <jslist class="font-fam-Montserrat"></jslist>

@@ -1,0 +1,746 @@
+<div class="modal-dialog modal-{{settings.modal.size}}">
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title ml-3">{{settings.modal.name}}</h5>
+            <button type="button" class="close" id="closeInvoice" data-dismiss="modal" onclick=" ">×</button>
+        </div>
+        <div class="modal-body nopadding">
+
+            <!--....... Room Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'Room'">
+                <div ng-if="settings.modal.name == 'Add Room'">
+                <form autocomplete="off" class="addRoomForm mx-5 my-4">
+                    <input class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Number" type="number" onkeydown="javascript: return event.keyCode !=69" name="room_number" />
+                    <input class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Rate" type="number" onkeydown="javascript: return event.keyCode !=69" name="room_rate" />
+                    
+                    <textarea class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-5" placeholder="Use slash( / ) to separate Features" name="features" ></textarea>
+
+                    <div class="row justify-content-around my-5 align-items-center font-fam-Montserrat">
+                        <h6 class="font-fam-Montserrat-bold choral">Category</h6>
+                        <span>
+                            <input type="radio" ng-model = 'rooms.jslist.room_category' id="deluxe" value="deluxe"  name="room_category" class="clearinput " />
+                            <label for="deluxe" class="f-15 ml-2">Deluxe</label>
+                        </span>
+                        <span>
+                            <input type="radio" class="clearinput " ng-model = 'rooms.jslist.room_category' value="standard" name="room_category" id="standard" />
+                            <label for="standard" class="f-15 ml-2">Standard</label>
+                        </span>
+                    </div>
+                </form>
+                <div class="modal-footer w-100">
+                    <div class="justify-content-center w-100 d-flex flex-column">
+                        <div class="py-1 row justify-content-center w-100">
+                            <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                    height="70px" /></div>
+                            <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success my-3"
+                                onclick="addRoom()">
+                                Add
+                            </button>
+                        </div>
+                        <div class="row pt-3 justify-content-center">
+                            <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div ng-if="settings.modal.name == 'Update Room'">
+                <form autocomplete="off" class="updateRoomForm">
+                    <div class="ml-5 my-4 float-left w-40 inpRead">
+                        <div class="w-100">
+                            <input class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Number" type="number" onkeydown="javascript: return event.keyCode !=69" name="room_number" readonly/>
+                            <input class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Rate" type="number" onkeydown="javascript: return event.keyCode !=69" name="room_rate" readonly/>
+                            <textarea class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-5" placeholder="Use slash( / ) to separate Features" name="features" readonly></textarea>
+                            <input class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Category" name="room_category" readonly/>
+                        </div>
+                    </div>
+                    <div class="updateRoomForm mr-5 my-4 float-right w-40">
+                        <div class="w-100">
+                            <input class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Number" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_room_number" />
+                            <input class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Rate" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_room_rate" />
+                            <textarea class="clearinput form-control w-100 font-fam-Montserrat text-center d-block mt-3 mb-5" placeholder="Use slash( / ) to separate Features" name="new_features" ></textarea>
+                            <div class="row justify-content-around my-4 align-items-center font-fam-Montserrat">
+                                <span class="col-6 text-center">
+                                    <input type="radio" class="clearinput " ng-model = 'rooms.jslist.new_room_category' id="deluxe" value="deluxe"  name="new_room_category" />
+                                    <label for="deluxe" class="f-15 ml-2">Deluxe</label>
+                                </span>
+                                <span class="col-6 text-center">
+                                    <input type="radio" class="clearinput " ng-model = 'rooms.jslist.room_category' value="standard" name="new_room_category" id="standard" />
+                                    <label for="standard" class="f-15 ml-2 ">Standard</label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer w-100">
+                    <div class="justify-content-center w-100 d-flex flex-column">
+                        <div class="py-1 row justify-content-center w-100">
+                            <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                    height="70px" /></div>
+                            <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success my-3"
+                                onclick="updateRoom()">
+                                Update
+                            </button>
+                        </div>
+                        <div class="row pt-3 justify-content-center">
+                            <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!--....... Room End ......... -->
+
+
+            <!--....... Guest Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'Guest'">
+                <div class="w-100" ng-if="settings.modal.name == 'Add Guest'">
+                    <div class="py-4 w-100 row justify-content-between m-0 px-5">
+                        <form class = 'w-40 addGuestForm pr-5' autocomplete = "off">
+                            <input class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Name"
+                                name="guest_name" />
+                            <input class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Phone Number"
+                                name="phone_number" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" name="room_number" />
+                            <textarea class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Address" name="contact_address" ></textarea>
+                            <div class = "row">
+                                <input ng-model = 'guest.roomgrid.averagenyt' class="form-control col-5 font-fam-Montserrat text-center d-block my-2" placeholder="Nights" name="average_no_of_nights" ng-change = "guest.roomgrid.nytdate = (guest.roomgrid.averagenyt | intervalGetDate); guest.roomgrid.change_averagenyt()" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
+                                <input ng-model = 'guest.roomgrid.nytdate' class="form-control offset-1 col-6 font-fam-Montserrat text-center d-block my-2" placeholder="leaving" name="leaving_date" onkeydown="javascript: return false" />
+                            </div>
+                            <div class="row justify-content-between">
+                                <div class = "col-5 p-0 my-3 text-center">
+                                    <input class="clearinput form-control w-100 font-fam-Montserrat text-center m-0 d-block my-3" placeholder="Deposit"
+                                    name="deposited" />
+                                </div>
+                                <div class = "col-6 p-0 text-center">
+                                    <select class="form-control methpay my-3 w-100 f-13" name="means_of_payment">
+                                        <option selected value="Cash">Cash</option>
+                                        <option value="Cheque">Cheque</option>
+                                        <option value="POS">POS</option>
+                                        <option value="Credit">Credit</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row justify-content-around w-100 py-3">
+                                <span class="py-1">
+                                    <input type="radio" class="clearinput " ng-model = "guest.guest_type_gender" id="male" value="male" checked name="guest_type_gender" />
+                                    <label for="male" class="f-15 ml-2">Male</label>
+                                </span>
+                                <span class="py-1">
+                                    <input type="radio" class="clearinput " value="female" ng-model = "guest.guest_type_gender" name= "guest_type_gender" id="female" />
+                                    <label for="female" class="f-15 ml-2">Female</label>
+                                </span>
+                            </div>
+                        </form>
+                        <div class = 'w-60 {{!guest.roomgrid.averagenyt ? "deactivate" : null}}' >
+                            <div ng-switch on = 'guest.roomgrid.activated' class = "table-bordered">
+                                <div ng-switch-when = 'false'>
+                                    <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
+                                        <h6 class='col-3 f-15 text-left'>Category</h6>
+                                        <h6 class='col-6 f-15'>Rooms Available</h6>
+                                        <h6 class='col-3 f-15'>No. Rooms</h6>
+                                    </div>
+                                    <div ng-repeat = "rm in guest.roomgrid.room_details.rooms" class='row w-100 text-center b-1 pointer'>
+                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate(rm.name);">{{rm.name | capitalize}}</h6>
+                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate(rm.name);">{{rm.count}}</p>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input  ng-model = "guest.roomgrid.room_details.rooms[rm.name].num" ng-change = " guest.roomgrid.room_details.selectrooms(rm.name)" class='clearinput formcontrol w-100 text-center' name = 'noroom' ng-disabled="!guest.roomgrid.averagenyt"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"/></span>
+                                    </div>
+                                </div>
+                                <div ng-switch-when = 'true'>
+                                    <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
+                                        <h6 class='col-3 f-15 text-left pointer' ng-click='guest.roomgrid.deactivate()'>Back</h6>
+                                        <h6 class='col-9 f-15 text-right'>{{guest.roomgrid.type}}</h6>
+                                    </div>
+                                    <div class='row w-100 text-center'>
+                                        <ul class="w-100">
+                                            <li ng-repeat = 'room in guest.roomgrid.room_details.rooms[guest.roomgrid.type].arr' class = "w-100 row"  ng-class = "{'sechue anim' : guest.roomgrid.reservedyes == room.room_id, 'lytpurp-back' : room.selected && guest.roomgrid.reservedyes != room.room_id}">
+                                                <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-2 py-2 roomno text-left">{{room.room_number}}</span>
+                                                <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-3 py-2 roomno">{{room.room_rate}}</span>
+                                                <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-4 py-2 roomno">{{(guest.roomgrid.roomid[room.room_id] | intervalGetDate)}}</span>
+                                                <span class="col-3 py-2 nights text-right"><input ng-model = 'guest.roomgrid.roomid[room.room_id]' ng-init = "guest.roomgrid.roomid[room.room_id] = room.no_of_nights" class='clearinput formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "guest.roomgrid.room_details.change_nyt_no(room.room_id); " type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"/></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row w-100 px-0 py-2 justify-content-between dark-back">
+                                <div class = "w-50 row p-0">
+                                    <h6 class="col-5">Rooms</h6>
+                                    <h6 class="col-7 text-center">{{guest.roomgrid.room_info.rooms}}</h6>
+                                </div>
+                                <div class = "w-50 row p-0 text-right">
+                                    <h6 class="col-5">Cost</h6>
+                                    <h6 class="col-7">{{guest.roomgrid.room_info.cost}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="addGuest()">
+                                    {{settings.modal.name | limitTo:3}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="w-100" ng-if="settings.modal.name == 'Update Guest'">
+                    <form autocomplete="off" class="updateGuestForm p-4 w-100">
+                        <div class="float-left w-45 inpRead row m-0">
+                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="Guest Name"
+                                name="guest_name" readonly />
+                            <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Address" name="contact_address" readonly />
+                            <input class="clearinput password form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Phone Number" name="phone_number" readonly />
+                            <input class="clearinput role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Gender"
+                                    name="guest_type_gender" readonly />
+                        </div>
+                        <div class="float-right w-45 row m-0 justify-content-center">
+                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="Guest Name"
+                                name="new_guest_name" />
+                            <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Address" name="new_contact_address"  />
+                            <input class="clearinput password form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Phone Number" name="new_phone_number" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
+                            <div class="row justify-content-between w-50 py-4">
+                                <span class="py-1">
+                                    <input type="radio" class="clearinput " id="male" value="male" name="new_guest_type_gender"  ng-model = "guest.guest_type_gender"/>
+                                    <label for="male" class="f-15 ml-2">Male</label>
+                                </span>
+                                <span class="py-1">
+                                    <input type="radio" class="clearinput " checked value="female" name="new_guest_type_gender" id="female"  ng-model = "guest.guest_type_gender" />
+                                    <label for="female" class="f-15 ml-2">Female</label>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="updateGuest()">
+                                    {{settings.modal.name | limitTo:7}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--....... Guest End ......... -->
+
+            <!--....... Reservation Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'Reservation'">
+                <div class="w-100" ng-if="settings.modal.name == 'Add Reservation'">
+                    <div class="pt-4 pb-2 w-100 row justify-content-between m-0 px-5">
+                        <form class = 'w-50 addReservationForm pr-5' autocomplete = "off">
+                            <input ng-model = "settings.AutoComplete.obj.guest_name" class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Name"
+                                name="guest_name" ng-focus="settings.AutoComplete.activate($event, guest.arr, guest.namesarr, 'guest_name')"/>
+                            <input ng-model = "settings.AutoComplete.obj.phone_number" class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Phone Number"
+                                name="phone_number" ng-focus="settings.AutoComplete.activate($event, guest.jslist.values,(guest.jslist.values | duplicatekey: {value : 'phone_number'}), 'phone_number')" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
+                            <textarea ng-model = "settings.AutoComplete.obj.contact_address" class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Address" name="contact_address" ></textarea>
+                            <div class = "row">
+                                <datepicker  date-min-limit = "{{settings.ydate}}" date-format="yyyy-MM-dd" class="col-4 my-2 p-0 text-center" selector="form-control">
+                                    <label class="font-fam-Montserrat opac-50">Start</label>
+                                    <input ng-model = 'reservation.roomgrid.nytstartdate' class="f-14 w-100 form-control text-center d-block " placeholder="Start" name="start_date"  ng-change = "reservation.roomgrid.nytdate = (reservation.roomgrid.averagenyt | intervalGetDate: reservation.roomgrid.nytstartdate); reservation.roomgrid.change_averagenyt()" onkeydown="javascript: return false"/>
+                                </datepicker>
+                                <div class="offset-1 col-2 my-2 p-0 f-13 text-center">
+                                    <label class="font-fam-Montserrat opac-50">Nights</label>
+                                    <input ng-model = 'reservation.roomgrid.averagenyt' class="f-14 w-100 form-control text-center d-block" placeholder="Nights" name="average_no_of_nights" ng-change = "reservation.roomgrid.nytdate = (reservation.roomgrid.averagenyt | intervalGetDate: reservation.roomgrid.nytstartdate); reservation.roomgrid.change_averagenyt()" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"/>
+                                </div>
+                                <div class="offset-1 col-4 my-2 p-0 f-13 text-center">
+                                    <label class="font-fam-Montserrat opac-50">Leaving</label>
+                                    <input ng-model = 'reservation.roomgrid.nytdate' class="f-14 w-100 form-control text-center d-block " placeholder="leaving" name="leaving_date" readonly/>
+                                </div>
+                            </div>
+                            <div class="row justify-content-between">
+                                <input ng-model = "settings.AutoComplete.obj.email" name = "email" class="clearinput form-control col-7 font-fam-Montserrat text-center d-block my-3" placeholder="Email" />
+                                <div class = "offset-1 col-4 p-0 text-center">
+                                    <select class="form-control methpay my-3 w-100 f-13" name="means_of_payment">
+                                        <option selected value="Cash">Cash</option>
+                                        <option value="Cheque">Cheque</option>
+                                        <option value="POS">POS</option>
+                                        <option value="Credit">Credit</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row justify-content-around w-100 pt-3">
+                                <span class="pt-1">
+                                    <input type="radio" id="male" value="male" class="clearinput " ng-model = "settings.AutoComplete.obj.guest_type_gender" name="guest_type_gender" />
+                                    <label for="male" class=" f-15 ml-2">Male</label>
+                                </span>
+                                <span class="pt-1">
+                                    <input type="radio" value="female" class="clearinput " ng-model = "settings.AutoComplete.obj.guest_type_gender" name="guest_type_gender" id="female" />
+                                    <label for="female" class="f-15 ml-2">Female</label>
+                                </span>
+                            </div>
+                        </form>
+                        <div class = 'w-50 {{!reservation.roomgrid.averagenyt && !reservation.roomgrid.nytstartdate ? "deactivate" : null}}' >
+                            <div ng-switch on = 'reservation.roomgrid.activated' class = "table-bordered">
+                                <div ng-switch-when = 'false'>
+                                    <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
+                                        <h6 class='col-3 f-15 text-left'>Category</h6>
+                                        <h6 class='col-6 f-15'>Rooms Available</h6>
+                                        <h6 class='col-3 f-15'>No. Rooms</h6>
+                                    </div>
+                                    <div ng-repeat = "rm in reservation.roomgrid.room_details.rooms" class='row w-100 text-center b-1 pointer'>
+                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "reservation.roomgrid.activate(rm.name);">{{rm.name | capitalize}}</h6>
+                                        <p class='col-6 py-4 f-13' ng-click = "reservation.roomgrid.activate(rm.name);">{{rm.count}}</p>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input  ng-model = "reservation.roomgrid.room_details.rooms[rm.name].num" ng-change = " reservation.roomgrid.room_details.selectrooms(rm.name)" class='clearinput formcontrol w-100 text-center' name = 'noroom' ng-disabled="!reservation.roomgrid.averagenyt && !reservation.roomgrid.nytstartdate" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"/></span>
+                                    </div>
+                                </div>
+                                <div ng-switch-when = 'true'>
+                                    <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
+                                        <h6 class='col-3 f-15 text-left pointer' ng-click='reservation.roomgrid.deactivate()'>Back</h6>
+                                        <h6 class='col-9 f-15 text-right'>{{reservation.roomgrid.type}}</h6>
+                                    </div>
+                                    <div class='row w-100 px-3 py-1 dark-back  m-0'>
+                                        <span class="col-2 p-0 text-left f-13">No.</span>
+                                        <span class="col-3 p-0 text-center f-13">Rate</span>
+                                        <span class="col-3 gone p-0 text-center f-13">Start</span>
+                                        <span class="col-4 p-0 text-center f-13">Leave</span>
+                                        <span class="col-3 p-0 text-center f-13">Nights</span>
+                                    </div>
+                                    <div class='row w-100 text-center'>
+                                        <ul class="w-100">
+                                            <li ng-repeat = 'room in reservation.roomgrid.room_details.rooms[reservation.roomgrid.type].arr' class = "w-100 row px-3"  ng-class = "{'sechue anim' : reservation.roomgrid.reservedyes == room.room_id, 'lytpurp-back' : room.selected && reservation.roomgrid.reservedyes != room.room_id}">
+                                                <span ng-click = "room.selected = room.selected ? false : true; reservation.roomgrid.room_details.toggleroom();" class="col-2 px-0 f-13 py-2 roomno text-left">{{room.room_number}}</span>
+                                                <span ng-click = "room.selected = room.selected ? false : true; reservation.roomgrid.room_details.toggleroom();" class="col-3 px-0 f-13 py-2 roomno">{{room.room_rate}}</span>
+                                                <span date-set= "{{settings.date}}" date-format="yyyy-MM-dd" class="col-3 gone px-0 f-13 py-2 roomno"><input ng-model = 'reservation.roomgrid.roomdate[room.room_id]' ng-init = "reservation.roomgrid.roomdate[room.room_id] = room.room_reservation_date" class='clearinput formcontrol w-100 text-center' name = 'room_reservation_date' ng-change = "reservation.roomgrid.room_details.change_nyt_no(room.room_id); "/></span>
+                                                <span ng-click = "room.selected = room.selected ? false : true; reservation.roomgrid.room_details.toggleroom();" class="col-4 px-0 f-13 py-2 roomno text-center">{{(reservation.roomgrid.roomid[room.room_id] | intervalGetDate: reservation.roomgrid.roomdate[room.room_id])}}</span>
+                                                <span class="col-3 f-13 px-0 py-2 nights text-right"><input ng-model = 'reservation.roomgrid.roomid[room.room_id]' ng-init = "reservation.roomgrid.roomid[room.room_id] = room.no_of_nights" class='clearinput formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "reservation.roomgrid.room_details.change_nyt_no(room.room_id); "  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"/></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row w-100 px-0 py-2 justify-content-between dark-back">
+                                <div class = "w-50 row p-0">
+                                    <h6 class="col-5">Rooms</h6>
+                                    <h6 class="col-7 text-center">{{reservation.roomgrid.room_info.rooms}}</h6>
+                                </div>
+                                <div class = "w-50 row p-0 text-right">
+                                    <h6 class="col-5">Cost</h6>
+                                    <h6 class="col-7">{{reservation.roomgrid.room_info.cost}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="addReservation()">
+                                    {{settings.modal.name | limitTo:3}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="w-100" ng-if="settings.modal.name == 'Confirm Reservation'">
+                    <form class="p-4 w-100 ConfirmReservationForm row justify-content-center m-0">
+                        <input class="clearinput form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Amount Paid"
+                            name="amount_paid"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"/>
+                        <select class="form-control methpay w-75 my-4 f-13" name="means_of_payment">
+                            <option selected value="Cash">Cash</option>
+                            <option value="Cheque">Cheque</option>
+                            <option value="POS">POS</option>
+                            <option value="Credit">Credit</option>
+                        </select>
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="confirmReservation()">
+                                    {{settings.modal.name | limitTo:7}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="w-100" ng-if="settings.modal.name == 'Claim Reservation'">
+                    <form class="p-4 w-100 ClaimReservationForm row justify-content-center m-0">
+                        <textarea class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Address" name="contact_address" ></textarea>
+                        <input class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Phone Number"
+                                name="phone_number"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
+                        <div class="row justify-content-around w-100 py-3">
+                                <span class="py-1">
+                                    <input type="radio" class="clearinput " ng-model = "reservation.guest_type_gender" id="male" value="male" checked name="guest_type_gender" />
+                                    <label for="male" class="f-15 ml-2">Male</label>
+                                </span>
+                                <span class="py-1">
+                                    <input type="radio" class="clearinput " value="female" ng-model = "reservation.guest_type_gender" name= "guest_type_gender" id="female" />
+                                    <label for="female" class="f-15 ml-2">Female</label>
+                                </span>
+                            </div>
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="claimReservation()">
+                                    {{settings.modal.name | limitTo:5}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="w-100"  ng-if="settings.modal.name == 'Update Reservation'">
+                    <form autocomplete="off" class="UpdateReservationForm p-4 w-100" ng-if="settings.modal.name == 'Update Reservation'">
+                        <div class="float-left w-45 inpRead row m-0">
+                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="Name"
+                                name="guest_name" readonly />
+                            <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Phone Number" name="phone_number" readonly />
+                            <input class="clearinput role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Email"
+                                name="email" readonly />
+                            <input class="clearinput password form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Reserved Date" name="reserved_date" readonly />
+                        </div>
+                        <div class="float-right w-45 row m-0 justify-content-center">
+                                <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="Name"
+                                name="new_guest_name" />
+                            <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Phone Number" name="new_phone_number"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
+                            <input class="clearinput role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Email"
+                                name="new_email" />
+                            <datepicker date-min-limit = "{{settings.ydate}}" date-format="yyyy-MM-dd" class="my-2 p-0 text-center" selector="form-control">
+                                    <input class=" clearinput password form-control font-fam-Montserrat text-center d-block mt-3"
+                                placeholder="Reserved Date" name="new_reserved_date"  onkeydown="javascript: return false"/>
+                            </datepicker>
+                        </div>
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="updateReservation()">
+                                    {{settings.modal.name | limitTo:7}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--....... Reservation End ......... -->
+
+            <!--....... Update Reservation Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'Resvtn'">
+                <div class="w-100">
+                    <form autocomplete="off" class="UpdateResvtnForm p-4 w-100">
+                        <div class="float-left w-45 inpRead row m-0">
+                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="Room Number"
+                                name="room_number" readonly />
+                            <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Nights" name="no_of_nights" readonly />
+                        </div>
+                        <div class="float-right w-45 row m-0 justify-content-center">
+                            <!-- <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="Room Number"
+                                name="new_room_number"  /> -->
+                            <select class="clearinput form-control roomno font-fam-Montserrat d-block my-4 f-13" name="new_room_number">
+                                <option value = "">None</option>
+                                <option ng-repeat = "rm in rooms.allrooms" value= {{rm.room_number}}>{{rm.room_number}}</option>
+                            </select>
+                            <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Nights" name="new_no_of_nights"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
+                        </div>
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="updateResvtn()">
+                                    {{settings.modal.name | limitTo:7}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--....... Update Reservation End ......... -->
+
+            <!--....... CheckIn Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'CheckIn'">
+                <div class="w-100" ng-if="settings.modal.name == 'CheckIn'">
+                    <div class="py-4 w-100 row justify-content-between m-0 px-5">
+                        <form class = 'w-40 CheckInForm pr-5' autocomplete = "off">
+                            <input ng-model = 'guest.roomgrid.averagenyt' class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Nights" name="average_no_of_nights" ng-change = "guest.roomgrid.nytdate = (guest.roomgrid.averagenyt | intervalGetDate); guest.roomgrid.change_averagenyt()"/>
+                            <input ng-model = 'guest.roomgrid.nytdate' class="form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="leaving" name="leaving_date" />
+                            <input class="clearinput form-control w-100 font-fam-Montserrat text-center m-0 d-block my-3" placeholder="Deposit"
+                                    name="deposited" />
+                            <select class="form-control text-center methpay my-3 w-100 f-13" name="means_of_payment">
+                                <option class = "text-center" selected value="Cash">Cash</option>
+                                <option class = "text-center" value="Cheque">Cheque</option>
+                                <option class = "text-center" value="POS">POS</option>
+                                <option class = "text-center" value="Credit">Credit</option>
+                            </select>
+                        </form>
+                        <div class = 'w-60 {{!guest.roomgrid.averagenyt ? "deactivate" : null}}' >
+                            <div ng-switch on = 'guest.roomgrid.activated' class = "table-bordered">
+                                <div ng-switch-when = 'false'>
+                                    <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
+                                        <h6 class='col-3 f-15 text-left'>Category</h6>
+                                        <h6 class='col-6 f-15'>Rooms Available</h6>
+                                        <h6 class='col-3 f-15'>No. Rooms</h6>
+                                    </div>
+                                    <div ng-repeat = "rm in guest.roomgrid.room_details.rooms" class='row w-100 text-center b-1 pointer'>
+                                        <h6 class='col-3 py-4 f-14 text-left' ng-click = "guest.roomgrid.activate(rm.name);">{{rm.name | capitalize}}</h6>
+                                        <p class='col-6 py-4 f-13' ng-click = "guest.roomgrid.activate(rm.name);">{{rm.count}}</p>
+                                        <span class='pr-2 py-4 pl-3 col-3'><input  ng-model = "guest.roomgrid.room_details.rooms[rm.name].num" ng-change = " guest.roomgrid.room_details.selectrooms(rm.name)" class='clearinput formcontrol w-100 text-center' name = 'noroom' ng-disabled="!guest.roomgrid.averagenyt" /></span>
+                                    </div>
+                                </div>
+                                <div ng-switch-when = 'true'>
+                                    <div class='row w-100 py-2 text-center purp-back wht opac-70 m-0'>
+                                        <h6 class='col-3 f-15 text-left pointer' ng-click='guest.roomgrid.deactivate()'>Back</h6>
+                                        <h6 class='col-9 f-15 text-right'>{{guest.roomgrid.type}}</h6>
+                                    </div>
+                                    <div class='row w-100 text-center'>
+                                        <ul class="w-100">
+                                            <li ng-repeat = 'room in guest.roomgrid.room_details.rooms[guest.roomgrid.type].arr' class = "w-100 row py-2" ng-class = "{'sechue anim' : guest.roomgrid.reservedyes == room.room_id, 'lytpurp-back' : room.selected && guest.roomgrid.reservedyes != room.room_id}">
+                                                <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-2 py-2 roomno text-left">{{room.room_number}}</span>
+                                                <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-3 py-2 roomno">{{room.room_rate}}</span>
+                                                <span ng-click = "room.selected = room.selected ? false : true; guest.roomgrid.room_details.toggleroom();" class="col-4 py-2 roomno">{{(guest.roomgrid.roomid[room.room_id] | intervalGetDate)}}</span>
+                                                <span class="col-3 py-2 nights text-right"><input ng-model = 'guest.roomgrid.roomid[room.room_id]' ng-init = "guest.roomgrid.roomid[room.room_id] = room.no_of_nights" class='clearinput formcontrol w-100 text-center' name = 'no_of_nights' ng-change = "guest.roomgrid.room_details.change_nyt_no(room.room_id); "/></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row w-100 px-0 py-2 justify-content-between dark-back">
+                                <div class = "w-50 row p-0">
+                                    <h6 class="col-5">Rooms</h6>
+                                    <h6 class="col-7 text-center">{{guest.roomgrid.room_info.rooms}}</h6>
+                                </div>
+                                <div class = "w-50 row p-0 text-right">
+                                    <h6 class="col-5">Cost</h6>
+                                    <h6 class="col-7">{{guest.roomgrid.room_info.cost}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="checkIn()">
+                                    {{settings.modal.name}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--....... CheckIn End ......... -->
+
+            <!--....... Pay Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'Pay'">
+                <div class="w-100" ng-if="settings.modal.name == 'Pay Balance'">
+                    <div class="py-4 w-100 row justify-content-center m-0 px-5">
+                        <form class = 'w-70 PayBalanceForm' autocomplete = "off">
+                            <input class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-5" placeholder="Payment" name="amount_paid" />
+                            <select class="form-control text-center methpay my-5 w-100 f-13" name="means_of_payment">
+                                <option class = "text-center" selected value="Cash">Cash</option>
+                                <option class = "text-center" value="Cheque">Cheque</option>
+                                <option class = "text-center" value="POS">POS</option>
+                                <option class = "text-center" value="Credit">Credit</option>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="payBalance()">
+                                    {{settings.modal.name | limitTo:3}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--....... Pay End ......... -->
+
+            <!--....... CheckOut Start .........-->
+            <div class="w-100" ng-if="settings.modal.active == 'CheckOut'">
+                <div class="w-100" ng-if="settings.modal.name == 'CheckOut'">
+                    <div class="py-4 w-100 row justify-content-center m-0 px-5">
+                        <form class = 'w-70 CheckOutForm' autocomplete = "off">
+                            <ul class = "w-100">
+                                <li ng-click = "booking.select(room)" ng-repeat = 'room in booking.rooms' class = "w-100 row bb-1" ng-class = "{'purp-back wht font-weight-bold': (booking.selected | objInArray : room.room_id : 'room_id')}">
+                                    <span class="col-4 text-center py-2">{{room.room_number}}</span>
+                                    <span class="col-4 text-center py-2">{{room.room_id}}</span>
+                                    <span class="col-4 text-center py-2">{{room.room_category}}</span>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="checkOut()">
+                                    {{settings.modal.name}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--....... CheckOut End .........-->
+
+
+            <!--....... User Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'User'">
+                <div class="w-100" ng-if="settings.modal.name == 'Add User'">
+                    <form class="p-4 w-100 addUserForm row justify-content-center m-0">
+                        <input class="clearinput form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Name"
+                            name="user" />
+                        <input class="clearinput form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Username"
+                            name="user_name" />
+                        <input class="clearinput form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Password"
+                            name="user_pass" />
+                        <div class="row justify-content-between w-50">
+                            <span>
+                                <input type="radio" class="clearinput " id="admin" value="admin" name="role" />
+                                <label for="admin" class="f-15 ml-2">Admin</label>
+                            </span>
+                            <span>
+                                <input type="radio" class="clearinput " checked value="user" name="role" id="user" />
+                                <label for="user" class="f-15 ml-2">User</label>
+                            </span>
+                        </div>
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="addUser()">
+                                    {{settings.modal.name | limitTo:3}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="w-100" ng-if="settings.modal.name == 'Update User'">
+                    <form autocomplete="off" class="updateUserForm p-4 w-100">
+                        <div class="float-left w-45 inpRead row m-0">
+                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="User"
+                                name="user" readonly />
+                            <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Username" name="user_name" readonly />
+                            <input class="clearinput role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Role"
+                                name="role" readonly />
+                            <input class="clearinput password form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Password" name="pass" readonly />
+                        </div>
+                        <div class="float-right w-45 row m-0 justify-content-center">
+                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="User"
+                                name="new_user" />
+                            <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Username" name="new_user_name" />
+                            <div class="row justify-content-between w-50 py-4">
+                                <span class="py-1">
+                                    <input type="radio" class="clearinput " id="admin" value="admin" name="new_role" />
+                                    <label for="admin" class="f-15 ml-2">Admin</label>
+                                </span>
+                                <span class="py-1">
+                                    <input type="radio" class="clearinput " checked value="user" name="new_role" id="user" />
+                                    <label for="user" class="f-15 ml-2">User</label>
+                                </span>
+                            </div>
+                            <input class="clearinput password form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Password" name="new_password" />
+                        </div>
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="updateUser()">
+                                    {{settings.modal.name | limitTo:7}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--....... User End ......... -->
+
+
+        </div>
+    </div>
+</div>

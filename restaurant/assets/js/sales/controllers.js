@@ -46,7 +46,7 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', fun
                 $scope.sales.cust_list = result;
                 console.log($scope.sales.cust_list);
             });
-            /* gp = jsonPost.data("../php1/front_desk/list_guests.php", {});
+            gp = jsonPost.data("../php1/restaurant_bar/list_guests_all.php", {});
             gp.then(function(result){
                 if(!result){
                     return;
@@ -57,14 +57,15 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', fun
                     obj.customer_id = elm.guest_id;
                     obj.full_name = elm.guest_name;
                     obj.gender = elm.guest_type_gender;
-                    obj.phone_number = elm.contact_address;
+                    obj.phone_number = elm.phone_number;
                     obj.contact_address = elm.contact_address;
                     obj.outstanding_balance = elm.restaurant_outstanding;
                     cust_list.push(obj);
                 });
+                //$scope.sales.cust_list = cust_list.concat()
                 $scope.sales.lodger_list = cust_list;
                 console.log($scope.sales.lodger_list);
-            }); */
+            });
         },
         products: {
             layout: "listlayout",
@@ -196,7 +197,7 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', fun
                 console.log($scope.buyer.customer.selected);
             },
             makeCustomerList: function () {
-                $scope.buyer.customer.customerList = $scope.sales.cust_list;
+                $scope.buyer.customer.customerList = $scope.sales.cust_list.concat($scope.sales.lodger_list);
                 console.log($scope.buyer.customer.customerList);
             },
             /* customerList, */
@@ -220,7 +221,7 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', fun
             getLodgers: function (request, response) {
                 data = [];
                 json1 = [
-                    {
+                    /* {
                         full_name: "martins",
                         phone_number: "08130249102",
                         contact_address: "",
@@ -246,7 +247,7 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', fun
                         gender: "female",
                         room: 7,
                         type: "customer"
-                    }
+                    } */
                 ];
                 json = $filter('filter')(json1, request.term);
                 for (var a = 0; a < json.length; a++) {
