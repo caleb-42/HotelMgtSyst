@@ -1,74 +1,51 @@
-app.directive('bookinghistory', ['$rootScope', function ($rootScope) {
+app.directive('history', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/revenue/listTemplates.php?list=booking',
+        templateUrl: './assets/js/revenue/listTemplates.php?list=frontdesk',
 
-        scope: false,
+        scope: {
+            listhddata: "=",
+            itemlist : "&",
+            evt : "=",
+        },
 
         link: function (scope, element, attrs) {
-            scope.listbookings.jslist = {
-                createList: function () {
-                    listdetails = scope.listbookings.itemlist();
+            scope.jslist = {
+                createList: function (param) {
+                    console.log(scope.list);
+                    listdetails = scope.itemlist({range:param});
                     jsonlist = listdetails.jsonfunc;
-
+                    scope.jslist.values = [];
                     jsonlist.then(function (result) {
                         if (!result) {
                             return 0;
                         }
                         console.log(result);
-                        scope.listbookings.jslist.values = result;
+                        result.revenues_array.forEach(function(elem){
+                            tnx = attrs.list + '_txn';
+                            elem.txn_id = elem[tnx];
+                        });
+                        scope.jslist.values = result.revenues_array;
                     });
-                    scope.listbookings.listhddata = [
-                        {
-                            name: "Booking Ref",
-                            width: "col-1",
-                        },
-                        {
-                            name: "Room Number",
-                            width: "col-1",
-                        },
-                        {
-                            name: "Room Category",
-                            width: "col-1",
-                        },
-                        {
-                            name: "Room Rate",
-                            width: "col-1",
-                        },
-                        {
-                            name: "Guest Name",
-                            width: "col-1",
-                        },
-                        {
-                            name: "Nights",
-                            width: "col-1",
-                        },
-                        {
-                            name: "Guest",
-                            width: "col-1",
-                        },
-                        {
-                            name: "Checked In Time",
-                            width: "col-2",
-                        },
-                        {
-                            name: "Checked Out Time",
-                            width: "col-2",
-                        },
-                        {
-                            name: "Checked Out",
-                            width: "col-1",
-                        }
-                    ];
                 },
-                select: function (index, id) {
-                    scope.listbookings.jslist.selected = id;
-                    scope.listbookings.jslist.selectedObj = scope.listbookings.jslist.newItemArray[index];
-                    console.log(scope.listbookings.jslist.selectedObj);/* 
-                    $rootScope.$emit('tranxselect', {sales_ref : id, obj: scope.listbookings.jslist.selectedObj}); */
-                }
+                /* select: function (index, id) {
+                    scope.jslist.selected = id;
+                    scope.jslist.selectedObj = scope.jslist.newItemArray[index];
+                    console.log(scope.jslist.selectedObj);
+                    
+                } */
             }
-            scope.listbookings.jslist.createList();
+            $rootScope.$on(attrs.evt,function(evt, param){
+                console.log(param);
+                scope.list = param.table;
+                scope.jslist.createList(param);
+            });
+            scope.list = attrs.list;
+            scope.jslist.createList({
+                script: 'list_revenues' ,
+                data : {table : attrs.list}
+            });
+            
         }
     };
 }]);

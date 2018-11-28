@@ -95,12 +95,12 @@ app.controller("appctrl", ["$rootScope", "$scope","$filter", function ($rootScop
                     iconClass: "mr-3 fa fa-user",
                     innerHtml: '',
                 },
-                {
+                /* {
                     name: "Records",
                     listClass: "anim",
                     iconClass: "mr-3 fa fa-history",
                     innerHtml: '',
-                }
+                } */
             ]
         },
         menuicon: {

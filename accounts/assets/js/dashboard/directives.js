@@ -21,11 +21,11 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
                     scope.expenses.listhddata = [
                         {
                             name: "Name",
-                            width: "col-2",
+                            width: "col-3",
                         },
                         {
                             name: "Description",
-                            width: "col-3",
+                            width: "col-2",
                         },
                         {
                             name: "Cost",
@@ -33,11 +33,11 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
                         },
                         {
                             name: "Amount Paid",
-                            width: "col-3",
+                            width: "col-2",
                         },
                         {
                             name: "Balance",
-                            width: "col-2",
+                            width: "col-3",
                         }
                     ];
                 },
@@ -61,55 +61,51 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
     };
 }]);
 
-app.directive('revenuelist', ['$rootScope', function ($rootScope) {
+app.directive('debtlist', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/dashboard/listTemplates.php?list=revenue',
+        templateUrl: './assets/js/dashboard/listTemplates.php?list=debts',
 
         scope: false,
 
         link: function (scope, element, attrs) {
-            scope.revenue.jslist = {
+            scope.debts.jslist = {
                 createList: function () {
-                    listdetails = scope.revenue.itemlist();
+                    listdetails = scope.debts.itemlist();
                     jsonlist = listdetails.jsonfunc;
                     jsonlist.then(function (result) {
                         console.log(result);
-                        scope.revenue.jslist.values = result;
-                        /* scope.guest.jslist.values.forEach(function(elem){
-                            elem.value = elem.guest_name;
-                        }); */
-                        //scope.guest.jslist.selected = null;
+                        scope.debts.jslist.values = result.items_array;
                     });
-                    scope.revenue.listhddata = [
+                    scope.debts.listhddata = [
                         {
                             name: "Name",
                             width: "col-3",
                         },
                         {
-                            name: "Gender",
+                            name: "Description",
                             width: "col-2",
                         },
                         {
-                            name: "Rooms",
+                            name: "Cost",
                             width: "col-2",
                         },
                         {
-                            name: "Visit Count",
+                            name: "Amount Paid",
                             width: "col-2",
                         },
                         {
-                            name: "Out bal.",
+                            name: "Balance",
                             width: "col-3",
                         }
                     ];
                 },
                 select: function (index, id) {
                     console.log(id);
-                    scope.revenue.jslist.selected = id;
-                    scope.revenue.jslist.selectedObj = scope.revenue.jslist.newItemArray[index];
-                    console.log(scope.revenue.jslist.newItemArray[index]);
-                    $rootScope.$emit('revenueselect', scope.revenue.jslist.selectedObj)
+                    scope.debts.jslist.selected = id;
+                    scope.debts.jslist.selectedObj = scope.debts.jslist.newItemArray[index];
+                    console.log(scope.debts.jslist.newItemArray[index]);
+                    $rootScope.$emit('debtselect', scope.debts.jslist.selectedObj)
                 },
                 toggleOut : function(){
                     $(".listcont").fadeOut(200);
@@ -119,21 +115,11 @@ app.directive('revenuelist', ['$rootScope', function ($rootScope) {
                 },
                 gender : 'male'
             }
-            scope.revenue.jslist.createList();
+            scope.debts.jslist.createList();
         }
     };
 }]);
 
-dashApp.directive('accordion', ['$rootScope', function ($rootScope) {
-    return {
-        restrict: 'E',
-        templateUrl: './assets/js/dashboard/listTemplates.php?list=accordion',
-        scope: false,
-        link: function (scope, element, attrs) {
-            scope.type = attrs.type;
-        }
-    };
-}]);
 
 
 

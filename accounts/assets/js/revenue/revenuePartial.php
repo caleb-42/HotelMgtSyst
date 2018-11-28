@@ -1,4 +1,4 @@
-<div ng-controller="revenue"> <!-- {{tabnav.selected == 'Customers' ? null : 'w-100'}} -->
+<div ng-controller="revenue" > <!-- {{tabnav.selected == 'Customers' ? null : 'w-100'}} -->
     <div class="prime-hd anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.primeclass : 'w-100'}}">
         <div class="statusbar darkred row  align-items-end pl-1">
             <div class="tabnav col-9 row">
@@ -17,20 +17,64 @@
         </div>
         <div class="prime-body {{tabnav.selected.options.rightbar ? null : 'px-0'}}">
             <div class="animate-switch-container" ng-switch on="tabnav.selected.name">
-                <div class="animate-switch SalesHistory px-4 h-100" ng-switch-default>
-                    <div class="prodlisthd row justify-content-center">
-                        <h4 class=" my-4 py-2 font-fam-Montserrat-bold text-center">Bookings History</h4>
-                    </div>
-                    <div class="saleshistorylist h-80 " ng-controller="bookinghistory">
-                        <bookinghistory></bookinghistory>
+                <div class="animate-switch History px-4 h-100" ng-switch-default>
+                    <div ng-controller="frontdeskhistory">
+                        <div class="prodlisthd row justify-content-between">
+                            <h4 class=" col-6 px-0 my-4 py-2 font-fam-Montserrat-bold text-left">Payment History</h4>
+                            <div class = "col-6 p-0 row justify-content-around">
+                                <datepicker date-max-limit = "{{frontdesk.todate}}" date-format="yyyy-MM-dd" class="col-4 my-4 text-center" selector="form-control">
+                                    <input class=" clearinput password form-control font-fam-Montserrat text-center d-block"
+                                        placeholder="From Date" name="fromdate" 
+                                        ng-model = "frontdesk.fromdate" onkeydown="javascript: return false"/>
+                                </datepicker>
+                                <datepicker date-min-limit = "{{frontdesk.fromdate}}" date-format="yyyy-MM-dd" class=" col-4 my-4 text-center" selector="form-control">
+                                    <input class=" clearinput password form-control font-fam-Montserrat text-center d-block"
+                                        placeholder="To Date" ng-model = "frontdesk.todate" name="todate"  onkeydown="javascript: return false"/>
+                                </datepicker>
+                                <div class = "pr-0 py-4 row justify-content-between col-4">
+                                    <button ng-click = "frontdesk.fetchdate()" class = "w-45 f-14 btn  btn-sm btn-info">
+                                    Fetch
+                                    </button>
+                                    <button ng-click = "frontdesk.todate = null; frontdesk.fromdate=null;" class = "w-45 f-14 btn  btn-sm purp-back wht opac-70">
+                                    Clear
+                                    </button>
+                                </div>
+                                <!-- $filter('intervalGetDate')(-1, new Date().toString()) -->
+                            </div>
+                        </div>
+                        <div class="saleshistorylist h-80 " >
+                            <history evt = "frontdesklist" list = "frontdesk" listhddata = "frontdesk.listhddata" itemlist = "frontdesk.itemlist(range)"></history>
+                        </div>
                     </div>
                 </div>
-                <div class="animate-switch StockHistory px-4 h-100" ng-switch-when="Guest">
-                    <div class="prodlisthd row justify-content-center">
-                    <h4 class=" my-4 py-2 font-fam-Montserrat-bold text-center">Guest History</h4>
-                    </div>
-                    <div class="stockhistorylist h-80" ng-controller="stockhistory">
-                         <!-- <stockhistorylist></stockhistorylist>  -->
+                <div class="animate-switch History px-4 h-100" ng-switch-when = "Restaurant">
+                    <div ng-controller="restauranthistory">
+                        <div class="prodlisthd row justify-content-center">
+                            <h4 class="col-6 my-4 py-2 font-fam-Montserrat-bold text-left px-0">Payment History</h4>
+                            
+                            <div class = "col-6 p-0 row justify-content-around">
+                                <datepicker date-max-limit = "{{restaurant.todate}}" date-format="yyyy-MM-dd" class="col-4 my-4 text-center" selector="form-control">
+                                    <input class=" clearinput password form-control font-fam-Montserrat text-center d-block"
+                                        placeholder="From Date" name="fromdate" 
+                                        ng-model = "restaurant.fromdate" onkeydown="javascript: return false"/>
+                                </datepicker>
+                                <datepicker date-min-limit = "{{restaurant.fromdate}}" date-format="yyyy-MM-dd" class=" col-4 my-4 text-center" selector="form-control">
+                                    <input class=" clearinput password form-control font-fam-Montserrat text-center d-block"
+                                        placeholder="To Date" ng-model = "restaurant.todate" name="todate"  onkeydown="javascript: return false"/>
+                                </datepicker>
+                                <div class = "pr-0 py-4 row justify-content-between col-4">
+                                    <button ng-click = "restaurant.fetchdate()" class = "w-45 f-14 btn  btn-sm btn-info">
+                                    Fetch
+                                    </button>
+                                    <button ng-click = "restaurant.todate = null; restaurant.fromdate=null;" class = "w-45 f-14 btn  btn-sm purp-back wht opac-70">
+                                    Clear
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="saleshistorylist h-80 " >
+                            <history evt = "restaurantlist" list = "restaurant" listhddata = "restaurant.listhddata" itemlist = "restaurant.itemlist(range)"></history>
+                        </div>
                     </div>
                 </div>
             </div>
