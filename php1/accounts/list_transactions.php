@@ -3,8 +3,10 @@
    $table = $_POST["table"];
    if ($table == "frontdesk") {
      $table = "frontdesk_txn";
-   } else if ($table = "restaurant") {
+   } else if ($table == "restaurant") {
      $table = "restaurant_txn";
+   } else if ($table == "reservations") {
+     $table = "frontdesk_reservation_txn";
    } else {
       $msg_response=["OUTPUT", "No table requested"];
       $response_message = json_encode($msg_response);

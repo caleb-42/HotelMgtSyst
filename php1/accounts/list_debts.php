@@ -14,8 +14,8 @@
  		$items_array[] = $rows;
  		$items_debts = $items_debts + intval($rows["balance"]);
  	  }
- 	  $items["items_array"] = $items_array;
- 	  $items["items_debts"] = $items_debts;
+ 	  $items["debts_array"] = $items_array;
+ 	  $items["debts_total"] = $items_debts;
  	  $get_items_json = json_encode($items);
  	  return $get_items_json;
     }

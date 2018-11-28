@@ -6,6 +6,7 @@ $payment_details = json_decode($_POST["payment_details"], true);
 $trasaction_ref = $payment_details["trasaction_ref"];
 $means_of_payment = $payment_details["means_of_payment"];
 $amount_paid = $payment_details["amount_paid"];
+$sales_rep = $payment_details["sales_rep"];
 
 $last_payment_id_query = "SELECT MAX(id) AS id FROM restaurant_payments WHERE restaurant_txn = '$trasaction_ref'";
 $last_payment_id_result = mysqli_query($dbConn, $last_payment_id_query);
@@ -29,7 +30,7 @@ $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 // exit;
 
 
-$udpate_payment = "INSERT INTO restaurant_payments (restaurant_txn, txn_date, amount_paid, date_of_payment, amount_balance, net_paid, txn_worth, customer_id, means_of_payment) VALUES ('$trasaction_ref', '$txn_date', $amount_paid, CURRENT_TIMESTAMP, $new_balance, $net_paid, $txn_worth, '$customer_id', '$means_of_payment')";
+$udpate_payment = "INSERT INTO restaurant_payments (restaurant_txn, txn_date, amount_paid, date_of_payment, amount_balance, net_paid, txn_worth, customer_id, means_of_payment, sales_rep) VALUES ('$trasaction_ref', '$txn_date', $amount_paid, CURRENT_TIMESTAMP, $new_balance, $net_paid, $txn_worth, '$customer_id', '$means_of_payment', '$sales_rep')";
 
 $update_payment_result = mysqli_query($dbConn, $udpate_payment);
 
