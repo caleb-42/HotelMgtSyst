@@ -23,7 +23,7 @@
 
   $account_expenses = get_all_account_expenses($get_items_result, $get_items_array);
 
-  if ($_SERVER["REQUEST_METHOD"] != "POST") {
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	echo $account_expenses;
   } else {
   	echo "UNAUTHORIZED ACCESS";
