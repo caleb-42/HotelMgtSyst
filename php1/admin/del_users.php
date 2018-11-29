@@ -1,5 +1,5 @@
 <?php
-include "../settings/connect.php"; //$database handler $dbConn or $conn
+include "../../settings/connect.php"; //$database handler $dbConn or $conn
 print_r($_POST);
 $del_users = json_decode($_POST["del_users"], true);
 //$del_users = '{"users": [{"user_name": "vivian", "id": 1}, {"user_name": "wendy", "id": 2}]}';
