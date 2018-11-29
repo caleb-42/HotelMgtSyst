@@ -89,12 +89,12 @@ body {
 .listcont li.actparent {
   color: white !important;
   /*box-shadow:  200px 200px 20px rgba(217, 83, 79, .9) inset !important;*/
-  box-shadow: 200px 200px 20px rgba(80, 156, 203, 0.8) inset !important; }
+  box-shadow: 200px 200px 20px rgba(93, 193, 167, 0.8) inset !important; }
 
 div.actparent {
   color: white !important;
   /*box-shadow:  200px 200px 20px rgba(217, 83, 79, .9) inset !important;*/
-  box-shadow: 200px 200px 20px rgba(80, 156, 203, 0.8) inset !important; }
+  box-shadow: 200px 200px 20px rgba(93, 193, 167, 0.8) inset !important; }
 
 .listhd {
   background: #ddd;

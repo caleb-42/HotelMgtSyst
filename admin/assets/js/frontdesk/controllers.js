@@ -303,80 +303,10 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
                 $scope.guest.jslist.toggleIn();
             });
         },
-        checkIn: function (jsonguest) {
-            //console.log("new checkIn", jsonform);
-            jsonguest.guest_id = $scope.guest.jslist.selectedObj.guest_id;
-            jsonguest.guest_name = $scope.guest.jslist.selectedObj.guest_name;
-            console.log("new checkIn", jsonguest);
-
-            jsonPost.data("../php1/front_desk/checkin.php", {
-                checkin_data: $filter('json')(jsonguest)
-            }).then(function (response) {
-                $scope.guest.roomgrid.averagenyt = 0;
-                $scope.guest.roomgrid.room_info.rooms = 0;
-                $scope.guest.roomgrid.room_info.cost = 0;
-                console.log(response);
-                $scope.guest.jslist.toggleOut();
-                res = $rootScope.settings.modal.msgprompt(response);
-                res ? $scope.guest.jslist.createList() : null;
-                $scope.guest.itemlist().jsonfunc.then(function(response){
-                    $scope.guest.jslist.selectedObj =  $filter('filterObj')(response,$scope.guest.jslist.selected, ['guest_id']);
-                    $scope.guest.jslist.selected = $scope.guest.jslist.selectedObj.guest_id;
-                    console.log($scope.guest.jslist.selectedObj);
-                });
-                $scope.guest.jslist.toggleIn();
-            });
-        },
-        checkOut: function(){
-            jsonguest = $scope.guest.jslist.selectedObj;
-            jsonguest.frontdesk_rep = $rootScope.settings.user;
-            jsonguest.rooms = $scope.booking.selected;
-            jsonguest.booking_ref = $scope.booking.selected[0].booking_ref;
-            console.log("new checkOut", jsonguest);
-
-            jsonPost.data("../php1/front_desk/checkOut.php", {
-                checkout_data: $filter('json')(jsonguest)
-            }).then(function (response) {
-                console.log(response);
-                $scope.guest.jslist.toggleOut();
-                $scope.booking.selected = [];
-                res = $rootScope.settings.modal.msgprompt(response);
-                res ? $scope.guest.jslist.createList() : null;
-                $scope.guest.itemlist().jsonfunc.then(function(response){
-                    $scope.guest.jslist.selectedObj =  $filter('filterObj')(response,$scope.guest.jslist.selected, ['guest_id']);
-                    $scope.guest.jslist.selected = $scope.guest.jslist.selectedObj.guest_id;
-                    console.log($scope.guest.jslist.selectedObj);
-                });
-                
-                $scope.guest.jslist.toggleIn();
-            });
-        },
-        payBalance: function(jsonguest){
-            jsonguest.booking_ref = $scope.booking.rooms[0].booking_ref;
-            jsonguest.guest_name = $scope.booking.rooms[0].guest_name;
-            jsonguest.guest_id = $scope.booking.rooms[0].guest_id;
-            jsonguest.frontdesk_rep = $rootScope.settings.user;
-            console.log("new payment", jsonguest);
-
-            jsonPost.data("../php1/front_desk/frontdesk_balance_pay.php", {
-                payment_details: $filter('json')(jsonguest)
-            }).then(function (response) {
-                console.log(response);
-                $scope.guest.jslist.toggleOut();
-                res = $rootScope.settings.modal.msgprompt(response);
-                res ? $scope.guest.jslist.createList() : null;
-                $scope.guest.itemlist().jsonfunc.then(function(response){
-                    $scope.guest.jslist.selectedObj =  $filter('filterObj')(response,$scope.guest.jslist.selected, ['guest_id']);
-                    $scope.guest.jslist.selected = $scope.guest.jslist.selectedObj.guest_id;
-                    console.log($scope.guest.jslist.selectedObj);
-                });
-                $scope.guest.jslist.toggleIn();
-            });
-        },
         updateGuest: function (jsonguest) {
             jsonguest.id = $scope.guest.jslist.selected;
             console.log("new product", jsonguest);
-            jsonPost.data("../php1/front_desk/admin/edit_guest.php", {
+            jsonPost.data("../php1/admin/frontdesk_admin/admin/edit_guest.php", {
                 update_guest: $filter('json')(jsonguest)
             }).then(function (response) {
                 $scope.guest.jslist.toggleOut();
@@ -408,7 +338,7 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
         },
         getRoomBooking : function(id){
             $scope.booking.itemlist(id).jsonfunc.then(function(result){
-                console.log(result);
+                console.log($scope.guest.jslist.selectedObj);
                 response = [];
                 $scope.guest.jslist.selectedObj.rooms = [];
                 if(result){
@@ -480,13 +410,13 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
     $scope.rooms = {
         itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/front_desk/admin/list_room.php", {})
+                jsonfunc: jsonPost.data("../php1/admin/frontdesk_admin/admin/list_room.php", {})
             }
         },
         addRoom: function (jsonrm) {
             console.log("new room", jsonrm);
             jsonrm.category = jsonrm.room_category;
-            jsonPost.data("../php1/front_desk/admin/add_room.php", {
+            jsonPost.data("../php1/admin/frontdesk_admin/admin/add_room.php", {
                 new_room: $filter('json')(jsonrm)
             }).then(function (response) {
                 $scope.rooms.jslist.toggleOut();
@@ -499,7 +429,7 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
         updateRoom: function (jsonrm) {
             jsonrm.room_id = $scope.rooms.jslist.selected;
             console.log("new room", jsonrm);
-            jsonPost.data("../php1/front_desk/admin/edit_room.php", {
+            jsonPost.data("../php1/admin/frontdesk_admin/admin/edit_room.php", {
                 update_room: $filter('json')(jsonrm)
             }).then(function (response) {
                 $scope.rooms.jslist.toggleOut();
@@ -513,7 +443,7 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
             jsonrm = {};
             jsonrm.items = [$scope.rooms.jslist.selectedObj];
             console.log("new product", jsonprod);
-            jsonPost.data("../php1/front_desk/admin/del_room.php", {
+            jsonPost.data("../php1/admin/frontdesk_admin/admin/del_room.php", {
                 del_items: $filter('json')(jsonprod)
             }).then(function (response) {
                 $scope.rooms.jslist.toggleOut();
@@ -1006,7 +936,7 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
         }
     }
 
-    $scope.rooms = {
+    /* $scope.rooms = {
         current_guest : {},
         itemlist: function () {
             return {
@@ -1260,5 +1190,5 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
         },
         
 
-    };
+    }; */
 }]);
