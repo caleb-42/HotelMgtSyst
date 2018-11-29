@@ -1,17 +1,25 @@
 <?php
   include "../settings/connect.php"; //$database handler $dbConn or $conn
    $table = $_POST["table"];
-   if ($table == "frontdesk") {
+   if ($table == "bookings") {
      $table = "frontdesk_payments";
+     $like = "WHERE frontdesk_txn LIKE 'BK_'";
    } else if ($table = "restaurant") {
      $table = "restaurant_payments";
+     $like = "";
+   } else if ($table == "reservations") {
+      $table = "frontdesk_payments";
+      $like = "WHERE frontdesk_txn LIKE 'RESV_'";
+   } else if ($table == "frontdesk") {
+       $table = "frontdesk_payments";
+       $like = "";
    } else {
       $msg_response=["OUTPUT", "No table requested"];
       $response_message = json_encode($msg_response);
       die($response_message);
    }
 
-  $get_revenues_sql = "SELECT * FROM $table";
+  $get_revenues_sql = "SELECT * FROM $table $like";
   $get_revenues_result = mysqli_query($dbConn, $get_revenues_sql);
   $get_revenues_array = [];
 
