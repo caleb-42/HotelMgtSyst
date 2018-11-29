@@ -18,12 +18,12 @@
 .tabpill {
     color: white !important;
     text-align: center;
-    width: 130px;
+    width: 140px;
     padding: 10px;
 }
 
 .tabpill.focus {
-    color: #509CCB !important;
+    color: rgba(93, 193, 167, 1) !important;
     background: white;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -291,11 +291,11 @@ input::placeholder, textarea::placeholder {
     border-color: #f0ad4e;
   }
 .blu{
-    background: #509CCB;
+    background: rgba(93, 193, 167, 1);
 /*    font-weight: 700;*/
 }
 .blu-clr{
-    color: #509CCB;
+    color: rgba(93, 193, 167, 1);
 /*    font-weight: 700;*/
 }
 .btn-darkgrn:hover{

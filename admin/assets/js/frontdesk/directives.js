@@ -1,7 +1,7 @@
-app.directive('jslist', ['$rootScope', function ($rootScope) {
+frontdeskApp.directive('jslist', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/dashboard/listTemplates.php?list=guest',
+        templateUrl: './assets/js/frontdesk/listTemplates.php?list=guest',
 
         scope: false,
 
@@ -61,10 +61,10 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
     };
 }]);
 
-app.directive('reservationlist', ['$rootScope', function ($rootScope) {
+frontdeskApp.directive('reservationlist', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/dashboard/listTemplates.php?list=reservation',
+        templateUrl: './assets/js/frontdesk/listTemplates.php?list=reservation',
 
         scope: false,
 
@@ -142,11 +142,10 @@ app.directive('reservationlist', ['$rootScope', function ($rootScope) {
     };
 }]);
 
-
-app.directive('resvtnlist', ['$rootScope', function ($rootScope) {
+frontdeskApp.directive('resvtnlist', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/dashboard/listTemplates.php?list=resvtn',
+        templateUrl: './assets/js/frontdesk/listTemplates.php?list=resvtn',
 
         scope: false,
 
@@ -219,54 +218,40 @@ app.directive('resvtnlist', ['$rootScope', function ($rootScope) {
     };
 }]);
 
-dashApp.directive('roomgrid', ['$rootScope', function ($rootScope) {
+
+frontdeskApp.directive('userlist', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/dashboard/listTemplates.php?list=roomgrid',
+        templateUrl: './assets/js/frontdesk/listTemplates.php?list=users',
 
         scope: false,
 
         link: function (scope, element, attrs) {
-            scope.rooms.jslist = {
+            scope.users.jslist = {
                 createList: function () {
-                    listdetails = scope.rooms.itemlist();
+                    listdetails = scope.users.itemlist();
                     jsonlist = listdetails.jsonfunc;
                     jsonlist.then(function (result) {
                         console.log(result);
-                        scope.rooms.jslist.values = result;
-                        /* scope.rooms.jslist.selected = null; */
+                        scope.users.jslist.values = result;
+                        scope.users.jslist.selected = null;
                     });
-                    scope.rooms.listhddata = [
+                    scope.users.listhddata = [
                         {
                             name: "Name",
-                            width: "col-3",
+                            width: "col-6",
                         },
                         {
-                            name: "Gender",
-                            width: "col-2",
-                        },
-                        {
-                            name: "Rooms",
-                            width: "col-2",
-                        },
-                        {
-                            name: "Visit Count",
-                            width: "col-2",
-                        },
-                        {
-                            name: "Out bal.",
-                            width: "col-3",
+                            name: "Role",
+                            width: "col-6",
                         }
                     ];
                 },
                 select: function (index, id) {
-                    scope.rooms.jslist.selected = id;
-                    scope.rooms.jslist.selectedObj = scope.rooms.jslist.newItemArray[index];
-                    console.log(scope.rooms.jslist.newItemArray[index]);$rootScope.$emit('roomselect', scope.rooms.jslist.selectedObj);
-                    scope.rooms.reservations.confirmed_reservation.selectedObj = {}
-                    scope.rooms.reservations.confirmed_reservation.selected = null;
-                    scope.rooms.reservations.temp_reservation.selectedObj = {}
-                    scope.rooms.reservations.temp_reservation.selected = null;
+                    scope.users.jslist.selected = id;
+                    scope.users.jslist.selectedObj = scope.users.jslist.newItemArray[index];
+                    console.log(scope.users.jslist.newItemArray[index]);
+                    scope.sessions.jslist.createList();
                 },
                 toggleOut : function(){
                     $(".listcont").fadeOut(200);
@@ -275,18 +260,58 @@ dashApp.directive('roomgrid', ['$rootScope', function ($rootScope) {
                     $(".listcont").delay(500).fadeIn(200);
                 }
             }
-            scope.rooms.jslist.createList();
+            scope.users.jslist.createList();
         }
     };
 }]);
- 
-dashApp.directive('accordion', ['$rootScope', function ($rootScope) {
+
+
+frontdeskApp.directive('sessionlist', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/dashboard/listTemplates.php?list=accordion',
+        templateUrl: './assets/js/frontdesk/listTemplates.php?list=sessions',
+
         scope: false,
+
         link: function (scope, element, attrs) {
-            scope.type = attrs.type;
+            scope.sessions.jslist = {
+                createList: function () {
+                    if(!scope.users.jslist.selected){
+                        return;
+                    }
+                    listdetails = scope.sessions.itemlist();
+                    jsonlist = listdetails.jsonfunc;
+                    resultfiltered = [];
+
+                    jsonlist.then(function (result) {
+                        if (!result) {
+                            return 0;
+                        }
+                        console.log(result);
+                        result.forEach(function (element) {
+                            if (element.user_name == scope.users.jslist.selectedObj.user_name && element.role == scope.users.jslist.selectedObj.role) {
+                                resultfiltered.push(element);
+                                console.log(element);
+                            }else{
+                                return;
+                            }
+                        });
+                        scope.sessions.jslist.values = resultfiltered;
+                        //scope.users.jslist.selected = null;
+                    });
+                    scope.sessions.listhddata = [
+                        {
+                            name: "Logged On",
+                            width: "col-6",
+                        },
+                        {
+                            name: "Logged Off",
+                            width: "col-6",
+                        }
+                    ];
+                }
+            }
+            scope.sessions.jslist.createList();
         }
     };
 }]);

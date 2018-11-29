@@ -125,7 +125,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 res = $rootScope.settings.modal.msgprompt(response);
                 res ? $scope.debts.jslist.createList() : null;
                 $scope.debts.itemlist().jsonfunc.then(function(response){
-                    $scope.debts.jslist.selectedObj =  $filter('filterObj')(response.items_array ,$scope.debts.jslist.selected, ['expense_ref']);
+                    $scope.debts.jslist.selectedObj =  $filter('filterObj')(response.debts_array ,$scope.debts.jslist.selected, ['expense_ref']);
                     $scope.debts.jslist.selected = $scope.debts.jslist.selectedObj.expense_ref;
                     console.log($scope.debts.jslist.selectedObj);
                 });

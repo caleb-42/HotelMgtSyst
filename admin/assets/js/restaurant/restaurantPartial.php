@@ -1,29 +1,30 @@
-<div ng-controller="stocks">
+<div ng-controller="restaurant">
+    <link href="./assets/css/index2.css" rel="stylesheet">   
     <div class="prime-hd anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.primeclass : 'w-100'}}">
-        <div class="statusbar grn row  align-items-end pl-1">
-            <div class="tabnav col-7 row">
+        <div class="statusbar blu row  align-items-end pl-1">
+            <div class="tabnav col-9 row">
                 <button ng-repeat='nav in tabnav.navs | objtoarray' class="tabpill btnnone" ng-click="tabnav.selectNav(nav.name)" ng-class="{focus:nav.name == tabnav.selected.name}">
                 <h5>{{nav.name}}</h5>
             </button>
             </div>
             <!--tabnav end-->
-            <div class="searchbox col-5 h-100 row  align-items-end pb-1" >
+            <div class="searchbox col-3 h-100 row  align-items-end pb-1" >
                 <div class="col-8">
                     <input class="form-control float-right anim" ng-model="searchbox.imp" /></div>
                 <!-- ng-class="{vanishsearch:searchbox.iconhover}" -->
-                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" ng-mouseenter="settings.log = false;" href = "../php1/restaurant_bar/restaurant_logoff.php" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm btn-outline-secondary wht mb-2">{{settings.log ? settings.user : 'log out'}}</a></div>
+                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" ng-mouseenter="settings.log = false;" href = "../php1/front_desk/frontdesk_logoff.php" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a></div>
             </div>
 
         </div>
-        <div class="prime-body">
+        <div class="prime-body {{tabnav.selected.options.rightbar ? '' : 'pr-0'}}">
             <div class="animate-switch-container" ng-switch on="tabnav.selected.name">
-                <div class="animate-switch Products px-4 h-100" ng-switch-default>
+                <div class="animate-switch Products px-4 h-100" ng-switch-when = "Products">
                     <div class="prodlisthd row justify-content-between">
                         <h4 class=" my-4 py-2 font-fam-Montserrat-bold">Manage Products</h4>
                         <div class="my-4 row justify-content-between align-items-center">
 
                         <div class = "stockcrudbtns my-4 mr-4">
-                        <button class="btn btn-sm btn-primary mx-1 font-fam-Montserrat f-12" ng-disabled="!productstock.jslist.selected" ng-click="stock.activateStockModal();" data-toggle="{{stock.modal}}" data-target="#crud" >Add Stock</button><!-- <button class="btn btn-sm btn-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'Update Stock'; settings.modal.name = 'Update Stock'; settings.modal.size = 'lg'; " ng-disabled="!productstock.jslist.selected">Update Stock</button><button class="btn btn-sm btn-danger mx-1 font-fam-Montserrat f-12" ng-disabled="!productstock.jslist.selected" ng-click = "stock.deleteProduct()">Delete Stock</button> -->
+                        <button class="btn btn-sm btn-primary mx-1 font-fam-Montserrat f-12" ng-disabled="!productstock.jslist.selected" ng-click="stock.activateStockModal();" data-toggle="{{stock.modal}}" data-target="#crud" >Add Stock</button>
                         </div>
 
                         <div class = "productcrudbtns my-4 align-items-center ">
@@ -36,13 +37,12 @@
                         <productlist></productlist>
                     </div>
                 </div>
-                <div class="animate-switch" ng-switch-when="History">HomeSpan</div>
             </div>
         </div>
     </div>
     <!--statusbar for primehd end-->
     <div class="main-sidebar-right hs-100 anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.rightbarclass : 'w-0 gone'}}">
-        <div class="statusbar grn row align-items-end justify-content-center">
+        <div class="statusbar blu row align-items-end justify-content-center">
             <h4 class="text-center wht">Details <i class="fa fa-book"></i></h4>
         </div>
         <!--statusbar for main-sidebar-right end -->

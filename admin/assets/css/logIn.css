@@ -7,7 +7,7 @@
     font-family: 'Montserrat', sans-serif;
 }
 body{
-    background: #509CCB;
+    background: #3D3D3D;
     overflow: hidden;
 }
 input{
@@ -19,12 +19,12 @@ input{
     margin-bottom: 30px;
 }
 button[name=B1] {
-    background: rgba(0,0,0, .2);
+    background: rgba(0,0,0, .5);
     color: #fff;
     font-size: 1.3em;
 }
 button[name=B1]:hover {
-    background: rgba(0,0,0, .4);
+    background: rgba(0,0,0, .7);
 }
 .inputcolor{
     color: rgba(0,0,0,.3) !important;

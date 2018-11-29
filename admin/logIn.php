@@ -10,7 +10,7 @@ $date=date("D M d, Y g:i a");
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>PrimePoint Admin Panel</title>
+        <title>Admin</title>
 
         <!-- jQuery core -->
         <script src="./vendors/jquery/jquery-3.1.1.min.js"></script>
@@ -32,11 +32,11 @@ $date=date("D M d, Y g:i a");
     <body>
         <div class="container">
             <div class = "adminform row justify-content-center" style="height: 100vh;">
-                <form autocomplete="off" role="form" method="post" action = "../php1/front_desk/frontdesk_logon.php" class="align-self-center">
+                <form autocomplete="off" role="form" method="post" action = "../php1/admin/admin_logon.php" class="align-self-center">
                     <div class="formhd text-center px-4 pt-4">
-                        <img  class = "" width = 110px height = 100px src = "assets/img/icon.png"/>
+                        <img  class = "d-block mx-auto" width = 110px height = 110px src = "assets/img/icon.png"/>
                         <!-- <h5 class = "Title mb-4 pb-1 mx-5 mt-3 wht font-fam-Calibri">Front<b>Desk</b></h5> -->
-                        <img  class = "my-4 ml-2" width = 280px height = 65px src = "assets/img/title.png"/>
+                        <img  class = "mb-3 mt-2 ml-2" width = 210px height = 90px src = "assets/img/title.png"/>
                         <div class="row mb-4 pb-2">
                             <input type="text" name="username" class="form-control text-center font-fam-Montserrat-bold inputcolor" required id="username" required value = "Username" placehd = "Username"/>
                             <input type="text" name="password" class="form-control text-center font-fam-Montserrat-bold inputcolor" id="password" value="Password" required placehd = "Password"/>
@@ -47,7 +47,7 @@ $date=date("D M d, Y g:i a");
                         <div style = "margin-top:-20px;" class="text-center row w-100 justify-content-center" ><img id="sendGif" class=""  style = "" src="assets/img/loadersquash1.gif" width="100px" height="100px" />
                         </div>
                         <div class="row justify-content-center w-100" style="margin-top:-66px !important;" >
-                            <p id="output" class="str text-center " style="opacity:.8; font-size:17px; font-weight: 700" ><?php $output = ""; if(array_key_exists("output", $_GET)){
+                            <p id="output" class="wht str text-center " style="opacity:.8; font-size:17px; font-weight: 700" ><?php $output = ""; if(array_key_exists("output", $_GET)){
                                 $output = $_GET["output"] ? $_GET["output"] : "";
                             } echo "<script type = 'text/javascript'>
             jQuery(function(){
@@ -70,7 +70,7 @@ $date=date("D M d, Y g:i a");
                 </form>
             </div>
         </div>
-        <footer class="f-12">
+        <footer class="f-12 wht opac-50">
             <p class = "text-center">&copy; 2012 - <?php echo date('Y') ?> Webplay Nig Ltd. All Rights Reserved.</p>
             <p class = "text-center"><?php echo $date ?></p>
         </footer>

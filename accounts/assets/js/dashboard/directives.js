@@ -75,7 +75,7 @@ app.directive('debtlist', ['$rootScope', function ($rootScope) {
                     jsonlist = listdetails.jsonfunc;
                     jsonlist.then(function (result) {
                         console.log(result);
-                        scope.debts.jslist.values = result.items_array;
+                        scope.debts.jslist.values = result.debts_array;
                     });
                     scope.debts.listhddata = [
                         {

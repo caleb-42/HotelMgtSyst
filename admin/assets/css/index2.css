@@ -1,0 +1,38 @@
+
+.sidebar-body .details {
+    width: 100%;
+    background: #fff;
+    height: 350px !important;
+    position: relative;
+    right: 0;
+}
+
+.sidebar-body .discount {
+    width: 100%;
+    background: #fff;
+    height: 50vh;
+    position: relative;
+    right: 0;
+}
+
+.sidebar-body .discount .header {
+    border-bottom: 2px solid rgba(240, 173, 78, 1);
+}
+.sidebar-body .discount .center {
+    width:70px;
+    height:50px;
+}
+.sidebar-body .photodetails{
+    width: 100%;
+    background: #fff;
+    height: 40vh;
+    position: relative;
+    right: 0;
+    margin-bottom: 10px;
+}
+.sidebar-body .photodetails .productpic{
+    width:180px;
+    height:180px;
+    background: rgba(0,0,0,.2);
+    border-radius: 90px;
+}

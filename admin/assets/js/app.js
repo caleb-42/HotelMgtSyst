@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngAnimate', 'ngRoute', 'ngSanitize', 'dashApp', 'roomsApp', 'usersApp', 'recordsApp', 'ngCroppie','720kb.datepicker']);
+var app = angular.module('app', ['ngAnimate', 'ngRoute', 'ngSanitize', 'frontdeskApp', 'restaurantApp', 'usersApp', 'recordsApp', 'ngCroppie','720kb.datepicker']);
 
 app.controller("appctrl", ["$rootScope", "$scope","$filter", function ($rootScope, $scope, $filter) {
     $rootScope.settings = {
@@ -72,31 +72,31 @@ app.controller("appctrl", ["$rootScope", "$scope","$filter", function ($rootScop
     }
     $scope.sidebarnav = {
         navig: {
-            activeNav: "Dashboard",
+            activeNav: "Frontdesk",
             mkactiveNav: function (nav) {
                 $scope.sidebarnav.navig.activeNav = nav;
             },
             navs: [
                 {
-                    name: "Dashboard",
+                    name: "Frontdesk",
                     listClass: "anim",
                     iconClass: "mr-3",
                     innerHtml: '<img width = 15px height = 20px style="margin-top:-20px;" src = "assets/img/moneybag-08.png"/>',
                 },
                 {
-                    name: "Lodge",
+                    name: "Restaurant",
                     listClass: "anim",
                     iconClass: "mr-3 fa fa-foursquare",
                     innerHtml: '',
                 },
                 {
-                    name: "Users",
+                    name: "Accounts",
                     listClass: "anim",
                     iconClass: "mr-3 fa fa-user",
                     innerHtml: '',
                 },
                 {
-                    name: "Records",
+                    name: "Users",
                     listClass: "anim",
                     iconClass: "mr-3 fa fa-history",
                     innerHtml: '',
@@ -113,7 +113,7 @@ app.controller("appctrl", ["$rootScope", "$scope","$filter", function ($rootScop
     };
 }]);
 
-var dashApp = angular.module('dashApp', []);
-var roomsApp = angular.module('roomsApp', []);
+var frontdeskApp = angular.module('frontdeskApp', []);
+var restaurantApp = angular.module('restaurantApp', []);
 var usersApp = angular.module('usersApp', []);
 var recordsApp = angular.module('recordsApp', []);

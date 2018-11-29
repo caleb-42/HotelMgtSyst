@@ -1,4 +1,4 @@
-app.directive('userlist', ['$rootScope', function ($rootScope) {
+usersApp.directive('userlist', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
         templateUrl: './assets/js/users/listTemplates.php?list=users',
@@ -44,7 +44,7 @@ app.directive('userlist', ['$rootScope', function ($rootScope) {
     };
 }]);
 
-app.directive('sessionlist', ['$rootScope', function ($rootScope) {
+usersApp.directive('sessionlist', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
         templateUrl: './assets/js/users/listTemplates.php?list=sessions',

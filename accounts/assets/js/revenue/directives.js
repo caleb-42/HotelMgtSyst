@@ -21,10 +21,6 @@ app.directive('history', ['$rootScope', function ($rootScope) {
                             return 0;
                         }
                         console.log(result);
-                        result.revenues_array.forEach(function(elem){
-                            tnx = attrs.list + '_txn';
-                            elem.txn_id = elem[tnx];
-                        });
                         scope.jslist.values = result.revenues_array;
                     });
                 },
@@ -42,7 +38,7 @@ app.directive('history', ['$rootScope', function ($rootScope) {
             });
             scope.list = attrs.list;
             scope.jslist.createList({
-                script: 'list_revenues' ,
+                script: attrs.script ,
                 data : {table : attrs.list}
             });
             

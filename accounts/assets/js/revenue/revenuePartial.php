@@ -18,24 +18,29 @@
         <div class="prime-body {{tabnav.selected.options.rightbar ? null : 'px-0'}}">
             <div class="animate-switch-container" ng-switch on="tabnav.selected.name">
                 <div class="animate-switch History px-4 h-100" ng-switch-default>
-                    <div ng-controller="frontdeskhistory">
+                    <div ng-controller="transactionhistory">
                         <div class="prodlisthd row justify-content-between">
-                            <h4 class=" col-6 px-0 my-4 py-2 font-fam-Montserrat-bold text-left">Payment History</h4>
-                            <div class = "col-6 p-0 row justify-content-around">
-                                <datepicker date-max-limit = "{{frontdesk.todate}}" date-format="yyyy-MM-dd" class="col-4 my-4 text-center" selector="form-control">
+                            <h4 class=" col-4 px-0 my-4 py-2 font-fam-Montserrat-bold text-left">Transaction History</h4>
+                            <div class = "col-8 p-0 row justify-content-around">
+                                <select ng-change = "transaction.fetchdate()" ng-model = "transaction.table" class="form-control methpay my-4 col-2 f-13" name="means_of_payment">
+                                    <option value="frontdesk">Frontdesk</option>
+                                    <option value="restaurant">Restaurant</option>
+                                    <option value="reservations">Reservation</option>
+                                </select>
+                                <datepicker date-max-limit = "{{transaction.todate}}" date-format="yyyy-MM-dd" class="ml-5 col-3 my-4 text-center" selector="form-control">
                                     <input class=" clearinput password form-control font-fam-Montserrat text-center d-block"
                                         placeholder="From Date" name="fromdate" 
-                                        ng-model = "frontdesk.fromdate" onkeydown="javascript: return false"/>
+                                        ng-model = "transaction.fromdate" onkeydown="javascript: return false"/>
                                 </datepicker>
-                                <datepicker date-min-limit = "{{frontdesk.fromdate}}" date-format="yyyy-MM-dd" class=" col-4 my-4 text-center" selector="form-control">
+                                <datepicker date-min-limit = "{{transaction.fromdate}}" date-format="yyyy-MM-dd" class=" col-3 my-4 text-center" selector="form-control">
                                     <input class=" clearinput password form-control font-fam-Montserrat text-center d-block"
-                                        placeholder="To Date" ng-model = "frontdesk.todate" name="todate"  onkeydown="javascript: return false"/>
+                                        placeholder="To Date" ng-model = "transaction.todate" name="todate"  onkeydown="javascript: return false"/>
                                 </datepicker>
-                                <div class = "pr-0 py-4 row justify-content-between col-4">
-                                    <button ng-click = "frontdesk.fetchdate()" class = "w-45 f-14 btn  btn-sm btn-info">
+                                <div class = "pr-0 py-4 row justify-content-between col-3">
+                                    <button ng-click = "transaction.fetchdate()" class = "w-45 f-14 btn  btn-sm btn-info">
                                     Fetch
                                     </button>
-                                    <button ng-click = "frontdesk.todate = null; frontdesk.fromdate=null;" class = "w-45 f-14 btn  btn-sm purp-back wht opac-70">
+                                    <button ng-click = "transaction.todate = null; transaction.fromdate=null;" class = "w-45 f-14 btn  btn-sm purp-back wht opac-70">
                                     Clear
                                     </button>
                                 </div>
@@ -43,37 +48,41 @@
                             </div>
                         </div>
                         <div class="saleshistorylist h-80 " >
-                            <history evt = "frontdesklist" list = "frontdesk" listhddata = "frontdesk.listhddata" itemlist = "frontdesk.itemlist(range)"></history>
+                            <history evt = "transactionslist" script = "list_transactions" list = "frontdesk" listhddata = "transaction.listhddata" itemlist = "transaction.itemlist(range)"></history>
                         </div>
                     </div>
                 </div>
-                <div class="animate-switch History px-4 h-100" ng-switch-when = "Restaurant">
-                    <div ng-controller="restauranthistory">
+                <div class="animate-switch History px-4 h-100" ng-switch-when = "Payments">
+                    <div ng-controller="paymentshistory">
                         <div class="prodlisthd row justify-content-center">
-                            <h4 class="col-6 my-4 py-2 font-fam-Montserrat-bold text-left px-0">Payment History</h4>
+                            <h4 class="col-4 my-4 py-2 font-fam-Montserrat-bold text-left px-0">Payment History</h4>
                             
-                            <div class = "col-6 p-0 row justify-content-around">
-                                <datepicker date-max-limit = "{{restaurant.todate}}" date-format="yyyy-MM-dd" class="col-4 my-4 text-center" selector="form-control">
+                            <div class = "col-8 p-0 row justify-content-around">
+                                <select ng-change = "payment.fetchdate()" ng-model = "payment.table" class="form-control methpay my-4 col-2 f-13" name="means_of_payment">
+                                    <option value="frontdesk">Frontdesk</option>
+                                    <option value="restaurant">Restaurant</option>
+                                </select>
+                                <datepicker date-max-limit = "{{payment.todate}}" date-format="yyyy-MM-dd" class="ml-5  col-3 my-4 text-center" selector="form-control">
                                     <input class=" clearinput password form-control font-fam-Montserrat text-center d-block"
                                         placeholder="From Date" name="fromdate" 
-                                        ng-model = "restaurant.fromdate" onkeydown="javascript: return false"/>
+                                        ng-model = "payment.fromdate" onkeydown="javascript: return false"/>
                                 </datepicker>
-                                <datepicker date-min-limit = "{{restaurant.fromdate}}" date-format="yyyy-MM-dd" class=" col-4 my-4 text-center" selector="form-control">
+                                <datepicker date-min-limit = "{{payment.fromdate}}" date-format="yyyy-MM-dd" class=" col-3 my-4 text-center" selector="form-control">
                                     <input class=" clearinput password form-control font-fam-Montserrat text-center d-block"
-                                        placeholder="To Date" ng-model = "restaurant.todate" name="todate"  onkeydown="javascript: return false"/>
+                                        placeholder="To Date" ng-model = "payment.todate" name="todate"  onkeydown="javascript: return false"/>
                                 </datepicker>
-                                <div class = "pr-0 py-4 row justify-content-between col-4">
-                                    <button ng-click = "restaurant.fetchdate()" class = "w-45 f-14 btn  btn-sm btn-info">
+                                <div class = "pr-0 py-4 row justify-content-between col-3">
+                                    <button ng-click = "payment.fetchdate()" class = "w-45 f-14 btn  btn-sm btn-info">
                                     Fetch
                                     </button>
-                                    <button ng-click = "restaurant.todate = null; restaurant.fromdate=null;" class = "w-45 f-14 btn  btn-sm purp-back wht opac-70">
+                                    <button ng-click = "payment.todate = null; payment.fromdate=null;" class = "w-45 f-14 btn  btn-sm purp-back wht opac-70">
                                     Clear
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div class="saleshistorylist h-80 " >
-                            <history evt = "restaurantlist" list = "restaurant" listhddata = "restaurant.listhddata" itemlist = "restaurant.itemlist(range)"></history>
+                            <history evt = "paymentslist" script = "list_revenues" list = "frontdesk" listhddata = "payment.listhddata" itemlist = "payment.itemlist(range)"></history>
                         </div>
                     </div>
                 </div>

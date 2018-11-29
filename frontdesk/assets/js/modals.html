@@ -180,7 +180,7 @@
                                 <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
                                         height="70px" /></div>
                                 <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
-                                    onclick="addGuest()">
+                                    ng-disabled = "guest.roomgrid.room_info.cost == 0" onclick="addGuest()">
                                     {{settings.modal.name | limitTo:3}}
                                 </button>
                             </div>
@@ -345,7 +345,7 @@
                                 <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
                                         height="70px" /></div>
                                 <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
-                                    onclick="addReservation()">
+                                    ng-disabled = "reservation.roomgrid.room_info.cost == 0" onclick="addReservation()">
                                     {{settings.modal.name | limitTo:3}}
                                 </button>
                             </div>
@@ -568,7 +568,7 @@
                                 <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
                                         height="70px" /></div>
                                 <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
-                                    onclick="checkIn()">
+                                    ng-disabled = "guest.roomgrid.room_info.cost == 0" onclick="checkIn()">
                                     {{settings.modal.name}}
                                 </button>
                             </div>

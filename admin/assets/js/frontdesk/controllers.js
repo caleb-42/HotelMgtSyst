@@ -1,4 +1,4 @@
-dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', '$timeout', function ($rootScope, $scope, jsonPost, $filter, $timeout) {
+frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filter', '$timeout', function ($rootScope, $scope, jsonPost, $filter, $timeout) {
 
     $rootScope.$on('guestselect', function(evt,param){
         console.log($scope.guest.getRoomBooking(param.guest_id));
@@ -25,6 +25,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     rightbar: false
                 }
             }, */
+            
             Guests: {
                 name: 'Guests',
                 options: {
@@ -34,6 +35,12 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             Rooms: {
                 name: 'Rooms',
                 options: {
+                    rightbar: false
+                }
+            },
+            Reservation: {
+                name: 'Reservation',
+                options: {
                     rightbar: {
                         present: true,
                         rightbarclass: 'w-35',
@@ -41,8 +48,8 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     }
                 }
             },
-            Reservation: {
-                name: 'Reservation',
+            Users: {
+                name: 'Users',
                 options: {
                     rightbar: {
                         present: true,
@@ -397,6 +404,107 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     });
                 }
                 return response;
+            });
+        }
+    };
+
+    $scope.users = {
+        jslist:{},
+        itemlist: function () {
+            return {
+                jsonfunc: jsonPost.data("../php1/front_desk/admin/list_users.php", {})
+            }
+        },
+        addUser: function (jsonprod) {
+            console.log("new user", jsonprod);
+
+            jsonPost.data("../php1/front_desk/admin/add_user.php", {
+                new_user: $filter('json')(jsonprod)
+            }).then(function (response) {
+                console.log(response);
+                $rootScope.settings.modal.msgprompt(response);
+                $scope.users.jslist.createList();
+            });
+        },
+        updateUser: function (jsonuser) {
+            jsonuser.id = $scope.users.jslist.selected;
+            console.log("new product", jsonuser);
+            jsonPost.data("../php1/front_desk/admin/edit_user.php", {
+                update_user: $filter('json')(jsonuser)
+            }).then(function (response) {
+                $scope.users.jslist.toggleOut();
+                console.log(response);
+                $rootScope.settings.modal.msgprompt(response);
+                $scope.users.jslist.createList();
+                $scope.users.jslist.toggleIn();
+            });
+        },
+        deleteUser: function () {
+            jsonuser = {};
+            jsonuser.users = [$scope.users.jslist.selectedObj];
+            console.log("new users", jsonuser);
+            jsonPost.data("../php1/front_desk/admin/del_users.php", {
+                del_users: $filter('json')(jsonuser)
+            }).then(function (response) {
+                $scope.users.jslist.toggleOut();
+                console.log(response);
+                $scope.users.jslist.createList();
+                $scope.users.jslist.toggleIn();
+            });
+        }
+    };
+    
+    $scope.sessions = {
+        itemlist: function () {
+            return {
+                jsonfunc: jsonPost.data("../php1/front_desk/admin/list_session.php", {})
+            }
+        }
+    }
+
+    $scope.rooms = {
+        itemlist: function () {
+            return {
+                jsonfunc: jsonPost.data("../php1/front_desk/admin/list_room.php", {})
+            }
+        },
+        addRoom: function (jsonrm) {
+            console.log("new room", jsonrm);
+            jsonrm.category = jsonrm.room_category;
+            jsonPost.data("../php1/front_desk/admin/add_room.php", {
+                new_room: $filter('json')(jsonrm)
+            }).then(function (response) {
+                $scope.rooms.jslist.toggleOut();
+                console.log(response);
+                $rootScope.settings.modal.msgprompt(response);
+                $scope.rooms.jslist.createList();
+                $scope.rooms.jslist.toggleIn();
+            });
+        },
+        updateRoom: function (jsonrm) {
+            jsonrm.room_id = $scope.rooms.jslist.selected;
+            console.log("new room", jsonrm);
+            jsonPost.data("../php1/front_desk/admin/edit_room.php", {
+                update_room: $filter('json')(jsonrm)
+            }).then(function (response) {
+                $scope.rooms.jslist.toggleOut();
+                console.log(response);
+                $rootScope.settings.modal.msgprompt(response);
+                $scope.rooms.jslist.createList();
+                $scope.rooms.jslist.toggleIn();
+            });
+        },
+        deleteRoom: function () {
+            jsonrm = {};
+            jsonrm.items = [$scope.rooms.jslist.selectedObj];
+            console.log("new product", jsonprod);
+            jsonPost.data("../php1/front_desk/admin/del_room.php", {
+                del_items: $filter('json')(jsonprod)
+            }).then(function (response) {
+                $scope.rooms.jslist.toggleOut();
+                console.log(response);
+                $scope.rooms.jslist.createList();
+                $scope.rooms.jslist.toggleIn();
             });
         }
     };

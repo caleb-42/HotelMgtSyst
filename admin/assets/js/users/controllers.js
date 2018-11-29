@@ -30,13 +30,13 @@ usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', fun
         jslist:{},
         itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/front_desk/admin/list_users.php", {})
+                jsonfunc: jsonPost.data("../php1/admin/list_users.php", {})
             }
         },
         addUser: function (jsonprod) {
             console.log("new user", jsonprod);
 
-            jsonPost.data("../php1/front_desk/admin/add_user.php", {
+            jsonPost.data("../php1/admin/add_user.php", {
                 new_user: $filter('json')(jsonprod)
             }).then(function (response) {
                 console.log(response);
