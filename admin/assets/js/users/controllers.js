@@ -47,7 +47,7 @@ usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', fun
         updateUser: function (jsonuser) {
             jsonuser.id = $scope.users.jslist.selected;
             console.log("new product", jsonuser);
-            jsonPost.data("../php1/front_desk/admin/edit_user.php", {
+            jsonPost.data("../php1/admin/edit_user.php", {
                 update_user: $filter('json')(jsonuser)
             }).then(function (response) {
                 $scope.users.jslist.toggleOut();
@@ -61,7 +61,7 @@ usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', fun
             jsonuser = {};
             jsonuser.users = [$scope.users.jslist.selectedObj];
             console.log("new users", jsonuser);
-            jsonPost.data("../php1/front_desk/admin/del_users.php", {
+            jsonPost.data("../php1/admin/del_users.php", {
                 del_users: $filter('json')(jsonuser)
             }).then(function (response) {
                 $scope.users.jslist.toggleOut();
@@ -75,7 +75,7 @@ usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', fun
     $scope.sessions = {
         itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/front_desk/admin/list_session.php", {})
+                jsonfunc: jsonPost.data("../php1/admin/list_session.php", {})
             }
         }
     }

@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngAnimate', 'ngRoute', 'ngSanitize', 'frontdeskApp', 'restaurantApp', 'usersApp', 'recordsApp', 'ngCroppie','720kb.datepicker']);
+var app = angular.module('app', ['ngAnimate', 'ngRoute', 'ngSanitize', 'frontdeskApp', 'restaurantApp', 'usersApp', 'accountsApp', 'ngCroppie','720kb.datepicker']);
 
 app.controller("appctrl", ["$rootScope", "$scope","$filter", function ($rootScope, $scope, $filter) {
     $rootScope.settings = {
@@ -116,4 +116,4 @@ app.controller("appctrl", ["$rootScope", "$scope","$filter", function ($rootScop
 var frontdeskApp = angular.module('frontdeskApp', []);
 var restaurantApp = angular.module('restaurantApp', []);
 var usersApp = angular.module('usersApp', []);
-var recordsApp = angular.module('recordsApp', []);
+var accountsApp = angular.module('accountsApp', []);

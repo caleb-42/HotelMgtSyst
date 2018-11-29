@@ -48,6 +48,12 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
                     }
                 }
             },
+            Bookings: {
+                name: 'Bookings',
+                options: {
+                    rightbar : false
+                }
+            },
             Users: {
                 name: 'Users',
                 options: {
@@ -69,6 +75,15 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
             $scope.tabnav.selected = $scope.tabnav.navs[navname];
         }
     };
+
+    $scope.listbookings = {
+        itemlist: function () {
+            return {
+                jsonfunc: jsonPost.data("../php1/front_desk/list_bookings.php", {})
+            }
+        }
+    }
+    
     $scope.booking = {
         itemlist: function (id) {
             return {

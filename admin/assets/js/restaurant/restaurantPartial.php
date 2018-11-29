@@ -2,13 +2,13 @@
     <link href="./assets/css/index2.css" rel="stylesheet">   
     <div class="prime-hd anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.primeclass : 'w-100'}}">
         <div class="statusbar blu row  align-items-end pl-1">
-            <div class="tabnav col-9 row">
-                <button ng-repeat='nav in tabnav.navs | objtoarray' class="tabpill btnnone" ng-click="tabnav.selectNav(nav.name)" ng-class="{focus:nav.name == tabnav.selected.name}">
+            <div class="tabnav {{tabnav.selected.options.rightbar ? 'col-12' : 'col-8'}} relatv row">
+                <button ng-repeat='nav in tabnav.navs | objtoarray' class="abs  h-100 tabpill btnnone" ng-click="tabnav.selectNav(nav.name)" ng-class="{focus:nav.name == tabnav.selected.name}" style = "left: {{($index * 150) + 20}}px;">
                 <h5>{{nav.name}}</h5>
             </button>
             </div>
             <!--tabnav end-->
-            <div class="searchbox col-3 h-100 row  align-items-end pb-1" >
+            <div class="searchbox col-3 h-100 {{tabnav.selected.options.rightbar ? 'gone' : 'col-4'}} row  align-items-end pb-1" >
                 <div class="col-8">
                     <input class="form-control float-right anim" ng-model="searchbox.imp" /></div>
                 <!-- ng-class="{vanishsearch:searchbox.iconhover}" -->
@@ -37,17 +37,63 @@
                         <productlist></productlist>
                     </div>
                 </div>
+                <div class="animate-switch Customers px-4 h-100" ng-switch-when="Customers">
+                    <div class="customerslist h-80">
+                        <div class="prodlisthd row justify-content-between">
+                            <h4 class=" my-4 py-2 font-fam-Montserrat-bold text-center">Manage Customers</h4>
+                            
+                            <div class="my-4">
+                                <button class="btn btn-outline-primary mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Customers'; settings.modal.name = 'Add Customer'; settings.modal.size = 'md' " data-toggle="modal" data-target="#crud" >Add</button>
+                                <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'Customers'; settings.modal.name = 'Update Customer'; settings.modal.size = 'lg'; " ng-disabled="!customers.jslist.selected || (customers.jslist.selected | limitTo:3) == 'LOD'">Update</button>
+                                <button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" ng-click="customers.deleteCustomer()"  ng-disabled="!customers.jslist.selected || (customers.jslist.selected | limitTo:3) == 'LOD'">Delete</button>
+                            </div>
+                        </div>
+                        <customerslist></customerslist> 
+                        <div class="modal fade" id="crud" role="dialog" modalentry></div>
+                    </div>
+                </div>
+                <div class="animate-switch SalesHistory px-4 h-100" ng-switch-when = "Sales">
+                    <div class="prodlisthd row justify-content-center">
+                        <h4 class=" my-4 py-2 font-fam-Montserrat-bold text-center">Sales History</h4>
+                    </div>
+                    <div class="saleshistorylist h-80">
+                        <saleshistorylist></saleshistorylist>
+                    </div>
+                </div>
+                <div class="animate-switch StockHistory px-4 h-100" ng-switch-when="Stocks">
+                    <div class="prodlisthd row justify-content-center">
+                    <h4 class=" my-4 py-2 font-fam-Montserrat-bold text-center">Stock History</h4>
+                    </div>
+                    <div class="stockhistorylist h-80" >
+                         <stockhistorylist></stockhistorylist> 
+                    </div>
+                </div>
+                <div class="animate-switch User px-4 h-100" ng-switch-when = "Users">
+                    <div class="userlisthd row justify-content-between">
+                        <h4 class=" my-4 py-2 font-fam-Montserrat-bold">Manage Users</h4>
+                        <div class="my-4"><button class="btn btn-outline-primary mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'User'; settings.modal.name = 'Add User'; settings.modal.size = 'md' " data-toggle="modal" data-target="#crud" >Add</button><button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'User'; settings.modal.name = 'Update User'; settings.modal.size = 'lg'; " ng-disabled="!users.jslist.selected">Update</button><button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" ng-click="users.deleteUser()"  ng-disabled="!users.jslist.selected">Delete</button></div>
+                    </div>
+                    <div class="userlist h-80">
+                        <restaurantuserlist></restaurantuserlist>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <!--statusbar for primehd end-->
     <div class="main-sidebar-right hs-100 anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.rightbarclass : 'w-0 gone'}}">
         <div class="statusbar blu row align-items-end justify-content-center">
-            <h4 class="text-center wht">Details <i class="fa fa-book"></i></h4>
+            <div class="searchbox col-12 h-100 row  align-items-end pb-1 {{tabnav.selected.options.rightbar ? '' : 'gone'}}">
+                    <div class="col-8">
+                        <input class="form-control float-right anim" ng-model="searchbox.imp" />
+                    </div>
+                    <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" href = "../php1/admin/admin_logoff.php" ng-mouseenter="settings.log = false;" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a>
+                </div>
+            </div>
         </div>
         <!--statusbar for main-sidebar-right end -->
-        <div class="sidebar-body" ng-switch on="tabnav.selected.name">
-            <div ng-switch-default>
+        <div class="sidebar-body whtback" ng-switch on="tabnav.selected.name">
+            <div ng-switch-when = "Products">
                 <div class = "photodetails">
                     <div class = "productpic center"></div>
                 </div>
@@ -68,7 +114,16 @@
                     </div>
                 </div>
             </div>
-            
+            <div ng-switch-when = 'Sales'>
+                <div class = "sidebar-content p-4 w-100">
+                    <listsale></listsale>
+                </div>
+            </div>
+            <div ng-switch-when = "Users">
+                <div class = "sessions p-4 w-100">
+                    <restaurantsessionlist></restaurantsessionlist>
+                </div>
+            </div>  
         </div>
     </div>
     <!--main-sidebar-right end-->

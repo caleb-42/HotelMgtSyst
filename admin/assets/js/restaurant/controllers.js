@@ -10,6 +10,38 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
                         primeclass: 'w-70'
                     }
                 }
+            },
+            Customers: {
+                name: 'Customers',
+                options: {
+                    rightbar: false
+                }
+            },
+            Sales: {
+                name: 'Sales',
+                options: {
+                    rightbar : {
+                        present: true,
+                        rightbarclass: 'w-35',
+                        primeclass: 'w-65'
+                    }
+                }
+            },
+            Stocks: {
+                name: 'Stocks',
+                options: {
+                    rightbar : false
+                }
+            },
+            Users: {
+                name: 'Users',
+                options: {
+                    rightbar: {
+                        present: true,
+                        rightbarclass: 'w-30',
+                        primeclass: 'w-70'
+                    }
+                }
             }
         },
         selected: {
@@ -222,5 +254,120 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
             }
         }
     }
+    $scope.stockHistory = {
+        itemlist: function () {
+            return {
+                jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_stock_transaction.php", {})
+            }
+        }
+    }
+    $scope.listsales = {
+        itemlist: function (ref) {
+            //console.log('ewere');
+            return {
+                jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_sales.php", ref)
+            }
+        }
+    };
+    $scope.salesHistory = {
+        itemlist: function () {
+            return {
+                jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_transactions.php", {})
+            }
+        }
+    };
+    $scope.customers = {
+        itemlist: function () {
+            return {
+                jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_customers.php", {}),
+                /* jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_customers.php", {}) */
+            }
+        },
+        addCustomer: function (jsoncust) {
+            console.log("new cust", jsoncust);
 
+            jsonPost.data("../php1/restaurant_bar/add_customer.php", {
+                new_customer: $filter('json')(jsoncust)
+            }).then(function (response) {
+                console.log(response);
+                $rootScope.settings.modal.msgprompt(response);
+                $scope.customers.jslist.createList();
+            });
+        },
+        updateCustomer: function (jsoncust) {
+            console.log("new cust", jsoncust);
+            jsoncust.customer_id = $scope.customers.jslist.selected;
+            jsonPost.data("../php1/restaurant_bar/update_customer.php", {
+                update_customer: $filter('json')(jsoncust)
+            }).then(function (response) {
+                console.log(response);
+                $rootScope.settings.modal.msgprompt(response);
+                $scope.customers.jslist.createList();
+            });
+        },
+        deleteCustomer: function () {
+            jsoncust = {};
+            jsoncust.customers = [$scope.customers.jslist.selectedObj];
+            console.log("new users", jsoncust);
+            jsonPost.data("../php1/restaurant_bar/admin/del_customers.php", {
+                del_customers: $filter('json')(jsoncust)
+            }).then(function (response) {
+                //$scope.customers.jslist.toggleOut();
+                console.log(response);
+                $scope.customers.jslist.createList();
+                //$scope.customers.jslist.toggleIn();
+            });
+        }
+    };
+    $scope.users = {
+        itemlist: function () {
+            return {
+                jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_users.php", {})
+            }
+        },
+        addUser: function (jsonprod) {
+            console.log("new user", jsonprod);
+
+            jsonPost.data("../php1/restaurant_bar/admin/add_user.php", {
+                new_user: $filter('json')(jsonprod)
+            }).then(function (response) {
+                console.log(response);
+                $rootScope.settings.modal.msgprompt(response);
+                $scope.users.jslist.createList();
+            });
+        },
+        updateUser: function (jsonuser) {
+            jsonuser.id = $scope.users.jslist.selected;
+            console.log("new product", jsonuser);
+            jsonPost.data("../php1/restaurant_bar/admin/edit_user.php", {
+                update_user: $filter('json')(jsonuser)
+            }).then(function (response) {
+                $scope.users.jslist.toggleOut();
+                console.log(response);
+                $rootScope.settings.modal.msgprompt(response);
+                $scope.users.jslist.createList();
+                $scope.users.jslist.toggleIn();
+            });
+        },
+        deleteUser: function () {
+            jsonuser = {};
+            jsonuser.users = [$scope.users.jslist.selectedObj];
+            console.log("new users", jsonuser);
+            jsonPost.data("../php1/restaurant_bar/admin/del_user.php", {
+                del_users: $filter('json')(jsonuser)
+            }).then(function (response) {
+                $scope.users.jslist.toggleOut();
+                console.log(response);
+                $scope.users.jslist.createList();
+                $scope.users.jslist.toggleIn();
+            });
+        }
+    };
+    $scope.sessions = {
+        itemlist: function () {
+            return {
+                jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_sessions.php", {})
+            }
+        }
+    }
 }]);

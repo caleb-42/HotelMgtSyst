@@ -79,13 +79,21 @@
                     <roomlist class="font-fam-Montserrat"></roomlist>
                 </div>
             </div>
+            <div class="animate-switch SalesHistory px-4 h-100" ng-switch-when = "Bookings">
+                    <div class="prodlisthd row justify-content-center">
+                        <h4 class=" my-4 py-2 font-fam-Montserrat-bold text-center">Bookings History</h4>
+                    </div>
+                    <div class="saleshistorylist h-80 ">
+                        <bookinghistory></bookinghistory>
+                    </div>
+                </div>
             <div class="animate-switch User px-4 h-100" ng-switch-when = "Users">
                 <div class="userlisthd row justify-content-between">
                     <h4 class=" my-4 py-2 font-fam-Montserrat-bold">Manage Users</h4>
                     <div class="my-4"><button class="btn btn-outline-primary mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'User'; settings.modal.name = 'Add User'; settings.modal.size = 'md' " data-toggle="modal" data-target="#crud" >Add</button><button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'User'; settings.modal.name = 'Update User'; settings.modal.size = 'lg'; " ng-disabled="!users.jslist.selected">Update</button><button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" ng-click="users.deleteUser()"  ng-disabled="!users.jslist.selected">Delete</button></div>
                 </div>
                 <div class="userlist h-80">
-                    <userlist></userlist>
+                    <frontdeskuserlist></frontdeskuserlist>
                 </div>
             </div>
         </div>
@@ -99,7 +107,7 @@
                 <div class="col-8">
                     <input class="form-control float-right anim" ng-model="searchbox.imp" />
                 </div>
-                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" href = "../php1/front_desk/frontdesk_logoff.php" ng-mouseenter="settings.log = false;" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a>
+                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" href = "../php1/admin/admin_logoff.php" ng-mouseenter="settings.log = false;" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a>
             </div>
         </div>
     </div>
@@ -111,7 +119,7 @@
         <div ng-switch-when = "Users">
                 <div class = "sessions h-100 p-4 w-100">
                     
-                <sessionlist></sessionlist>
+                <frontdesksessionlist></frontdesksessionlist>
                 </div>
             </div> 
     </div>

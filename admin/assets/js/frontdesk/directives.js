@@ -218,8 +218,7 @@ frontdeskApp.directive('resvtnlist', ['$rootScope', function ($rootScope) {
     };
 }]);
 
-
-frontdeskApp.directive('userlist', ['$rootScope', function ($rootScope) {
+frontdeskApp.directive('frontdeskuserlist', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
         templateUrl: './assets/js/frontdesk/listTemplates.php?list=users',
@@ -266,7 +265,7 @@ frontdeskApp.directive('userlist', ['$rootScope', function ($rootScope) {
 }]);
 
 
-frontdeskApp.directive('sessionlist', ['$rootScope', function ($rootScope) {
+frontdeskApp.directive('frontdesksessionlist', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
         templateUrl: './assets/js/frontdesk/listTemplates.php?list=sessions',
@@ -315,6 +314,157 @@ frontdeskApp.directive('sessionlist', ['$rootScope', function ($rootScope) {
         }
     };
 }]);
+
+frontdeskApp.directive('roomlist', ['$rootScope', '$filter', function ($rootScope, $filter) {
+    return {
+        restrict: 'E',
+        templateUrl: './assets/js/frontdesk/listTemplates.php?list=rooms',
+
+        scope: false,
+
+        link: function (scope, element, attrs) {
+            var jslistObj;
+            scope.rooms.jslist = {
+                createList: function () {
+                    listdetails = scope.rooms.itemlist();
+                    jsonlist = listdetails.jsonfunc;
+                    jsonlist.then(function (result) {
+                        console.log(result);
+                        /* result.forEach(function(elem){
+                            elem.category = elem.room_category;
+                        }); */
+                        scope.rooms.jslist.values = result;
+                        scope.rooms.jslist.selected = null;
+                    });
+                    scope.rooms.listhddata = [
+                        {
+                            name: "Number",
+                            width: "col-1",
+                        },
+                        {
+                            name: "ID",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Rate",
+                            width: "col-1",
+                        },
+                        {
+                            name: "Category",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Guest",
+                            width: "col-1",
+                        },
+                        {
+                            name: "Guest No",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Booked",
+                            width: "col-1",
+                        },
+                        {
+                            name: "Reserved",
+                            width: "col-2",
+                        },
+                    ];
+                },
+                select: function (index, id) {
+                    scope.rooms.jslist.selected = id;
+                    scope.rooms.jslist.selectedObj = scope.rooms.jslist.newItemArray[index];
+                    console.log(scope.rooms.jslist.selectedObj);
+                },
+                toggleOut: function () {
+                    $(".listcont").fadeOut(200);
+                },
+                toggleIn: function () {
+                    $(".listcont").delay(500).fadeIn(200);
+                },
+                shelfitem : 'yes'
+            }
+            scope.rooms.jslist.createList();
+        }
+    };
+}]);
+
+frontdeskApp.directive('bookinghistory', ['$rootScope', function ($rootScope) {
+    return {
+        restrict: 'E',
+        templateUrl: './assets/js/frontdesk/listTemplates.php?list=booking',
+
+        scope: false,
+
+        link: function (scope, element, attrs) {
+            scope.listbookings.jslist = {
+                createList: function () {
+                    listdetails = scope.listbookings.itemlist();
+                    jsonlist = listdetails.jsonfunc;
+
+                    jsonlist.then(function (result) {
+                        if (!result) {
+                            return 0;
+                        }
+                        console.log(result);
+                        scope.listbookings.jslist.values = result;
+                    });
+                    scope.listbookings.listhddata = [
+                        {
+                            name: "Booking Ref",
+                            width: "col-1",
+                        },
+                        {
+                            name: "Room Number",
+                            width: "col-1",
+                        },
+                        {
+                            name: "Room Category",
+                            width: "col-1",
+                        },
+                        {
+                            name: "Room Rate",
+                            width: "col-1",
+                        },
+                        {
+                            name: "Guest Name",
+                            width: "col-1",
+                        },
+                        {
+                            name: "Nights",
+                            width: "col-1",
+                        },
+                        {
+                            name: "Guest",
+                            width: "col-1",
+                        },
+                        {
+                            name: "Checked In Time",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Checked Out Time",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Checked Out",
+                            width: "col-1",
+                        }
+                    ];
+                },
+                select: function (index, id) {
+                    scope.listbookings.jslist.selected = id;
+                    scope.listbookings.jslist.selectedObj = scope.listbookings.jslist.newItemArray[index];
+                    console.log(scope.listbookings.jslist.selectedObj);/* 
+                    $rootScope.$emit('tranxselect', {sales_ref : id, obj: scope.listbookings.jslist.selectedObj}); */
+                }
+            }
+            scope.listbookings.jslist.createList();
+        }
+    };
+}]);
+
+
 
 
 

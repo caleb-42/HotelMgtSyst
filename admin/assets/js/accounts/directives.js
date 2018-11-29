@@ -1,14 +1,76 @@
-usersApp.directive('userlist', ['$rootScope', function ($rootScope) {
+accountsApp.directive('expenselist', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/users/listTemplates.php?list=users',
+        templateUrl: './assets/js/accounts/listTemplates.php?list=expenses',
+
+        scope: false,
+
+        link: function (scope, element, attrs) {
+            scope.expenses.jslist = {
+                createList: function () {
+                    listdetails = scope.expenses.itemlist();
+                    jsonlist = listdetails.jsonfunc;
+                    jsonlist.then(function (result) {
+                        console.log(result);
+                        scope.expenses.jslist.values = result;
+                        /* scope.guest.jslist.values.forEach(function(elem){
+                            elem.value = elem.guest_name;
+                        }); */
+                        //scope.guest.jslist.selected = null;
+                    });
+                    scope.expenses.listhddata = [
+                        {
+                            name: "Name",
+                            width: "col-3",
+                        },
+                        {
+                            name: "Description",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Cost",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Amount Paid",
+                            width: "col-2",
+                        },
+                        {
+                            name: "Balance",
+                            width: "col-3",
+                        }
+                    ];
+                },
+                select: function (index, id) {
+                    console.log(id);
+                    scope.expenses.jslist.selected = id;
+                    scope.expenses.jslist.selectedObj = scope.expenses.jslist.newItemArray[index];
+                    console.log(scope.expenses.jslist.newItemArray[index]);
+                    $rootScope.$emit('expenseselect', scope.expenses.jslist.selectedObj)
+                },
+                toggleOut : function(){
+                    $(".listcont").fadeOut(200);
+                },
+                toggleIn : function(){
+                    $(".listcont").delay(500).fadeIn(200);
+                },
+                gender : 'male'
+            }
+            scope.expenses.jslist.createList();
+        }
+    };
+}]);
+
+accountsApp.directive('accountsuserlist', ['$rootScope', function ($rootScope) {
+    return {
+        restrict: 'E',
+        templateUrl: './assets/js/accounts/listTemplates.php?list=users',
 
         scope: false,
 
         link: function (scope, element, attrs) {
             scope.users.jslist = {
                 createList: function () {
-                    scope.users.jslist.values = [];
                     listdetails = scope.users.itemlist();
                     jsonlist = listdetails.jsonfunc;
                     jsonlist.then(function (result) {
@@ -45,17 +107,16 @@ usersApp.directive('userlist', ['$rootScope', function ($rootScope) {
     };
 }]);
 
-usersApp.directive('sessionlist', ['$rootScope', function ($rootScope) {
+accountsApp.directive('accountssessionlist', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/users/listTemplates.php?list=sessions',
+        templateUrl: './assets/js/accounts/listTemplates.php?list=sessions',
 
         scope: false,
 
         link: function (scope, element, attrs) {
             scope.sessions.jslist = {
                 createList: function () {
-                    scope.sessions.jslist.values = [];
                     if(!scope.users.jslist.selected){
                         return;
                     }
