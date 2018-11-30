@@ -116,12 +116,9 @@
         <div ng-switch-when = "Reservation" class = "p-4 whtback hs-100 anim animate-switch">
             <resvtnlist></resvtnlist>
         </div>
-        <div ng-switch-when = "Users">
-                <div class = "sessions h-100 p-4 w-100">
-                    
-                <frontdesksessionlist></frontdesksessionlist>
-                </div>
-            </div> 
+        <div ng-switch-when = "Users" class = "sessions p-4 whtback hs-100 anim animate-switch">
+            <frontdesksessionlist></frontdesksessionlist>
+        </div> 
     </div>
 
 
