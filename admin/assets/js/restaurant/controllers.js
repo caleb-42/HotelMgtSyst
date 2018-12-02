@@ -61,7 +61,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
     $scope.productstock = {
         itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/restaurant_bar/restaurant_items.php", {})
+                jsonfunc: jsonPost.data("../php1/admin/restaurant_admin/admin/list_items.php", {})
             }
         },
         addProduct: function (jsonprod) {
@@ -70,7 +70,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
             jsonprod.discount_available = "";
             console.log("new product", jsonprod);
 
-            jsonPost.data("../php1/restaurant_bar/admin/add_item.php", {
+            jsonPost.data("../php1/admin/restaurant_admin/admin/add_item.php", {
                 new_item: $filter('json')(jsonprod)
             }).then(function (response) {
                 $scope.productstock.jslist.toggleOut();
@@ -84,7 +84,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
             jsonprod.id = $scope.productstock.jslist.selected;
             jsonprod.new_shelf_item = "";
             console.log("new product", jsonprod);
-            jsonPost.data("../php1/restaurant_bar/admin/edit_item.php", {
+            jsonPost.data("../php1/admin/restaurant_admin/admin/edit_item.php", {
                 update_item: $filter('json')(jsonprod)
             }).then(function (response) {
                 $scope.productstock.jslist.toggleOut();
@@ -98,7 +98,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
             jsonprod = {};
             jsonprod.items = [$scope.productstock.jslist.selectedObj];
             console.log("new product", jsonprod);
-            jsonPost.data("../php1/restaurant_bar/admin/del_item.php", {
+            jsonPost.data("../php1/admin/restaurant_admin/admin/del_item.php", {
                 del_items: $filter('json')(jsonprod)
             }).then(function (response) {
                 $scope.productstock.jslist.toggleOut();
@@ -119,7 +119,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
     $scope.stock = {
         /* itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/restaurant_bar/restaurant_items.php", {})
+                jsonfunc: jsonPost.data("../php1/admin/restaurant_admin/admin/restaurant_items.php", {})
             }
         }, */
         activateStockModal : function(){
@@ -141,7 +141,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
             jsonstock.category = $scope.productstock.jslist.selectedObj.category;
             
             console.log("new stock", jsonstock);
-            jsonPost.data("../php1/restaurant_bar/admin/add_stock.php", {
+            jsonPost.data("../php1/admin/restaurant_admin/admin/add_stock.php", {
                 new_stock: $filter('json')(jsonstock)
             }).then(function (response) {
                 $scope.productstock.jslist.toggleOut();
@@ -154,7 +154,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
         /* updateStock: function (jsonstock) {
             jsonstock.id = $scope.productstock.jslist.selected;
             console.log("new product", jsonstock);
-            jsonPost.data("../php1/restaurant_bar/admin/edit_item.php", {
+            jsonPost.data("../php1/admin/restaurant_admin/admin/edit_item.php", {
                 update_item: $filter('json')(jsonstock)
             }).then(function (response) {
                 $scope.productstock.jslist.toggleOut();
@@ -168,7 +168,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
             jsonstock = {};
             jsonstock.items = [$scope.productstock.jslist.selectedObj];
             console.log("new product", jsonstock);
-            jsonPost.data("../php1/restaurant_bar/admin/del_item.php", {
+            jsonPost.data("../php1/admin/restaurant_admin/admin/del_item.php", {
                 del_items: $filter('json')(jsonstock)
             }).then(function (response) {
                 $scope.productstock.jslist.toggleOut();
@@ -199,7 +199,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
                 }else{
                     prod = $scope.productstock.jslist.selectedObj ? $scope.productstock.jslist.selectedObj.item : "sprite"
                 }
-                url = "../php1/restaurant_bar/admin/list_discount.php";
+                url = "../php1/admin/restaurant_admin/admin/list_discount.php";
                 return {
                     jsonfunc: jsonPost.data(url, {
                         item: prod
@@ -210,7 +210,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
                 prod = type == "total" ? "all" : $scope.productstock.jslist.selectedObj.item;
                 jsondiscount.discount_item = prod;
                 console.log("new discount", jsondiscount);
-                url = "../php1/restaurant_bar/admin/add_discount.php";
+                url = "../php1/admin/restaurant_admin/admin/add_discount.php";
                 jsonPost.data(url, {
                     new_discount: $filter('json')(jsondiscount)
                 }).then(function (response) {
@@ -228,7 +228,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
                 
                 jsondiscount.discount_id = $scope.details.discount.jslist.selected;
                 console.log("new discount", jsondiscount);
-                url = "../php1/restaurant_bar/admin/edit_discount.php";
+                url = "../php1/admin/restaurant_admin/admin/edit_discount.php";
                 jsonPost.data(url, {
                     edit_discounts: $filter('json')(jsondiscount)
                 }).then(function (response) {
@@ -243,7 +243,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
                 jsondiscnt = {};
                 jsondiscnt.discounts = [$scope.details.discount.jslist.selectedObj];
                 console.log("new discount", jsondiscnt);
-                jsonPost.data("../php1/restaurant_bar/admin/del_discount.php", {
+                jsonPost.data("../php1/admin/restaurant_admin/admin/del_discount.php", {
                     del_discounts: $filter('json')(jsondiscnt)
                 }).then(function (response) {
                     $scope.details.discount.jslist.toggleOut();
@@ -257,7 +257,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
     $scope.stockHistory = {
         itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_stock_transaction.php", {})
+                jsonfunc: jsonPost.data("../php1/admin/restaurant_admin/admin/list_stock_transaction.php", {})
             }
         }
     }
@@ -265,28 +265,28 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
         itemlist: function (ref) {
             //console.log('ewere');
             return {
-                jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_sales.php", ref)
+                jsonfunc: jsonPost.data("../php1/admin/restaurant_admin/admin/list_sales.php", ref)
             }
         }
     };
     $scope.salesHistory = {
         itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_transactions.php", {})
+                jsonfunc: jsonPost.data("../php1/admin/restaurant_admin/admin/list_transactions.php", {})
             }
         }
     };
     $scope.customers = {
         itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_customers.php", {}),
-                /* jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_customers.php", {}) */
+                jsonfunc: jsonPost.data("../php1/admin/restaurant_admin/admin/list_customers.php", {}),
+                /* jsonfunc: jsonPost.data("../php1/admin/restaurant_admin/admin/list_customers.php", {}) */
             }
         },
         addCustomer: function (jsoncust) {
             console.log("new cust", jsoncust);
 
-            jsonPost.data("../php1/restaurant_bar/add_customer.php", {
+            jsonPost.data("../php1/admin/restaurant_admin/admin/add_customer.php", {
                 new_customer: $filter('json')(jsoncust)
             }).then(function (response) {
                 console.log(response);
@@ -297,7 +297,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
         updateCustomer: function (jsoncust) {
             console.log("new cust", jsoncust);
             jsoncust.customer_id = $scope.customers.jslist.selected;
-            jsonPost.data("../php1/restaurant_bar/update_customer.php", {
+            jsonPost.data("../php1/admin/restaurant_admin/admin/update_customer.php", {
                 update_customer: $filter('json')(jsoncust)
             }).then(function (response) {
                 console.log(response);
@@ -309,7 +309,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
             jsoncust = {};
             jsoncust.customers = [$scope.customers.jslist.selectedObj];
             console.log("new users", jsoncust);
-            jsonPost.data("../php1/restaurant_bar/admin/del_customers.php", {
+            jsonPost.data("../php1/admin/restaurant_admin/admin/del_customers.php", {
                 del_customers: $filter('json')(jsoncust)
             }).then(function (response) {
                 //$scope.customers.jslist.toggleOut();
@@ -322,13 +322,13 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
     $scope.users = {
         itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_users.php", {})
+                jsonfunc: jsonPost.data("../php1/admin/restaurant_admin/admin/list_users.php", {})
             }
         },
         addUser: function (jsonprod) {
             console.log("new user", jsonprod);
 
-            jsonPost.data("../php1/restaurant_bar/admin/add_user.php", {
+            jsonPost.data("../php1/admin/restaurant_admin/admin/add_user.php", {
                 new_user: $filter('json')(jsonprod)
             }).then(function (response) {
                 console.log(response);
@@ -339,7 +339,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
         updateUser: function (jsonuser) {
             jsonuser.id = $scope.users.jslist.selected;
             console.log("new product", jsonuser);
-            jsonPost.data("../php1/restaurant_bar/admin/edit_user.php", {
+            jsonPost.data("../php1/admin/restaurant_admin/admin/edit_user.php", {
                 update_user: $filter('json')(jsonuser)
             }).then(function (response) {
                 $scope.users.jslist.toggleOut();
@@ -353,7 +353,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
             jsonuser = {};
             jsonuser.users = [$scope.users.jslist.selectedObj];
             console.log("new users", jsonuser);
-            jsonPost.data("../php1/restaurant_bar/admin/del_user.php", {
+            jsonPost.data("../php1/admin/restaurant_admin/admin/del_user.php", {
                 del_users: $filter('json')(jsonuser)
             }).then(function (response) {
                 $scope.users.jslist.toggleOut();
@@ -366,7 +366,7 @@ restaurantApp.controller("restaurant", ["$rootScope", "$scope", 'jsonPost', '$fi
     $scope.sessions = {
         itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_sessions.php", {})
+                jsonfunc: jsonPost.data("../php1/admin/restaurant_admin/admin/list_sessions.php", {})
             }
         }
     }

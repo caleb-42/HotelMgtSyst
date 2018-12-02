@@ -10,7 +10,7 @@
                 <div class="col-8">
                     <input class="form-control float-right anim" ng-model="searchbox.imp" />
                 </div>
-                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" href = "../php1/front_desk/frontdesk_logoff.php" ng-mouseenter="settings.log = false;" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a>
+                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" href = "../php1/admin/admin_logoff.php" ng-mouseenter="settings.log = false;" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a>
             </div>
         </div>
         <!--tabnav end-->
@@ -116,12 +116,9 @@
         <div ng-switch-when = "Reservation" class = "p-4 whtback hs-100 anim animate-switch">
             <resvtnlist></resvtnlist>
         </div>
-        <div ng-switch-when = "Users">
-                <div class = "sessions h-100 p-4 w-100">
-                    
-                <frontdesksessionlist></frontdesksessionlist>
-                </div>
-            </div> 
+        <div ng-switch-when = "Users" class = "sessions p-4 whtback hs-100 anim animate-switch">
+            <frontdesksessionlist></frontdesksessionlist>
+        </div> 
     </div>
 
 

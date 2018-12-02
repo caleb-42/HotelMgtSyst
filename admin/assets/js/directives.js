@@ -27,7 +27,21 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
                 if ($rootScope.settings.modal.name == "Update Room") {
                     console.log(scope.rooms);
                     loadJson2Form(scope.rooms.jslist.selectedObj, '.inpRead');
-                } else if ($rootScope.settings.modal.name == "Update User") {
+                } 
+                else if ($rootScope.settings.modal.active == "Update Product") {
+                    console.log(scope.productstock);
+                    loadJson2Form(scope.productstock.jslist.selectedObj, '.inpRead');
+                }else if ($rootScope.settings.modal.name == "Update User") {
+                    console.log(scope.users);
+                    loadJson2Form(scope.users.jslist.selectedObj, '.inpRead');
+                }else if ($rootScope.settings.modal.name == "Update Discount") {
+                    console.log(scope.details.discount);
+                    loadJson2Form(scope.details.discount.jslist.selectedObj, '.inpRead');
+                }else if ($rootScope.settings.modal.name == "Update Customer") {
+                    console.log(scope.customers);
+                    loadJson2Form(scope.customers.jslist.selectedObj, '.inpRead');
+                }
+                else if ($rootScope.settings.modal.name == "Update User") {
                     console.log(scope.users);
                     loadJson2Form(scope.users.jslist.selectedObj, '.inpRead');
                 } else if ($rootScope.settings.modal.name == "Update Guest") {
@@ -47,17 +61,6 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
                     loadJson2Form(scope.rooms.reservations.confirmed_reservation.selectedObj, '.inpRead');
                 }
             });
-            confirmReservation = function () {
-                $rootScope.settings.modal.adding = true
-                jsonForm = $(".ConfirmReservationForm").serializeObject();
-                scope.reservation.confirm(jsonForm);
-            }
-            claimReservation = function () {
-                $rootScope.settings.modal.adding = true
-                jsonForm = $(".ClaimReservationForm").serializeObject();
-                jsonForm.guest_type_gender = scope.reservation.guest_type_gender;
-                scope.reservation.claim(jsonForm);
-            }
             updateRoom = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".updateRoomForm").serializeObject();
@@ -132,29 +135,6 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
                 }
                 
             };
-            checkIn = function () {
-                $rootScope.settings.modal.adding = true;
-                jsonForm = $(".CheckInForm").serializeObject();
-                jsonForm.room_outstanding = 0;
-                jsonForm.total_cost = scope.guest.roomgrid.room_info.cost;
-                jsonForm.total_rooms_booked = scope.guest.roomgrid.room_info.rooms;
-                jsonForm.balance = scope.guest.roomgrid.room_info.cost - jsonForm.deposited;
-                jsonForm.frontdesk_rep = $rootScope.settings.user;
-                jsonForm.rooms = [];
-                arryy = Object.values(scope.guest.roomgrid.room_details.rooms);
-                arryy.forEach(function (rm) {
-                    if (rm.arr) {
-                        rm.arr.forEach(function (elem) {
-                            if (elem.selected == true) {
-                                elem.room_total_cost = (parseInt(elem.no_of_nights) * parseInt(elem.room_rate));
-                                jsonForm.rooms.push(elem);
-                            }
-                        });
-                    }
-                });
-                console.log(jsonForm);
-                scope.guest.checkIn(jsonForm);
-            };
             addReservation = function () {
                 $rootScope.settings.modal.adding = true;
                 jsonForm = $(".addReservationForm").serializeObject();
@@ -188,25 +168,68 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
                 console.log(jsonForm);
                 scope.reservation.addReservation(jsonForm);
             };
-            checkOut = function () {
-                scope.guest.checkOut();
+            updateUser = function () {
+                $rootScope.settings.modal.adding = true
+                jsonForm = $(".updateUserForm").serializeObject();
+                scope.users.updateUser(jsonForm);
+            };
+            updateProduct = function () {
+                $rootScope.settings.modal.adding = true
+                jsonForm = $(".updateProductForm").serializeObject();
+                jsonForm.new_current_stock = "";
+                scope.productstock.updateProduct(jsonForm);
+            };
+            addProduct = function () {
+                $rootScope.settings.modal.adding = true
+                jsonForm = $(".addProductForm").serializeObject();
+                //console.log();
+                jsonForm.shelf_item = scope.productstock.jslist.shelfitem;
+                scope.productstock.addProduct(jsonForm);
+            };
+            addStock = function (){
+                $rootScope.settings.modal.adding = true
+                jsonForm = $(".addStockForm").serializeObject();
+                if(parseInt(jsonForm.quantity) < 1 || jsonForm.quantity == ''){
+                    $rootScope.settings.modal.msgprompt(['ERROR', 'FILL STOCK WITH A POSITIVE VALUE']);
+                    //console.log($rootScope.settings.modal.msg);
+                    $rootScope.$apply();
+                    return;
+                }
+                scope.stock.addStock(jsonForm);
+            }
+            addUser = function () {
+                $rootScope.settings.modal.adding = true
+                jsonForm = $(".addUserForm").serializeObject();
+                console.log(scope.users);
+                scope.users.addUser(jsonForm);
             };
             updateUser = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".updateUserForm").serializeObject();
                 scope.users.updateUser(jsonForm);
             };
-            payBalance = function () {
+            addDiscount = function (){
                 $rootScope.settings.modal.adding = true
-                jsonForm = $(".PayBalanceForm").serializeObject();
-                console.log(jsonForm, parseInt(jsonForm.amount_paid));
-                if (parseInt(jsonForm.amount_paid) < 1 || jsonForm.amount_paid == '') {
-                    $rootScope.settings.modal.msgprompt(['ERROR', 'FILL AMOUNT PAID WITH A VALUE']);
-                    //console.log($rootScope.settings.modal.msg);
-                    $rootScope.$apply();
-                    return;
+                jsonForm = $(".addDiscount").serializeObject();
+                jsonForm.upper_limit = jsonForm.upper_limit == "" ? 0 : jsonForm.upper_limit;
+                scope.details.discount.addDiscount(jsonForm,scope.details.discount.selected_discount );
+            };
+            updateDiscount = function () {
+                $rootScope.settings.modal.adding = true
+                jsonForm = $(".updateDiscount").serializeObject();
+                scope.details.discount.updateDiscount(jsonForm,scope.details.discount.selected_discount);
+            };
+            addCustomer = function (form){
+                $rootScope.settings.modal.adding = true
+                if(form == '.addCustomersForm'){
+                    jsonForm = $(form).serializeObject();
+                    scope.customers.addCustomer(jsonForm);
                 }
-                scope.guest.payBalance(jsonForm);
+            };
+            updateCustomer = function () {
+                $rootScope.settings.modal.adding = true
+                jsonForm = $(".updateCustomersForm").serializeObject();
+                scope.customers.updateCustomer(jsonForm);
             };
             $rootScope.settings.modal.close = function () {
                 $(".report").fadeIn(100, function () {
@@ -251,16 +274,3 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
         }
     }
 }]);
-/* app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jsonPost, $filter) {
-    return {
-        restrict: 'A',
-        template : '',
-        scope: {
-            
-        },
-        link: function (scope, element, attrs) {
-
-        }
-
-    }
-}]); */

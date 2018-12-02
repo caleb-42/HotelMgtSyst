@@ -1,17 +1,17 @@
 <div ng-controller="accounts"> <!-- {{tabnav.selected == 'Customers' ? null : 'w-100'}} -->
     <div class="prime-hd anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.primeclass : 'w-100'}}">
         <div class="statusbar blu row  align-items-end pl-1">
-            <div class="tabnav col-9 row">
-                <button ng-repeat='nav in tabnav.navs | objtoarray' class="tabpill btnnone" ng-click="tabnav.selectNav(nav.name)" ng-class="{focus:nav.name == tabnav.selected.name}">
+            <div class="tabnav {{tabnav.selected.options.rightbar ? 'col-12' : 'col-8'}} relatv row">
+                <button ng-repeat='nav in tabnav.navs | objtoarray' class="abs h-100 tabpill btnnone" ng-click="tabnav.selectNav(nav.name)" ng-class="{focus:nav.name == tabnav.selected.name}" style = "left: {{($index * 150) + 20}}px;">
                 <h5>{{nav.name}}</h5>
             </button>
             </div>
             <!--tabnav end-->
-            <div class="searchbox col-3 h-100 row  align-items-end pb-1">
+            <div class="searchbox col-3 h-100  {{tabnav.selected.options.rightbar ? 'gone' : 'col-4'}} row  align-items-end pb-1">
             <div class="col-8">
                     <input class="form-control float-right anim" ng-model="searchbox.imp" /></div>
                 <!-- ng-class="{vanishsearch:searchbox.iconhover}" -->
-                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" ng-mouseenter="settings.log = false;" href = "../php1/front_desk/frontdesk_logoff.php" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a></div>
+                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" ng-mouseenter="settings.log = false;" href = "../php1/admin/admin_logoff.php" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a></div>
             </div>
 
         </div>
@@ -46,9 +46,15 @@
         </div>
     </div>
     <!--statusbar for primehd end--><!-- {{tabnav.selected == 'Customers' ? null : 'w-0 gone'}} -->
-    <div class="main-sidebar-right hs-100 whtback anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.rightbarclass : 'w-0 gone'}}">
+    <div class="main-sidebar-right hs-100 whtback anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.rightbarclass : 'w-0 vanish'}}">
         <div class="statusbar blu row align-items-end justify-content-center">
-            <h4 class="text-center wht">{{tabnav.selected.name == 'Customers' ? 'Bookings Tranx' : 'Bookings List'}} <i class="fa fa-book"></i></h4>
+            <div class="searchbox col-12 h-100 row  align-items-end pb-1 {{tabnav.selected.options.rightbar ? '' : 'gone'}}">
+                    <div class="col-8">
+                        <input class="form-control float-right anim" ng-model="searchbox.imp" />
+                    </div>
+                    <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" href = "../php1/admin/admin_logoff.php" ng-mouseenter="settings.log = false;" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a>
+                </div>
+            </div>
         </div>
         <!--statusbar for main-sidebar-right end -->
         <div class="sidebar-body" ng-switch on="tabnav.selected.name">

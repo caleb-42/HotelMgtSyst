@@ -740,7 +740,203 @@
             </div>
             <!--....... User End ......... -->
 
+            <!--....... Product Start ......... -->
+            <div ng-if="settings.modal.active == 'Add Product'">
 
+                    <form autocomplete="off" class="addProductForm mx-5 my-4">
+                        <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Name" name="item" />
+                        <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Stock" type="number" type="number" onkeydown="javascript: return event.keyCode !=69" name="current_stock" />
+                        <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Price" type="number" type="number" onkeydown="javascript: return event.keyCode !=69" name="current_price" />
+                        <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Description"
+                            name="description" />
+                        <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Category"
+                            name="category" />
+                        <div class="row justify-content-around my-2 align-items-center font-fam-Montserrat">
+                            <h6 class="font-fam-Montserrat-bold choral">Shelf Item</h6>
+                            <span>
+                                <input type="radio" ng-model = 'productstock.jslist.shelfitem' id="yes" value="yes"  name="shelf_item" />
+                                <label for="yes" class="f-15 ml-2">Yes</label>
+                            </span>
+                            <span>
+                                <input type="radio" ng-model = 'productstock.jslist.shelfitem' value="no" name="shelf_item" id="no" />
+                                <label for="no" class="f-15 ml-2">No</label>
+                            </span>
+                        </div>
+    
+                        <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Type" name="type" />
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success my-3"
+                                    onclick="addProduct()">
+                                    Add
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div ng-if="settings.modal.active == 'Update Product'">
+                    <form autocomplete="off" class="updateProductForm">
+                        <div class="ml-5 my-4 float-left w-40 inpRead">
+                            <div class="w-100">
+                                <input class="item form-control font-fam-Montserrat text-center d-block my-4" placeholder="Name"
+                                    value="rer" name="item" readonly />
+                                <input class="form-control gone font-fam-Montserrat text-center d-block my-4" placeholder="Stock"
+                                    name="current_stock" readonly />
+                                <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Price"
+                                    name="current_price" readonly />
+                                <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Description"
+                                    name="description" readonly />
+                                <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Category"
+                                    name="category" readonly />
+                                <input type="text" name="shelf_item" class="form-control gone font-fam-Montserrat text-center d-block my-4" readonly />
+                                <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Type"
+                                    name="type" readonly />
+                            </div>
+                        </div>
+                        <div class="updateProductForm mr-5 my-4 float-right w-40">
+                            <div class="w-100">
+                                <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Name"
+                                    name="new_item" />
+                                <input class="form-control gone font-fam-Montserrat text-center d-block my-4" placeholder="Stock" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_current_stock" />
+                                <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Price" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_current_price" />
+                                <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Description"
+                                    name="new_description" />
+                                <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Category"
+                                    name="new_category" />
+                                <div class="row gone justify-content-around my-2 align-items-center font-fam-Montserrat">
+                                    <h6 class="font-fam-Montserrat-bold choral">Shelf Item</h6><span><input type="radio" id="yes"
+                                            value="yes" name="new_shelf_item" /><label for="yes" class="f-15 ml-2">Yes</label></span><span><input
+                                            type="radio" checked value="no" name="new_shelf_item" id="no" /><label for="no"
+                                            class="f-15 ml-2">No</label></span>
+                                </div>
+    
+                                <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Type"
+                                    name="new_type" />
+                            </div>
+                        </div>
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success my-3"
+                                    onclick="updateProduct()">
+                                    Update
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <!--....... Product End ......... -->
+
+            <!--....... Stock Start ......... -->
+            <div ng-if="settings.modal.active == 'Stock'">
+
+                <div class="w-100" ng-if="settings.modal.name == 'Add Stock'">
+                    <form class="p-4 w-100 addStockForm row justify-content-center m-0">
+                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Stock No" type="number" onkeydown="javascript: return event.keyCode !=69" name="quantity" />
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="addStock()">
+                                    {{settings.modal.name | limitTo:3}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--....... Stock End ......... -->
+
+
+            <!--....... Discount Start ......... -->
+            <div ng-if="settings.modal.active == 'Discount'">
+                
+                    <div class="w-100" ng-if="settings.modal.name == 'Update Discount'">
+                        <form autocomplete="off" class="updateDiscount p-4 w-100">
+                            <div class="float-left w-45 inpRead row m-0">
+                                <input class="discntitem form-control font-fam-Montserrat text-center d-block my-4"
+                                    placeholder="Discount Item" readonly name="discount_item" />
+                                <input class="discntname form-control font-fam-Montserrat text-center d-block my-4"
+                                    placeholder="Discount Name" readonly name="discount_name" />
+                                <input class="uplimit form-control font-fam-Montserrat text-center d-block my-4"
+                                    placeholder="Upper Limit" readonly name="upper_limit" />
+                                <input class="lowlimit form-control font-fam-Montserrat text-center d-block my-4"
+                                    placeholder="Lower Limit" readonly name="lower_limit" />
+                                <input class="discountvalue form-control font-fam-Montserrat text-center d-block my-4"
+                                    placeholder="Discount Value" name="discount_value" readonly />
+                            </div>
+                            <div class="float-right w-45 row m-0">
+                                <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Discount Item"
+                                    name="new_discount_item" />
+                                <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Discount Name"
+                                    name="new_discount_name" />
+                                <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Upper Limit" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_upper_limit" />
+                                <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Lower Limit" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_lower_limit" />
+                                <input class="form-control font-fam-Montserrat text-center d-block my-4" placeholder="Discount Value" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_discount_value" />
+                            </div>
+                        </form>
+                        <div class="modal-footer w-100">
+                            <div class="justify-content-center w-100 d-flex flex-column">
+                                <div class="py-1 row justify-content-center w-100">
+                                    <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif"
+                                            width="100px" height="70px" /></div>
+                                    <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                        onclick="updateDiscount()">
+                                        {{settings.modal.name | limitTo:6}}
+                                    </button>
+                                </div>
+                                <div class="row pt-3 justify-content-center">
+                                    <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-100" ng-if="settings.modal.name == 'Add Discount'">
+                        <form class="p-4 w-100 addDiscount row justify-content-center m-0">
+                            <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Discount Name"
+                                name="discount_name" />
+                            <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Lower Limit" type="number" onkeydown="javascript: return event.keyCode !=69" name="lower_limit" />
+                            <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Upper Limit" type="number" onkeydown="javascript: return event.keyCode !=69" name="upper_limit" />
+                            <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Discount Value" type="number" onkeydown="javascript: return event.keyCode !=69" name="discount_value" />
+                        </form>
+                        <div class="modal-footer w-100">
+                            <div class="justify-content-center w-100 d-flex flex-column">
+                                <div class="py-1 row justify-content-center w-100">
+                                    <div ng-class="{gone : !settings.modal.addingg}"><img src="./assets/img/loader.gif"
+                                            width="100px" height="70px" /></div>
+                                    <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                        onclick="addDiscount()">
+                                        {{settings.modal.name | limitTo:3}}
+                                    </button>
+                                </div>
+                                <div class="row pt-3 justify-content-center">
+                                    <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <!--....... Discount End ......... -->
+    
         </div>
     </div>
 </div>
