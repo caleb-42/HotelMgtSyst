@@ -26,8 +26,8 @@
    }
    date_add($compare_to, date_interval_create_from_date_string("1 days"));
    $date_to_sql = date_format($compare_to, "Y-m-d");
-   
-  $get_expense_payments_sql = "SELECT * FROM account_expenses WHERE expense_ref IN (SELECT DISTINCT expense_ref FROM account_expense_payments WHERE date_of_payment >= '$from_date' AND date_of_payment < '$date_to_sql')";
+
+  $get_expense_payments_sql = "SELECT * FROM account_expense_payments WHERE date_of_payment >= '$from_date' AND date_of_payment < '$date_to_sql'";
   $get_expense_payments_result = mysqli_query($dbConn, $get_expense_payments_sql);
   $get_expense_payments_array = [];
 
