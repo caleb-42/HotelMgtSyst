@@ -110,7 +110,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
     $scope.debts = {
         itemlist: function () {
             return {
-                jsonfunc: jsonGet.data("../php1/accounts/list_debts.php", {})
+                jsonfunc: jsonPost.data("../php1/accounts/list_debts.php", {})
             }
         },
         payDebts: function (jsondebts) {    

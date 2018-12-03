@@ -937,6 +937,64 @@
             </div>
             <!--....... Discount End ......... -->
     
+            
+            <!--....... Expenses Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'Expenses'">
+                <div class="w-100" ng-if="settings.modal.name == 'Add Expenses'">
+                    <div class="py-2 w-100 row justify-content-between m-0 px-5">
+                        <form class = 'w-100 addExpensesForm' autocomplete = "off">
+                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="Expense name"
+                                name="expense" />
+                            <input class="clearinput role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Description" name="expense_description" />
+                            <datepicker date-min-limit = "{{settings.ydate}}" date-format="yyyy-MM-dd" class="mb-4 p-0 text-center" selector="form-control">
+                                <input class=" clearinput password form-control font-fam-Montserrat text-center d-block"
+                                placeholder="Date" name="date"  onkeydown="javascript: return false"/>
+                            </datepicker>
+                            <div class = "row w-100">
+                                <div class="col-4 mb-3 pl-0 pr-3 text-center">
+                                    <label class="font-fam-Montserrat opac-70 f-13 font-weight-bold">Cost</label>
+                                    <input class=" user-name form-control font-fam-Montserrat text-center d-block" placeholder="Cost" name="expense_cost" ng-init = "expenses.jslist.cost = 0" ng-model = "expenses.jslist.cost" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
+                                </div>
+                                <div class="col-4 mb-3 px-2 text-center">
+                                    <label class="font-fam-Montserrat opac-70 f-13 font-weight-bold">Paid</label>
+                                    <input ng-init = "expenses.jslist.paid = 0" ng-model = "expenses.jslist.paid" class=" user-name form-control font-fam-Montserrat text-center d-block" placeholder="Paid" name="amount_paid"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
+                                </div>
+                                <div class="col-4 mb-3 pr-0 pl-3 text-center">
+                                    <label class="font-fam-Montserrat opac-70 f-13 font-weight-bold">Balance</label>
+                                    <input value = "{{expenses.jslist.cost - expenses.jslist.paid}}" class=" user-name form-control font-fam-Montserrat text-center d-block" placeholder="balance" name="balance"  type="number" readonly/>
+                                </div>
+                                
+                            </div>
+                            
+                            <select class="form-control methpay my-3 w-100 f-13" name="means_of_payment">
+                                <option selected value="Cash">Cash</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="POS">POS</option>
+                                <option value="Credit">Credit</option>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="addExpenses()">
+                                    {{settings.modal.name | limitTo:3}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <!--....... Expenses End ......... -->
+
         </div>
     </div>
 </div>

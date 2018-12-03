@@ -129,8 +129,8 @@ revenueApp.controller("transactionhistory", ["$rootScope", "$scope", 'jsonPost',
 revenueApp.controller("paymentshistory", ["$rootScope", "$scope", 'jsonPost', '$filter', function ($rootScope, $scope, jsonPost, $filter) {
     $scope.payment = {
         itemlist: function (range) {
-            console.log(range);
             script = "../php1/accounts/" + range.script + ".php";
+            console.log(range);
             if(range.script == 'list_revenues'){
                 return {
                     jsonfunc: jsonPost.data(script, range.data)

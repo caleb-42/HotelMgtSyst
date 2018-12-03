@@ -4,7 +4,7 @@
    if ($table == "bookings") {
      $table = "frontdesk_payments";
      $like = "WHERE frontdesk_txn LIKE 'BK_'";
-   } else if ($table = "restaurant") {
+   } else if ($table == "restaurant") {
      $table = "restaurant_payments";
      $like = "";
    } else if ($table == "reservations") {

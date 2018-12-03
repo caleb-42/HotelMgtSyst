@@ -87,7 +87,7 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
     $scope.booking = {
         itemlist: function (id) {
             return {
-                jsonfunc: jsonPost.data("../php1/front_desk/list_bookings_custom.php", {
+                jsonfunc: jsonPost.data("../php1/admin/frontdesk_admin/list_bookings_custom.php", {
                     col : 'guest_id',
                     val : id
                 })
@@ -106,7 +106,7 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
     $scope.guest = {
         itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/admin/frontdesk_admin/admin/list_guests_all.php", {})
+                jsonfunc: jsonPost.data("../php1/admin/frontdesk_admin/list_guests_all.php", {})
             }
         },
         getguest : function(obj){$scope.guest.itemlist().jsonfunc.then(function(result){
