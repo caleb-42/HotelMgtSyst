@@ -9,17 +9,29 @@ $printerFile = fopen("assets/printer.txt", "r");
 $printName = fgets($printerFile);
 fclose($printerFile);
 
-$shop_name_file = fopen("assets/shop_name.txt", "r");
-$shop_name = fgets($shop_name_file);
-fclose($shop_name_file);
+$settings = ["shop_name", "shop_address", "shop_contact", "restaurant_bottom_msg", "restaurant_top_msg"];
+$select_settings_query = $conn->prepare("SELECT property_value FROM admin_settings WHERE shop_settings = ?");
+$select_settings_query->bind_param("s", $settings_shop);
+foreach ($settings as $shop_settings) {
+	$settings_shop = $shop_settings;
+	$select_settings_query->execute();
+	$settings_result = $select_settings_query->get_result();
+	$row = $settings_result->fetch_array(MYSQLI_ASSOC);
+	${"$settings_shop"} = $row["property_value"];
+}
+$select_settings_query->close();
 
-$shop_address_file = fopen("assets/shop_address.txt", "r");
-$shop_address = fgets($shop_address_file);
-fclose($shop_address_file);
+// $shop_name_file = fopen("assets/shop_name.txt", "r");
+// $shop_name = fgets($shop_name_file);
+// fclose($shop_name_file);
 
-$shop_contact_file = fopen("assets/shop_contact.txt", "r");
-$shop_contact = fgets($shop_contact_file);
-fclose($shop_contact_file);
+// $shop_address_file = fopen("assets/shop_address.txt", "r");
+// $shop_address = fgets($shop_address_file);
+// fclose($shop_address_file);
+
+// $shop_contact_file = fopen("assets/shop_contact.txt", "r");
+// $shop_contact = fgets($shop_contact_file);
+// fclose($shop_contact_file);
 
 $biz_name = $shop_name;
 $biz_add = $shop_address . "\n";
