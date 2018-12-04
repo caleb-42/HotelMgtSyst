@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2018 at 03:02 PM
+-- Generation Time: Dec 04, 2018 at 11:42 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -124,6 +124,33 @@ CREATE TABLE IF NOT EXISTS `account_users` (
 
 INSERT INTO `account_users` (`id`, `user_name`, `user`, `role`, `password`) VALUES
 (1, 'admin', 'Admin', 'admin', '$2y$11$08a5e2f2a4f3cf5d52989uezmO8uyWJpL5ifsvJHnQpC9026fnHB.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_settings`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `shop_settings` varchar(300) NOT NULL,
+  `property_value` varchar(400) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `admin_settings`
+--
+
+INSERT INTO `admin_settings` (`id`, `shop_settings`, `property_value`) VALUES
+(1, 'shop_name', 'Webplay Nigeria Ltd'),
+(2, 'shop_address', '52 Adesuwa rd, G.R.A benin city'),
+(3, 'shop_contact', '09091953375'),
+(4, 'shop_email', ''),
+(5, 'frontdesk_bottom_msg', 'Hope you enjoyed your stay, please come by again'),
+(6, 'frontdesk_top_msg', 'For bookings and reservations please call'),
+(7, 'restaurant_bottom_msg', 'Hope you enjoyed our first class meals'),
+(8, 'restaurant_top_msg', 'For catering service please call');
 
 -- --------------------------------------------------------
 
