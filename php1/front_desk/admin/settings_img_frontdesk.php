@@ -1,5 +1,5 @@
 <?php
-  include "../settings/connect.php"; //$database handler $dbConn or $conn
+  include "../../settings/connect.php"; //$database handler $dbConn or $conn
   //$settings_data = $_POST["settings_data"];
   $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
@@ -13,7 +13,7 @@
   $img = str_replace(' ', '+', $img);
   $imgFileData = base64_decode($img);
   //saving
-  $imgFileName = '../front_desk/assets/logo.png';
+  $imgFileName = '../assets/logo.png';
   file_put_contents($imgFileName, $imgFileData);
 } else {
   $msg_response=["ERROR", "Empty image data provided"];
