@@ -15,7 +15,7 @@
             </div>
 
         </div>
-        <div class="prime-body">
+        <div class="prime-body {{tabnav.selected.options.rightbar ? '' : 'pr-0'}}">
             <div class="animate-switch-container" ng-switch on="tabnav.selected.name">
                 <div class="animate-switch User px-4 h-100" ng-switch-default>
                     <div class="userlisthd row justify-content-between">
@@ -26,7 +26,29 @@
                         <userlist></userlist>
                     </div>
                 </div>
-                <div class="animate-switch" ng-switch-when="History">HomeSpan</div>
+                
+                <div class="animate-switch h-95 ovflo-y px-4" ng-switch-when="General">
+                    <div class = "w-100 row justify-content-start float-left text-center pt-4">
+                        <div class = "col-5 mt-2">
+                            <div class="front-demo h-80"></div>
+                            <div class = "w-70 mx-auto">
+                                <input class = " w-100" type="file" name="front-upload-img" id="front-upload-img" />
+                                <button class="mt-3 front-cropImg btn blu wht w-100 ">Save</button>
+                            </div>
+                        </div>
+                        <div class="row col-7 justify-content-center text-center pb-4 pr-5" ng-init = "general.itemlist()">
+                            <h6 class="w-100 mt-3">Top Message</h6>
+                            <textarea placeholder = "Top Message" ng-model = "general.frontdesk_top_msg" class="text-center form-control f-13 col-12 m-0" rows='3'></textarea>
+                            <button class="opac-70 mt-3 btn wht purp-back w-25 py-0" ng-click = "general.msg_Update('frontdesk_top_msg')">Save</button>
+                            <h6 class="w-100 mt-5">Bottom Message</h6>
+                            <textarea placeholder = "Bottom Message" ng-model = "general.frontdesk_bottom_msg" class="text-center form-control f-13 col-12" rows='3'></textarea>
+                            <button class="opac-70 mt-3 btn wht purp-back w-25 py-0" ng-click = "general.msg_Update('frontdesk_bottom_msg')">Save</button>
+                        </div>
+                        
+                    <croppie url = "../php1/front_desk/admin/settings_img_frontdesk.php" cont = ".front-demo" upload = "#front-upload-img" save = ".front-cropImg"></croppie>
+                    </div>
+                    
+                </div>
             </div>
         </div>
     </div>

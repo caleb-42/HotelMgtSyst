@@ -1,6 +1,12 @@
 usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', function ($rootScope, $scope, jsonPost, $filter) {
     $scope.tabnav = {
         navs: {
+            General: {
+                name: 'General',
+                options: {
+                    rightbar: false
+                }
+            },
             Users: {
                 name: 'Users',
                 options: {
@@ -13,19 +19,39 @@ usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', fun
             }
         },
         selected: {
-            name: 'Users',
+            name: 'General',
             options: {
-                rightbar: {
-                    present: true,
-                    rightbarclass: 'w-30',
-                    primeclass: 'w-70'
-                }
+                rightbar: false
             }
         },
         selectNav: function (navname) {
             $scope.tabnav.selected = $scope.tabnav.navs[navname];
         }
     };
+    $scope.general = {
+        itemlist: function () {
+            jsonPost.data("../php1/restaurant_bar/admin/settings_list.php", {}).then(function(resp){
+                resp.forEach(function(result){
+                    if(result.shop_settings == 'restaurant_bottom_msg'){
+                        $scope.general.restaurant_bottom_msg = result.property_value;
+                    }else if(result.shop_settings == 'restaurant_top_msg'){
+                        $scope.general.restaurant_top_msg = result.property_value;
+                    }
+                });
+                console.log(resp);
+            });
+        },
+        msg_Update : function(msg){
+            json = {};
+            json[msg] = $scope.general[msg];
+            jsonPost.data("../php1/restaurant_bar/admin/settings.php", {
+                settings_data : $filter('json')(json)
+            }).then(function(result){
+                console.log(result);
+                $scope.general.itemlist();
+            });
+        }
+    }
     $scope.users = {
         itemlist: function () {
             return {

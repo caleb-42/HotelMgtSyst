@@ -31,3 +31,9 @@
         </div>
     </div>
 </div>
+
+<div ng-if = "<?php echo $_GET['list'] == 'croppie'?>">
+
+    
+    
+</div>

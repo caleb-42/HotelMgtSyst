@@ -51,10 +51,10 @@ $templates = ["Frontdesk"=>"./assets/js/frontdesk/frontDeskPartial.php","Restaur
     <link href="./assets/css/ng-animation.css" rel="stylesheet">
     <link href="./assets/css/utilities.css" rel="stylesheet">
     <link rel="stylesheet" href="./vendors/node_modules/croppie/croppie.css" />
-    <link rel="stylesheet" href="./vendors/node_modules/ng-croppie/unminified/ng-croppie.css" />
     <link rel="stylesheet" href="./vendors/node_modules/angularjs-datepicker/src/css/angular-datepicker.css" />
 
     <!-- Custom scripts for this template -->
+    <script src="./vendors/node_modules/croppie/croppie.js"></script>
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/filters.js"></script>
     <script src="./assets/js/services.js"></script>
@@ -67,7 +67,6 @@ $templates = ["Frontdesk"=>"./assets/js/frontdesk/frontDeskPartial.php","Restaur
     <script src="./assets/js/users/controllers.js"></script>
     <script src="./assets/js/accounts/directives.js"></script>
     <script src="./assets/js/accounts/controllers.js"></script>
-    <script src="./vendors/node_modules/ng-croppie/unminified/ng-croppie.js"></script>
     <script src="./vendors/node_modules/angularjs-datepicker/src/js/angular-datepicker.js"></script>
 </head>
 

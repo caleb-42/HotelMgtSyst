@@ -98,3 +98,71 @@ app.directive('sessionlist', ['$rootScope', function ($rootScope) {
     };
 }]);
 
+
+app.directive('croppie', ['$rootScope', '$filter', function ($rootScope, $filter) {
+    return {
+        restrict: 'E',
+        templateUrl: './assets/js/users/listTemplates.php?list=croppie',
+
+        scope: false,
+
+        link: function (scope, element, attrs) {
+            var basic = $(attrs.cont).croppie({
+                viewport: {
+                    width: 200,
+                    height: 200,
+                    type: 'square'
+                },
+                boundary: {
+                    width: 250,
+                    height: 250
+                }
+    
+            });
+            var uploaded = false;
+            console.log(basic);
+            basic.croppie('bind', {
+                url: './assets/img/4.png'
+            });
+            //on button click
+            basic.croppie('result', 'html').then(function(html) {
+                // html is div (overflow hidden)
+                // with img positioned inside.
+            });
+            $(attrs.upload).on("change", function() {
+                uploaded = true;
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    basic.croppie("bind", {
+                        url: event.target.result
+                    })/* .then(function() {
+                        console.log(event.target.result);
+                    }) */
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+            $(attrs.save).click(function(event) {
+                if(!uploaded) return;
+                basic.croppie('result', {
+                    type: 'canvas',
+                    size: 'viewport',
+                    format: 'png'
+                }).then(function(response) {
+                    $.ajax({
+                        url: attrs.url,
+                        method: "POST",
+                        data: {
+                            settings_data : $filter('json')({"img_restaurant_data": response})
+                        },
+                        success: function(data) {
+                            //$('.fdemo').html(data);
+                            console.log(data);
+                        }
+                    });
+                    //console.log(response);
+                })
+            })
+            
+        }
+    };
+}]);

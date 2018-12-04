@@ -28,6 +28,51 @@ settingsApp.controller("settings", ["$rootScope", "$scope",  'jsonPost','$filter
             $scope.tabnav.selected = $scope.tabnav.navs[navname];
         }
     };
+    $scope.general = {
+        itemlist: function () {
+            jsonPost.data("../php1/admin/settings_list.php", {}).then(function(resp){
+                resp.forEach(function(result){
+                    switch(result.shop_settings){
+                        case "restaurant_top_msg":
+                            $scope.general.restaurant_top_msg = result.property_value;
+                        break;
+                        case "restaurant_bottom_msg":
+                            $scope.general.restaurant_bottom_msg = result.property_value;
+                        break;
+                        case "frontdesk_top_msg":
+                            $scope.general.frontdesk_top_msg = result.property_value;
+                        break;
+                        case "frontdesk_bottom_msg":
+                            $scope.general.frontdesk_bottom_msg = result.property_value;
+                        break;
+                        case "shop_name":
+                            $scope.general.shop_name = result.property_value;
+                        break;
+                        case "shop_address":
+                            $scope.general.shop_address = result.property_value;
+                        break;
+                        case "shop_contact":
+                            $scope.general.shop_address = result.property_value;
+                        break;
+                        case "shop_email":
+                            $scope.general.shop_email = result.property_value;
+                        break;
+                    }
+                });
+                console.log(resp);
+            });
+        },
+        msg_Update : function(msg){
+            json = {};
+            json[msg] = $scope.general[msg];
+            jsonPost.data("../php1/admin/settings.php", {
+                settings_data : $filter('json')(json)
+            }).then(function(result){
+                console.log(result);
+                $scope.general.itemlist();
+            });
+        }
+    }
     $scope.users = {
         jslist:{},
         itemlist: function () {

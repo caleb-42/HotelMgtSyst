@@ -26,7 +26,52 @@
                         <userlist></userlist>
                     </div>
                 </div>
-                <div class="animate-switch" ng-switch-when="History">HomeSpan</div>
+                
+                <div class="animate-switch row justify-content-center h-95 p-4 ovflo-y" ng-switch-when="General">
+                    <div class="w-80 text-center" ng-init = "general.itemlist()">
+                        <h5 class="w-100 font-fam-Montserrat-bold opac-70">Company Info</h5>
+                        <div class = "w-45 mt-5 float-left">
+                            <h6 class="w-100 purp-clr opac-70">Name</h6>
+                            <textarea placeholder = "Top Message" class="form-control f-13 col-12 m-0" rows='3'></textarea>
+                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('restaurant_top_msg')">Save</button>
+                        </div>
+                        <div class = "w-45 mt-5 float-right">
+                            <h6 class="w-100 purp-clr opac-70">Address</h6>
+                            <textarea placeholder = "Top Message" class="form-control f-13 col-12 m-0" rows='3'></textarea>
+                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('restaurant_top_msg')">Save</button>
+                        </div>
+                        <div class = "w-45 mt-4 float-left">
+                            <h6 class="w-100 purp-clr opac-70">Phone Number</h6>
+                            <textarea placeholder = "Top Message" class="form-control f-13 col-12 m-0" rows='3'></textarea>
+                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('restaurant_top_msg')">Save</button>
+                        </div>
+                        <div class = "w-45 mt-4 float-right">
+                            <h6 class="w-100 purp-clr opac-70">Email</h6>
+                            <textarea placeholder = "Top Message" class="form-control f-13 col-12 m-0" rows='3'></textarea>
+                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('restaurant_top_msg')">Save</button>
+                        </div>
+                        <div class = "w-45 mt-4 float-left">
+                            <h6 class="w-100 purp-clr opac-70">Frontdesk Top Message</h6>
+                            <textarea placeholder = "Top Message" class="form-control f-13 col-12 m-0" ng-model = "general.frontdesk_top_msg" rows='3'></textarea>
+                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('frontdesk_top_msg')">Save</button>
+                        </div>
+                        <div class = "w-45 mt-4 float-right">
+                            <h6 class="w-100 purp-clr opac-70">Frontdesk Bottom Message</h6>
+                            <textarea ng-model = "general.frontdesk_bottom_msg" placeholder = "Top Message" class="form-control f-13 col-12 m-0" rows='3'></textarea>
+                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('frontdesk_top_msg')">Save</button>
+                        </div>
+                        <div class = "w-45 mt-4 float-left">
+                            <h6 class="w-100 purp-clr opac-70">Restaurant Top Message</h6>
+                            <textarea placeholder = "Top Message" class="form-control f-13 col-12 m-0" ng-model = "general.restaurant_top_msg" rows='3'></textarea>
+                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('restaurant_top_msg')">Save</button>
+                        </div>
+                        <div class = "w-45 mt-4 float-right">
+                            <h6 class="w-100 purp-clr opac-70">Restaurant Bottom Message</h6>
+                            <textarea ng-model = "general.restaurant_bottom_msg" placeholder = "Top Message" class="form-control f-13 col-12 m-0" rows='3'></textarea>
+                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('restaurant_top_msg')">Save</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -47,6 +92,11 @@
                 <div class = "sessions h-100 p-4 w-100">
                     
                 <sessionlist></sessionlist>
+                </div>
+            </div>            
+            <div ng-switch-when = "General">
+                <div class = "text-center sessions h-100 p-4 w-100">
+                    
                 </div>
             </div>            
         </div>

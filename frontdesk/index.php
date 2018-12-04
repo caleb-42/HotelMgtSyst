@@ -8,7 +8,7 @@ if(!isset($_SESSION['user_name'])){
     header("Location: ./logIn.php");
 }
 
-$templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Lodge"=>"./assets/js/rooms/roomsPartial.php","Users"=>"./assets/js/users/usersPartial.php","Records"=>"./assets/js/records/recordsPartial.php"]
+$templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Lodge"=>"./assets/js/rooms/roomsPartial.php","Settings"=>"./assets/js/users/usersPartial.php","Records"=>"./assets/js/records/recordsPartial.php"]
 ?>
 
 <!doctype html>

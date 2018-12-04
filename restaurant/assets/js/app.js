@@ -55,7 +55,7 @@ app.controller("appctrl", ["$rootScope", "$scope", function ($rootScope, $scope)
                     innerHtml: '',
                 },
                 {
-                    name: "Users",
+                    name: "Settings",
                     listClass: "anim",
                     iconClass: "mr-3 fa fa-user",
                     innerHtml: '',

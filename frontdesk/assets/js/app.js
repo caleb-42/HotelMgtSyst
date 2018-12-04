@@ -90,7 +90,7 @@ app.controller("appctrl", ["$rootScope", "$scope","$filter", function ($rootScop
                     innerHtml: '',
                 },
                 {
-                    name: "Users",
+                    name: "Settings",
                     listClass: "anim",
                     iconClass: "mr-3 fa fa-user",
                     innerHtml: '',

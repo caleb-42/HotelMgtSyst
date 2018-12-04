@@ -467,4 +467,3 @@ frontdeskApp.directive('bookinghistory', ['$rootScope', function ($rootScope) {
 
 
 
-

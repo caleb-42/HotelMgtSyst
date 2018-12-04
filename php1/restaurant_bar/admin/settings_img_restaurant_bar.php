@@ -3,7 +3,7 @@
   //$settings_data = $_POST["settings_data"];
   $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
-  $settings_data = '{"img_restaurant_data":"data:image/png;base64....."}';
+  /* $settings_data = '{"img_restaurant_data":"data:image/png;base64....."}'; */
   $settings_data = json_decode($_POST["settings_data"], true);
   $img_restaurant_data = $settings_data["img_restaurant_data"];
 
