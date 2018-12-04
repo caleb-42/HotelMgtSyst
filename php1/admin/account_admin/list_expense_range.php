@@ -2,9 +2,9 @@
   include "../settings/connect.php"; //$database handler $dbConn or $conn
   $range_details = $_POST["range_details"];
   // $range_details = '{"from_date": "2018-09-23", "to_date": "2018-11-29"}';
-   $range_details = json_decode($range_details, true);
-   $msg_response=["OUTPUT", "NOTHING HAPPENED"];
-
+  $range_details = json_decode($range_details, true);
+  $msg_response=["OUTPUT", "NOTHING HAPPENED"];
+//print_r($_POST);
    $from_date = $range_details["from_date"];
    $to_date = $range_details["to_date"];
 

@@ -1,6 +1,12 @@
-usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', function ($rootScope, $scope, jsonPost, $filter) {
+settingsApp.controller("settings", ["$rootScope", "$scope",  'jsonPost','$filter', function ($rootScope, $scope, jsonPost, $filter) {
     $scope.tabnav = {
         navs: {
+            General: {
+                name: 'General',
+                options: {
+                    rightbar: false
+                }
+            },
             Users: {
                 name: 'Users',
                 options: {
@@ -13,13 +19,9 @@ usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', fun
             }
         },
         selected: {
-            name: 'Users',
+            name: 'General',
             options: {
-                rightbar: {
-                    present: true,
-                    rightbarclass: 'w-30',
-                    primeclass: 'w-70'
-                }
+                rightbar: false
             }
         },
         selectNav: function (navname) {
@@ -75,7 +77,7 @@ usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', fun
     $scope.sessions = {
         itemlist: function () {
             return {
-                jsonfunc: jsonPost.data("../php1/admin/list_session.php", {})
+                jsonfunc: jsonPost.data("../php1/admin/list_sessions.php", {})
             }
         }
     }

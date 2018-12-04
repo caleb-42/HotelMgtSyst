@@ -1,5 +1,5 @@
 <?php
-  include "../../settings/connect.php"; //$database handler $dbConn or $conn
+  include "settings/connect.php"; //$database handler $dbConn or $conn
 
   $get_users_sql = "SELECT * FROM admin_users";
   $get_users_result = mysqli_query($dbConn, $get_users_sql);

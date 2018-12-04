@@ -1,5 +1,5 @@
 <?php
-include "../settings/connect.php"; //$database handler $dbConn or $conn
+include "settings/connect.php"; //$database handler $dbConn or $conn
 
 $new_user = json_decode($_POST["new_user"], true);
 

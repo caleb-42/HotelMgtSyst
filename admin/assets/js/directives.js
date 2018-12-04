@@ -179,6 +179,11 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
                 jsonForm.new_current_stock = "";
                 scope.productstock.updateProduct(jsonForm);
             };
+            addExpenses = function () {
+                $rootScope.settings.modal.adding = true;
+                jsonForm = $(".addExpensesForm").serializeObject();
+                scope.expenses.addExpenses(jsonForm);
+            };
             addProduct = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".addProductForm").serializeObject();

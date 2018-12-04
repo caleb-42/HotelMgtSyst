@@ -1,4 +1,4 @@
-<div ng-controller="users">
+<div ng-controller="settings">
     <div class="prime-hd anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.primeclass : 'w-100'}}">
         <div class="statusbar blu row  align-items-end pl-1">
             <div class="tabnav {{tabnav.selected.options.rightbar ? 'col-12' : 'col-8'}} relatv row">
@@ -15,9 +15,9 @@
             </div>
 
         </div>
-        <div class="prime-body">
+        <div class="prime-body {{tabnav.selected.options.rightbar ? '' : 'p-0'}}">
             <div class="animate-switch-container" ng-switch on="tabnav.selected.name">
-                <div class="animate-switch User px-4 h-100" ng-switch-default>
+                <div class="animate-switch User px-4 h-100" ng-switch-when = "Users">
                     <div class="userlisthd row justify-content-between">
                         <h4 class=" my-4 py-2 font-fam-Montserrat-bold">Manage Users</h4>
                         <div class="my-4"><button class="btn btn-outline-primary mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'User'; settings.modal.name = 'Add User'; settings.modal.size = 'md' " data-toggle="modal" data-target="#crud" >Add</button><button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'User'; settings.modal.name = 'Update User'; settings.modal.size = 'lg'; " ng-disabled="!users.jslist.selected">Update</button><button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" ng-click="users.deleteUser()"  ng-disabled="!users.jslist.selected">Delete</button></div>

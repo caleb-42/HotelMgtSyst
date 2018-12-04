@@ -23,7 +23,7 @@
         <div class="animate-switch-container" ng-switch on="tabnav.selected.name">
             
             <div class="animate-switch h-100" ng-switch-when="Debts">
-                <div class="debts prime-footer anim h-80">
+                <div class="debts prime-footer anim h-100">
                     <div class="p-3 px-4  itemlayout w-100 h-93">
                         <div class="mb-5 item-container">
                             <div class="userlisthd row justify-content-between">
@@ -36,21 +36,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="row align-items-center anim py-3 px-2 h-20 relatv">
-
-                    <!-- <div class = "row w-100">
-                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 br-1 m-0 pb-3 px-3">Current Guest</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 pb-2 px-3">{{rooms.current_guest.guest_name}} </p>
-                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 pb-3 br-1 m-0 px-3">Phone Number</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 pb-2 px-3">{{rooms.current_guest.phone_number}} </p>
-                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 pb-3 br-1 m-0 px-3">Room Outstanding</h6>
-                        <p class = "  col-8  f-13 opac-70 m-0 pb-2 px-3">{{rooms.current_guest.room_outstanding}} </p>
-                    </div> -->
-
-                </div>
             </div>
             <div class="animate-switch Expenses h-100" ng-switch-when = "Expenses">
-                <div class="expenses prime-footer anim h-80">
+                <div class="expenses prime-footer anim h-100">
                     <div class="p-3 px-4 itemlayout w-100 h-93">
                         <div class="mb-5 item-container">
                             <div class="userlisthd row justify-content-between">
@@ -63,18 +51,6 @@
                             <jslist class="font-fam-Montserrat"></jslist>
                         </div>
                     </div>
-                </div>
-                <div class="orders row align-items-center anim px-2 h-20">
-
-                    <div class = "row w-100">
-                        <!-- <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Rooms</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? (guest.jslist.selectedObj.rooms | arraytostring) : '2, 4, 7'}} </p>
-                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Phone Number</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.phone_number : '08130439102'}} </p>
-                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Address</h6>
-                        <p class = "  col-8  f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.contact_address : 'Conversion of Architectural Blueprints to well-designed Structural layouts (foundaton, beams, columns and bases, slabs'}} </p> -->
-                    </div>
-
                 </div>
             </div>
         </div>
