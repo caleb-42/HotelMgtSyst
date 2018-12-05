@@ -12,7 +12,7 @@ accountsApp.directive('expenselist', ['$rootScope', function ($rootScope) {
                     jsonlist = listdetails.jsonfunc;
                     jsonlist.then(function (result) {
                         console.log(result);
-                        scope.expenses.jslist.values = param.script == "list_expenses" ? result : result.expense_payments_array;
+                        scope.expenses.jslist.values = param.script == "list_expenses1" ? result.expense_array : result.expense_payments_array;
                         /* scope.guest.jslist.values.forEach(function(elem){
                             elem.value = elem.guest_name;
                         }); */
@@ -57,7 +57,7 @@ accountsApp.directive('expenselist', ['$rootScope', function ($rootScope) {
                 gender : 'male'
             }
             scope.expenses.jslist.createList({
-                script : 'list_expenses',
+                script : 'list_expenses1',
                 data : {}
             });
         }

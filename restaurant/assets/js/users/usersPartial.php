@@ -32,16 +32,26 @@
                             <div class="rest-demo h-80"></div>
                             <div class = "w-70 mx-auto">
                                 <input class = " w-100" type="file" name="rest-upload-img" id="rest-upload-img" />
-                                <button class="mt-3 rest-cropImg btn btn-success w-100 ">Save</button>
+                                <div class=" w-100 mt-3  py-0">
+                                    <img src="./assets/img/loader.gif" width="100px" height="70px" ng-class="{gone : !general.loader.img}"/>
+                                    <button class="{{general.loader.img ? 'gone' : ''}} rest-cropImg btn btn-success w-100 " ng-click = "general.loader.img = true;">Save</button>
+                                </div>
                             </div>
                         </div>
                         <div class="row col-7 justify-content-center text-center pb-4 pr-5" ng-init = "general.itemlist()">
-                            <h6 class="w-100 mt-3">Top Message</h6>
+                            <!-- <h6 class="w-100 mt-3 font-weight-bold">Top Message</h6>
                             <textarea placeholder = "Top Message" ng-model = "general.restaurant_top_msg" class="text-center form-control f-13 col-12 m-0" rows='3'></textarea>
-                            <button class="mt-3 btn btn-danger py-0 w-25" ng-click = "general.msg_Update('restaurant_top_msg')">Save</button>
-                            <h6 class="w-100 mt-5">Bottom Message</h6>
-                            <textarea ng-model = "general.restaurant_bottom_msg" placeholder = "Top Message" class="text-center form-control f-13 col-12" rows='3'></textarea>
-                            <button class="mt-3 btn btn-danger py-0 w-25" ng-click = "general.msg_Update('restaurant_bottom_msg')">Save</button>
+                            <div class="w-25 mt-3  py-0">
+                                <img src="./assets/img/loader.gif" width="100px" height="70px" ng-class="{gone : !general.loader.restaurant_top_msg}"/>
+                                <button  class="{{general.loader.restaurant_top_msg ? 'gone' : ''}} btn btn-danger w-100" ng-click = "general.loader.restaurant_top_msg = true; general.msg_Update('restaurant_top_msg')">Save</button>
+                            </div> -->
+                            <h6 class="w-100 mt-5 font-weight-bold">Bottom Message</h6>
+                            <textarea ng-model = "general.restaurant_bottom_msg" placeholder = "Top Message" class="text-center form-control f-13 col-12" rows='6'></textarea>
+                            
+                            <div class="w-25 mt-3  py-0">
+                                <img src="./assets/img/loader.gif" width="100px" height="70px" ng-class="{gone : !general.loader.restaurant_bottom_msg}"/>
+                                <button  class="{{general.loader.restaurant_bottom_msg ? 'gone' : ''}} btn btn-danger w-100" ng-click = "general.loader.restaurant_bottom_msg = true; general.msg_Update('restaurant_bottom_msg')">Save</button>
+                            </div>
                         </div>
                     <croppie url = "../php1/restaurant_bar/admin/settings_img_restaurant_bar.php" cont = ".rest-demo" upload = "#rest-upload-img" save = ".rest-cropImg"></croppie>
                     </div>

@@ -111,7 +111,7 @@ app.directive('croppie', ['$rootScope', '$filter', function ($rootScope, $filter
                 viewport: {
                     width: 200,
                     height: 200,
-                    type: 'square'
+                    type: 'circle'
                 },
                 boundary: {
                     width: 250,
@@ -142,7 +142,7 @@ app.directive('croppie', ['$rootScope', '$filter', function ($rootScope, $filter
                 reader.readAsDataURL(this.files[0]);
             });
             $(attrs.save).click(function(event) {
-                if(!uploaded) return;
+                if(!uploaded) {scope.general.loader.img = false;$rootScope.$apply();return;}
                 basic.croppie('result', {
                     type: 'canvas',
                     size: 'viewport',
@@ -157,6 +157,8 @@ app.directive('croppie', ['$rootScope', '$filter', function ($rootScope, $filter
                         success: function(data) {
                             //$('.fdemo').html(data);
                             console.log(data);
+                            scope.general.loader.img = false;
+                            $rootScope.$apply();
                         }
                     });
                     //console.log(response);

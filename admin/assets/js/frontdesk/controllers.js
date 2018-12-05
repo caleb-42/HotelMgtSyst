@@ -552,7 +552,7 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
             jsonform = {
                 reservations : [jsonresvtn]
             }
-            jsonPost.data("../php1/front_desk/delete_reservation.php", {
+            jsonPost.data("../php1/admin/frontdesk_admin/delete_reservation.php", {
                 reservation_ref: $filter('json')(jsonform)
             }).then(function (response) {
                 $scope.reservation.jslist.toggleOut();
@@ -568,7 +568,7 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
             jsonclaim = Object.assign($scope.reservation.jslist.selectedObj,jsonform);
             jsonclaim.frontdesk_rep = $rootScope.settings.user;
             console.log(jsonclaim);
-            jsonPost.data("../php1/front_desk/claim_reservation.php", {
+            jsonPost.data("../php1/admin/frontdesk_admin/claim_reservation.php", {
              reservation_data: $filter('json')(jsonclaim)
              }).then(function (response) {
                  console.log(response);
@@ -850,7 +850,7 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
                     }
                 });
                 console.log("update Resvtn", jsonresvtn);
-                jsonPost.data("../php1/admin/frontdesk_admin/admin/update_reservation_room_admin.php", {
+                jsonPost.data("../php1/admin/frontdesk_admin/update_reservation_room.php", {
                     update_reservation: $filter('json')(jsonresvtn)
                 }).then(function (response) {
                     console.log(response);
@@ -899,7 +899,7 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
                 jsonform = {
                     reservations : [jsonresvtn]
                 }
-                jsonPost.data("../php1/front_desk/del_reservation_room.php", {
+                jsonPost.data("../php1/admin/frontdesk_admin/del_reservation_room.php", {
                     reservation_ref: $filter('json')(jsonform)
                 }).then(function (response) {
                     $scope.reservation.jslist.toggleOut();

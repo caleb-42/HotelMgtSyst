@@ -12,7 +12,7 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
                     jsonlist = listdetails.jsonfunc;
                     jsonlist.then(function (result) {
                         console.log(result);
-                        scope.expenses.jslist.values = result;
+                        scope.expenses.jslist.values = result.expense_array;
                         /* scope.guest.jslist.values.forEach(function(elem){
                             elem.value = elem.guest_name;
                         }); */

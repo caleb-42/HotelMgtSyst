@@ -76,8 +76,8 @@
         </div>
         <div class = "row w-100 justify-content-between pb-3">
             <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" ng-click="rooms.getallrooms(); settings.modal.active = 'Resvtn'; settings.modal.name = 'Update Single Reservation'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud" ng-disabled="!resvtn.jslist.selected">Update</button>
-            <input class="form-control w-60 text-center anim" ng-model="searchbox.inp"  placeholder = "Search"/>
-            <!-- <button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" ng-click="resvtn.deleteResvtn()" ng-disabled="!resvtn.jslist.selected">Cancel</button> -->
+            <input class="form-control w-40 text-center anim" ng-model="searchbox.inp"  placeholder = "Search"/>
+            <button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" ng-click="resvtn.deleteResvtn()" ng-disabled="!resvtn.jslist.selected">Cancel</button>
         </div>
         <div class = "listhd pr-2 row font-fam-Montserrat-bold">
             <span class="{{hd.width}} f-13 opac-70"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in resvtn.listhddata">{{hd.name}}</span>

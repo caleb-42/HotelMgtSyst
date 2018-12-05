@@ -1,3 +1,3 @@
 <?php
-    header("Location:  ./accounts/index.php");
+    header("Location:  ./admin/index.php");
 ?>

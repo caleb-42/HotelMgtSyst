@@ -13,8 +13,8 @@
   foreach ($settings_data as $settings_key => $settings_value) {
   	$property_setting = $settings_value;
   	$key_setting = $settings_key;
- 	$update_settings_query->execute();
- 	$updated[] = $settings_key;
+ 	  $update_settings_query->execute();
+ 	  $updated[] = $settings_key;
   }
 
   $update_settings_query->close();

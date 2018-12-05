@@ -1,6 +1,6 @@
 <?php
 sleep(3);
-include "settings/connect.php";  //database name = $dbConn
+include "/settings/connect.php";  //database name = $dbConn
 
 function generateHash($password) {
 	if (defined("CRYPT_BLOWFISH") && CRYPT_BLOWFISH) {

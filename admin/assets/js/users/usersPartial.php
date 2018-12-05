@@ -27,49 +27,73 @@
                     </div>
                 </div>
                 
-                <div class="animate-switch row justify-content-center h-95 p-4 ovflo-y" ng-switch-when="General">
-                    <div class="w-80 text-center" ng-init = "general.itemlist()">
-                        <h5 class="w-100 font-fam-Montserrat-bold opac-70">Company Info</h5>
+                <div class="animate-switch row justify-content-center h-95 p-4 ovflo-y " ng-switch-when="General">
+                    <div class="w-80 text-center pb-5" ng-init = "general.itemlist()">
+                        <h5 class="w-100 font-fam-Montserrat-bold opac-70 purp-clr">Company Info</h5>
+                        <div class = "w-100 mb-4">
+                        <div class = "w-45 pt-5 float-left row justify-content-center">
+                            <h6 class="w-100 opac-70 font-weight-bold">Name</h6>
+                            <textarea ng-model = "general.shop_name" placeholder = "Comapany Name" class="text-center form-control f-13 col-12 mt-3" rows='3'></textarea>
+                            <div class="w-25 mt-3 py-0">
+                                <img src="./assets/img/loader.gif" width="50px" height="30px" ng-class="{gone : !general.loader.shop_name}"/>
+                                <button  class="{{general.loader.shop_name ? 'gone' : ''}} btn btn-warning py-1 w-100" ng-click = "general.loader.shop_name = true;general.msg_Update('shop_name')">Save</button>
+                            </div>
+                        </div>
+                        <div class = "w-45 pt-5 float-right row justify-content-center">
+                            <h6 class="w-100 opac-70 font-weight-bold">Address</h6>
+                            <textarea ng-model = "general.shop_address" placeholder = "Comapany Address" class="text-center form-control f-13 col-12 mt-3" rows='3'></textarea>
+                            <div class="w-25 mt-3 py-0">
+                                <img src="./assets/img/loader.gif" width="50px" height="30px" ng-class="{gone : !general.loader.shop_address}"/>
+                                <button  class="{{general.loader.shop_address ? 'gone' : ''}} btn btn-warning py-1 w-100" ng-click = "general.loader.shop_address = true;general.msg_Update('shop_address')">Save</button>
+                            </div>
+                        </div>
+                        </div>
+                        <div class = "w-100 mb-4 relatv">
+                        <div class = "w-45 pt-5 float-left row justify-content-center">
+                            <h6 class="w-100 opac-70 font-weight-bold">Phone Number</h6>
+                            <textarea ng-model = "general.shop_contact" placeholder = "Comapany Contact" class="text-center form-control f-13 col-12 mt-3" rows='3'></textarea>
+                            <div class="w-25 mt-3 py-0">
+                                <img src="./assets/img/loader.gif" width="50px" height="30px" ng-class="{gone : !general.loader.shop_contact}"/>
+                                <button  class="{{general.loader.shop_contact ? 'gone' : ''}} btn btn-warning py-1 w-100" ng-click = "general.loader.shop_contact = true;general.msg_Update('shop_contact')">Save</button>
+                            </div>
+                        </div>
+                        <div class = "w-45 pt-5 float-right row justify-content-center">
+                            <h6 class="w-100 opac-70 font-weight-bold">Email</h6>
+                            <textarea ng-model = "general.shop_email" placeholder = "Comapany Mail" class="text-center form-control f-13 col-12 mt-3" rows='3'></textarea>
+                            <div class="w-25 mt-3 py-0">
+                                <img src="./assets/img/loader.gif" width="50px" height="30px" ng-class="{gone : !general.loader.shop_email}"/>
+                                <button  class="{{general.loader.shop_email ? 'gone' : ''}} btn btn-warning py-1 w-100" ng-click = "general.loader.shop_email = true;general.msg_Update('shop_email')">Save</button>
+                            </div>
+                        </div>
+                        </div>
+                         <div class = "w-100">                       
+                        <div class = "w-45 pt-5 float-left row justify-content-center">
+                            <h6 class="w-100 opac-70 font-weight-bold">Frontdesk Bottom Message</h6>
+                            <textarea ng-model = "general.frontdesk_bottom_msg" placeholder = "Frontdesk Bottom Message" class="text-center form-control f-13 col-12 mt-3" rows='3'></textarea>
+                            <div class="w-25 mt-3 py-0">
+                                <img src="./assets/img/loader.gif" width="50px" height="30px" ng-class="{gone : !general.loader.frontdesk_bottom_msg}"/>
+                                <button  class="{{general.loader.frontdesk_bottom_msg ? 'gone' : ''}} btn btn-warning py-1 w-100" ng-click = "general.loader.frontdesk_bottom_msg = true;general.msg_Update('frontdesk_bottom_msg')">Save</button>
+                            </div>
+                        </div>
+                        <div class = "w-45 pt-5 float-right row justify-content-center">
+                            <h6 class="w-100 opac-70 font-weight-bold">Restaurant Bottom Message</h6>
+                            <textarea ng-model = "general.restaurant_bottom_msg" placeholder = "Restaurant Bottom Messag" class="text-center form-control f-13 col-12 mt-3" rows='3'></textarea>
+                            <div class="w-25 mt-3 py-0">
+                                <img src="./assets/img/loader.gif" width="70px" height="45px" ng-class="{gone : !general.loader.restaurant_bottom_msg}"/>
+                                <button  class="{{general.loader.restaurant_bottom_msg ? 'gone' : ''}} btn btn-warning py-1 w-100" ng-click = "general.loader.restaurant_bottom_msg = true; general.msg_Update('restaurant_bottom_msg')">Save</button>
+                            </div>
+                        </div>
+                        </div>
+                        <!-- <div class = "w-45 mt-5 float-left">
+                            <h6 class="w-100 opac-70 font-weight-bold">Restaurant Top Message</h6>
+                            <textarea placeholder = "Restaurant Top Message" class="text-center form-control f-13 col-12 mt-3" ng-model = "general.restaurant_top_msg" rows='3'></textarea>
+                            <button class="mt-3 btn btn-warning py-1 w-25" ng-click = "general.msg_Update('restaurant_top_msg')">Save</button>
+                        </div>
                         <div class = "w-45 mt-5 float-left">
-                            <h6 class="w-100 purp-clr opac-70">Name</h6>
-                            <textarea placeholder = "Top Message" class="form-control f-13 col-12 m-0" rows='3'></textarea>
-                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('restaurant_top_msg')">Save</button>
-                        </div>
-                        <div class = "w-45 mt-5 float-right">
-                            <h6 class="w-100 purp-clr opac-70">Address</h6>
-                            <textarea placeholder = "Top Message" class="form-control f-13 col-12 m-0" rows='3'></textarea>
-                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('restaurant_top_msg')">Save</button>
-                        </div>
-                        <div class = "w-45 mt-4 float-left">
-                            <h6 class="w-100 purp-clr opac-70">Phone Number</h6>
-                            <textarea placeholder = "Top Message" class="form-control f-13 col-12 m-0" rows='3'></textarea>
-                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('restaurant_top_msg')">Save</button>
-                        </div>
-                        <div class = "w-45 mt-4 float-right">
-                            <h6 class="w-100 purp-clr opac-70">Email</h6>
-                            <textarea placeholder = "Top Message" class="form-control f-13 col-12 m-0" rows='3'></textarea>
-                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('restaurant_top_msg')">Save</button>
-                        </div>
-                        <div class = "w-45 mt-4 float-left">
-                            <h6 class="w-100 purp-clr opac-70">Frontdesk Top Message</h6>
-                            <textarea placeholder = "Top Message" class="form-control f-13 col-12 m-0" ng-model = "general.frontdesk_top_msg" rows='3'></textarea>
-                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('frontdesk_top_msg')">Save</button>
-                        </div>
-                        <div class = "w-45 mt-4 float-right">
-                            <h6 class="w-100 purp-clr opac-70">Frontdesk Bottom Message</h6>
-                            <textarea ng-model = "general.frontdesk_bottom_msg" placeholder = "Top Message" class="form-control f-13 col-12 m-0" rows='3'></textarea>
-                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('frontdesk_top_msg')">Save</button>
-                        </div>
-                        <div class = "w-45 mt-4 float-left">
-                            <h6 class="w-100 purp-clr opac-70">Restaurant Top Message</h6>
-                            <textarea placeholder = "Top Message" class="form-control f-13 col-12 m-0" ng-model = "general.restaurant_top_msg" rows='3'></textarea>
-                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('restaurant_top_msg')">Save</button>
-                        </div>
-                        <div class = "w-45 mt-4 float-right">
-                            <h6 class="w-100 purp-clr opac-70">Restaurant Bottom Message</h6>
-                            <textarea ng-model = "general.restaurant_bottom_msg" placeholder = "Top Message" class="form-control f-13 col-12 m-0" rows='3'></textarea>
-                            <button class="mt-3 btn btn-warning py-0 w-25" ng-click = "general.msg_Update('restaurant_top_msg')">Save</button>
-                        </div>
+                            <h6 class="w-100 opac-70 font-weight-bold">Frontdesk Top Message</h6>
+                            <textarea placeholder = "Frontdesk Top Message" class="text-center form-control f-13 col-12 mt-3" ng-model = "general.frontdesk_top_msg" rows='3'></textarea>
+                            <button class="mt-3 btn btn-warning py-1 w-25" ng-click = "general.msg_Update('frontdesk_top_msg')">Save</button>
+                        </div> -->
                     </div>
                 </div>
             </div>

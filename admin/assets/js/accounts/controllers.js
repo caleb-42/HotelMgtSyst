@@ -218,7 +218,7 @@ accountsApp.controller("accounts", ["$rootScope", "$scope", 'jsonPost', '$filter
         itemlist: function (range) {
             console.log(range);
             script = "../php1/admin/account_admin/" + range.script + ".php";
-            if(range.script == 'list_expenses'){
+            if(range.script == 'list_expenses1'){
                 return {
                     jsonfunc: jsonPost.data(script, range.data)
                 }
@@ -239,8 +239,14 @@ accountsApp.controller("accounts", ["$rootScope", "$scope", 'jsonPost', '$filter
                 console.log(response);
                 $scope.expenses.jslist.toggleOut();
                 res = $rootScope.settings.modal.msgprompt(response);
-                res ? $scope.expenses.jslist.createList() : null;
-                $scope.expenses.itemlist().jsonfunc.then(function(response){
+                res ? $scope.expenses.jslist.createList({
+                    script : 'list_expenses1',
+                    data : {}
+                }) : null;
+                $scope.expenses.itemlist({
+                    script : 'list_expenses1',
+                    data : {}
+                }).jsonfunc.then(function(response){
                     $scope.expenses.jslist.selectedObj =  $filter('filterObj')(response,$scope.expenses.jslist.selected, ['expense_ref']);
                     $scope.expenses.jslist.selected = $scope.expenses.jslist.selectedObj.expense_ref;
                     console.log($scope.expenses.jslist.selectedObj);
@@ -257,7 +263,10 @@ accountsApp.controller("accounts", ["$rootScope", "$scope", 'jsonPost', '$filter
             }).then(function (response) {
                 $scope.expenses.jslist.toggleOut();
                 console.log(response);
-                $scope.expenses.jslist.createList();
+                $scope.expenses.jslist.createList({
+                    script : 'list_expenses1',
+                    data : {}
+                });
                 $scope.expenses.jslist.selectedObj = {};
                 $scope.expenses.jslist.selected = null;
                 $scope.expenses.jslist.toggleIn();
@@ -266,7 +275,7 @@ accountsApp.controller("accounts", ["$rootScope", "$scope", 'jsonPost', '$filter
         fetchdate : function (){
             if($scope.expenses.fromdate == "" || $scope.expenses.todate == "" || $scope.expenses.fromdate == undefined || $scope.expenses.todate == undefined){
                 $scope.expenses.jslist.createList({
-                    script : 'list_expenses',
+                    script : 'list_expenses1',
                     data : {}
                 });
                 return;

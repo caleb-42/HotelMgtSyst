@@ -33,16 +33,25 @@
                             <div class="front-demo h-80"></div>
                             <div class = "w-70 mx-auto">
                                 <input class = " w-100" type="file" name="front-upload-img" id="front-upload-img" />
-                                <button class="mt-3 front-cropImg btn blu wht w-100 ">Save</button>
+                                <div class=" w-100 mt-3 py-0">
+                                    <img src="./assets/img/loader.gif" width="100px" height="70px" ng-class="{gone : !general.loader.img}"/>
+                                    <button class="{{general.loader.img ? 'gone' : ''}} front-cropImg btn blu wht w-100 " ng-click = "general.loader.img = true;">Save</button>
+                                </div>
                             </div>
                         </div>
                         <div class="row col-7 justify-content-center text-center pb-4 pr-5" ng-init = "general.itemlist()">
-                            <h6 class="w-100 mt-3">Top Message</h6>
+                            <!-- <h6 class="w-100 mt-3 font-weight-bold">Top Message</h6>
                             <textarea placeholder = "Top Message" ng-model = "general.frontdesk_top_msg" class="text-center form-control f-13 col-12 m-0" rows='3'></textarea>
-                            <button class="opac-70 mt-3 btn wht purp-back w-25 py-0" ng-click = "general.msg_Update('frontdesk_top_msg')">Save</button>
-                            <h6 class="w-100 mt-5">Bottom Message</h6>
-                            <textarea placeholder = "Bottom Message" ng-model = "general.frontdesk_bottom_msg" class="text-center form-control f-13 col-12" rows='3'></textarea>
-                            <button class="opac-70 mt-3 btn wht purp-back w-25 py-0" ng-click = "general.msg_Update('frontdesk_bottom_msg')">Save</button>
+                            <div class="w-25 mt-3 py-0">
+                                <img src="./assets/img/loader.gif" width="100px" height="70px" ng-class="{gone : !general.loader.frontdesk_top_msg}"/>
+                                <button  class="{{general.loader.frontdesk_top_msg ? 'gone' : ''}} opac-70 btn wht purp-back w-100 " ng-click = "general.loader.frontdesk_top_msg = true; general.msg_Update('frontdesk_top_msg')">Save</button>
+                            </div> -->
+                            <h6 class="w-100 mt-5 font-weight-bold">Bottom Message</h6>
+                            <textarea placeholder = "Bottom Message" ng-model = "general.frontdesk_bottom_msg" class="text-center form-control f-13 col-12" rows='6'></textarea>
+                            <div class="w-25 mt-3 py-0">
+                                <img src="./assets/img/loader.gif" width="100px" height="70px" ng-class="{gone : !general.loader.frontdesk_bottom_msg}"/>
+                                <button  class="{{general.loader.frontdesk_bottom_msg ? 'gone' : ''}} opac-70 btn wht purp-back w-100" ng-click = "general.loader.frontdesk_bottom_msg = true; general.msg_Update('frontdesk_bottom_msg')">Save</button>
+                            </div>
                         </div>
                         
                     <croppie url = "../php1/front_desk/admin/settings_img_frontdesk.php" cont = ".front-demo" upload = "#front-upload-img" save = ".front-cropImg"></croppie>

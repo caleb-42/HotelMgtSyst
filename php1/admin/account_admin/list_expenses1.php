@@ -1,6 +1,6 @@
 <?php
   include "../settings/connect.php"; //$database handler $dbConn or $conn
-
+/* ewere created this cos tego didnt copy the new list expense(with extra json fields like expense_array, expense_total) you had at accounts here. this enable my code to be consistent */
   $get_items_sql = "SELECT * FROM account_expenses";
   $get_items_result = mysqli_query($dbConn, $get_items_sql);
   $get_items_array = [];

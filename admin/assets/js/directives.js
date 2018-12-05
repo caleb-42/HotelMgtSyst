@@ -74,6 +74,16 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
                 jsonForm.room_category = scope.rooms.jslist.room_category;
                 scope.rooms.addRoom(jsonForm);
             };
+            confirmReservation = function () {
+                $rootScope.settings.modal.adding = true
+                jsonForm = $(".ConfirmReservationForm").serializeObject();
+                scope.reservation.confirm(jsonForm);
+            }
+            payDebts = function () {
+                $rootScope.settings.modal.adding = true;
+                jsonForm = $(".payDebtsForm").serializeObject();
+                scope.debts.payDebts(jsonForm);
+            };
             addUser = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".addUserForm").serializeObject();

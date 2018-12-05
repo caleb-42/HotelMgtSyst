@@ -12,8 +12,8 @@ $room_id = $update_reservation["room_id"];
 $new_room_id = $update_reservation["new_room_id"];
 $no_of_nights = $update_reservation["new_no_of_nights"] ? $update_reservation["new_no_of_nights"] : $update_reservation["no_of_nights"];
 
-$phone_number = mysqli_real_escape_string($dbConn, $phone_number);
-$email = mysqli_real_escape_string($dbConn, $email);
+/* $phone_number = mysqli_real_escape_string($dbConn, $phone_number);
+$email = mysqli_real_escape_string($dbConn, $email); */
 
 $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 

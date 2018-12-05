@@ -23,8 +23,10 @@
                             <div class="mb-5 item-container">
                                 <div class="userlisthd row justify-content-between">
                                     <h4 class=" my-4 col-4 py-2 font-fam-Montserrat-bold">Manage Expenses</h4>
-                                    <div class="col-8 p-0 row justify-content-around">
-                                        <datepicker date-max-limit = "{{expenses.todate}}" date-format="yyyy-MM-dd" class=" col-4 my-4 text-center" selector="form-control">
+                                    <div class="col-8 my-4 py-4 row justify-content-end">
+                                        <button class="w-10 btn btn-info mx-3 font-fam-Montserrat f-12 py-0" ng-click="settings.modal.active = 'Expenses'; settings.modal.name = 'Add Expenses'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud">Add</button>
+                                        <button class="w-10 btn f-12 py-0 btn-sm btn-danger" ng-click="expenses.deleteExpenses()" ng-disabled="!expenses.jslist.selected">Delete</button>
+                                        <!-- <datepicker date-max-limit = "{{expenses.todate}}" date-format="yyyy-MM-dd" class=" col-4 my-4 text-center" selector="form-control">
                                         <input class=" clearinput password form-control font-fam-Montserrat text-center d-block"
                                         placeholder="From Date" name="fromdate" 
                                         ng-model = "expenses.fromdate" onkeydown="javascript: return false"/>
@@ -40,9 +42,9 @@
                                             <button ng-click = "expenses.todate = null; expenses.fromdate=null;" class = "w-30 f-14 btn  btn-sm purp-back wht opac-70">
                                             Clear
                                             </button>
-                                            <!-- <button class="btn btn-info mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Expenses'; settings.modal.name = 'Add Expenses'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud">Add</button> -->
+                                            <button class="btn btn-info mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Expenses'; settings.modal.name = 'Add Expenses'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud">Add</button>
                                             <button class="w-30 btn  btn-sm btn-danger" ng-click="expenses.deleteExpenses()" ng-disabled="!expenses.jslist.selected">Delete</button>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <expenselist class="font-fam-Montserrat"></expenselist>
@@ -69,7 +71,7 @@
                                 <div class="userlisthd row justify-content-between">
                                     <h4 class=" mt-4 py-2 font-fam-Montserrat-bold">Manage Debts</h4>
                                     <div class="mt-4">
-                                        <!-- <button class="btn btn-success wht opac-70 mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Debts'; settings.modal.name = 'Pay Debts'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud" ng-disabled="!debts.jslist.selected">Pay</button> -->
+                                        <button class="btn btn-success wht opac-70 mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Debts'; settings.modal.name = 'Pay Debts'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud" ng-disabled="!debts.jslist.selected">Pay</button>
                                     </div>
                                 </div>
                                 <debtlist class="font-fam-Montserrat"></debtlist>

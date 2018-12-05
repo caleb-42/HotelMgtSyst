@@ -1,5 +1,5 @@
 <?php
-include "settings/connect.php";  //database name = $dbConn
+include "/settings/connect.php";  //database name = $dbConn
 
 session_start();
 $user_name = $_SESSION['user_name'];

@@ -29,6 +29,7 @@ settingsApp.controller("settings", ["$rootScope", "$scope",  'jsonPost','$filter
         }
     };
     $scope.general = {
+        loader: {},
         itemlist: function () {
             jsonPost.data("../php1/admin/settings_list.php", {}).then(function(resp){
                 resp.forEach(function(result){
@@ -52,7 +53,7 @@ settingsApp.controller("settings", ["$rootScope", "$scope",  'jsonPost','$filter
                             $scope.general.shop_address = result.property_value;
                         break;
                         case "shop_contact":
-                            $scope.general.shop_address = result.property_value;
+                            $scope.general.shop_contact = result.property_value;
                         break;
                         case "shop_email":
                             $scope.general.shop_email = result.property_value;
@@ -63,14 +64,17 @@ settingsApp.controller("settings", ["$rootScope", "$scope",  'jsonPost','$filter
             });
         },
         msg_Update : function(msg){
-            json = {};
-            json[msg] = $scope.general[msg];
-            jsonPost.data("../php1/admin/settings.php", {
-                settings_data : $filter('json')(json)
-            }).then(function(result){
-                console.log(result);
-                $scope.general.itemlist();
-            });
+            setTimeout(function(){
+                json = {};
+                json[msg] = $scope.general[msg];
+                jsonPost.data("../php1/admin/settings.php", {
+                    settings_data : $filter('json')(json)
+                }).then(function(result){
+                    console.log(result);
+                    $scope.general.itemlist();
+                    $scope.general.loader[msg] = false;
+                });
+            }, 2000);
         }
     }
     $scope.users = {

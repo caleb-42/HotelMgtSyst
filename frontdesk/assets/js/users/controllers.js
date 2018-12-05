@@ -29,6 +29,7 @@ usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', fun
         }
     };
     $scope.general = {
+        loader :{},
         itemlist: function () {
             jsonPost.data("../php1/front_desk/admin/settings_list.php", {}).then(function(resp){
                 resp.forEach(function(result){
@@ -42,14 +43,17 @@ usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', fun
             });
         },
         msg_Update : function(msg){
-            json = {};
-            json[msg] = $scope.general[msg];
-            jsonPost.data("../php1/front_desk/admin/settings.php", {
-                settings_data : $filter('json')(json)
-            }).then(function(result){
-                console.log(result);
-                $scope.general.itemlist();
-            });
+            setTimeout(function(){
+                json = {};
+                json[msg] = $scope.general[msg];
+                jsonPost.data("../php1/front_desk/admin/settings.php", {
+                    settings_data : $filter('json')(json)
+                }).then(function(result){
+                    console.log(result);
+                    $scope.general.itemlist();
+                    $scope.general.loader[msg] = false;
+                });
+            }, 2000);
         }
     }
     $scope.users = {
