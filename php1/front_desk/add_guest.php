@@ -9,7 +9,7 @@ $printerFile = fopen("assets/printer.txt", "r");
 $printName = fgets($printerFile);
 fclose($printerFile);
 
-$settings = ["shop_name", "shop_address", "shop_contact", "restaurant_bottom_msg", "restaurant_top_msg"];
+$settings = ["shop_name", "shop_address", "shop_contact", "frontdesk_bottom_msg", "frontdesk_top_msg"];
 $select_settings_query = $conn->prepare("SELECT property_value FROM admin_settings WHERE shop_settings = ?");
 $select_settings_query->bind_param("s", $settings_shop);
 foreach ($settings as $shop_settings) {
@@ -371,7 +371,7 @@ function receipt_body($fprinter, $rooms_arr, $room_arr_count, $cost_due, $paid_a
     fwrite($fprinter, "\x0A");
 }
 
-$partingMsg = "Thanks for staying with us.\nPls call again.\nAttendant: $frontdesk_rep\n";
+$partingMsg = $frontdesk_bottom_msg ."\nPls call again.\nAttendant: $frontdesk_rep\n";
 if ($guest_name) {
   $customer_msg = "GUEST: " . $guest_name . "\n";
 } else {

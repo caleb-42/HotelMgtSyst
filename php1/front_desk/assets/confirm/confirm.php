@@ -83,7 +83,7 @@
         
         <div class="Address" style = "text-align:center;width: 100%;">
             <p style="font-size:12px;text-decoration:underline; color:rgba(0,0,0,.7);">Address</p>
-            <p style="margin:0;font-size:11px;width:90%;text-align:center;display:inline-block;">"Message could not be sent.Mailer Error: Could not instantiate mail function.". I continued on in the videos for a bit but it seems it's </p>
+            <p style="margin:0;font-size:11px;width:90%;text-align:center;display:inline-block;">Message could not be sent.Mailer Error: Could not instantiate mail function</p>
         </div>
         <div class="Phone" style = "text-align:center;">
             <p style="font-size:12px;text-decoration:underline; color:rgba(0,0,0,.7);">Phone Number</p>
