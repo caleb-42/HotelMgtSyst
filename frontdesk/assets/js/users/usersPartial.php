@@ -46,7 +46,7 @@
                                 <img src="./assets/img/loader.gif" width="100px" height="70px" ng-class="{gone : !general.loader.frontdesk_top_msg}"/>
                                 <button  class="{{general.loader.frontdesk_top_msg ? 'gone' : ''}} opac-70 btn wht purp-back w-100 " ng-click = "general.loader.frontdesk_top_msg = true; general.msg_Update('frontdesk_top_msg')">Save</button>
                             </div> -->
-                            <h6 class="w-100 mt-5 font-weight-bold">Bottom Message</h6>
+                            <h4 class="w-100 h-0 mt-5 font-weight-bold">Bottom Message</h4>
                             <textarea placeholder = "Bottom Message" ng-model = "general.frontdesk_bottom_msg" class="text-center form-control f-13 col-12" rows='6'></textarea>
                             <div class="w-25 mt-3 py-0">
                                 <img src="./assets/img/loader.gif" width="100px" height="70px" ng-class="{gone : !general.loader.frontdesk_bottom_msg}"/>

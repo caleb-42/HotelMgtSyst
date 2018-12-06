@@ -82,7 +82,7 @@ app.directive('discountlist', ['$rootScope', '$filter', function ($rootScope, $f
             scope.details.discount.jslist = {
                 createList: function () {
                     listdetails = scope.details.discount.itemlist(scope.details.discount.selected_discount);
-
+                    scope.details.discount.jslist.values = [];
                     jsonlist = listdetails.jsonfunc;
 
                     resultfiltered = [];

@@ -88,7 +88,7 @@
                 <button class="btn-block btn {{surcharge.discount.type == 'Total' ? 'custom-btn-outline-warning' : 'btn-warning'}} my-2" ng-mouseleave = "surcharge.discount.type == 'Total' ? (surcharge.totalClass = false) : null;" ng-mouseover = "surcharge.discount.type == 'Total' ? (surcharge.totalClass = true) : null;"><span class="mr-1 mt-1">N</span>{{ surcharge.totalClass || surcharge.discount.type == 'Item' || surcharge.discount.type == 'None'  ? cart.currentCart.total.total_cost : (cart.currentCart.total.discounted_total_cost + ' &nbsp  |  &nbsp %' + cart.currentCart.total.transaction_discount)}}</button>
                 <div class="row">
                     <button ng-disabled = "cart.cartlist.length == 0" class="col-5 btn sechue" ng-click="sales.order.command()">{{!sales.order.orderDeselect ? 'Delete Order' : 'Open Order'}}</button>
-                    <button ng-disabled = "cart.cartlist.length == 0" class="offset-2 col-5 btn btn-success" data-toggle="modal" data-target="#Customer" ng-click="settings.modal.active = 'payment'; surcharge.payment.preview(); settings.modal.name = 'Reciept Preview'; settings.modal.size = 'md' ">Preview</button>
+                    <button ng-disabled = "cart.cartlist.length == 0 || !cart.currentCart.total.total_cost" class="offset-2 col-5 btn btn-success" data-toggle="modal" data-target="#Customer" ng-click="settings.modal.active = 'payment'; surcharge.payment.preview(); settings.modal.name = 'Reciept Preview'; settings.modal.size = 'md' ">Sell</button>
                 </div>
             </div>
         </div>

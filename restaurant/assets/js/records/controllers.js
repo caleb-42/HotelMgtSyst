@@ -149,10 +149,10 @@ recordsApp.controller("customers", ["$rootScope", "$scope", 'jsonPost', '$filter
             jsonPost.data("../php1/restaurant_bar/admin/del_customers.php", {
                 del_customers: $filter('json')(jsoncust)
             }).then(function (response) {
-                //$scope.customers.jslist.toggleOut();
+                $scope.customers.jslist.toggleOut();
                 console.log(response);
                 $scope.customers.jslist.createList();
-                //$scope.customers.jslist.toggleIn();
+                $scope.customers.jslist.toggleIn();
             });
         }
     }

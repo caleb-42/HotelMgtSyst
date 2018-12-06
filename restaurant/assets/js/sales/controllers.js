@@ -34,6 +34,7 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', fun
     };
     $scope.sales = {
         makeCustomerList: function () {
+            $scope.sales.cust_list = [];
             cp = jsonPost.data("../php1/restaurant_bar/restaurant_customer.php", {});
             cp.then(function (result) {
                 if (!result) {
@@ -43,7 +44,7 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', fun
                     elm.type = 'customer';
                     elm.room = 'none';
                 });
-                $scope.sales.cust_list = result;
+                $scope.sales.cust_list = result ? result : [];
                 console.log($scope.sales.cust_list);
             });
             gp = jsonPost.data("../php1/restaurant_bar/list_guests_all.php", {});
@@ -197,6 +198,13 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', fun
                 console.log($scope.buyer.customer.selected);
             },
             makeCustomerList: function () {
+                if($scope.sales.lodger_list){
+                    $scope.buyer.customer.customerList = $scope.sales.cust_list ? $scope.sales.cust_list : [];
+                    return;
+                }else if($scope.sales.cust_list){
+                    $scope.buyer.customer.customerList = $scope.sales.lodger_list ? $scope.sales.lodger_list : [];
+                    return;
+                }
                 $scope.buyer.customer.customerList = $scope.sales.cust_list.concat($scope.sales.lodger_list);
                 console.log($scope.buyer.customer.customerList);
             },
@@ -383,7 +391,8 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', fun
                     sales_details: $filter('json')($scope.surcharge.reciept)
                 }).then(function(response){
                     console.log(response);
-                    $rootScope.settings.modal.msgprompt(response);
+                    res = $rootScope.settings.modal.msgprompt(response);
+                    if(!res){return};
                     if(!$scope.sales.order.orderDeselect){
                         $scope.sales.order.delete();
                     }else{
@@ -392,8 +401,8 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', fun
                         $scope.cart.currentCart = {};
 
                     }
+                    $rootScope.$emit('resetproductlist' , {});
                 });
-                $rootScope.$emit('resetproductlist' , {});
             }
         }
     }

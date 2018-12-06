@@ -138,7 +138,7 @@ app.directive('customerslist', ['$rootScope', '$filter', function ($rootScope, $
                 createList: function () {
                     listdetails = scope.customers.itemlist();
                     jsonlist = listdetails.jsonfunc;
-
+                    scope.customers.jslist.values = [];
                     jsonlist.then(function (result) {
                         if (!result) {
                             return 0;

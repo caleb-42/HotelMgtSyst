@@ -12,18 +12,21 @@ app.controller("appctrl", ["$rootScope", "$scope", function ($rootScope, $scope)
                 if (typeof (arr) == "string") {
                     $rootScope.settings.modal.msg = "BACKEND CODE ERROR";
                     $rootScope.settings.modal.msgcolor = "choral";
-                    $rootScope.settings.modal.adding = false;
                     $rootScope.settings.modal.fademsg();
+                    $rootScope.settings.modal.adding = false;
+                    return false;
                 } else {
                     $rootScope.settings.modal.msg = arr[1];
                     if(arr[0] == "OUTPUT"){
                         $rootScope.settings.modal.msgcolor = "green";
-                        $rootScope.settings.modal.close();
+                        $rootScope.settings.modal.close();$rootScope.settings.modal.adding = false;
+                        return true;
                     }else{
                         $rootScope.settings.modal.msgcolor = "choral";
                         $rootScope.settings.modal.fademsg();
+                        $rootScope.settings.modal.adding = false;
+                        return false;
                     }
-                    $rootScope.settings.modal.adding = false;
                 }
             }
         },

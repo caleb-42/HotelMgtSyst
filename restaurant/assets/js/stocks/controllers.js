@@ -156,12 +156,13 @@ stocksApp.controller("stocks", ["$rootScope", "$scope", 'jsonPost', '$filter', f
     };
     $scope.details = {
         discount: {
-            selected_discount: "item",
+            selected_discount: "total",
             select_discount:function(type){
                 $scope.details.discount.selected_discount = type;
                 $scope.details.discount.jslist.createList()
             },
             itemlist: function (type) {
+                console.log(type);
                 if(type == "total"){
                     prod ="all";
                 }else{

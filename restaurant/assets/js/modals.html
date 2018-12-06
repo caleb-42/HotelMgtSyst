@@ -74,13 +74,13 @@
                 <div class="modal-footer w-100">
                     <div class="justify-content-center w-100 d-flex flex-column">
                         <div class="py-1 align-self-center row justify-content-between w-70">
-                            <button type="button" class="b-0 btn btn-warning" ng-click="buyer.customer.selected = buyer.showPanel == 'addnew' ? buyer.customer.jsonform('visitor') : buyer.customer.selectedDefault">{{buyer.showPanel
-                                == 'addnew' ? 'Select' : 'Reset'}}</button>
-                            <button type="button" ng-class="{'gone': buyer.showPanel != 'addnew'}" class="b-0 btn btn-success"
-                                ng-click="buyer.customer.makeCustomer()">Add</button>
                             <button type="button" class="btn b-0 {{buyer.showPanel == 'addnew' ? 'btn-danger' : 'btn-info'}}"
                                 ng-click="buyer.showPanel = buyer.showPanel == 'addnew' ? 'search' : 'addnew';settings.modal.size = buyer.showPanel == 'addnew' ? 'md' : 'lg'; buyer.customer.makeCustomerList(); ">{{buyer.showPanel
                                 == 'addnew' ? 'Search' : 'New'}}</button>
+                            <button type="button" ng-class="{'gone': buyer.showPanel != 'addnew'}" class="b-0 btn btn-success"
+                                ng-click="buyer.customer.makeCustomer()">Add</button>
+                            <button type="button" class="b-0 btn btn-warning" ng-click="buyer.customer.selected = buyer.showPanel == 'addnew' ? buyer.customer.jsonform('visitor') : buyer.customer.selectedDefault">{{buyer.showPanel
+                                == 'addnew' ? 'Select' : 'Reset'}}</button>
                         </div>
                     </div>
                 </div>
@@ -95,17 +95,6 @@
 
                         <div class="buyer w-100">
                             <h3 class="mb-4 opac-50 mt-3">{{surcharge.reciept.customer}}</h3>
-
-                            <div class="pay-method">
-                                <select ng-model="surcharge.reciept.pay_method" class="form-control methpay mx-auto my-4 w-40 f-13"
-                                    name="paymethod">
-                                    <option value="Cash">Cash</option>
-                                    <option value="Cheque">Cheque</option>
-                                    <option value="POS">POS</option>
-                                    <option value="Credit">Credit</option>
-                                </select>
-
-                            </div>
 
                             <div class="w-100 px-4 pt-3 choralback row justify-content-around wht">
                                 <span>
@@ -131,14 +120,30 @@
                             </div>
                             <div class="w-100 row justify-content-between px-4">
                                 <form autocomplete="off">
-                                    <span class="px-3 w-50"><label class="font-fam-Montserrat-bold opac-50">Paid</label><input
+                                    <span class="px-1 w-30"><label class="font-fam-Montserrat-bold opac-50">Paid</label><input
                                             ng-change="surcharge.reciept.outstanding_balance = surcharge.reciept.discounted_total_cost - surcharge.reciept.amount_paid "
                                             ng-model="surcharge.reciept.amount_paid" name="paid" placeholder="Amount Paid"
                                             class="text-center form-control"  type="number" onkeydown="javascript: return event.keyCode !=69" /></span>
-                                    <span class="px-3 w-50"><label class="font-fam-Montserrat-bold opac-50">Balance</label><input
-                                            ng-model="surcharge.reciept.outstanding_balance" readonly name="paid"
-                                            placeholder="Balance" class="text-center form-control" /></span>
+                                    <span class="px-1 w-30"><label class="font-fam-Montserrat-bold opac-50">Balance</label>
+                                        <input
+                                        ng-model="surcharge.reciept.outstanding_balance" readonly name="paid"
+                                        placeholder="Balance" class="text-center form-control" />
+                                    </span>
+                                    <span class="pay-method px-1 w-30">
+                                        <label class="font-fam-Montserrat-bold opac-50">Method</label>
+                                        <select ng-model="surcharge.reciept.pay_method" class="form-control methpay mx-auto w-100 f-13"
+                                            name="paymethod">
+                                            <option value="Cash">Cash</option>
+                                            <option value="Cheque">Cheque</option>
+                                            <option value="POS">POS</option>
+                                            <option value="Credit">Credit</option>
+                                        </select>
+        
+                                    </span>
                                 </form>
+                                
+                                
+    
                             </div>
 
                         </div>

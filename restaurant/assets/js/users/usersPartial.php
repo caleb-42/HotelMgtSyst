@@ -45,7 +45,7 @@
                                 <img src="./assets/img/loader.gif" width="100px" height="70px" ng-class="{gone : !general.loader.restaurant_top_msg}"/>
                                 <button  class="{{general.loader.restaurant_top_msg ? 'gone' : ''}} btn btn-danger w-100" ng-click = "general.loader.restaurant_top_msg = true; general.msg_Update('restaurant_top_msg')">Save</button>
                             </div> -->
-                            <h6 class="w-100 mt-5 font-weight-bold">Bottom Message</h6>
+                            <h4 class="w-100 mt-5 font-weight-bold h-0">Bottom Message</h4>
                             <textarea ng-model = "general.restaurant_bottom_msg" placeholder = "Top Message" class="text-center form-control f-13 col-12" rows='6'></textarea>
                             
                             <div class="w-25 mt-3  py-0">

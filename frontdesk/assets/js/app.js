@@ -12,7 +12,6 @@ app.controller("appctrl", ["$rootScope", "$scope","$filter", function ($rootScop
                 if (typeof (arr) == "string") {
                     $rootScope.settings.modal.msg = "BACKEND CODE ERROR";
                     $rootScope.settings.modal.msgcolor = "choral";
-                    $rootScope.settings.modal.adding = false;
                     $rootScope.settings.modal.fademsg();
                     $rootScope.settings.modal.adding = false;
                     return false;
