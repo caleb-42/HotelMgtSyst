@@ -359,7 +359,7 @@ if($txn_insert_result && $payment_record_result){
 	$msg_response[1] = "SUCCESS";
 } else {
 	$msg_response[0] = "ERROR";
-	$msg_response[1] = "SOMETHING WENT WRONG";
+	$msg_response[1] = "SOMETHING WENT WRONG " . mysqli_error($dbConn);
 }
 
 $response_message = json_encode($msg_response);

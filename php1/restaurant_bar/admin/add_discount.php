@@ -61,6 +61,8 @@ $add_discount_query = "INSERT INTO restaurant_discount (discount_name, lower_lim
 $add_discount_result = mysqli_query($dbConn, $add_discount_query);
 
 if($add_discount_result){
+	$del_redundant_discount_sql = "DELETE FROM restaurant_discount WHERE lower_limit > $lower_limit AND upper_limit < $upper_limit";
+	$del_redundant_discount_result = mysqli_query($dbConn, $del_redundant_discount_sql);
 	$msg_response[0] = "OUTPUT";
 	$msg_response[1] = "SUCCESSFULLY ADDED";
 } else {
