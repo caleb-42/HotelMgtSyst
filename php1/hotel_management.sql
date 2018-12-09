@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2018 at 11:42 AM
+-- Generation Time: Dec 06, 2018 at 12:11 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -149,7 +149,7 @@ INSERT INTO `admin_settings` (`id`, `shop_settings`, `property_value`) VALUES
 (4, 'shop_email', ''),
 (5, 'frontdesk_bottom_msg', 'Hope you enjoyed your stay, please come by again'),
 (6, 'frontdesk_top_msg', 'For bookings and reservations please call'),
-(7, 'restaurant_bottom_msg', 'Hope you enjoyed our first class meals'),
+(7, 'restaurant_bottom_msg', 'come back to enjoy our first class meals'),
 (8, 'restaurant_top_msg', 'For catering service please call');
 
 -- --------------------------------------------------------
@@ -313,7 +313,7 @@ CREATE TABLE IF NOT EXISTS `frontdesk_reservations` (
   `deposit_confirmed` varchar(100) NOT NULL DEFAULT 'NO',
   `frontdesk_rep` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -460,7 +460,14 @@ CREATE TABLE IF NOT EXISTS `restaurant_customers` (
   `contact_address` varchar(200) NOT NULL DEFAULT '',
   `outstanding_balance` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `restaurant_customers`
+--
+
+INSERT INTO `restaurant_customers` (`id`, `customer_id`, `full_name`, `gender`, `phone_number`, `contact_address`, `outstanding_balance`) VALUES
+(1, 'RES_2281', 'Adam', 'male', '0809197', '', 0);
 
 -- --------------------------------------------------------
 
@@ -476,7 +483,14 @@ CREATE TABLE IF NOT EXISTS `restaurant_discount` (
   `discount_item` varchar(200) NOT NULL DEFAULT 'all',
   `discount_value` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+
+--
+-- Dumping data for table `restaurant_discount`
+--
+
+INSERT INTO `restaurant_discount` (`id`, `discount_name`, `lower_limit`, `upper_limit`, `discount_item`, `discount_value`) VALUES
+(22, 'rerw', 100, 900, 'all', 16);
 
 -- --------------------------------------------------------
 
@@ -499,7 +513,15 @@ CREATE TABLE IF NOT EXISTS `restaurant_items` (
   `last_stock_update` timestamp NULL DEFAULT NULL,
   `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `restaurant_items`
+--
+
+INSERT INTO `restaurant_items` (`id`, `item`, `type`, `category`, `description`, `current_price`, `discount_rate`, `discount_criteria`, `discount_available`, `shelf_item`, `current_stock`, `last_stock_update`, `reg_date`) VALUES
+(1, 'Sharwama', 'medium', 'Snacks', 'Chicken and Cheese', 1200, 0, 0, '', 'no', NULL, NULL, '2018-12-05 19:55:17'),
+(2, 'Maltina', '33cl', 'Drinks', 'Non-alcoholic', 300, 0, 0, '', 'yes', 193, '2018-12-05 19:59:06', '2018-12-05 19:59:06');
 
 -- --------------------------------------------------------
 
@@ -518,8 +540,16 @@ CREATE TABLE IF NOT EXISTS `restaurant_payments` (
   `txn_worth` int(11) NOT NULL,
   `customer_id` varchar(100) NOT NULL,
   `means_of_payment` varchar(100) NOT NULL,
+  `sales_rep` varchar(300) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `restaurant_payments`
+--
+
+INSERT INTO `restaurant_payments` (`id`, `restaurant_txn`, `txn_date`, `amount_paid`, `date_of_payment`, `amount_balance`, `net_paid`, `txn_worth`, `customer_id`, `means_of_payment`, `sales_rep`) VALUES
+(1, '00007', '2018-12-06 07:26:30', 2300, '2018-12-06 06:26:30', 400, 2300, 2700, 'BUYER', 'Cash', 'admin');
 
 -- --------------------------------------------------------
 
@@ -540,7 +570,27 @@ CREATE TABLE IF NOT EXISTS `restaurant_sales` (
   `discount_amount` int(11) NOT NULL,
   `sold_by` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+
+--
+-- Dumping data for table `restaurant_sales`
+--
+
+INSERT INTO `restaurant_sales` (`id`, `sales_ref`, `item`, `type`, `quantity`, `unit_cost`, `net_cost`, `discount_rate`, `discounted_net_cost`, `discount_amount`, `sold_by`) VALUES
+(1, '00001', 'Sharwama', 'medium', 2, 1200, 2400, 0, 2400, 0, 'admin'),
+(2, '00001', 'Maltina', '33cl', 1, 300, 300, 0, 300, 0, 'admin'),
+(3, '00002', 'Sharwama', 'medium', 2, 1200, 2400, 0, 2400, 0, 'admin'),
+(4, '00002', 'Maltina', '33cl', 1, 300, 300, 0, 300, 0, 'admin'),
+(5, '00003', 'Sharwama', 'medium', 2, 1200, 2400, 0, 2400, 0, 'admin'),
+(6, '00003', 'Maltina', '33cl', 1, 300, 300, 0, 300, 0, 'admin'),
+(7, '00004', 'Sharwama', 'medium', 2, 1200, 2400, 0, 2400, 0, 'admin'),
+(8, '00004', 'Maltina', '33cl', 1, 300, 300, 0, 300, 0, 'admin'),
+(9, '00005', 'Sharwama', 'medium', 2, 1200, 2400, 0, 2400, 0, 'admin'),
+(10, '00005', 'Maltina', '33cl', 1, 300, 300, 0, 300, 0, 'admin'),
+(11, '00006', 'Sharwama', 'medium', 2, 1200, 2400, 0, 2400, 0, 'admin'),
+(12, '00006', 'Maltina', '33cl', 1, 300, 300, 0, 300, 0, 'admin'),
+(13, '00007', 'Sharwama', 'medium', 2, 1200, 2400, 0, 2400, 0, 'admin'),
+(14, '00007', 'Maltina', '33cl', 1, 300, 300, 0, 300, 0, 'admin');
 
 -- --------------------------------------------------------
 
@@ -557,7 +607,14 @@ CREATE TABLE IF NOT EXISTS `restaurant_sessions` (
   `logged_on_state` varchar(50) NOT NULL,
   `duration` time NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `restaurant_sessions`
+--
+
+INSERT INTO `restaurant_sessions` (`id`, `user_name`, `role`, `logged_on_time`, `logged_off_time`, `logged_on_state`, `duration`) VALUES
+(1, 'admin', 'admin', '2018-12-05 20:01:06', '0000-00-00 00:00:00', 'LOGGED IN', '00:00:00');
 
 -- --------------------------------------------------------
 
@@ -618,7 +675,20 @@ CREATE TABLE IF NOT EXISTS `restaurant_txn` (
   `payment_status` varchar(100) NOT NULL,
   `sales_rep` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `restaurant_txn`
+--
+
+INSERT INTO `restaurant_txn` (`id`, `txn_ref`, `total_items`, `total_cost`, `transaction_discount`, `discounted_total_cost`, `deposited`, `balance`, `txn_time`, `customer_ref`, `pay_method`, `payment_status`, `sales_rep`) VALUES
+(1, '00001', 2, 2700, 0, 2700, 2300, 400, '2018-12-06 06:15:30', 'BUYER', 'Cash', 'UNBALANCED', 'admin'),
+(2, '00002', 2, 2700, 0, 2700, 2300, 400, '2018-12-06 06:19:44', 'BUYER', 'Cash', 'UNBALANCED', 'admin'),
+(3, '00003', 2, 2700, 0, 2700, 2300, 400, '2018-12-06 06:21:16', 'BUYER', 'Cash', 'UNBALANCED', 'admin'),
+(4, '00004', 2, 2700, 0, 2700, 2300, 400, '2018-12-06 06:21:57', 'BUYER', 'Cash', 'UNBALANCED', 'admin'),
+(5, '00005', 2, 2700, 0, 2700, 2300, 400, '2018-12-06 06:22:24', 'BUYER', 'Cash', 'UNBALANCED', 'admin'),
+(6, '00006', 2, 2700, 0, 2700, 2300, 400, '2018-12-06 06:24:01', 'BUYER', 'Cash', 'UNBALANCED', 'admin'),
+(7, '00007', 2, 2700, 0, 2700, 2300, 400, '2018-12-06 06:26:30', 'BUYER', 'Cash', 'UNBALANCED', 'admin');
 
 -- --------------------------------------------------------
 

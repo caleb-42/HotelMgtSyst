@@ -52,7 +52,9 @@ for ($i=0; $i < $no_of_items; $i++) {
 		}
 		$ux++;
 	}
-	$updated_discounts[$i][$ux - 1]["upper_limit"] = 0;
+	if ($ux > 0) {
+		$updated_discounts[$i][$ux - 1]["upper_limit"] = 0;
+	}
 }
 $select_discount_query->close();
 /*creating an array of discount updates to make*/
@@ -66,6 +68,11 @@ $update_discount_query->bind_param("ii", $update_upper, $update_id);
 
 for ($i=0; $i < $no_of_items; $i++) { 
 	$no_of_updates = count($updated_discounts[$i]);
+	// foreach ($updated_discounts[$i] as $udpated_discount_arr) {
+	// 	$update_upper = $udpated_discount_arr["upper_limit"];
+	// 	$update_id = $udpated_discount_arr["id"];
+	// 	$update_discount_query->execute();
+	// }
 	for ($ux=0; $ux <$no_of_updates; $ux++) { 
 		$update_upper = $updated_discounts[$i][$ux]["upper_limit"];
 	    $update_id = $updated_discounts[$i][$ux]["id"];
