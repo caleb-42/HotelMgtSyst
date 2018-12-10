@@ -257,6 +257,8 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             },
             change_averagenyt : function(){
                 $scope.guest.roomgrid.getrooms(['deluxe', 'standard']);
+                $scope.guest.roomgrid.room_info.cost = 0;
+                $scope.guest.roomgrid.room_info.rooms = 0;
             },
             activated:'false'
         },
@@ -774,6 +776,8 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             },
             change_averagenyt : function(){
                 $scope.reservation.roomgrid.getrooms(['deluxe', 'standard']);
+                $scope.reservation.roomgrid.room_info.cost = 0;
+                $scope.reservation.roomgrid.room_info.rooms = 0;
             },
             activated:'false'
         }

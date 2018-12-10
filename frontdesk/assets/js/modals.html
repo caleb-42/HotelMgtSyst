@@ -98,18 +98,18 @@
                     <div class="py-4 w-100 row justify-content-between m-0 px-5">
                         <form class = 'w-40 addGuestForm pr-5' autocomplete = "off">
                             <input class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Name"
-                                name="guest_name" />
-                            <input class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Phone Number"
+                                name="guest_name"  ng-model="guest.guest_name"/>
+                            <input class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" ng-model="guest.phone" placeholder="Phone Number"
                                 name="phone_number" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" name="room_number" />
-                            <textarea class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Address" name="contact_address" ></textarea>
+                            <textarea class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-3" placeholder="Address"  ng-model="guest.contact_address" name="contact_address" ></textarea>
                             <div class = "row">
                                 <input ng-model = 'guest.roomgrid.averagenyt' class="form-control col-5 font-fam-Montserrat text-center d-block my-2" placeholder="Nights" name="average_no_of_nights" ng-change = "guest.roomgrid.nytdate = (guest.roomgrid.averagenyt | intervalGetDate); guest.roomgrid.change_averagenyt()" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
                                 <input ng-model = 'guest.roomgrid.nytdate' class="form-control offset-1 col-6 font-fam-Montserrat text-center d-block my-2" placeholder="leaving" name="leaving_date" onkeydown="javascript: return false" />
                             </div>
                             <div class="row justify-content-between">
                                 <div class = "col-5 p-0 my-3 text-center">
-                                    <input class="clearinput form-control w-100 font-fam-Montserrat text-center m-0 d-block my-3" placeholder="Deposit"
-                                    name="deposited" />
+                                    <input ng-model="guest.deposited" class="clearinput form-control w-100 font-fam-Montserrat text-center m-0 d-block my-3" placeholder="Deposit"
+                                    name="deposited" type="number"  onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"/>
                                 </div>
                                 <div class = "col-6 p-0 text-center">
                                     <select class="form-control methpay my-3 w-100 f-13" name="means_of_payment">
@@ -180,7 +180,7 @@
                                 <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
                                         height="70px" /></div>
                                 <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
-                                    ng-disabled = "guest.roomgrid.room_info.cost == 0" onclick="addGuest()">
+                                    ng-disabled = "!guest.phone || !guest.contact_address || !guest.deposited ||!guest.guest_name ||!guest.guest_type_gender ||guest.roomgrid.room_info.cost == 0" onclick="addGuest()">
                                     {{settings.modal.name | limitTo:3}}
                                 </button>
                             </div>
@@ -345,7 +345,7 @@
                                 <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
                                         height="70px" /></div>
                                 <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
-                                    ng-disabled = "reservation.roomgrid.room_info.cost == 0" onclick="addReservation()">
+                                    ng-disabled = "!settings.AutoComplete.obj.email || !settings.AutoComplete.obj.phone_number || !settings.AutoComplete.obj.guest_type_gender || !settings.AutoComplete.obj.guest_name || reservation.roomgrid.room_info.cost == 0" onclick="addReservation()">
                                     {{settings.modal.name | limitTo:3}}
                                 </button>
                             </div>
