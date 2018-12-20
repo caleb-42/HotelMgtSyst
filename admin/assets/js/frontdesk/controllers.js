@@ -413,6 +413,11 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
                 jsonfunc: jsonPost.data("../php1/admin/frontdesk_admin/admin/list_room.php", {})
             }
         },
+        getallrooms: function(){
+            $scope.rooms.itemlist().jsonfunc.then(function(result){
+                $scope.rooms.allrooms = result;
+            });
+        },
         addRoom: function (jsonrm) {
             console.log("new room", jsonrm);
             jsonrm.category = jsonrm.room_category;
@@ -434,8 +439,13 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
             }).then(function (response) {
                 $scope.rooms.jslist.toggleOut();
                 console.log(response);
-                $rootScope.settings.modal.msgprompt(response);
-                $scope.rooms.jslist.createList();
+                res = $rootScope.settings.modal.msgprompt(response);
+                res ? $scope.rooms.jslist.createList() : null;
+                $scope.rooms.itemlist().jsonfunc.then(function(response){
+                    $scope.rooms.jslist.selectedObj =  $filter('filterObj')(response,$scope.rooms.jslist.selected, ['room_id']);
+                    $scope.rooms.jslist.selected = $scope.rooms.jslist.selectedObj.room_id;
+                    console.log($scope.rooms.jslist.selectedObj);
+                });
                 $scope.rooms.jslist.toggleIn();
             });
         },
@@ -872,6 +882,7 @@ frontdeskApp.controller("frontdesk", ["$rootScope", "$scope", 'jsonPost', '$filt
                                 newresvtn.push(rtn);
                             }
                         });
+                        console.log(newresvtn, $scope.reservation.jslist.selected);
                         $scope.reservation.jslist.selectedObj =  $filter('filterObj')(newresvtn,$scope.reservation.jslist.selected, ['reservation_ref']);
                         $scope.reservation.jslist.selected = $scope.reservation.jslist.selectedObj.reservation_ref;
                         console.log($scope.reservation.jslist.selectedObj);

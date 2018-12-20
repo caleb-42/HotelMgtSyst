@@ -756,7 +756,6 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                                 arr[i].no_of_nights = $scope.reservation.roomgrid.averagenyt;
                                 arr[i].room_reservation_date = $scope.reservation.roomgrid.nytstartdate;
                                 console.log('true', resvtn.reserved_date);
-                               
                             }
                         };
                     }else{
