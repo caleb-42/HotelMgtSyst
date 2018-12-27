@@ -1,0 +1,46 @@
+@mixin align($prop, $l:"null", $t:"null", $r:"null", $b:"null", $a:"null", $c:"null", $u: ""){
+    @if ($prop == "border"){
+        @if $a != "none"{
+            border-style: solid !important;
+            border-color: $c !important;
+        }
+        @if $a == "null" {
+            @if $l != "null" {#{$prop}-left-width: #{$l}unquote($string: $u) !important;} 
+            @if $t != "null" {#{$prop}-top-width: #{$t}unquote($string: $u) !important;}
+            @if $r != "null" {#{$prop}-right-width: #{$r}unquote($string: $u) !important;}
+            @if $b != "null" {#{$prop}-bottom-width: #{$b}unquote($string: $u) !important;}
+            
+        }
+    }
+    @if ($prop != "border"){
+        @if $a == "null" {
+            @if $l != "null" {#{$prop}-left: #{$l}unquote($string: $u) !important;} 
+            @if $t != "null" {#{$prop}-top: #{$t}unquote($string: $u) !important;}
+            @if $r != "null" {#{$prop}-right: #{$r}unquote($string: $u) !important;}
+            @if $b != "null" {#{$prop}-bottom: #{$b}unquote($string: $u) !important;}
+        }
+        @else{
+            #{$prop} : $a !important;
+        }
+    }
+}
+
+.nopadding{
+    @include align(padding, $a:0);
+    @include align(margin, $a:0);
+}
+.px-0{
+    @include align(padding, $l:0, $r:0);
+}
+.py-0{
+    @include align(padding, $t:0, $b:0);
+}
+.p-0{
+    @include align(padding, $a:0);
+}
+.b-0{
+    @include align(border, $a:"none");
+}
+.b-1{
+    @include align(border, $t:0, $r:0, $l:0, $b:1, $c: rgba(0,0,0,.1), $u:"px");
+}

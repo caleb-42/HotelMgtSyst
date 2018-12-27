@@ -1,0 +1,34 @@
+/* width and font iteration mixin */
+@mixin propClass($prop, $cls, $num, $unit:"") {
+    .#{$cls}-#{$num}{
+        #{$prop}: #{$num}unquote($string: $unit) !important;
+    }
+}
+@mixin opacClass($prop, $cls, $num, $unit:"") {
+    .#{$cls}-#{$num * 100}{
+        #{$prop}: #{$num}unquote($string: $unit) !important;
+    }
+}
+
+@for $i from 0 through 100
+{
+    @include propClass(width, w, $i, "%");
+    @include propClass(height, h, $i, "%");
+    @include propClass(height, hs, $i, "vh");
+}
+@for $i from 100 through 700
+{
+    @if ($i) % 100 == 0{
+        @include propClass(font-weight, fw, $i, "");
+    }
+}
+@for $i from 12 through 30
+{
+    @include propClass(font-size, f, $i, "px");
+}
+@for $i from 0 through 100
+{
+    @if ($i) % 10 == 0{
+        @include opacClass(opacity, opac, $i/100);
+    }
+}

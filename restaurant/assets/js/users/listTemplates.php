@@ -19,14 +19,13 @@
     </div>
     <div class = "listcont {{!users.jslist.selected ? 'gone' : 'notgone'}}">
         <div class = "listhd pr-3 row">
-            <span class="{{hd.width}}"  ng-class ='{"text-center" : !$first}' ng-repeat = "hd in sessions.listhddata">{{hd.name}}</span>
+            <span class="{{hd.width}} text-center" ng-repeat = "hd in sessions.listhddata">{{hd.name}}</span>
         </div>
         <div class = "hs-70 listbody ovflo-y pb-4" >
             <ul class = "list" >
                 <li class = "itemlistrow row align-items-center f-12" ng-repeat = "session in sessions.jslist.values">
-                    <span class = "username col-4">{{session.user_name}}</span>
-                    <span class = "text-center login col-4">{{session.logged_on_time}}</span>
-                    <span class = "text-center logoff col-4">{{session.logged_off_time}}</span>
+                    <span class = "text-center login col-6">{{session.logged_on_time}}</span>
+                    <span class = "text-center logoff col-6">{{session.logged_off_time}}</span>
                 </li>
             </ul>
         </div>

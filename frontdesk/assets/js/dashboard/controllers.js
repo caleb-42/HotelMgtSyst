@@ -82,6 +82,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
     }
 
     $scope.guest = {
+        inputs:{},
         itemlist: function () {
             return {
                 jsonfunc: jsonPost.data("../php1/front_desk/list_guests_all.php", {})
@@ -390,6 +391,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             $scope.booking.itemlist(id).jsonfunc.then(function(result){
                 console.log(result);
                 response = [];
+                if($scope.guest.jslist.selectedObj == undefined) return;
                 $scope.guest.jslist.selectedObj.rooms = [];
                 if(result){
                     result.forEach(function(elem){

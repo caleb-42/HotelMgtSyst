@@ -119,11 +119,11 @@ body {
     overflow: hidden;
     background: #333;
 }
-
+/* 
 .navig ul {
     width: 100%;
 }
-
+ */
 .navig li {
     width: 300%;
     font-size: 1.2em;
@@ -137,7 +137,7 @@ body {
     opacity: 1;
     background: #111;
 }
-
+/* 
 .main {
     width: 100%;
 }
@@ -149,7 +149,7 @@ body {
 .Users .prime-hd {
     width: 55%;
     float: left;
-}
+} */
 .Users .main-sidebar-right {
     width: 45%;
     float: right;
@@ -203,20 +203,11 @@ body {
     right: 0;
     /* border-left: .5px solid rgba(0,0,0,.2);*/
 }
-
-.statusbar {
-    height: 9vh;
-}
-
-.tabnav {
-    height: 70%;
-    bottom: 0;
-}
-
+/* 
 .vanishsearch {
     width: 0 !important;
     opacity: 0;
-}
+} */
 
 .tabpill {
     color: white !important;

@@ -63,13 +63,17 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
             addUser = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".addUserForm").serializeObject();
+                jsonForm.role = scope.users.inputs.role == undefined ? "" : scope.users.inputs.role;
                 console.log(scope.users);
                 scope.users.addUser(jsonForm);
+                scope.users.inputs = {};
             };
             updateUser = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".updateUserForm").serializeObject();
+                jsonForm.new_role = scope.users.inputs.new_role == undefined ? "" : scope.users.inputs.new_role;
                 scope.users.updateUser(jsonForm);
+                scope.users.inputs = {};
             };
             addDiscount = function (){
                 $rootScope.settings.modal.adding = true
@@ -86,13 +90,19 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                 $rootScope.settings.modal.adding = true
                 if(form == '.addCustomersForm'){
                     jsonForm = $(form).serializeObject();
+                    jsonForm.gender = scope.customers.guest_type_gender == undefined ? "" : scope.customers.guest_type_gender;
+                    console.log(jsonForm);
                     scope.customers.addCustomer(jsonForm);
+                    scope.customers.inputs = {}
                 }
             };
             updateCustomer = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".updateCustomersForm").serializeObject();
+                jsonForm.new_gender = scope.customers.new_gender == undefined ? "" : scope.customers.new_gender;
+                console.log(jsonForm);
                 scope.customers.updateCustomer(jsonForm);
+                scope.customers.inputs = {};
             };
             debtpaydata = function () {
                 $rootScope.settings.modal.adding = true
@@ -105,6 +115,7 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jso
                     return;
                 }
                 scope.listtranxs.debtpay(jsonForm);
+                scope.listtranxs.inputs = {};
             };
             if (scope.sidebarnav.navig.activeNav == "Sales") {
                 scope.buyer.customer.jsonform = function (a) {

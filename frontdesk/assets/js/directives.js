@@ -62,21 +62,25 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".updateRoomForm").serializeObject();
                 console.log(scope.rooms.jslist.new_room_category);
-                jsonForm.new_room_category = scope.rooms.jslist.new_room_category ? scope.rooms.jslist.new_room_category : "";
+                jsonForm.new_room_category = scope.rooms.inputs.new_room_category ? scope.rooms.inputs.new_room_category : "";
                 scope.rooms.updateRoom(jsonForm);
+                scope.rooms.inputs = {};
             };
             addRoom = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".addRoomForm").serializeObject();
                 //console.log();
-                jsonForm.room_category = scope.rooms.jslist.room_category;
+                jsonForm.room_category = scope.rooms.inputs.room_category == undefined ? "" : scope.rooms.inputs.room_category;
                 scope.rooms.addRoom(jsonForm);
+                scope.rooms.inputs = {};
             };
             addUser = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".addUserForm").serializeObject();
+                jsonForm.role = scope.users.inputs.role == undefined ? "" : scope.users.inputs.role ;
                 console.log(scope.users);
                 scope.users.addUser(jsonForm);
+                scope.users.inputs = {};
             };
             addGuest = function () {
                 $rootScope.settings.modal.adding = true;
@@ -105,9 +109,10 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
             updateGuest = function () {
                 $rootScope.settings.modal.adding = true;
                 jsonForm = $(".updateGuestForm").serializeObject();
-                jsonForm.new_guest_type_gender = scope.guest.guest_type_gender ? scope.guest.guest_type_gender : jsonForm.guest_type_gender;
+                jsonForm.new_guest_type_gender = scope.guest.inputs.guest_type_gender ? scope.guest.inputs.guest_type_gender : jsonForm.guest_type_gender;
                 console.log(jsonForm);
                 scope.guest.updateGuest(jsonForm);
+                scope.guest.inputs = {};
             };
             updateReservation = function () {
                 $rootScope.settings.modal.adding = true;
@@ -195,7 +200,9 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
             updateUser = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".updateUserForm").serializeObject();
+                jsonForm.new_role = scope.users.inputs.new_role == undefined ? "" : scope.users.inputs.new_role;
                 scope.users.updateUser(jsonForm);
+                scope.users.inputs = {};
             };
             payBalance = function () {
                 $rootScope.settings.modal.adding = true

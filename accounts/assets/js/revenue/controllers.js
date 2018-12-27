@@ -69,7 +69,7 @@ revenueApp.controller("transactionhistory", ["$rootScope", "$scope", 'jsonPost',
         listhddata : [
             {
                 name: "Ref",
-                body: "reservation_ref",
+                body: "booking_ref",
                 width: "col-2",
             },
             {

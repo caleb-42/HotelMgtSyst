@@ -76,11 +76,11 @@
 
                     <div class = "row w-100">
                         <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Rooms</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? (guest.jslist.selectedObj.rooms | arraytostring) : '2, 4, 7'}} </p>
+                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? (guest.jslist.selectedObj.rooms | arraytostring) : ''}} </p>
                         <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Phone Number</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.phone_number : '08130439102'}} </p>
+                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.phone_number : ''}} </p>
                         <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Address</h6>
-                        <p class = "  col-8  f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.contact_address : 'Conversion of Architectural Blueprints to well-designed Structural layouts (foundaton, beams, columns and bases, slabs'}} </p>
+                        <p class = "  col-8  f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.contact_address : ''}} </p>
                     </div>
 
                 </div>

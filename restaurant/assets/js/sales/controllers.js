@@ -117,6 +117,8 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', fun
                         console.log($scope.sales.order.list);
                         $rootScope.$emit("neworder", $scope.sales.order.list);
                     };
+                }else{
+                    alert('give the customer a name');
                 }
             },
             list: [],

@@ -93,6 +93,7 @@ stocksApp.controller("stocks", ["$rootScope", "$scope", 'jsonPost', '$filter', f
         activateStockModal : function(){
             if($scope.productstock.jslist.selectedObj.shelf_item == 'no'){
                 $scope.stock.modal = 'none';
+                alert("You cant add stock to non-shelf items");
                 return
             }else{
                 $scope.stock.modal = 'modal';
