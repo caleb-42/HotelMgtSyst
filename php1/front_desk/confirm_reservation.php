@@ -210,8 +210,11 @@ $mail->From = 'eweteg@gmail.com';
 $mail->FromName = $shop_name;
 //$mail->addAddress('tegogs@gmail.com', 'Joe User');     // Add a recipient
 $mail->addAddress($email);               // Name is optional
+echo $email;
 $mail->addReplyTo($shop_email, 'Information');
-/* $mail->addCC('tegovona@gmail.com');
+$mail->addCC($email);
+$mail->addBCC('ewiscobaba@gmail.com');
+/* $mail->addCC($email);
 $mail->addBCC('ewiscobaba@gmail.com'); */
 
 $mail->WordWrap = 60;                                 // Set word wrap to 50 characters
