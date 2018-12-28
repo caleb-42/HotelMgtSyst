@@ -52,6 +52,10 @@
                                         </li>
                                     </ul>
                                 </div>
+                                
+                            </div>
+                            <div class="row pt-3 justify-content-center w-100">
+                                <p class="{{buyer.customer.paybal.msgcolor}} report fw-600 text-center w-100 f-14">{{buyer.customer.paybal.msg}}</p>
                             </div>
                         </div>
                         <div class="historyPanel float-right w-50 pl-3 pr-2">
@@ -66,6 +70,17 @@
                                 <div class="col-8 my-3 opac-50 ">{{buyer.customer.selected.phone_number}}</div>
                                 <div class="col-4 my-3 opac-50  pl-4">Address</div>
                                 <div class="col-8 my-3 opac-50 ">{{buyer.customer.selected.contact_address}}</div>
+                            </div>
+                            <div class="row px-4">
+                                <input ng-disabled = "buyer.customer.selected.full_name == 'Buyer' || buyer.customer.selected.outstanding_balance == '0'" placeholder="Balance" class="form-control customer-search f-14 my-3 col-4" ng-model="buyer.customer.paybal.balance" />
+                                <select ng-model="buyer.customer.paybal.means_of_payment" ng-disabled = "buyer.customer.selected.full_name == 'Buyer' || buyer.customer.selected.outstanding_balance == '0'" class="form-control methpay my-3 offset-1 col-4 f-13"
+                                name="means_of_payment">
+                                    <option value="Cash">Cash</option>
+                                    <option value="Cheque">Cheque</option>
+                                    <option value="POS">POS</option>
+                                    <option value="Credit">Credit</option>
+                                </select>
+                                <button ng-click = "buyer.customer.paybal.debtpay()" ng-disabled = "buyer.customer.selected.full_name == 'Buyer' || buyer.customer.selected.outstanding_balance == '0'" class="btn btn-success my-3 px-1 offset-1 f-14 col-2">Pay</button>
                             </div>
                         </div>
                         <div class="clr"></div>

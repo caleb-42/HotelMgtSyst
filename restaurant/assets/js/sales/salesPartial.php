@@ -1,4 +1,4 @@
-<div ng-controller="sales">
+<div ng-controller="sales" ng-init = "sales.makeCustomerList();">
 <div class="prime-hd float-left anim  {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.primeclass : 'w-100'}}">
     <div class="statusbar hs-9 grn row  align-items-end pl-1">
         <div class="tabnav h-70 col-7 row">
@@ -58,7 +58,7 @@
                 <div class="col-3 m-0" ng-click="buyer.customer.selected = buyer.customer.selectedDefault">
                     <div class="{{buyer.customer.selected.gender == 'male' ? 'avatar-img' : 'avatar-img-female'}}"></div>
                 </div>
-                <div class="col-6 row  justify-content-start px-1 h-100  align-items-center" ng-click="buyer.customer.makeCustomerList(); buyer.showPanel = 'search'; settings.modal.active = 'customer'; settings.modal.name = 'Select Customer'; settings.modal.size = 'lg' " data-toggle="modal" data-target="#Customer">
+                <div class="col-6 row  justify-content-start px-1 h-100  align-items-center" ng-click=" buyer.showPanel = 'search'; settings.modal.active = 'customer'; settings.modal.name = 'Select Customer'; settings.modal.size = 'lg' " data-toggle="modal" data-target="#Customer">
                     <span class="m-0 p-0 buyerbio">
                         <p class="m-0 f-17 font-fam-Montserrat pointer excerpt" style = "width:150px;">{{buyer.customer.selected.full_name == buyer.customer.selectedDefault.full_name ? 'Select Customer' : buyer.customer.selected.full_name}}</p>
                         <p class="f-13 m-0 font-fam-Montserrat opac-70 pointer" ng-class = "{'gone' : buyer.customer.selected.full_name == buyer.customer.selectedDefault.full_name}">{{buyer.customer.selected.type}} | {{buyer.customer.selected.outstanding_balance}}</p></span>
