@@ -29,7 +29,7 @@
                             <div class="userlisthd row justify-content-between px-4">
                                 <h4 class=" mt-4 py-2 font-fam-Montserrat-bold">Manage Rooms</h4>
                                 <div class="mt-4">
-                                    <!-- <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation';settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';rooms.roomgrid.getrooms(['deluxe','standard']);  guest.getguest({value : 'guest_name'});" data-toggle="modal" data-target="#crud">Add Reservation</button> -->
+                                    <!-- <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation';settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';rooms.roomgrid.getrooms(['deluxe','standard']);  reservation.guestAutoComplete.getGuest({value : 'guest_name'});" data-toggle="modal" data-target="#crud">Add Reservation</button> -->
                                 </div>
                             </div>
                                 <roomgrid></roomgrid>
@@ -92,7 +92,7 @@
                             <div class="userlisthd row justify-content-between">
                                 <h4 class=" my-4 py-2 font-fam-Montserrat-bold">Manage Reservation</h4>
                                 <div class="my-4">
-                                    <button class="btn btn-info mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation';settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';reservation.roomgrid.getrooms(['deluxe','standard']);  guest.getguest({value : 'guest_name'});" data-toggle="modal" data-target="#crud">Add</button>
+                                    <button class="btn btn-info mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation';settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';reservation.roomgrid.getrooms(['deluxe','standard']);  reservation.guestAutoComplete.getGuest({value : 'guest_name'});" data-toggle="modal" data-target="#crud">Add</button>
                                     <button class="btn btn-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation'; settings.modal.name = 'Update Reservation'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud" ng-disabled="!reservation.jslist.selected" >Update</button>
                                     <button class = "btn purp-back wht opac-70 font-fam-Montserrat f-12" ng-disabled="!reservation.jslist.selected || reservation.jslist.selectedObj.booked == 'YES'" ng-click = "reservation.state()" data-toggle="modal" data-target="#crud">{{reservation.jslist.selectedObj.deposit_confirmed == 'NO' ? 'Confirm' : 'Claim'}}</button>
                                     <button class = "btn btn-danger font-fam-Montserrat f-12" ng-disabled="!reservation.jslist.selected" ng-click = "reservation.deleteReservation()">Cancel</button>

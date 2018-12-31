@@ -73,3 +73,54 @@ app.directive('roomlist', ['$rootScope', '$filter', function ($rootScope, $filte
 }]);
 
 
+app.directive('categorylist', ['$rootScope', '$filter', function ($rootScope, $filter) {
+    return {
+        restrict: 'E',
+        templateUrl: './assets/js/rooms/listTemplates.php?list=category',
+
+        scope: false,
+
+        link: function (scope, element, attrs) {
+            var jslistObj;
+            scope.category.jslist = {
+                createList: function () {
+                    listdetails = scope.category.itemlist();
+                    jsonlist = listdetails.jsonfunc;
+                    jsonlist.then(function (result) {
+                        console.log(result);
+                        scope.category.jslist.values = result;
+                        scope.category.jslist.selected = null;
+                    });
+                    scope.category.listhddata = [
+                        {
+                            name: "Category",
+                            width: "col-4",
+                        },
+                        {
+                            name: "Rate",
+                            width: "col-4",
+                        },
+                        {
+                            name: "Added By",
+                            width: "col-4",
+                        }
+                    ];
+                },
+                select: function (index, id) {
+                    scope.category.jslist.selected = id;
+                    scope.category.jslist.selectedObj = scope.category.jslist.newItemArray[index];
+                    console.log(scope.category.jslist.selectedObj);
+                },
+                toggleOut: function () {
+                    $(".listcont").fadeOut(200);
+                },
+                toggleIn: function () {
+                    $(".listcont").delay(500).fadeIn(200);
+                }
+            }
+            scope.category.jslist.createList();
+        }
+    };
+}]);
+
+

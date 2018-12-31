@@ -32,6 +32,9 @@ app.controller("appctrl", ["$rootScope", "$scope","$filter", function ($rootScop
                 }
             }
         },
+        logger: function(obj){
+            console.log(obj);
+        },
         date : new Date().toString(),
         ydate : $filter('intervalGetDate')(-1, new Date().toString()),
         userDefinition : function (user, role) {

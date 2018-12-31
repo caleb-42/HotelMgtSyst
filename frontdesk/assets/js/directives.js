@@ -31,8 +31,11 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
                     console.log(scope.users);
                     loadJson2Form(scope.users.jslist.selectedObj, '.inpRead');
                 } else if ($rootScope.settings.modal.name == "Update Guest") {
-                    console.log(scope.users);
+                    console.log(scope.guest);
                     loadJson2Form(scope.guest.jslist.selectedObj, '.inpRead');
+                } else if ($rootScope.settings.modal.name == "Update Category") {
+                    console.log(scope.category);
+                    loadJson2Form(scope.category.jslist.selectedObj, '.inpRead');
                 } else if ($rootScope.settings.modal.name == "Update Reservation") {
                     console.log(scope.reservation);
                     loadJson2Form(scope.reservation.jslist.selectedObj, '.inpRead');
@@ -74,6 +77,18 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
                 scope.rooms.addRoom(jsonForm);
                 scope.rooms.inputs = {};
             };
+            addCategory = function () {
+                $rootScope.settings.modal.adding = true
+                jsonForm = $(".addCategoryForm").serializeObject();
+                scope.category.addCategory(jsonForm);
+                scope.category.inputs = {};
+            };
+            updateCategory = function () {
+                $rootScope.settings.modal.adding = true
+                jsonForm = $(".updateCategoryForm").serializeObject();
+                scope.category.updateCategory(jsonForm);
+                scope.category.inputs = {};
+            };
             addUser = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".addUserForm").serializeObject();
@@ -86,25 +101,14 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
                 $rootScope.settings.modal.adding = true;
                 jsonForm = $(".addGuestForm").serializeObject();
                 jsonForm.room_outstanding = 0;
-                jsonForm.total_cost = scope.guest.roomgrid.room_info.cost;
-                jsonForm.guest_type_gender = scope.guest.guest_type_gender;
-                jsonForm.total_rooms_booked = scope.guest.roomgrid.room_info.rooms;
-                jsonForm.balance = scope.guest.roomgrid.room_info.cost - jsonForm.deposited;
+                jsonForm.total_cost = scope.guest.addGuestForm.roomsProps.selectedRooms.cost;
+                jsonForm.guest_type_gender = scope.guest.inputs.guest_type_gender;
+                jsonForm.total_rooms_booked = scope.guest.addGuestForm.roomsProps.selectedRooms.num;
+                jsonForm.balance = scope.guest.addGuestForm.roomsProps.selectedRooms.cost - jsonForm.deposited;
                 jsonForm.frontdesk_rep = $rootScope.settings.user;
-                jsonForm.rooms = [];
-                arryy = Object.values(scope.guest.roomgrid.room_details.rooms);
-                arryy.forEach(function (rm) {
-                    if (rm.arr) {
-                        rm.arr.forEach(function (elem) {
-                            if (elem.selected == true) {
-                                elem.room_total_cost = (parseInt(elem.no_of_nights) * parseInt(elem.room_rate));
-                                jsonForm.rooms.push(elem);
-                            }
-                        });
-                    }
-                });
+                jsonForm.rooms = scope.guest.addGuestForm.roomsProps.selectedRooms.selected;
                 console.log(jsonForm);
-                scope.guest.addGuest(jsonForm);
+                //scope.guest.addGuest(jsonForm);
             };
             updateGuest = function () {
                 $rootScope.settings.modal.adding = true;
@@ -245,30 +249,10 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
                 reset();
             });
             function reset(){
-                if(scope.reservation && scope.guest){
-                    scope.reservation.roomgrid.activated = false;
-                    scope.guest.roomgrid.activated = false;
-                    scope.guest.roomgrid.averagenyt = 0;
-                    scope.guest.roomgrid.nytdate = $filter('intervalGetDate')(0,$rootScope.settings.date);
-                    scope.reservation.roomgrid.averagenyt = 0;
-                    scope.reservation.roomgrid.nytstartdate = $filter('intervalGetDate')(0,$rootScope.settings.date);
-                    scope.reservation.roomgrid.nytdate = $filter('intervalGetDate')(0,$rootScope.settings.date);
-                }
-                
+                if(scope.guest) scope.guest.inputs = {}; 
+                if(scope.rooms) scope.rooms.inputs = {}; 
+                if(scope.category) scope.category.inputs = {};
             }
         }
     }
 }]);
-/* app.directive('modalentry', ['$rootScope', 'jsonPost', function ($rootScope, jsonPost, $filter) {
-    return {
-        restrict: 'A',
-        template : '',
-        scope: {
-            
-        },
-        link: function (scope, element, attrs) {
-
-        }
-
-    }
-}]); */
