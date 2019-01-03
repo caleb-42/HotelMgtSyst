@@ -40,26 +40,12 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
         }
     };
 
-    $scope.booking = {
-        itemlist: function (id) {
-            return {
-                jsonfunc: jsonPost.data("../php1/front_desk/list_bookings_custom.php", {
-                    col: 'guest_id',
-                    val: id
-                })
-            }
-        }
-    }
-
     $scope.guest = {
         init: function(){
             $rootScope.$on('guestselect', function (evt, param) {
-                console.log($scope.guest.getRoomBooking(param.guest_id));
-                $scope.booking.itemlist(param.guest_id).jsonfunc.then(function (result) {
-                    $scope.booking.rooms = result ? result : [];
-                    console.log(result);
-                });
+                $scope.guest.roomBookings.getRoomBooking(param.guest_id);
             });
+
             $scope.$watch('guest.inputs.averagenyt', function(newVal){
                 $scope.guest.addGuestForm.roomsProps.activePane = newVal ? 'category' : '';
                 $scope.guest.addGuestForm.roomsProps.selectedRooms = {
@@ -77,11 +63,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             }
         },
         addGuestForm : {
-            roomInfo:{
-
-            },
             getAvailablerooms: function(nyts, end_date, trigger){
-                
                 start_date = $filter('intervalGetDate')(0, new Date().toString());
                 var result;
                 if(trigger == "nyts"){
@@ -94,6 +76,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     startDate: start_date,
                     nights: nyts,
                     endDate: end_date,
+                    flag: 'booking'
                 }).then(function (result) {
                     $scope.guest.addGuestForm.roomsProps.rooms = result;
                     console.log(result);
@@ -175,9 +158,13 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 checkin_data: $filter('json')(jsonguest)
             }).then(function (response) {
                 console.log(response);
-                $scope.guest.roomgrid.averagenyt = 0;
-                $scope.guest.roomgrid.room_info.rooms = 0;
-                $scope.guest.roomgrid.room_info.cost = 0;
+                $scope.guest.addGuestForm.roomsProps.selectedRooms = {
+                    categories:{},
+                    num: 0,
+                    cost: 0,
+                    selected: []
+                }
+                $scope.guest.inputs = {};
                 $scope.guest.jslist.toggleOut();
                 res = $rootScope.settings.modal.msgprompt(response);
                 res ? $scope.guest.jslist.createList() : null;
@@ -190,7 +177,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             });
         },
         checkIn: function (jsonguest) {
-            //console.log("new checkIn", jsonform);
+            console.log("new checkIn", jsonguest);
             jsonguest.guest_id = $scope.guest.jslist.selectedObj.guest_id;
             jsonguest.guest_name = $scope.guest.jslist.selectedObj.guest_name;
             console.log("new checkIn", jsonguest);
@@ -198,9 +185,13 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             jsonPost.data("../php1/front_desk/checkin.php", {
                 checkin_data: $filter('json')(jsonguest)
             }).then(function (response) {
-                $scope.guest.roomgrid.averagenyt = 0;
-                $scope.guest.roomgrid.room_info.rooms = 0;
-                $scope.guest.roomgrid.room_info.cost = 0;
+                $scope.guest.addGuestForm.roomsProps.selectedRooms = {
+                    categories:{},
+                    num: 0,
+                    cost: 0,
+                    selected: []
+                }
+                $scope.guest.inputs = {};
                 console.log(response);
                 $scope.guest.jslist.toggleOut();
                 res = $rootScope.settings.modal.msgprompt(response);
@@ -209,6 +200,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     $scope.guest.jslist.selectedObj = $filter('filterObj')(response, $scope.guest.jslist.selected, ['guest_id']);
                     $scope.guest.jslist.selected = $scope.guest.jslist.selectedObj.guest_id;
                     console.log($scope.guest.jslist.selectedObj);
+                    $scope.guest.roomBookings.getRoomBooking($scope.guest.jslist.selected);
                 });
                 $scope.guest.jslist.toggleIn();
             });
@@ -232,15 +224,16 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     $scope.guest.jslist.selectedObj = $filter('filterObj')(response, $scope.guest.jslist.selected, ['guest_id']);
                     $scope.guest.jslist.selected = $scope.guest.jslist.selectedObj.guest_id;
                     console.log($scope.guest.jslist.selectedObj);
+                    $scope.guest.roomBookings.getRoomBooking($scope.guest.jslist.selected);
                 });
 
                 $scope.guest.jslist.toggleIn();
             });
         },
         payBalance: function (jsonguest) {
-            jsonguest.booking_ref = $scope.booking.rooms[0].booking_ref;
-            jsonguest.guest_name = $scope.booking.rooms[0].guest_name;
-            jsonguest.guest_id = $scope.booking.rooms[0].guest_id;
+            jsonguest.booking_ref = $scope.guest.roomBookings.rooms[0].booking_ref;
+            jsonguest.guest_name = $scope.guest.roomBookings.rooms[0].guest_name;
+            jsonguest.guest_id = $scope.guest.roomBookings.rooms[0].guest_id;
             jsonguest.frontdesk_rep = $rootScope.settings.user;
             console.log("new payment", jsonguest);
 
@@ -248,6 +241,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 payment_details: $filter('json')(jsonguest)
             }).then(function (response) {
                 console.log(response);
+                $scope.guest.inputs = {};
                 $scope.guest.jslist.toggleOut();
                 res = $rootScope.settings.modal.msgprompt(response);
                 res ? $scope.guest.jslist.createList() : null;
@@ -255,6 +249,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     $scope.guest.jslist.selectedObj = $filter('filterObj')(response, $scope.guest.jslist.selected, ['guest_id']);
                     $scope.guest.jslist.selected = $scope.guest.jslist.selectedObj.guest_id;
                     console.log($scope.guest.jslist.selectedObj);
+                    $scope.guest.roomBookings.getRoomBooking($scope.guest.jslist.selected);
                 });
                 $scope.guest.jslist.toggleIn();
             });
@@ -265,6 +260,7 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             jsonPost.data("../php1/front_desk/admin/edit_guest.php", {
                 update_guest: $filter('json')(jsonguest)
             }).then(function (response) {
+                $scope.guest.inputs = {};
                 $scope.guest.jslist.toggleOut();
                 console.log(response);
                 res = $rootScope.settings.modal.msgprompt(response);
@@ -273,22 +269,8 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     $scope.guest.jslist.selectedObj = $filter('filterObj')(response, $scope.guest.jslist.selected, ['guest_id']);
                     $scope.guest.jslist.selected = $scope.guest.jslist.selectedObj.guest_id;
                     console.log($scope.guest.jslist.selectedObj);
+                    $scope.guest.roomBookings.getRoomBooking($scope.guest.jslist.selected);
                 });
-                $scope.guest.jslist.toggleIn();
-            });
-        },
-        deleteGuest: function () {
-            jsonguest = {};
-            jsonguest.guest = [$scope.guest.jslist.selectedObj];
-            console.log("new users", jsonguest);
-            jsonPost.data("../php1/restaurant_bar/admin/del_user.php", {
-                del_users: $filter('json')(jsonguest)
-            }).then(function (response) {
-                $scope.guest.jslist.toggleOut();
-                console.log(response);
-                $scope.guest.jslist.createList();
-                $scope.guest.jslist.selectedObj = {};
-                $scope.guest.jslist.selected = null;
                 $scope.guest.jslist.toggleIn();
             });
         },
@@ -311,40 +293,68 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     });
                 return selectedBookings;
             },
-            selected: []
-        },
-        getRoomBooking: function (id) {
-            $scope.booking.itemlist(id).jsonfunc.then(function (result) {
-                console.log(result);
-                response = [];
-                if ($scope.guest.jslist.selectedObj == undefined) return;
-                $scope.guest.jslist.selectedObj.rooms = [];
-                if (result) {
-                    result.forEach(function (elem) {
-                        console.log(id, elem);
-                        $scope.guest.jslist.selectedObj.rooms.push(elem.room_number);
-                        response.push(elem);
+            selected: [],
+            getRoomBooking: function (id) {
+                jsonPost.data("../php1/front_desk/list_bookings_custom.php", {
+                    col: 'guest_id',
+                    val: id
+                }).then(function (result) {
+                    console.log(result);
+                    $scope.guest.roomBookings.roomNumbers = [];
+                    $scope.guest.roomBookings.rooms = result || [];
+                    $scope.guest.roomBookings.rooms.forEach(function (elem) {
+                        $scope.guest.roomBookings.roomNumbers.push(elem.room_number);
                     });
-                }
-                return response;
-            });
+                });
+            }
         }
     };
 
     $scope.reservation = {
-        itemlist: function () {
-            return {
-                jsonfunc: jsonPost.data("../php1/front_desk/list_reservations.php", {})
-            }
+        init: function(){
+
+            $scope.$watch('reservation.inputs.averagenyt', function(newVal){
+                $scope.reservation.addResvtnForm.roomsProps.activePane = newVal ? 'category' : '';
+                $scope.reservation.addResvtnForm.roomsProps.selectedRooms = {
+                    categories:{},
+                    num: 0,
+                    cost: 0,
+                    selected: []
+                };
+            });
+        },
+        inputs:{},
+        itemlist: function (type, callback) {
+            jsonPost.data("../php1/front_desk/list_reservations.php", {}).then(function(resvtn){
+                if(type == 'filter') {
+                    newresvtn = [];
+                        resvtn.forEach(function(rtn){
+                            if(rtn.booked == 'YES') return;
+                            count = true;
+                            rtn.sum_cost = parseInt(rtn.room_total_cost);
+                            newresvtn.forEach(function(res){
+                                if(rtn.reservation_ref == res.reservation_ref && rtn.guest_id == res.guest_id){
+                                    res.sum_cost +=  parseInt(rtn.room_total_cost);
+                                    count = false;
+                                }
+                            });
+                            if(count){
+                                newresvtn.push(rtn);
+                            }
+                        });
+                    callback(newresvtn);
+                }else{
+                    callback(resvtn);
+                }
+            })
         },
         guestAutoComplete: {
             getGuest : function (obj) {
                 jsonPost.data("../php1/front_desk/list_guests_all.php", {}).then(function (result) {
-                    $scope.reservation.guestAutoComplete.guestArray = result;
-                    $scope.reservation.guestAutoComplete.guestnamesArray = 
+                    $scope.reservation.guestAutoComplete.guestArray = result || [];
+                    $scope.reservation.guestAutoComplete.guestNamesArray = 
                     $filter('duplicatekey')(result, obj);
                 });
-                console.log(this);
             }
         },
         state: function () {
@@ -362,38 +372,36 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
         },
         addReservation: function (jsonresvtn) {
             console.log("new Reservation", jsonresvtn);
-
+            
             jsonPost.data("../php1/front_desk/add_reservation.php", {
                 reservation_data: $filter('json')(jsonresvtn)
             }).then(function (response) {
                 console.log(response);
-                $scope.reservation.roomgrid.averagenyt = 0;
-                $scope.reservation.roomgrid.room_info.rooms = 0;
-                $scope.reservation.roomgrid.room_info.cost = 0;
+                $scope.guest.addGuestForm.roomsProps.selectedRooms = {
+                    categories:{},
+                    num: 0,
+                    cost: 0,
+                    selected: []
+                };
+                
+                $scope.reservation.inputs.nytstartdate = $rootScope.settings.getDate(0);
+                $scope.reservation.inputs.leaveDate = $rootScope.settings.getDate(0);
                 $scope.reservation.jslist.toggleOut();
                 res = $rootScope.settings.modal.msgprompt(response);
-                res ? $scope.reservation.jslist.createList() : null;
+                if(res) {
+                    $scope.reservation.jslist.createList()
+                } else{
+                    return;
+                }
 
 
-                $scope.reservation.itemlist().jsonfunc.then(function (result) {
-                    newresvtn = [];
-                    result.forEach(function (rtn) {
-                        count = true;
-                        for (var i = 0; i < newresvtn.length; i++) {
-                            res = newresvtn[i];
-                            if (rtn.reservation_ref == res.reservation_ref && rtn.guest_id == res.guest_id) {
-                                count = false;
-                            }
-                        };
-                        if (count) {
-                            newresvtn.push(rtn);
-                        }
-                    });
+                $scope.reservation.itemlist('filter', function(newresvtn){
+                    $scope.reservation.jslist.values = [];
+                    $scope.reservation.jslist.values = newresvtn;
                     $scope.reservation.jslist.selectedObj = $filter('filterObj')(newresvtn, $scope.reservation.jslist.selected, ['reservation_ref']);
                     $scope.reservation.jslist.selected = $scope.reservation.jslist.selectedObj.reservation_ref;
                     console.log($scope.reservation.jslist.selectedObj);
                 });
-
 
                 $scope.reservation.jslist.toggleIn();
             });
@@ -407,28 +415,21 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 console.log(response);
                 $scope.reservation.jslist.toggleOut();
                 res = $rootScope.settings.modal.msgprompt(response);
-                res ? $scope.reservation.jslist.createList() : null;
+                if(res) {
+                    $scope.reservation.jslist.createList()
+                } else{
+                    return;
+                }
 
-                $scope.reservation.itemlist().jsonfunc.then(function (result) {
-                    newresvtn = [];
-                    result.forEach(function (rtn) {
-                        count = true;
-                        for (var i = 0; i < newresvtn.length; i++) {
-                            res = newresvtn[i];
-                            if (rtn.reservation_ref == res.reservation_ref && rtn.guest_id == res.guest_id) {
-                                count = false;
-                            }
-                        };
-                        if (count) {
-                            newresvtn.push(rtn);
-                        }
-                    });
+                $scope.reservation.itemlist('filter', function(newresvtn){
+                    $scope.reservation.jslist.values = [];
+                    $scope.reservation.jslist.values = newresvtn;
                     $scope.reservation.jslist.selectedObj = $filter('filterObj')(newresvtn, $scope.reservation.jslist.selected, ['reservation_ref']);
                     $scope.reservation.jslist.selected = $scope.reservation.jslist.selectedObj.reservation_ref;
                     console.log($scope.reservation.jslist.selectedObj);
                 });
-                $scope.resvtn.jslist.createList()
-                $scope.resvtn.jslist.selected = null; $scope.resvtn.jslist.selectedObj = {};
+                $scope.reservation.resvtn.jslist.createList()
+                $scope.reservation.resvtn.jslist.selected = null; $scope.reservation.resvtn.jslist.selectedObj = {};
                 $scope.reservation.jslist.toggleIn();
             });
         },
@@ -461,29 +462,22 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 console.log(response);
                 $scope.reservation.jslist.toggleOut();
                 res = $rootScope.settings.modal.msgprompt(response);
-                res ? $scope.reservation.jslist.createList() : null;
+                if(res) {
+                    $scope.reservation.jslist.createList()
+                } else{
+                    return;
+                }
 
-                $scope.reservation.itemlist().jsonfunc.then(function (result) {
-                    newresvtn = [];
-                    result.forEach(function (rtn) {
-                        count = true;
-                        for (var i = 0; i < newresvtn.length; i++) {
-                            res = newresvtn[i];
-                            if (rtn.reservation_ref == res.reservation_ref && rtn.guest_id == res.guest_id) {
-                                count = false;
-                            }
-                        };
-                        if (count) {
-                            newresvtn.push(rtn);
-                        }
-                    });
+                $scope.reservation.itemlist('filter', function(newresvtn){
+                    $scope.reservation.jslist.values = [];
+                    $scope.reservation.jslist.values = newresvtn;
                     $scope.reservation.jslist.selectedObj = $filter('filterObj')(newresvtn, $scope.reservation.jslist.selected, ['reservation_ref']);
                     $scope.reservation.jslist.selected = $scope.reservation.jslist.selectedObj.reservation_ref;
                     console.log($scope.reservation.jslist.selectedObj);
                 });
 
-                $scope.resvtn.jslist.createList()
-                $scope.resvtn.jslist.selected = null; $scope.resvtn.jslist.selectedObj = {};
+                $scope.reservation.resvtn.jslist.createList()
+                $scope.reservation.resvtn.jslist.selected = null; $scope.reservation.resvtn.jslist.selectedObj = {};
                 $scope.reservation.jslist.toggleIn();
             });
         },
@@ -499,238 +493,276 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 console.log(response);
                 $scope.reservation.jslist.toggleOut();
                 res = $rootScope.settings.modal.msgprompt(response);
-                res ? $scope.reservation.jslist.createList() : null;
+                if(res) {
+                    $scope.reservation.jslist.createList()
+                } else{
+                    return;
+                }
 
-                $scope.reservation.itemlist().jsonfunc.then(function (result) {
-                    newresvtn = [];
-                    result.forEach(function (rtn) {
-                        count = true;
-                        for (var i = 0; i < newresvtn.length; i++) {
-                            res = newresvtn[i];
-                            if (rtn.reservation_ref == res.reservation_ref && rtn.guest_id == res.guest_id) {
-                                count = false;
-                            }
-                        };
-                        if (count) {
-                            newresvtn.push(rtn);
-                        }
-                    });
+                $scope.reservation.itemlist('filter', function(newresvtn){
+                    $scope.reservation.jslist.values = [];
+                    $scope.reservation.jslist.values = newresvtn;
                     $scope.reservation.jslist.selectedObj = $filter('filterObj')(newresvtn, $scope.reservation.jslist.selected, ['reservation_ref']);
                     $scope.reservation.jslist.selected = $scope.reservation.jslist.selectedObj.reservation_ref;
                     console.log($scope.reservation.jslist.selectedObj);
                 });
 
-                $scope.resvtn.jslist.createList()
-                $scope.resvtn.jslist.selected = null; $scope.resvtn.jslist.selectedObj = {};
+                $scope.reservation.resvtn.jslist.createList()
+                $scope.reservation.resvtn.jslist.selected = null; $scope.reservation.resvtn.jslist.selectedObj = {};
                 $scope.reservation.jslist.toggleIn();
             });
         },
-        roomgrid: {
-            type: '',
-            rooms: {},
-            roomid: {},
-            roomdate: {},
-            room_info: {
-                rooms: 0,
-                cost: 0,
-                calc_room_info: function () {
-                    rmtype = Object.keys($scope.reservation.roomgrid.room_details.rooms);
-                    $scope.reservation.roomgrid.room_info.rooms = 0;
-                    $scope.reservation.roomgrid.room_info.cost = 0;
-
-                    rmtype.forEach(function (elem) {
-
-                        $scope.reservation.roomgrid.room_details.rooms[elem].num ? ($scope.reservation.roomgrid.room_info.rooms += parseInt($scope.reservation.roomgrid.room_details.rooms[elem].num)) : null;;
-                        $scope.reservation.roomgrid.room_details.rooms[elem].arr.forEach(function (val) {
-                            if (val.selected == true) {
-                                val.no_of_nights = val.no_of_nights ? val.no_of_nights : 0;
-                                $scope.reservation.roomgrid.room_info.cost += (parseInt(val.no_of_nights) * parseInt(val.room_rate));
-                            }
-                        })
-
-                    });
-                }
+        addResvtnForm : {
+            getAvailablerooms: function(nyts,start_date, end_date, trigger){
+                var result;
+                console.log(end_date, trigger);
+                if(trigger == "nyts"){
+                    result = $filter('intervalGetDate')(nyts, start_date)
+                    end_date = result;
+                }else if(trigger == "leave"){
+                    result = $filter('dateGetInterval')(end_date, start_date);
+                    console.log(result);
+                }else if(trigger == "start"){
+                    result = $filter('intervalGetDate')(nyts, start_date)
+                    end_date = result;
+                };
+                jsonPost.data("../php1/front_desk/list_rooms_custom.php", {
+                    startDate: start_date,
+                    nights: nyts,
+                    endDate: end_date,
+                    flag: 'reservation'
+                }).then(function (result) {
+                    $scope.reservation.addResvtnForm.roomsProps.rooms = result;
+                    console.log(result);
+                });
+                return result;
             },
-            room_details: {
-                rooms: {},
-                selectrooms: function (roomtype) {
-                    if ($scope.reservation.roomgrid.room_details.rooms[roomtype].num > $scope.reservation.roomgrid.room_details.rooms[roomtype].count) {
-                        $scope.reservation.roomgrid.room_details.rooms[roomtype].num = $scope.reservation.roomgrid.room_details.rooms[roomtype].count
+            roomsProps: {
+                rooms: [],
+                activePane: '',
+                roomModels : {},
+                calculateTotal: function(){
+                    this.selectedRooms.num = 0;
+                    this.selectedRooms.cost = 0;
+                    this.selectedRooms.selected = [];
+                    Object.values(this.selectedRooms.categories).forEach(function(category){
+                        //console.log(category);
+                        this.selectedRooms.num += category.num;
+                        this.selectedRooms.cost += category.cost;
+                        this.selectedRooms.selected = this.selectedRooms.selected.concat(category.array);
+                    }, this)
+                    return this.selectedRooms;
+                },
+                selectRooms: function(category, selectedNum, averagenyt){
+                    this.selectedRooms.categories[category] = {array: [], num:0, cost:0};
+                    var categoryRooms = this.rooms[category]['rooms'];
+                    if(selectedNum > categoryRooms.length) {
+                        this.selectedRooms.categories[category]['num'] = categoryRooms.length;
+                        selectedNum = categoryRooms.length;
                     }
-                    for (var i = 0; i <= $scope.reservation.roomgrid.room_details.rooms[roomtype].arr.length - 1; i++) {
-                        console.log(roomtype);
-                        $scope.reservation.roomgrid.room_details.rooms[roomtype].arr[i].selected = false;
-                    };
-                    for (var i = 0; i <= $scope.reservation.roomgrid.room_details.rooms[roomtype].num - 1; i++) {
-                        console.log(roomtype);
-                        $scope.reservation.roomgrid.room_details.rooms[roomtype].arr[i].selected = true;
-                    };
-                    $scope.reservation.roomgrid.room_info.calc_room_info();
-                },
-                toggleroom: function () {
-                    roomtype = Object.keys($scope.reservation.roomgrid.room_details.rooms);
-                    $scope.reservation.roomgrid.room_info.rooms = 0;
-                    $scope.reservation.roomgrid.room_info.cost = 0;
-                    roomtype.forEach(function (elem) {
-                        num = 0;
-                        $scope.reservation.roomgrid.room_details.rooms[elem].arr.forEach(function (val) {
-                            if (val.selected == true) {
-                                num++;
-                                $scope.reservation.roomgrid.room_info.cost += (parseInt(val.no_of_nights) * parseInt(val.room_rate));
-                            }
-                        });
-                        $scope.reservation.roomgrid.room_details.rooms[elem].num = num;
-                        $scope.reservation.roomgrid.room_info.rooms += num;
-                    });
-                },
-                change_nyt_no: function (id) {
-                    actv = $scope.reservation.roomgrid.type;
-                    for (var i = 0; i < $scope.reservation.roomgrid.room_details.rooms[actv].arr.length; i++) {
-                        elem = $scope.reservation.roomgrid.room_details.rooms[actv].arr[i]
-                        if (elem.room_id == id) {
-                            if (!elem.reservations) {
-                                $scope.reservation.roomgrid.room_details.rooms[actv].arr[i].no_of_nights = $scope.reservation.roomgrid.roomid[id];
-
-                            }
-                            else {
-                                for (var j = 0; j < elem.reservations.length; j++) {
-                                    resvtn = elem.reservations[j];
-                                    date1 = new Date($filter('intervalGetDate')($scope.reservation.roomgrid.roomid[id], $scope.reservation.roomgrid.roomdate[id]));
-
-                                    date2 = new Date(resvtn.reserved_date);
-
-                                    date3 = new Date($scope.reservation.roomgrid.roomdate[id]);
-
-                                    date4 = new Date($filter('intervalGetDate')(resvtn.no_of_nights, resvtn.reserved_date));
-                                    console.log(date3, date1, date2, date4);
-                                    if ((date3 >= date2 && date3 <= date4) || (date1 >= date2 && date1 <= date4)) {
-                                        console.log('no');
-                                        $scope.reservation.roomgrid.reservedyes = id;
-                                        $timeout(function () {
-                                            $scope.reservation.roomgrid.reservedyes = '';
-                                        }, 2000);
-                                        console.log($scope.reservation.roomgrid.reservedyes);
-
-                                        $scope.reservation.roomgrid.roomid[id] = $scope.reservation.roomgrid.averagenyt;
-
-                                    } else if (j == (elem.reservations.length - 1)) {
-                                        console.log('yes');
-                                        $scope.reservation.roomgrid.room_details.rooms[actv].arr[i].no_of_nights = $scope.reservation.roomgrid.roomid[id];
-                                        $scope.reservation.roomgrid.room_details.rooms[actv].arr[i].room_reservation_date = $scope.reservation.roomgrid.roomdate[id];
-
-                                    }
-                                }
-                            }
-
-                            $scope.reservation.roomgrid.room_info.calc_room_info();
+                    categoryRooms.forEach(function(room, index){
+                        room.selected = index < selectedNum ? true : false;
+                        this.roomModels[room.room_id] = averagenyt;
+                        if(room.selected){
+                            room.no_of_nights = this.roomModels[room.room_id];
+                            room.room_reservation_date = $scope.reservation.inputs.nytstartdate;
+                            room.room_total_cost = (parseInt(room.no_of_nights) * parseInt(room.room_rate));
+                            this.selectedRooms.categories[category]['num']++;
+                            this.selectedRooms.categories[category]['array'].push(room);
+                            this.selectedRooms.categories[category]['cost'] += parseInt(room.room_rate) * parseInt(room.no_of_nights);
                         }
-                    }
+                    }, this);
+                    console.log(this.calculateTotal());
+                },
+                toggleRooms: function(){
+                    category = this.activePane;
+                    this.selectedRooms.categories[category] = {array: [], num:0, cost:0};
+                    //dis = this;
+                    this.rooms[category]['rooms'].forEach(function(room){
+                        if(room.selected){
+                            room.no_of_nights = this.roomModels[room.room_id];
+                            room.room_reservation_date = $scope.reservation.inputs.nytstartdate;
+                            room.room_total_cost = (parseInt(room.no_of_nights) * parseInt(room.room_rate));
+                            this.selectedRooms.categories[category]['num']++;
+                            this.selectedRooms.categories[category]['array'].push(room);
+                            this.selectedRooms.categories[category]['cost'] += parseInt(room.room_rate) * parseInt(room.no_of_nights);
+                        }
+                    }, this);
+                    console.log(this.calculateTotal());
+                },
+                changeRoomNyts: function(room_id){
+                    category = this.activePane;
+                    this.selectedRooms.categories[category] = {array: [], num:0, cost:0};
+                    this.rooms[category]['rooms'].forEach(function(room){
+                        if(room.selected){
+                            if(room.room_id == room_id) 
+                            room.no_of_nights = this.roomModels[room.room_id];
+                            room.room_reservation_date = $scope.reservation.inputs.nytstartdate;
+                            room.room_total_cost = (parseInt(room.no_of_nights) * parseInt(room.room_rate));
+                            this.selectedRooms.categories[category]['num']++;
+                            this.selectedRooms.categories[category]['array'].push(room);
+                            this.selectedRooms.categories[category]['cost'] += parseInt(room.room_rate) * parseInt(room.no_of_nights);
+                        }
+                    }, this);
+                    console.log(this.calculateTotal());
                 }
-
+            }
+        },
+        resvtn : {
+            getallrooms: function () {
+                jsonPost.data("../php1/front_desk/list_rooms.php", {}).then(function(result){
+                    $scope.reservation.resvtn.allrooms = result;
+                });
             },
-            averagenyt: 0,
-            nytstartdate: $filter('intervalGetDate')(0, $rootScope.settings.date),
-            nytdate: $filter('intervalGetDate')(0),
-            activate: function (room_type) {
-                //$scope.reservation.rooms[room_type] = 
-                $scope.reservation.roomgrid.type = room_type;
-                $scope.reservation.roomgrid.activated = 'true';
-            },
-            deactivate: function () {
-                //$scope.reservation.rooms[room_type] = 
-                $scope.reservation.roomgrid.type = '';
-                $scope.reservation.roomgrid.activated = 'false';
-            },
-            getrooms: function (roomCat) {
-                roomCat.forEach(function (cat) {
-                    jsonPost.data("../php1/front_desk/list_rooms_for_reservations.php", {
-                        category: cat
-                    }).then(function (result) {
-                        $scope.reservation.roomgrid.room_details.rooms[cat] = { name: cat, arr: $scope.reservation.roomgrid.resvtn_room(result) };
-
-                        $scope.reservation.roomgrid.room_details.rooms[cat].count = $scope.reservation.roomgrid.room_details.rooms[cat].arr.length
-                        console.log($scope.reservation.roomgrid.room_details.rooms[cat]);
+            updateResvtn: function (jsonresvtn) {
+                jsonresvtn.reservation_ref = this.jslist.selectedObj.reservation_ref;
+                jsonresvtn.reserved_date = this.jslist.selectedObj.reserved_date;
+                jsonresvtn.new_room_id = '';
+                //console.log($scope.resvtn.jslist.selectedObj.reserved_date);
+    
+                jsonresvtn.room_id = this.jslist.selectedObj.room_id;
+    
+                jsonPost.data("../php1/front_desk/list_rooms.php", {}).then(function (result) {
+                    result.forEach(function (elem) {
+                        if (elem.room_number == jsonresvtn.new_room_number) {
+                            jsonresvtn.new_room_id = elem.room_id;
+                        } else if (elem.room_number == jsonresvtn.room_number) {
+                            jsonresvtn.room_id = elem.room_id;
+                        }
+                    });
+                    console.log("update Resvtn", jsonresvtn);
+                    jsonPost.data("../php1/front_desk/update_reservation_room.php", {
+                        update_reservation: $filter('json')(jsonresvtn)
+                    }).then(function (response) {
+                        console.log(response);
+                        $scope.reservation.jslist.toggleOut();
+                        res = $rootScope.settings.modal.msgprompt(response);
+                        if(res) {
+                            $scope.reservation.jslist.createList()
+                        } else{
+                            return;
+                        }
+    
+                        $scope.reservation.itemlist('filter', function(newresvtn){
+                            $scope.reservation.jslist.values = [];
+                            $scope.reservation.jslist.values = newresvtn;
+                            $scope.reservation.jslist.selectedObj = $filter('filterObj')(newresvtn, $scope.reservation.jslist.selected, ['reservation_ref']);
+                            $scope.reservation.jslist.selected = $scope.reservation.jslist.selectedObj.reservation_ref;
+                            console.log($scope.reservation.jslist.selectedObj);
+                        });
+    
+                        res ? $scope.reservation.resvtn.jslist.createList() : null;
+                        $scope.reservation.jslist.toggleIn();
+                        $scope.reservation.resvtn.jslist.selectedObj = {};
+                        $scope.reservation.resvtn.jslist.selected = null;
                     });
                 });
             },
-            resvtn_room: function (arr) {
-                if (!Array.isArray(arr)) {
-                    return [];
-                }
-                myarr = [];
-                for (var i = 0; i < arr.length; i++) {
-                    elem = arr[i];
-                    console.log(elem.reservations);
-                    bookedon = new Date(elem.booked_on);
-                    bookedoff = new Date(elem.booking_expires);
-
-                    date1 = new Date($scope.reservation.roomgrid.nytdate);
-
-                    date3 = new Date($scope.reservation.roomgrid.nytstartdate);
-
-                    if (((date3 >= bookedon && date3 <= bookedoff) || (date1 >= bookedon && date1 <= bookedoff)) && elem.booked_on != '0000-00-00 00:00:00') {
-                        console.log('aawwee');
-                        elem.can_be_booked = false;
-                        break;
+            deleteResvtn: function () {
+                jsonresvtn = {}
+                jsonresvtn.reservation_ref = this.jslist.selectedObj.reservation_ref;
+                jsonresvtn.room_number = this.jslist.selectedObj.room_number;
+    
+                jsonPost.data("../php1/front_desk/list_rooms.php", {}).then(function (result) {
+                    result.forEach(function (elem) {
+                        if (elem.room_number == jsonresvtn.room_number) {
+                            jsonresvtn.room_id = elem.room_id;
+                        }
+                    });
+                    console.log("new resvtn", jsonresvtn);
+                    jsonform = {
+                        reservations: [jsonresvtn]
                     }
-
-
-                    if (elem.reservations) {
-                        for (var j = 0; j < elem.reservations.length; j++) {
-                            resvtn = elem.reservations[j];
-
-                            date2 = new Date(resvtn.reserved_date);
-
-                            date4 = new Date($filter('intervalGetDate')(resvtn.no_of_nights, resvtn.reserved_date));
-
-                            console.log(date1, date2, date3, date4);
-
-                            if ((date3 >= date2 && date3 <= date4) || (date1 >= date2 && date1 <= date4)) {
-                                elem.can_be_booked = false;
-                                console.log('false', resvtn.reserved_date);
-                                break;
-                            } else {
-                                arr[i].can_be_booked = true;
-                                arr[i].no_of_nights = $scope.reservation.roomgrid.averagenyt;
-                                arr[i].room_reservation_date = $scope.reservation.roomgrid.nytstartdate;
-                                console.log('true', resvtn.reserved_date);
-                            }
-                        };
-                    } else {
-                        console.log('noresvtn');
-                        arr[i].can_be_booked = true;
-                        arr[i].no_of_nights = $scope.reservation.roomgrid.averagenyt;
-                        arr[i].room_reservation_date = $scope.reservation.roomgrid.nytstartdate;
-                    }
-
-                }
-                for (var k = 0; k < arr.length; k++) {
-                    if (arr[k].can_be_booked == true) {
-                        myarr.push(arr[k]);
-                    }
-                }
-                return myarr;
-            },
-            change_averagenyt: function () {
-                $scope.reservation.roomgrid.getrooms(['deluxe', 'standard']);
-                $scope.reservation.roomgrid.room_info.cost = 0;
-                $scope.reservation.roomgrid.room_info.rooms = 0;
-            },
-            activated: 'false'
+                    jsonPost.data("../php1/front_desk/del_reservation_room.php", {
+                        reservation_ref: $filter('json')(jsonform)
+                    }).then(function (response) {
+                        $scope.reservation.jslist.toggleOut();
+                        console.log(response);
+                        $scope.reservation.jslist.createList();
+                        $scope.reservation.resvtn.jslist.createList();
+    
+                        $scope.reservation.itemlist('filter', function(newresvtn){
+                            $scope.reservation.jslist.values = [];
+                            $scope.reservation.jslist.values = newresvtn;
+                            $scope.reservation.jslist.selectedObj = $filter('filterObj')(newresvtn, $scope.reservation.jslist.selected, ['reservation_ref']);
+                            $scope.reservation.jslist.selected = $scope.reservation.jslist.selectedObj.reservation_ref;
+                            console.log($scope.reservation.jslist.selectedObj);
+                        });
+    
+                        $scope.reservation.jslist.toggleIn();
+                        $scope.reservation.resvtn.jslist.selectedObj = {};
+                        $scope.reservation.resvtn.jslist.selected = null;
+                    });
+                });
+    
+            }
         }
     };
 
-    $scope.resvtn = {
-        updateResvtn: function (jsonresvtn) {
-            jsonresvtn.reservation_ref = $scope.resvtn.jslist.selectedObj.reservation_ref;
-            jsonresvtn.reserved_date = $scope.resvtn.jslist.selectedObj.reserved_date;
-            jsonresvtn.new_room_id = '';
-            //console.log($scope.resvtn.jslist.selectedObj.reserved_date);
 
-            jsonresvtn.room_id = $scope.resvtn.jslist.selectedObj.room_id;
+    $scope.rooms = {
+        init: function(){
+            $rootScope.$on('roomselect', function (evt, param) {
+                $scope.rooms.getGuest(param.current_guest_id);
+            });
+        },
+        current_guest: {},
+        itemlist: function (callback) {
+            jsonPost.data("../php1/front_desk/list_rooms.php", {}).then(function(result){
+                $scope.rooms.allrooms = result;
+                callback(result);
+            });
+        },
+        resvtn : {
+            list: [],
+            getReservation: function () {
+                console.log('arr');
+                jsonPost.data("../php1/front_desk/list_reservations.php", {}).then(function (result) {
+                    $scope.rooms.resvtn.list = [];
+                    result.forEach(function (elem) {
+                        if(elem.booked == 'NO' && elem.room_id == $scope.rooms.jslist.selected) $scope.rooms.resvtn.list.push(elem);
 
-            $scope.rooms.itemlist().jsonfunc.then(function (result) {
-                result.forEach(function (elem) {
+                    });
+                    console.log($scope.rooms.resvtn.list);
+                });
+            },
+            listhddata: [
+                {
+                    name: "Guest",
+                    width: "col-2",
+                },
+                {
+                    name: "Start",
+                    width: "col-3",
+                },
+                {
+                    name: "Nyts",
+                    width: "col-1",
+                },
+                {
+                    name: "Paid",
+                    width: "col-3",
+                },
+                {
+                    name: "Cost",
+                    width: "col-3",
+                }
+            ],
+            select: function (index, id) {
+                $scope.rooms.resvtn.selected = id;
+                $scope.rooms.resvtn.selectedObj = $scope.rooms.resvtn.newItemArray[index];
+                console.log($scope.rooms.resvtn.newItemArray[index]);
+            },
+            updateResvtn: function (jsonresvtn) {
+                jsonresvtn.reservation_ref = $scope.rooms.resvtn.selectedObj.reservation_ref;
+                jsonresvtn.reserved_date = $scope.rooms.resvtn.selectedObj.reserved_date;
+                jsonresvtn.new_room_id = '';
+                console.log($scope.rooms.resvtn.selectedObj.reserved_date);
+
+                jsonresvtn.room_id = $scope.rooms.resvtn.selectedObj.room_id;
+
+                
+                $scope.rooms.allrooms.forEach(function (elem) {
                     if (elem.room_number == jsonresvtn.new_room_number) {
                         jsonresvtn.new_room_id = elem.room_id;
                     } else if (elem.room_number == jsonresvtn.room_number) {
@@ -738,47 +770,39 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                     }
                 });
                 console.log("update Resvtn", jsonresvtn);
+
                 jsonPost.data("../php1/front_desk/update_reservation_room.php", {
                     update_reservation: $filter('json')(jsonresvtn)
                 }).then(function (response) {
                     console.log(response);
-                    $scope.reservation.jslist.toggleOut();
+                    $scope.rooms.jslist.toggleOut();
                     res = $rootScope.settings.modal.msgprompt(response);
-                    res ? $scope.reservation.jslist.createList() : null;
+                    if(res) {
+                        $scope.rooms.jslist.createList()
+                    } else{
+                        return;
+                    }
 
-                    $scope.reservation.itemlist().jsonfunc.then(function (result) {
-                        newresvtn = [];
-                        result.forEach(function (rtn) {
-                            count = true;
-                            for (var i = 0; i < newresvtn.length; i++) {
-                                res = newresvtn[i];
-                                if (rtn.reservation_ref == res.reservation_ref && rtn.guest_id == res.guest_id) {
-                                    count = false;
-                                }
-                            };
-                            if (count) {
-                                newresvtn.push(rtn);
-                            }
-                        });
-                        $scope.reservation.jslist.selectedObj = $filter('filterObj')(newresvtn, $scope.reservation.jslist.selected, ['reservation_ref']);
-                        $scope.reservation.jslist.selected = $scope.reservation.jslist.selectedObj.reservation_ref;
-                        console.log($scope.reservation.jslist.selectedObj);
+
+                    $scope.rooms.itemlist(function (result) {
+                        $scope.rooms.jslist.selectedObj = $filter('filterObj')(result, $scope.rooms.jslist.selected, ['room_id']);
+                        $scope.rooms.jslist.selected = $scope.rooms.jslist.selectedObj.room_id;
+                        console.log($scope.rooms.jslist.selectedObj);
                     });
 
-                    res ? $scope.resvtn.jslist.createList() : null;
-                    $scope.reservation.jslist.toggleIn();
-                    $scope.resvtn.jslist.selectedObj = {};
-                    $scope.resvtn.jslist.selected = null;
-                });
-            });
-        },
-        deleteResvtn: function () {
-            jsonresvtn = {}
-            jsonresvtn.reservation_ref = $scope.resvtn.jslist.selectedObj.reservation_ref;
-            jsonresvtn.room_number = $scope.resvtn.jslist.selectedObj.room_number;
 
-            $scope.rooms.itemlist().jsonfunc.then(function (result) {
-                result.forEach(function (elem) {
+                    $scope.rooms.jslist.toggleIn();
+                    $scope.rooms.resvtn.getReservation();
+                    $scope.rooms.resvtn.selectedObj = {}
+                    $scope.rooms.resvtn.selected = null;
+                });
+            },
+            deleteResvtn: function () {
+                jsonresvtn = {}
+                jsonresvtn.reservation_ref = $scope.rooms.resvtn.selectedObj.reservation_ref;
+                jsonresvtn.room_number = $scope.rooms.resvtn.selectedObj.room_number;
+
+                $scope.rooms.allrooms.forEach(function (elem) {
                     if (elem.room_number == jsonresvtn.room_number) {
                         jsonresvtn.room_id = elem.room_id;
                     }
@@ -790,295 +814,33 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                 jsonPost.data("../php1/front_desk/del_reservation_room.php", {
                     reservation_ref: $filter('json')(jsonform)
                 }).then(function (response) {
-                    $scope.reservation.jslist.toggleOut();
+                    $scope.rooms.jslist.toggleOut();
                     console.log(response);
-                    $scope.reservation.jslist.createList();
-                    $scope.resvtn.jslist.createList();
+                    $scope.rooms.jslist.createList();
 
-                    $scope.reservation.itemlist().jsonfunc.then(function (result) {
-                        newresvtn = [];
-                        if (!result) { return; }
-                        result.forEach(function (rtn) {
-                            count = true;
-                            for (var i = 0; i < newresvtn.length; i++) {
-                                res = newresvtn[i];
-                                if (rtn.reservation_ref == res.reservation_ref && rtn.guest_id == res.guest_id) {
-                                    count = false;
-                                }
-                            };
-                            if (count) {
-                                newresvtn.push(rtn);
-                            }
-                        });
-                        $scope.reservation.jslist.selectedObj = $filter('filterObj')(newresvtn, $scope.reservation.jslist.selected, ['reservation_ref']);
-                        $scope.reservation.jslist.selected = $scope.reservation.jslist.selectedObj.reservation_ref;
-                        console.log($scope.reservation.jslist.selectedObj);
+                    $scope.rooms.itemlist(function (result) {
+                        $scope.rooms.jslist.selectedObj = $filter('filterObj')(result, $scope.rooms.jslist.selected, ['room_id']);
+                        $scope.rooms.jslist.selected = $scope.rooms.jslist.selectedObj.room_id;
+                        console.log($scope.rooms.jslist.selectedObj);
                     });
 
-                    $scope.reservation.jslist.toggleIn();
-                    $scope.resvtn.jslist.selectedObj = {};
-                    $scope.resvtn.jslist.selected = null;
+                    $scope.rooms.resvtn.getReservation();
+                    $scope.rooms.jslist.toggleIn();
+                    $scope.rooms.resvtn.selectedObj = {}
+                    $scope.rooms.resvtn.selected = null;
                 });
-            });
 
-        }
-    }
-
-    $scope.rooms = {
-        init: function(){
-            $rootScope.$on('roomselect', function (evt, param) {
-                $scope.rooms.getGuest(param.current_guest_id);
-            });
-        },
-        current_guest: {},
-        itemlist: function () {
-            return {
-                jsonfunc: jsonPost.data("../php1/front_desk/list_rooms.php", {})
             }
-        },
-        getallrooms: function () {
-            $scope.rooms.itemlist().jsonfunc.then(function (result) {
-                $scope.rooms.allrooms = result;
-            });
-        },
-        reservations: {
-
-            listReservation: function () {
-                console.log('arr');
-                jsonPost.data("../php1/front_desk/list_reservations.php", {}).then(function (result) {
-                    $scope.rooms.reservations.temp_reservation.reservation_list = [];
-                    $scope.rooms.reservations.confirmed_reservation.reservation_list = [];
-                    result.forEach(function (elem) {
-                        (elem.booked == 'NO' && elem.deposit_confirmed == 'NO' && elem.room_id == $scope.rooms.jslist.selected) ? $scope.rooms.reservations.temp_reservation.reservation_list.push(elem) : null;
-                        (elem.booked == 'NO' && elem.deposit_confirmed == 'YES' && elem.room_id == $scope.rooms.jslist.selected) ? $scope.rooms.reservations.confirmed_reservation.reservation_list.push(elem) : null;
-
-                    });
-                    console.log($scope.rooms.reservations.temp_reservation.reservation_list);
-                });
-            },
-            confirmed_reservation: {
-                listhddata: [
-                    {
-                        name: "Guest",
-                        width: "col-2",
-                    },
-                    {
-                        name: "Start",
-                        width: "col-3",
-                    },
-                    {
-                        name: "Nyts",
-                        width: "col-1",
-                    },
-                    {
-                        name: "Paid",
-                        width: "col-3",
-                    },
-                    {
-                        name: "Cost",
-                        width: "col-3",
-                    }
-                ],
-                reservation_list: [],
-                select: function (index, id) {
-                    $scope.rooms.reservations.confirmed_reservation.selected = id;
-                    $scope.rooms.reservations.confirmed_reservation.selectedObj = $scope.rooms.reservations.confirmed_reservation.newItemArray[index];
-                    console.log($scope.rooms.reservations.confirmed_reservation.newItemArray[index]);
-                },
-                updateResvtn: function (jsonresvtn) {
-                    jsonresvtn.reservation_ref = $scope.rooms.reservations.confirmed_reservation.selectedObj.reservation_ref;
-                    jsonresvtn.reserved_date = $scope.rooms.reservations.confirmed_reservation.selectedObj.reserved_date;
-                    jsonresvtn.new_room_id = '';
-                    console.log($scope.rooms.reservations.confirmed_reservation.selectedObj.reserved_date);
-
-                    jsonresvtn.room_id = $scope.rooms.reservations.confirmed_reservation.selectedObj.room_id;
-
-                    $scope.rooms.itemlist().jsonfunc.then(function (result) {
-                        result.forEach(function (elem) {
-                            if (elem.room_number == jsonresvtn.new_room_number) {
-                                jsonresvtn.new_room_id = elem.room_id;
-                            } else if (elem.room_number == jsonresvtn.room_number) {
-                                jsonresvtn.room_id = elem.room_id;
-                            }
-                        });
-                        console.log("update Resvtn", jsonresvtn);
-
-                        jsonPost.data("../php1/front_desk/update_reservation_room.php", {
-                            update_reservation: $filter('json')(jsonresvtn)
-                        }).then(function (response) {
-                            console.log(response);
-                            $scope.rooms.jslist.toggleOut();
-                            res = $rootScope.settings.modal.msgprompt(response);
-                            res ? $scope.rooms.jslist.createList() : null;
-
-
-                            $scope.rooms.itemlist().jsonfunc.then(function (result) {
-                                $scope.rooms.jslist.selectedObj = $filter('filterObj')(result, $scope.rooms.jslist.selected, ['room_id']);
-                                $scope.rooms.jslist.selected = $scope.rooms.jslist.selectedObj.room_id;
-                                console.log($scope.rooms.jslist.selectedObj);
-                            });
-
-
-                            $scope.rooms.jslist.toggleIn();
-                            $scope.rooms.reservations.listReservation();
-                            $scope.rooms.reservations.confirmed_reservation.selectedObj = {}
-                            $scope.rooms.reservations.confirmed_reservation.selected = null;
-                        });
-                    });
-                },
-                deleteResvtn: function () {
-                    jsonresvtn = {}
-                    jsonresvtn.reservation_ref = $scope.rooms.reservations.confirmed_reservation.selectedObj.reservation_ref;
-                    jsonresvtn.room_number = $scope.rooms.reservations.confirmed_reservation.selectedObj.room_number;
-
-                    $scope.rooms.itemlist().jsonfunc.then(function (result) {
-                        result.forEach(function (elem) {
-                            if (elem.room_number == jsonresvtn.room_number) {
-                                jsonresvtn.room_id = elem.room_id;
-                            }
-                        });
-                        console.log("new resvtn", jsonresvtn);
-                        jsonform = {
-                            reservations: [jsonresvtn]
-                        }
-                        jsonPost.data("../php1/front_desk/del_reservation_room.php", {
-                            reservation_ref: $filter('json')(jsonform)
-                        }).then(function (response) {
-                            $scope.rooms.jslist.toggleOut();
-                            console.log(response);
-                            $scope.rooms.jslist.createList();
-
-                            $scope.rooms.itemlist().jsonfunc.then(function (result) {
-                                $scope.rooms.jslist.selectedObj = $filter('filterObj')(result, $scope.rooms.jslist.selected, ['room_id']);
-                                $scope.rooms.jslist.selected = $scope.rooms.jslist.selectedObj.room_id;
-                                console.log($scope.rooms.jslist.selectedObj);
-                            });
-
-                            $scope.rooms.reservations.listReservation();
-                            $scope.rooms.jslist.toggleIn();
-                            $scope.rooms.reservations.confirmed_reservation.selectedObj = {}
-                            $scope.rooms.reservations.confirmed_reservation.selected = null;
-                        });
-                    });
-
-                }
-            },
-            temp_reservation: {
-                listhddata: [
-                    {
-                        name: "Guest",
-                        width: "col-2",
-                    },
-                    {
-                        name: "Start",
-                        width: "col-3",
-                    },
-                    {
-                        name: "Nyts",
-                        width: "col-1",
-                    },
-                    {
-                        name: "Leave",
-                        width: "col-3",
-                    },
-                    {
-                        name: "Cost",
-                        width: "col-3",
-                    }
-                ],
-                reservation_list: [],
-                select: function (index, id) {
-                    $scope.rooms.reservations.temp_reservation.selected = id;
-                    $scope.rooms.reservations.temp_reservation.selectedObj = $scope.rooms.reservations.temp_reservation.newItemArray[index];
-                    console.log($scope.rooms.reservations.temp_reservation.newItemArray[index]);
-                },
-                updateResvtn: function (jsonresvtn) {
-                    jsonresvtn.reservation_ref = $scope.rooms.reservations.temp_reservation.selectedObj.reservation_ref;
-                    jsonresvtn.reserved_date = $scope.rooms.reservations.temp_reservation.selectedObj.reserved_date;
-                    jsonresvtn.new_room_id = '';
-
-                    jsonresvtn.room_id = $scope.rooms.reservations.temp_reservation.selectedObj.room_id;
-
-                    $scope.rooms.itemlist().jsonfunc.then(function (result) {
-                        result.forEach(function (elem) {
-                            if (elem.room_number == jsonresvtn.new_room_number) {
-                                jsonresvtn.new_room_id = elem.room_id;
-                            } else if (elem.room_number == jsonresvtn.room_number) {
-                                jsonresvtn.room_id = elem.room_id;
-                            }
-                        });
-                        console.log("update Resvtn", jsonresvtn);
-
-                        jsonPost.data("../php1/front_desk/update_reservation_room.php", {
-                            update_reservation: $filter('json')(jsonresvtn)
-                        }).then(function (response) {
-                            console.log(response);
-                            $scope.rooms.jslist.toggleOut();
-                            res = $rootScope.settings.modal.msgprompt(response);
-                            res ? $scope.rooms.jslist.createList() : null;
-
-                            $scope.rooms.itemlist().jsonfunc.then(function (result) {
-                                $scope.rooms.jslist.selectedObj = $filter('filterObj')(result, $scope.rooms.jslist.selected, ['room_id']);
-                                $scope.rooms.jslist.selected = $scope.rooms.jslist.selectedObj.room_id;
-                                console.log($scope.rooms.jslist.selectedObj);
-                            });
-
-                            $scope.rooms.jslist.toggleIn();
-                            $scope.rooms.reservations.listReservation();
-                            $scope.rooms.reservations.temp_reservation.selectedObj = {}
-                            $scope.rooms.reservations.temp_reservation.selected = null;
-                        });
-                    });
-                },
-                deleteResvtn: function () {
-                    jsonresvtn = {}
-                    jsonresvtn.reservation_ref = $scope.rooms.reservations.temp_reservation.selectedObj.reservation_ref;
-                    jsonresvtn.room_number = $scope.rooms.reservations.temp_reservation.selectedObj.room_number;
-
-                    $scope.rooms.itemlist().jsonfunc.then(function (result) {
-                        result.forEach(function (elem) {
-                            if (elem.room_number == jsonresvtn.room_number) {
-                                jsonresvtn.room_id = elem.room_id;
-                            }
-                        });
-                        console.log("new resvtn", jsonresvtn);
-                        jsonform = {
-                            reservations: [jsonresvtn]
-                        }
-                        jsonPost.data("../php1/front_desk/del_reservation_room.php", {
-                            reservation_ref: $filter('json')(jsonform)
-                        }).then(function (response) {
-                            $scope.rooms.jslist.toggleOut();
-                            console.log(response);
-                            $scope.rooms.jslist.createList();
-
-                            $scope.rooms.itemlist().jsonfunc.then(function (result) {
-                                $scope.rooms.jslist.selectedObj = $filter('filterObj')(result, $scope.rooms.jslist.selected, ['room_id']);
-                                $scope.rooms.jslist.selected = $scope.rooms.jslist.selectedObj.room_id;
-                                console.log($scope.rooms.jslist.selectedObj);
-                            });
-
-                            $scope.rooms.reservations.listReservation();
-                            $scope.rooms.jslist.toggleIn();
-                            $scope.rooms.reservations.temp_reservation.selectedObj = {}
-                            $scope.rooms.reservations.temp_reservation.selected = null;
-                        });
-                    });
-
-                }
-            }
-
         },
         getGuest: function (id) {
-            $scope.guest.itemlist().jsonfunc.then(function (result) {
+            jsonPost.data("../php1/front_desk/list_guests_all.php", {}).then(function (result) {
                 found = false;
                 result.forEach(function (elem) {
                     if (id == elem.guest_id) {
-                        found = true;
-                        $scope.rooms.current_guest = elem;
+                        found = elem;
                     }
                 })
-                $scope.rooms.current_guest = found ? $scope.rooms.current_guest : {};
+                $scope.rooms.current_guest = found || {};
             })
         },
 
@@ -1087,5 +849,6 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
     
     $scope.guest.init();
     $scope.rooms.init();
+    $scope.reservation.init();
 
 }]);

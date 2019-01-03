@@ -39,12 +39,12 @@
                 <div class="row align-items-center anim py-3 px-2 h-20 relatv">
 
                     <div class = "row w-100">
-                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 br-1 m-0 pb-3 px-3">Current Guest</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 pb-2 px-3">{{rooms.current_guest.guest_name}} </p>
-                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 pb-3 br-1 m-0 px-3">Phone Number</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 pb-2 px-3">{{rooms.current_guest.phone_number}} </p>
-                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 pb-3 br-1 m-0 px-3">Room Outstanding</h6>
-                        <p class = "  col-8  f-13 opac-70 m-0 pb-2 px-3">{{rooms.current_guest.room_outstanding}} </p>
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 br-1 m-0 py-2 px-3">Current Guest</h6>
+                        <p class = " col-8 f-13 opac-70 m-0 py-2 px-3">{{rooms.current_guest.guest_name}} </p>
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-2 br-1 m-0 px-3">Phone Number</h6>
+                        <p class = " col-8 f-13 opac-70 m-0 py-2 px-3">{{rooms.current_guest.phone_number}} </p>
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-2 br-1 m-0 px-3">Room Outstanding</h6>
+                        <p class = "  col-8  f-13 opac-70 m-0 py-2 px-3">{{rooms.current_guest.room_outstanding}} </p>
                     </div>
                     <!-- <div class = "row w-40 dark-back py-3 h-100 abs" style = "top:0; right:0; bottom: -10px;">
                         <div class = "row {{rooms.reservations.confirmed_reservation.selected ? 'gone' : 'align-items-center'}} relatv  w-100 h-100">
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="animate-switch Guests h-100" ng-switch-when = "Guests">
-                <div class="guests  prime-footer anim h-80">
+                <div class="guests prime-footer anim h-80">
                     <div class="p-3 px-4 itemlayout w-100 h-93">
                         <div class="mb-5 item-container">
                             <div class="userlisthd row justify-content-between">
@@ -74,19 +74,27 @@
                 </div>
                 <div class="orders row align-items-center anim px-2 h-20">
 
-                    <div class = "row w-100">
-                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Rooms</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? (guest.jslist.selectedObj.rooms | arraytostring) : ''}} </p>
-                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Phone Number</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.phone_number : ''}} </p>
-                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Address</h6>
-                        <p class = "  col-8  f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.contact_address : ''}} </p>
+                    <div class = "row w-60">
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-2 br-1 m-0 px-3">Rooms</h6>
+                        <p class = " col-8 f-13 opac-70 m-0 py-2 px-3">{{guest.jslist.selectedObj ? (guest.roomBookings.roomNumbers | arraytostring) : ''}} </p>
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-2 br-1 m-0 px-3">Checked In</h6>
+                        <p class = " col-8 f-13 opac-70 m-0 py-2 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.checked_in : ''}} </p>
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-2 br-1 m-0 px-3">Address</h6>
+                        <p class = "  col-8  f-13 opac-70 m-0 py-2 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.contact_address : ''}} </p>
+                    </div>
+                    <div class = "row w-40">
+                        <h6 class = "text-left f-14 col-6 font-fam-Montserrat-bold purp-clr opac-70 py-2 br-1 m-0 px-3">Check In Date</h6>
+                        <p class = " col-6 f-13 opac-70 m-0 py-2 px-3">{{guest.jslist.selectedObj ? (guest.roomBookings.rooms[0].check_in_date | limitTo: 10) : ''}} </p>
+                        <h6 class = "text-left f-14 col-6 font-fam-Montserrat-bold purp-clr opac-70 py-2 br-1 m-0 px-3">Nights</h6>
+                        <p class = " col-6 f-13 opac-70 m-0 py-2 px-3">{{guest.jslist.selectedObj ? guest.roomBookings.rooms[0].no_of_nights : ''}} </p>
+                        <h6 class = "text-left f-14 col-6 font-fam-Montserrat-bold purp-clr opac-70 py-2 br-1 m-0 px-3">Check Out Date</h6>
+                        <p class = "  col-6  f-13 opac-70 m-0 py-2 px-3">{{guest.jslist.selectedObj ? (guest.roomBookings.rooms[0].check_out_time | limitTo: 10) : ''}} </p>
                     </div>
 
                 </div>
             </div>
             <div class="animate-switch Reservation h-100" ng-switch-when = "Reservation">
-                <div class="reservation  anim h-100">
+                <div class="reservation prime-footer anim h-80">
                     <div class="p-3 px-4 itemlayout w-100 h-93">
                         <div class="mb-5 item-container">
                             <div class="userlisthd row justify-content-between">
@@ -102,18 +110,18 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="orders row align-items-center anim px-2 h-20">
+                <div class="orders row align-items-center anim px-2 h-20">
 
                     <div class = "row w-100">
-                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Rooms</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{reservation.jslist.selectedObj ? (guest.jslist.selectedObj.rooms | arraytostring) : '2, 4, 7'}} </p>
-                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Phone Number</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.phone_number : '08130439102'}} </p>
-                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Address</h6>
-                        <p class = "  col-8  f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.contact_address : 'Conversion of Architectural Blueprints to well-designed Structural layouts (foundaton, beams, columns and bases, slabs'}} </p>
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-2 br-1 m-0 px-3">Email</h6>
+                        <p class = " col-8 f-13 opac-70 m-0 py-2 px-3">{{reservation.jslist.selectedObj ? reservation.jslist.selectedObj.email : ''}} </p>
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-2 br-1 m-0 px-3">Phone Number</h6>
+                        <p class = " col-8 f-13 opac-70 m-0 py-2 px-3">{{reservation.jslist.selectedObj ? reservation.jslist.selectedObj.phone_number : ''}} </p>
+                        <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-2 br-1 m-0 px-3">Cost</h6>
+                        <p class = "  col-8  f-13 opac-70 m-0 py-2 px-3">{{reservation.jslist.selectedObj ? reservation.jslist.selectedObj.sum_cost : ''}} </p>
                     </div>
 
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -123,10 +131,11 @@
 <div class="main-sidebar-right hs-100 anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.rightbarclass : 'w-0 vanish'}}">
     <div class="statusbar blu row align-items-end justify-content-center">
         <div class="searchbox col-12 h-100 row  align-items-end pb-1 {{tabnav.selected.options.rightbar ? '' : 'gone'}}">
-                <div class="col-8">
-                    <input class="form-control float-right anim" ng-model="searchbox.imp" />
-                </div>
-                <div class="wht text-center col-4 px-0"><a  ng-mouseleave="settings.log = true;" href = "../php1/front_desk/frontdesk_logoff.php" ng-mouseenter="settings.log = false;" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a>
+            <div class="col-8">
+                <input class="form-control float-right anim" ng-model="searchbox.imp" />
+            </div>
+            <div class="wht text-center col-4 px-0">
+                <a  ng-mouseleave="settings.log = true;" href = "../php1/front_desk/frontdesk_logoff.php" ng-mouseenter="settings.log = false;" class = "anim btn w-100 font-fam-Montserrat-bold btn-sm custom-btn-outline-orange wht mb-2">{{settings.log ? settings.user : 'log out'}}</a>
             </div>
         </div>
     </div>
@@ -148,7 +157,7 @@
 
 
 </div>
-<div class="modal fade" id="crud" role="dialog" modalentry></div>
+<div class="modal fade" id="crud" role="dialog" dashmodalentry></div>
 <!--main-sidebar-right end-->
 <div class="clr"></div>
 </div>

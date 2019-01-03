@@ -1,7 +1,7 @@
-app.directive('roomlist', ['$rootScope', '$filter', function ($rootScope, $filter) {
+lodgeApp.directive('roomlist', ['$rootScope', '$filter', function ($rootScope, $filter) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/rooms/listTemplates.php?list=rooms',
+        templateUrl: './assets/js/lodge/listTemplates.php?list=rooms',
 
         scope: false,
 
@@ -73,10 +73,10 @@ app.directive('roomlist', ['$rootScope', '$filter', function ($rootScope, $filte
 }]);
 
 
-app.directive('categorylist', ['$rootScope', '$filter', function ($rootScope, $filter) {
+lodgeApp.directive('categorylist', ['$rootScope', '$filter', function ($rootScope, $filter) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/rooms/listTemplates.php?list=category',
+        templateUrl: './assets/js/lodge/listTemplates.php?list=category',
 
         scope: false,
 

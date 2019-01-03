@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2018 at 08:08 AM
+-- Generation Time: Jan 02, 2019 at 06:24 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -23,16 +23,35 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `frontdesk_room_category`
+-- Table structure for table `frontdesk_room_categories`
 --
 
-CREATE TABLE IF NOT EXISTS `frontdesk_room_category` (
-  `id` int(11) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `frontdesk_room_categories` (
+  `id` int(11) NOT NULL,
   `category` text NOT NULL,
   `rate` int(11) NOT NULL,
-  `user` text NOT NULL
+  `sales_rep` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `frontdesk_room_categories`
+--
+ALTER TABLE `frontdesk_room_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `frontdesk_room_categories`
+--
+ALTER TABLE `frontdesk_room_categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

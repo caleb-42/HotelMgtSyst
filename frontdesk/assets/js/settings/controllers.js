@@ -1,4 +1,4 @@
-usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', function ($rootScope, $scope, jsonPost, $filter) {
+settingsApp.controller("settings", ["$rootScope", "$scope",  'jsonPost','$filter', function ($rootScope, $scope, jsonPost, $filter) {
     $scope.tabnav = {
         navs: {
             General: {

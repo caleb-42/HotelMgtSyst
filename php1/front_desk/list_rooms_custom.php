@@ -35,12 +35,11 @@
     
     foreach($frontdesk_rooms as $room){
       if(
-        ($room['booked'] == 'YES') && 
-        !(strtotime($start_date) > strtotime($room['booking_expires']) && strtotime($end_date) > strtotime($room['booking_expires']))
+        ($room['booked'] == 'YES' && 
+        strtotime($start_date) < strtotime($room['booking_expires'])) || ($room['booked'] == 'YES' && $_POST['flag'] == "booking")
         )  {
           continue;
         }else{
-
           if(!isset($room['reservations'])) {
             if(!isset($available_rooms[$room['room_category']]))
             $available_rooms[$room['room_category']] = ['rooms' => [], 'category' => $room['room_category'] ];

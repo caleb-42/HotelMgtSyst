@@ -18,7 +18,9 @@ app.filter('intervalGetDate', function(){
         today = startdate ?  new Date(startdate) :  new Date();
         if(!input){
             dd = today.getDate();
+            dd = String(dd).length > 1 ? dd : ('0' + dd);
             mm = today.getMonth() + 1;
+            mm = String(mm).length > 1 ? mm : ('0' + mm);
             yy = today.getFullYear();
             today = yy + '-' + mm + '-' + dd;
             return today;

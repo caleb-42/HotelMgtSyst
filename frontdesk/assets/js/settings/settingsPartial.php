@@ -1,4 +1,4 @@
-<div ng-controller="users">
+<div ng-controller="settings">
     <div class="prime-hd anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.primeclass : 'w-100'}}">
         <div class="statusbar blu row  align-items-end pl-1">
             <div class="tabnav col-7 row">
@@ -78,5 +78,5 @@
     </div>
     <!--main-sidebar-right end-->
     <div class="clr"></div>
-    <div class="modal fade" id="crud" role="dialog" modalentry></div>
+    <div class="modal fade" id="crud" role="dialog" usersmodalentry></div>
 </div>

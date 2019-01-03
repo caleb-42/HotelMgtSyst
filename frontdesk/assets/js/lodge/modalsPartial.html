@@ -1,0 +1,144 @@
+<div class="modal-dialog modal-{{settings.modal.size}}">
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title ml-3">{{settings.modal.name}}</h5>
+            <button type="button" class="close" id="closeInvoice" data-dismiss="modal" onclick=" ">×</button>
+        </div>
+        <div class="modal-body nopadding">
+
+            <!--....... Room Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'Room'">
+                <div ng-if="settings.modal.name == 'Add Room'">
+                <form autocomplete="off" class="addRoomForm mx-5 my-4">
+                    <input ng-model = "rooms.inputs.room_number" class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Number" type="number" onkeydown="javascript: return event.keyCode !=69" name="room_number" />
+                    <div class="w-100 my-5">
+                        <input ng-model = "rooms.inputs.room_rate" class="clearinput w-45 float-left form-control font-fam-Montserrat text-center" placeholder="Room Rate" type="number" onkeydown="javascript: return event.keyCode !=69" name="room_rate" readonly/>
+                        <select ng-change = "rooms.inputs.room_rate = rooms.categories.changeCategory(rooms.categories.roomCategories, rooms.inputs.room_category)" ng-model = "rooms.inputs.room_category" class="form-control methpay f-13 w-45 float-right" name="room_category">
+                            <option selected value = "">Select Category</option>
+                            <option ng-repeat = "cat in rooms.categories.roomCategories" value="{{cat.category | lowercase}}">{{cat.category}}</option>
+                        </select>
+                        <div class="clr"></div>
+                    </div>
+                    
+                    <textarea class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-5" placeholder="Use slash( / ) to separate Features" name="features" ></textarea>
+
+                    
+                </form>
+                <div class="modal-footer w-100">
+                    <div class="justify-content-center w-100 d-flex flex-column">
+                        <div class="py-1 row justify-content-center w-100">
+                            <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                    height="70px" /></div>
+                            <button ng-disabled = "!rooms.inputs.room_number || !rooms.inputs.room_rate || !rooms.inputs.room_category" type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success my-3"
+                                onclick="addRoom()">
+                                Add
+                            </button>
+                        </div>
+                        <div class="row pt-3 justify-content-center">
+                            <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div ng-if="settings.modal.name == 'Update Room'">
+                <form autocomplete="off" class="updateRoomForm">
+                    <div class="ml-5 my-4 float-left w-40 inpRead">
+                        <div class="w-100">
+                            <input class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Number" type="number" onkeydown="javascript: return event.keyCode !=69" name="room_number" readonly/>
+                            <input class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Rate" type="number" onkeydown="javascript: return event.keyCode !=69" name="room_rate" readonly/>
+                            <textarea class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-5" placeholder="Use slash( / ) to separate Features" name="features" readonly></textarea>
+                            <input class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Category" name="room_category" readonly/>
+                        </div>
+                    </div>
+                    <div class="updateRoomForm mr-5 my-4 float-right w-40">
+                        <div class="w-100">
+                            <input ng-model = "rooms.inputs.new_room_number" class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Number" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_room_number" />
+                            <input ng-model = "rooms.inputs.new_room_rate" class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Rate" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_room_rate" readonly/>
+                            <textarea ng-model = "rooms.inputs.new_features" class="clearinput form-control w-100 font-fam-Montserrat text-center d-block my-5" placeholder="Use slash( / ) to separate Features" name="new_features" ></textarea>
+                            <select ng-change = "rooms.inputs.new_room_rate = rooms.categories.changeCategory(rooms.categories.roomCategories, rooms.inputs.new_room_category)" ng-model = "rooms.inputs.new_room_category" class="my-5 form-control methpay f-13" name="new_room_category">
+                                <option selected value = "">Select Category</option>
+                                <option ng-repeat = "cat in rooms.categories.roomCategories" value="{{cat.category | lowercase}}">{{cat.category}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer w-100">
+                    <div class="justify-content-center w-100 d-flex flex-column">
+                        <div class="py-1 row justify-content-center w-100">
+                            <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                    height="70px" /></div>
+                            <button ng-disabled = "!rooms.inputs.new_room_number && !rooms.inputs.new_room_rate && !rooms.inputs.new_features && !rooms.inputs.new_room_category" type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success my-3"
+                                onclick="updateRoom()">
+                                Update
+                            </button>
+                        </div>
+                        <div class="row pt-3 justify-content-center">
+                            <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!--....... Room End ......... -->
+
+            <!--....... Category Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'Category'">
+                <div ng-if="settings.modal.name == 'Add Category'">
+                <form autocomplete="off" class="addCategoryForm mx-5 my-4">
+                    <input ng-model = "category.inputs.category" class="clearinput lowercase form-control font-fam-Montserrat text-center d-block my-5" placeholder="Category Name" name="category"/>
+                    <input ng-model = "category.inputs.rate" class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Category Rate" type="number" onkeydown="javascript: return event.keyCode !=69" name="rate" />
+                </form>
+                <div class="modal-footer w-100">
+                    <div class="justify-content-center w-100 d-flex flex-column">
+                        <div class="py-1 row justify-content-center w-100">
+                            <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                    height="70px" /></div>
+                            <button ng-disabled = "!category.inputs.category || !category.inputs.rate" type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success my-3"
+                                onclick="addCategory()">
+                                Add
+                            </button>
+                        </div>
+                        <div class="row pt-3 justify-content-center">
+                            <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div ng-if="settings.modal.name == 'Update Category'">
+                <form autocomplete="off" class="updateCategoryForm">
+                    <div class="ml-5 my-4 float-left w-40 inpRead">
+                        <div class="w-100">
+                            <input class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Category Number" name="category" readonly/>
+                            <input class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Category Rate" type="number" onkeydown="javascript: return event.keyCode !=69" name="rate" readonly/>
+                        </div>
+                    </div>
+                    <div class="updateCategoryForm mr-5 my-4 float-right w-40">
+                        <div class="w-100">
+                            <input ng-model = "category.inputs.new_category" class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Number" name="new_category" />
+                            <input ng-model = "category.inputs.new_rate" class="clearinput form-control font-fam-Montserrat text-center d-block my-5" placeholder="Room Rate" type="number" onkeydown="javascript: return event.keyCode !=69" name="new_rate" />
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer w-100">
+                    <div class="justify-content-center w-100 d-flex flex-column">
+                        <div class="py-1 row justify-content-center w-100">
+                            <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                    height="70px" /></div>
+                            <button ng-disabled = "!category.inputs.new_category && !category.inputs.new_rate " type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success my-3"
+                                onclick="updateCategory()">
+                                Update
+                            </button>
+                        </div>
+                        <div class="row pt-3 justify-content-center">
+                            <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!--....... Room End ......... -->
+
+        </div>
+    </div>
+</div>

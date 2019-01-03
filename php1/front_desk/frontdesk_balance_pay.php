@@ -9,17 +9,17 @@ $printerFile = fopen("assets/printer.txt", "r");
 $printName = fgets($printerFile);
 fclose($printerFile);
 
-$shop_name_file = fopen("assets/shop_name.txt", "r");
-$shop_name = fgets($shop_name_file);
-fclose($shop_name_file);
-
-$shop_address_file = fopen("assets/shop_address.txt", "r");
-$shop_address = fgets($shop_address_file);
-fclose($shop_address_file);
-
-$shop_contact_file = fopen("assets/shop_contact.txt", "r");
-$shop_contact = fgets($shop_contact_file);
-fclose($shop_contact_file);
+$settings = ["shop_name", "shop_address", "shop_contact", "frontdesk_bottom_msg", "frontdesk_top_msg"];
+$select_settings_query = $conn->prepare("SELECT property_value FROM admin_settings WHERE shop_settings = ?");
+$select_settings_query->bind_param("s", $settings_shop);
+foreach ($settings as $shop_settings) {
+	$settings_shop = $shop_settings;
+	$select_settings_query->execute();
+	$settings_result = $select_settings_query->get_result();
+	$row = $settings_result->fetch_array(MYSQLI_ASSOC);
+	${"$settings_shop"} = $row["property_value"];
+}
+$select_settings_query->close();
 
 $biz_name = $shop_name;
 $biz_add = $shop_address . "\n";
@@ -202,9 +202,10 @@ function receipt_header($fprinter, $org_name, $header_msg, $high_separator){
    }
 }
 
-function receipt_body($fprinter, $cost_due, $paid_amount, $balance_amount, $normal_separator, $two_line_separator, $paid_with, $time_of_issue) {
+function receipt_body($fprinter, $cost_due, $paid_amount, $balance_amount, $normal_separator, $two_line_separator, $paid_with, $time_of_issue, $new_balance) {
     $paid_string = "Amt. Paid: N". number_format($paid_amount) . "\n";
-    $balance_string  = "Balance:   N" . number_format($balance_amount) . "\n";
+    $balance_string  = "Old Balance: N" . number_format($balance_amount) . "\n";
+    $new_balance_string  = "New Balance: N" . number_format($new_balance) . "\n";
     $receipt_paid_with = "Paid: $paid_with\n";
 
     fwrite($fprinter, $normal_separator);
@@ -213,6 +214,8 @@ function receipt_body($fprinter, $cost_due, $paid_amount, $balance_amount, $norm
     fwrite($fprinter, "\x1B\x45\x30");
     fwrite($fprinter, $receipt_paid_with);
     fwrite($fprinter, $balance_string);
+    fwrite($fprinter, "\x1B\x45\x30");
+    fwrite($fprinter, $new_balance_string);
     fwrite($fprinter, "\x1D\x34\x01");
     fwrite($fprinter, "Cost Total: ");
     fwrite($fprinter, "\x1D\x34\x00");
@@ -261,7 +264,7 @@ function receipt_footer($fprinter, $solid_separator, $parthian, $cus_msg, $power
   $printer -> close();
 
   receipt_header($fp, $biz_name, $header, $highSeparator);
-  receipt_body($fp, $total_cost, $amount_paid, $outstanding_bal, $separator, $doubleSeparator, $means_of_payment, $receipt_time);
+  receipt_body($fp, $total_cost, $amount_paid, $outstanding_bal, $separator, $doubleSeparator, $means_of_payment, $receipt_time, $new_balance);
   receipt_footer($fp, $separatorSolid, $partingMsg, $customer_msg, $poweredBy);
 
   $printData = file_get_contents("new_pay.txt");

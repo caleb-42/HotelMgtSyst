@@ -1,0 +1,102 @@
+<div class="modal-dialog modal-{{settings.modal.size}}">
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title ml-3">{{settings.modal.name}}</h5>
+            <button type="button" class="close" id="closeInvoice" data-dismiss="modal" onclick=" ">×</button>
+        </div>
+        <div class="modal-body nopadding">
+
+            <!--....... User Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'User'">
+                <div class="w-100" ng-if="settings.modal.name == 'Add User'">
+                    <form class="p-4 w-100 addUserForm row justify-content-center m-0">
+                        <input ng-model = "users.inputs.user" class="clearinput form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Name"
+                            name="user" />
+                        <input ng-model = "users.inputs.user_name" class="clearinput form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Username"
+                            name="user_name" />
+                        <input ng-model = "users.inputs.password" class="clearinput form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Password"
+                            name="user_pass" />
+                        <div class="row justify-content-between w-50">
+                            <span>
+                                <input ng-model = "users.inputs.role" type="radio" class="clearinput " id="admin" value="admin" name="role" />
+                                <label for="admin" class="f-15 ml-2">Admin</label>
+                            </span>
+                            <span>
+                                <input ng-model = "users.inputs.role" type="radio" class="clearinput " checked value="user" name="role" id="user" />
+                                <label for="user" class="f-15 ml-2">User</label>
+                            </span>
+                        </div>
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+                                <button ng-disabled = "!users.inputs.user || !users.inputs.user_name || !users.inputs.password || !users.inputs.role" type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="addUser()">
+                                    {{settings.modal.name | limitTo:3}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="w-100" ng-if="settings.modal.name == 'Update User'">
+                    <form autocomplete="off" class="updateUserForm p-4 w-100">
+                        <div class="float-left w-45 inpRead row m-0">
+                            <input class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="User"
+                                name="user" readonly />
+                            <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Username" name="user_name" readonly />
+                            <input class="clearinput role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Role"
+                                name="role" readonly />
+                            <input class="clearinput password form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Password" name="pass" readonly />
+                        </div>
+                        <div class="float-right w-45 row m-0 justify-content-center">
+                            <input ng-model = "users.inputs.new_user" class="clearinput user form-control font-fam-Montserrat text-center d-block my-4" placeholder="User"
+                                name="new_user" />
+                            <input ng-model = "users.inputs.new_user_name" class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Username" name="new_user_name" />
+                            <div class="row justify-content-between w-50 py-4">
+                                <span class="py-1">
+                                    <input ng-model = "users.inputs.new_role" type="radio" class="clearinput " id="admin" value="admin" name="new_role" />
+                                    <label for="admin" class="f-15 ml-2">Admin</label>
+                                </span>
+                                <span class="py-1">
+                                    <input ng-model = "users.inputs.new_role" type="radio" class="clearinput " checked value="user" name="new_role" id="user" />
+                                    <label for="user" class="f-15 ml-2">User</label>
+                                </span>
+                            </div>
+                            <input ng-model = "users.inputs.new_password" class="clearinput password form-control font-fam-Montserrat text-center d-block my-4"
+                                placeholder="Password" name="new_password" />
+                        </div>
+                    </form>
+                    <div class="modal-footer w-100">
+                        <div class="justify-content-center w-100 d-flex flex-column">
+                            <div class="py-1 row justify-content-center w-100">
+                                <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                        height="70px" /></div>
+
+                                <button ng-model = "!users.inputs.new_user && !users.inputs.new_user_name && !users.inputs.new_password && !users.inputs.new_role" type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                    onclick="updateUser()">
+                                    {{settings.modal.name | limitTo:7}}
+                                </button>
+                            </div>
+                            <div class="row pt-3 justify-content-center">
+                                <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--....... User End ......... -->
+
+
+        </div>
+    </div>
+</div>

@@ -7,8 +7,11 @@
 
   function get_all_frontdesk_rooms_category($rooms_category_result, $rooms_category_array, $connDB) {
     $rooms_category_array = [];
-
-    if (mysqli_num_rows($rooms_category_result) > 0){
+    /* if(!$rooms_category_result) {
+      json_encode([]); 
+      return;
+    } */
+    if ($rooms_category_result->num_rows !== 0){
  	  while($rows = mysqli_fetch_assoc($rooms_category_result)) {
         $rooms_category_array[] = $rows;
  	  }

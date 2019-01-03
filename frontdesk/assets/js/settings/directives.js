@@ -1,7 +1,7 @@
-usersApp.directive('userlist', ['$rootScope', function ($rootScope) {
+settingsApp.directive('userlist', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/users/listTemplates.php?list=users',
+        templateUrl: './assets/js/settings/listTemplates.php?list=users',
 
         scope: false,
 
@@ -44,10 +44,10 @@ usersApp.directive('userlist', ['$rootScope', function ($rootScope) {
     };
 }]);
 
-usersApp.directive('sessionlist', ['$rootScope', function ($rootScope) {
+settingsApp.directive('sessionlist', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/users/listTemplates.php?list=sessions',
+        templateUrl: './assets/js/settings/listTemplates.php?list=sessions',
 
         scope: false,
 
@@ -95,10 +95,10 @@ usersApp.directive('sessionlist', ['$rootScope', function ($rootScope) {
 }]);
 
 
-usersApp.directive('croppie', ['$rootScope', '$filter', function ($rootScope, $filter) {
+settingsApp.directive('croppie', ['$rootScope', '$filter', function ($rootScope, $filter) {
     return {
         restrict: 'E',
-        templateUrl: './assets/js/users/listTemplates.php?list=croppie',
+        templateUrl: './assets/js/settings/listTemplates.php?list=croppie',
 
         scope: false,
 

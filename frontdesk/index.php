@@ -8,7 +8,7 @@ if(!isset($_SESSION['user_name'])){
     header("Location: ./logIn.php");
 }
 
-$templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Lodge"=>"./assets/js/rooms/roomsPartial.php","Settings"=>"./assets/js/users/usersPartial.php","Records"=>"./assets/js/records/recordsPartial.php"]
+$templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Lodge"=>"./assets/js/lodge/lodgePartial.php","Settings"=>"./assets/js/settings/settingsPartial.php","Records"=>"./assets/js/records/recordsPartial.php"]
 ?>
 
 <!doctype html>
@@ -58,13 +58,16 @@ $templates = ["Dashboard"=>"./assets/js/dashboard/dashPartial.php","Lodge"=>"./a
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/filters.js"></script>
     <script src="./assets/js/services.js"></script>
-    <script src="./assets/js/directives.js"></script>
     <script src="./assets/js/dashboard/directives.js"></script>
+    <script src="./assets/js/dashboard/modalsDirective.js"></script>
     <script src="./assets/js/dashboard/controllers.js"></script>
-    <script src="./assets/js/rooms/directives.js"></script>
-    <script src="./assets/js/rooms/controllers.js"></script>
-    <script src="./assets/js/users/directives.js"></script>
-    <script src="./assets/js/users/controllers.js"></script>
+    <script src="./assets/js/lodge/directives.js"></script>
+    <script src="./assets/js/lodge/modalsDirective.js"></script>
+    <script src="./assets/js/lodge/controllers.js"></script>
+    
+    <script src="./assets/js/settings/modalsDirective.js"></script>
+    <script src="./assets/js/settings/directives.js"></script>
+    <script src="./assets/js/settings/controllers.js"></script>
     <script src="./assets/js/records/directives.js"></script>
     <script src="./assets/js/records/controllers.js"></script>
     <script src="./vendors/node_modules/ng-croppie/unminified/ng-croppie.js"></script>

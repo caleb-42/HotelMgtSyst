@@ -21,23 +21,31 @@ app.directive('jslist', ['$rootScope', function ($rootScope) {
                     scope.guest.listhddata = [
                         {
                             name: "Name",
-                            width: "col-3",
+                            width: "col-2",
                         },
                         {
                             name: "Gender",
                             width: "col-2",
                         },
                         {
-                            name: "Rooms",
+                            name: "Phone No.",
                             width: "col-2",
+                        },
+                        {
+                            name: "Rooms",
+                            width: "col-1",
                         },
                         {
                             name: "Visit Count",
                             width: "col-2",
                         },
                         {
+                            name: "CheckedIn",
+                            width: "col-1",
+                        },
+                        {
                             name: "Out bal.",
-                            width: "col-3",
+                            width: "col-2",
                         }
                     ];
                 },
@@ -71,30 +79,9 @@ app.directive('reservationlist', ['$rootScope', function ($rootScope) {
         link: function (scope, element, attrs) {
             scope.reservation.jslist = {
                 createList: function () {
-                    listdetails = scope.reservation.itemlist();
-                    jsonlist = listdetails.jsonfunc;
-                    jsonlist.then(function (result) {
+                    listdetails = scope.reservation.itemlist('filter', function(res){
                         scope.reservation.jslist.values = [];
-                        resvtn = result;
-                        newresvtn = [];
-                        if(!resvtn){
-                            return;
-                        }
-                        resvtn.forEach(function(rtn){
-                            count = true;
-                            for(var i = 0; i < newresvtn.length; i++){
-                                res = newresvtn[i];
-                                if(rtn.reservation_ref == res.reservation_ref && rtn.guest_id == res.guest_id){
-                                    count = false;
-                                }
-                            };
-                            if(count){
-                                newresvtn.push(rtn);
-                            }
-                        });
-                        scope.reservation.jslist.values = newresvtn;
-                        console.log(newresvtn);
-                        //scope.reservation.jslist.selected = null;
+                        scope.reservation.jslist.values = res;
                     });
                     scope.reservation.listhddata = [
                         {
@@ -102,7 +89,7 @@ app.directive('reservationlist', ['$rootScope', function ($rootScope) {
                             width: "col-2",
                         },
                         {
-                            name: "GuestID",
+                            name: "Guest",
                             width: "col-2",
                         },
                         {
@@ -125,9 +112,9 @@ app.directive('reservationlist', ['$rootScope', function ($rootScope) {
                     scope.reservation.jslist.selectedObj = scope.reservation.jslist.newItemArray[index];
                     console.log(scope.reservation.jslist.newItemArray[index]);
                     $rootScope.$emit('reservationselect', scope.reservation.jslist.selectedObj);
-                    scope.resvtn.jslist.createList();
-                    scope.resvtn.jslist.selectedObj = {};
-                    scope.resvtn.jslist.selected = null;
+                    scope.reservation.resvtn.jslist.createList();
+                    scope.reservation.resvtn.jslist.selectedObj = {};
+                    scope.reservation.resvtn.jslist.selected = null;
                 },
                 toggleOut : function(){
                     $(".listcont").fadeOut(200);
@@ -151,17 +138,14 @@ app.directive('resvtnlist', ['$rootScope', function ($rootScope) {
         scope: false,
 
         link: function (scope, element, attrs) {
-            scope.resvtn.jslist = {
+            scope.reservation.resvtn.jslist = {
                 createList: function () {
                     if(!scope.reservation.jslist.selected){
                         return;
                     }
-                    listdetails = scope.reservation.itemlist();
-                    jsonlist = listdetails.jsonfunc;
-                    resultfiltered = [];
-
-                    jsonlist.then(function (result) {
-                        scope.resvtn.jslist.values = [];
+                    listdetails = scope.reservation.itemlist('all', function(result){
+                        resultfiltered = [];
+                        scope.reservation.resvtn.jslist.values = [];
                         if (!result) {
                             return 0;
                         }
@@ -174,10 +158,11 @@ app.directive('resvtnlist', ['$rootScope', function ($rootScope) {
                                 return;
                             }
                         });
-                        scope.resvtn.jslist.values = resultfiltered;
+                        scope.reservation.resvtn.jslist.values = resultfiltered;
                         //scope.reservation.jslist.selected = null;
                     });
-                    scope.resvtn.listhddata = [
+
+                    scope.reservation.resvtn.listhddata = [
                         {
                             name: "Room No.",
                             width: "col-2",
@@ -202,9 +187,9 @@ app.directive('resvtnlist', ['$rootScope', function ($rootScope) {
                 },
                 select: function (index, id) {
                     console.log(id);
-                    scope.resvtn.jslist.selected = id;
-                    scope.resvtn.jslist.selectedObj = scope.resvtn.jslist.newItemArray[index];
-                    console.log(scope.resvtn.jslist.newItemArray[index]);
+                    scope.reservation.resvtn.jslist.selected = id;
+                    scope.reservation.resvtn.jslist.selectedObj = scope.reservation.resvtn.jslist.newItemArray[index];
+                    console.log(scope.reservation.resvtn.jslist.newItemArray[index]);
                     
                 },
                 toggleOut : function(){
@@ -214,7 +199,7 @@ app.directive('resvtnlist', ['$rootScope', function ($rootScope) {
                     $(".listcont").delay(500).fadeIn(200);
                 }
             }
-            scope.resvtn.jslist.createList();
+            scope.reservation.resvtn.jslist.createList();
         }
     };
 }]);
@@ -229,12 +214,10 @@ dashApp.directive('roomgrid', ['$rootScope', function ($rootScope) {
         link: function (scope, element, attrs) {
             scope.rooms.jslist = {
                 createList: function () {
-                    listdetails = scope.rooms.itemlist();
-                    jsonlist = listdetails.jsonfunc;
-                    jsonlist.then(function (result) {
+                    listdetails = scope.rooms.itemlist(function(result){
                         console.log(result);
                         scope.rooms.jslist.values = result;
-                        /* scope.rooms.jslist.selected = null; */
+                        scope.rooms.current_guest = {};
                     });
                     scope.rooms.listhddata = [
                         {
@@ -263,10 +246,10 @@ dashApp.directive('roomgrid', ['$rootScope', function ($rootScope) {
                     scope.rooms.jslist.selected = id;
                     scope.rooms.jslist.selectedObj = scope.rooms.jslist.newItemArray[index];
                     console.log(scope.rooms.jslist.newItemArray[index]);$rootScope.$emit('roomselect', scope.rooms.jslist.selectedObj);
-                    scope.rooms.reservations.confirmed_reservation.selectedObj = {}
-                    scope.rooms.reservations.confirmed_reservation.selected = null;
-                    scope.rooms.reservations.temp_reservation.selectedObj = {}
-                    scope.rooms.reservations.temp_reservation.selected = null;
+                    scope.rooms.resvtn.selectedObj = {}
+                    scope.rooms.resvtn.selected = null;
+                    scope.rooms.resvtn.selectedObj = {}
+                    scope.rooms.resvtn.selected = null;
                 },
                 toggleOut : function(){
                     $(".listcont").fadeOut(200);
