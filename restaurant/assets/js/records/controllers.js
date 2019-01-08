@@ -62,7 +62,6 @@ $scope.listsales = {
     }
 };
 $scope.listtranxs = {
-    inputs : {},
     itemlist: function (ref) {
         //console.log('ewere');
         return {
@@ -115,7 +114,6 @@ recordsApp.controller("stockhistory", ["$rootScope", "$scope", 'jsonPost', '$fil
 
 recordsApp.controller("customers", ["$rootScope", "$scope", 'jsonPost', '$filter', function ($rootScope, $scope, jsonPost, $filter) {
     $scope.customers = {
-        inputs: {},
         itemlist: function () {
             return {
                 jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_customers.php", {}),

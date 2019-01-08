@@ -57,7 +57,6 @@ usersApp.controller("users", ["$rootScope", "$scope",  'jsonPost','$filter', fun
         }
     }
     $scope.users = {
-        inputs : {},
         itemlist: function () {
             return {
                 jsonfunc: jsonPost.data("../php1/restaurant_bar/admin/list_users.php", {})

@@ -140,7 +140,7 @@ $message_mail = '<!DOCTYPE html>
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <div class="reservation" style="width:400px; min-height:600px; padding: 0 0 20px;background: #fff; border:#333 solid 1px;">
+    <div class="reservation" style="width:400px; height:500px; padding: 0 0 20px;background: #fff; border:#333 solid 1px;">
         <div style="width:100%;text-align:center;background:rgb(42, 138, 98);color:#fff;padding: 2px">
             <p style="font-size:12px;margin: 0;">'.$shop_name.'</p>
         </div>
@@ -186,8 +186,8 @@ $message_mail = '<!DOCTYPE html>
         </div>
         
         <div class="Address" style = "text-align:center;width: 100%;">
-            <p style="font-size:12px;text-decoration:underline; color:rgba(0,0,0,.7);">Address</p>
-            <p style="margin:0;font-size:11px;width:90%;text-align:center;display:inline-block;">'.$shop_address.'</p>
+            <p style="font-size:12px;text-decoration:underline; color:rgba(0,0,0,.7);">'.$shop_address.'</p>
+            <p style="margin:0;font-size:11px;width:90%;text-align:center;display:inline-block;"></p>
         </div>
         <div class="Phone" style = "text-align:center;">
             <p style="font-size:12px;text-decoration:underline; color:rgba(0,0,0,.7);">Phone Number</p>
@@ -226,14 +226,14 @@ $mail->Subject = $shop_name . ' reservation';
 $mail->Body    = $message_mail;
 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
- if(!$mail->send()) {
-     $msg_response =["ERROR", "Message could not be sent."];
-     echo '';
-     echo 'Mailer Error: ' . $mail->ErrorInfo;
- } else {
-     $msg_response[0] = "OUTPUT";
-     $msg_response[1] = "SENT";
- }
+// if(!$mail->send()) {
+//     $msg_response =["ERROR", "Message could not be sent."];
+//     echo '';
+//     echo 'Mailer Error: ' . $mail->ErrorInfo;
+// } else {
+//     $msg_response[0] = "OUTPUT";
+//     $msg_response[1] = "CONFIRMED";
+// }
 
 $response_message = json_encode($msg_response);
 echo $response_message;

@@ -79,12 +79,16 @@ app.directive('sessionlist', ['$rootScope', function ($rootScope) {
                     });
                     scope.sessions.listhddata = [
                         {
-                            name: "Logged On",
-                            width: "col-6 f-14 fw-500",
+                            name: "Username",
+                            width: "col-4",
                         },
                         {
-                            name: "Logged Off",
-                            width: "col-6 f-14 fw-500",
+                            name: "Logged On Time",
+                            width: "col-4",
+                        },
+                        {
+                            name: "Logged Off Time",
+                            width: "col-4",
                         }
                     ];
                 }

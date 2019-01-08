@@ -47,7 +47,7 @@ $templates = ["Sales"=>"./assets/js/sales/salesPartial.php","Stocks"=>"./assets/
     <script src="./vendors/List/List.js"></script>
 
     <!-- Custom styles for this template -->
-    <link href="./assets/css/index.css" rel="stylesheet">
+    <link href="./assets/css/index1.css" rel="stylesheet">
     <link href="./assets/css/ng-animation.css" rel="stylesheet">
     <link href="./assets/css/utilities.css" rel="stylesheet">
     <link rel="stylesheet" href="./vendors/node_modules/croppie/croppie.css" />
@@ -85,19 +85,25 @@ $templates = ["Sales"=>"./assets/js/sales/salesPartial.php","Stocks"=>"./assets/
             </div> 
             <input type = "number" onkeydown = "javascript: return event.keyCode !=69" class = "form-control font-fam-Montserrat w-50 mt-4 text-center d-inline-block mx-3" placeholder = "Room"   name = "room"/>-->
             <div class="navig">
-                <ul class="wht w-100">
+                <ul class="wht">
                     <li ng-repeat = "nav in sidebarnav.navig.navs" class = "{{nav.listClass}}" ng-style = "{opacity:  nav.name == sidebarnav.navig.activeNav ? '1': null, background:  nav.name == sidebarnav.navig.activeNav ? '#222': null, boxShadow : nav.name == sidebarnav.navig.activeNav ? 'inset 0px -5px 10px rgba(0,0,0,.3), inset 0px 5px 10px  rgba(0,0,0,.3)': null}" ng-click = "sidebarnav.navig.mkactiveNav(nav.name)"><i class="{{nav.iconClass}}" ng-bind-html = "nav.innerHtml"></i>{{sidebarnav.menuicon.active ? nav.name : null}}</li>
                 </ul>
             </div>
         </div>
         
-        <div class="main w-100"   ng-switch on="sidebarnav.navig.activeNav">
+        <div class="main"   ng-switch on="sidebarnav.navig.activeNav">
             
             <?php foreach($templates as $key => $value): ?>
             <div class  = "<?php echo $key ?>" ng-switch-when = "<?php echo $key; ?>">
                 <div ng-include ng-init = "settings.userDefinition('<?php echo $_SESSION['user_name']; ?>', '<?php echo $_SESSION['role']; ?>');" src = "'<?php echo $value; ?>'"></div>
             </div>
             <?php endforeach;?>
+           <!-- <div ng-switch-when = "Stocks">
+                <div ng-include = "sidebarnav.templates[1].url"></div>
+            </div>
+            <div ng-switch-when = "History">
+                <div ng-include = "sidebarnav.templates[2].url"></div>
+            </div>-->
         </div>
     </div>
 
