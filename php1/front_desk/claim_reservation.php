@@ -49,7 +49,7 @@ $printer = new Printer($connector);
  $reservation_ref = $reservation_data["reservation_ref"];
  $contact_address = $reservation_data["contact_address"];
  $guest_type_gender = $reservation_data["guest_type_gender"];
- $new_guest = "";
+ $new_guest = 0;
  $rooms = [];
 
 $get_all_ref_details_sql = "SELECT * FROM frontdesk_reservations WHERE deposit_confirmed = 'YES' AND reservation_ref = '$reservation_ref' AND cancelled != 'YES'";
@@ -233,6 +233,9 @@ $means_of_payment = $reservation_row["means_of_payment"];
 if ($new_guest) {
 	$add_new_guest_query = "INSERT INTO frontdesk_guests (guest_id, guest_name, guest_type_gender, phone_number, contact_address, room_outstanding,  total_rooms_booked) VALUES('$guest_id', '$guest_name', '$guest_type_gender', '$phone_number', '$contact_address', $room_outstanding, $no_of_rooms)";
     $add_new_guest_result = mysqli_query($dbConn, $add_new_guest_query);
+} else {
+	$update_guest_outstanding = "UPDATE frontdesk_guests SET room_outstanding = room_outstanding + $room_outstanding, total_rooms_booked = $no_of_rooms WHERE guest_id  = '$guest_id'";
+    $update_outstanding_result = mysqli_query($dbConn, $update_guest_outstanding);
 }
 
 /*Print Frontdesk Receipts*/

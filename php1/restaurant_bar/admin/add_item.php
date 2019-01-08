@@ -36,6 +36,14 @@ if ($item == "" || $current_price == "") {
 	die(json_encode($msg_response));
 }
 
+$item_category_check = "SELECT * FROM restaurant_item_category WHERE category_name = '$category'";
+$item_category_result = mysqli_query($dbConn, $item_category_check);
+if (mysqli_num_rows($item_category_check) > 0) {
+	$msg_response = ["ERROR", "This Category name is not among listed category"];
+	$response_msg = json_encode($msg_response);
+	die($response_msg);
+}
+
 $duplicate_check_query = "SELECT * FROM restaurant_items WHERE item = '$item' AND type = '$type' AND description = '$description'";
 $duplicate_check_result = mysqli_query($dbConn, $duplicate_check_query);
 

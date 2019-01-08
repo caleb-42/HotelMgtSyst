@@ -19,11 +19,20 @@ $rand_id = mt_rand(0, 100000);
 $room_id = "RM_" . $rand_id;
 
 
-$msg_response="";
+$msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
 if ($room_number == "" || $room_rate == "") {
-	$msg_response = "The fields 'Room number' and 'Room rate' are compulsory";
-	die($msg_response);
+	$msg_response = ["ERROR","The fields 'Room number' and 'Room rate' are compulsory"];
+	$response_msg = json_encode($msg_response);
+	die($response_msg);
+}
+
+$room_category_check = "SELECT * FROM frontdesk_room_category WHERE category_name = '$room_category'";
+$room_category_result = mysqli_query($dbConn, $room_category_check);
+if (mysqli_num_rows($room_category_check) > 0) {
+	$msg_response = ["ERROR", "This Category name is not among listed category"];
+	$response_msg = json_encode($msg_response);
+	die($response_msg);
 }
 
 $duplicate_check_query = "SELECT * FROM frontdesk_rooms WHERE room_number = '$room_number' AND room_category = '$room_category'";
