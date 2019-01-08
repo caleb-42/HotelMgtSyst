@@ -257,6 +257,8 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             },
             change_averagenyt : function(){
                 $scope.guest.roomgrid.getrooms(['deluxe', 'standard']);
+                $scope.guest.roomgrid.room_info.cost = 0;
+                $scope.guest.roomgrid.room_info.rooms = 0;
             },
             activated:'false'
         },
@@ -754,7 +756,6 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
                                 arr[i].no_of_nights = $scope.reservation.roomgrid.averagenyt;
                                 arr[i].room_reservation_date = $scope.reservation.roomgrid.nytstartdate;
                                 console.log('true', resvtn.reserved_date);
-                               
                             }
                         };
                     }else{
@@ -774,6 +775,8 @@ dashApp.controller("dashboard", ["$rootScope", "$scope", 'jsonPost', '$filter', 
             },
             change_averagenyt : function(){
                 $scope.reservation.roomgrid.getrooms(['deluxe', 'standard']);
+                $scope.reservation.roomgrid.room_info.cost = 0;
+                $scope.reservation.roomgrid.room_info.rooms = 0;
             },
             activated:'false'
         }

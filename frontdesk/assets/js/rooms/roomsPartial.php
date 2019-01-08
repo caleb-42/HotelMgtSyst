@@ -23,7 +23,7 @@
                         <div class="my-4 row justify-content-between align-items-center">
 
                         <div class = "roomscrudbtns my-4 align-items-center ">
-                        <button class="btn btn-outline-primary mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Room'; settings.modal.name = 'Add Room'; settings.modal.size = 'md' " data-toggle="modal" data-target="#crud" >Add</button><button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'Room'; settings.modal.name = 'Update Room'; settings.modal.size = 'lg'; " ng-disabled="!rooms.jslist.selected">Update</button><button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" ng-disabled="!room.jslist.selected" ng-click = "room.deleteRoom()">Delete</button>
+                        <button class="btn btn-outline-primary mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Room'; settings.modal.name = 'Add Room'; settings.modal.size = 'md' " data-toggle="modal" data-target="#crud" >Add</button><button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'Room'; settings.modal.name = 'Update Room'; settings.modal.size = 'lg'; " ng-disabled="!rooms.jslist.selected">Update</button><button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" ng-disabled="!rooms.jslist.selected" ng-click = "rooms.deleteRoom()">Delete</button>
                         </div>
 
                         </div>

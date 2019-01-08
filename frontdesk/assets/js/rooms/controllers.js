@@ -72,10 +72,10 @@ roomsApp.controller("rooms", ["$rootScope", "$scope", 'jsonPost', '$filter', fun
         },
         deleteRoom: function () {
             jsonrm = {};
-            jsonrm.items = [$scope.rooms.jslist.selectedObj];
-            console.log("new product", jsonprod);
+            jsonrm.rooms = [$scope.rooms.jslist.selectedObj];
+            console.log("new product", jsonrm);
             jsonPost.data("../php1/front_desk/admin/del_room.php", {
-                del_items: $filter('json')(jsonprod)
+                del_rooms: $filter('json')(jsonrm)
             }).then(function (response) {
                 $scope.rooms.jslist.toggleOut();
                 console.log(response);

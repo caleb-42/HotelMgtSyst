@@ -10,7 +10,7 @@ $date=date("D M d, Y g:i a");
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>PrimePoint Admin Panel</title>
+        <title>Restaurant</title>
 
         <!-- jQuery core -->
         <script src="./vendors/jquery/jquery-3.1.1.min.js"></script>

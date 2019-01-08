@@ -61,6 +61,7 @@ app.directive('modalentry', ['$rootScope', 'jsonPost', '$filter', function ($roo
             updateRoom = function () {
                 $rootScope.settings.modal.adding = true
                 jsonForm = $(".updateRoomForm").serializeObject();
+                console.log(scope.rooms.jslist.new_room_category);
                 jsonForm.new_room_category = scope.rooms.jslist.new_room_category ? scope.rooms.jslist.new_room_category : "";
                 scope.rooms.updateRoom(jsonForm);
             };

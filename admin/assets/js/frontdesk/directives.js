@@ -326,6 +326,7 @@ frontdeskApp.directive('roomlist', ['$rootScope', '$filter', function ($rootScop
             var jslistObj;
             scope.rooms.jslist = {
                 createList: function () {
+                    scope.rooms.jslist.values = [];
                     listdetails = scope.rooms.itemlist();
                     jsonlist = listdetails.jsonfunc;
                     jsonlist.then(function (result) {
@@ -334,7 +335,7 @@ frontdeskApp.directive('roomlist', ['$rootScope', '$filter', function ($rootScop
                             elem.category = elem.room_category;
                         }); */
                         scope.rooms.jslist.values = result;
-                        scope.rooms.jslist.selected = null;
+                        //scope.rooms.jslist.selected = null;
                     });
                     scope.rooms.listhddata = [
                         {

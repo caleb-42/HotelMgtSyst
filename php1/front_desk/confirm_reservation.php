@@ -182,6 +182,10 @@ $message_mail = '<!DOCTYPE html>
                 <h6>Rooms</h6>
                 <h4>'.$total_rooms_reserved.'</h4>
             </div>
+<<<<<<< HEAD
+=======
+            <div style = "clear:both;"></div>
+>>>>>>> refs/remotes/origin/tego
         </div>
         
         <div class="Address" style = "text-align:center;width: 100%;">
@@ -209,9 +213,18 @@ $mail->From = 'eweteg@gmail.com';
 $mail->FromName = $shop_name;
 //$mail->addAddress('tegogs@gmail.com', 'Joe User');     // Add a recipient
 $mail->addAddress($email);               // Name is optional
+<<<<<<< HEAD
 $mail->addReplyTo($shop_email, 'Information');
 $mail->addCC('tegovona@gmail.com');
 $mail->addBCC('ewiscobaba@gmail.com');
+=======
+echo $email;
+$mail->addReplyTo($shop_email, 'Information');
+$mail->addCC($email);
+$mail->addBCC('ewiscobaba@gmail.com');
+/* $mail->addCC($email);
+$mail->addBCC('ewiscobaba@gmail.com'); */
+>>>>>>> refs/remotes/origin/tego
 
 $mail->WordWrap = 60;                                 // Set word wrap to 50 characters
 //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
@@ -222,6 +235,7 @@ $mail->Subject = $shop_name . ' reservation';
 $mail->Body    = $message_mail;
 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
+<<<<<<< HEAD
 if(!$mail->send()) {
     $msg_response =["ERROR", $mail->ErrorInfo];
     // echo '';
@@ -230,6 +244,16 @@ if(!$mail->send()) {
     $msg_response[0] = "OUTPUT";
     $msg_response[1] = "CONFIRMED";
 }
+=======
+// if(!$mail->send()) {
+//     $msg_response =["ERROR", "Message could not be sent."];
+//     echo '';
+//     echo 'Mailer Error: ' . $mail->ErrorInfo;
+// } else {
+//     $msg_response[0] = "OUTPUT";
+//     $msg_response[1] = "CONFIRMED";
+// }
+>>>>>>> refs/remotes/origin/tego
 
 $response_message = json_encode($msg_response);
 echo $response_message;

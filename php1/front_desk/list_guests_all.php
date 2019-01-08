@@ -9,11 +9,11 @@
     $guests_array = [];
 
     if (mysqli_num_rows($guests_result) > 0){
- 	  while($rows = mysqli_fetch_assoc($guests_result)) {
- 		$guests_array[] = $rows;
- 	  }
- 	  $get_guests_json = json_encode($guests_array);
- 	  return $get_guests_json;
+      while($rows = mysqli_fetch_assoc($guests_result)) {
+        $guests_array[] = $rows;
+      }
+ 	    $get_guests_json = json_encode($guests_array);
+ 	    return $get_guests_json;
     }
   }
 
