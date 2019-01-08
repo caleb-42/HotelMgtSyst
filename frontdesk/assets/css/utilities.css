@@ -21,6 +21,18 @@
     width: 130px;
     padding: 10px;
 }
+.top{
+    top:0 !important;
+}
+.bottom{
+    bottom:0 !important;
+}
+.left{
+    left:0 !important;
+}
+.right{
+    right:0 !important;
+}
 .tabpill.focus {
     color: #509CCB !important;
     background: white;

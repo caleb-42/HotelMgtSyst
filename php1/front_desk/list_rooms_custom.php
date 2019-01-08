@@ -69,6 +69,7 @@
 
         }
     }
+
     $get_rooms_json = json_encode($available_rooms);
     return $get_rooms_json;
   }

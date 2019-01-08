@@ -212,6 +212,45 @@
             </div>
             <!--....... Guest End ......... -->
 
+            <!--....... Room Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'Rooms'">
+                <div class="p-4 h-100">
+                    <form autocomplete="off" class="w-100 changeRoomForm p-3 row justify-content-center">
+                        <div class="my-3 w-60">
+                            <label class="text-center w-100 mb-2 f-14 blu-clr">Current Room</label>
+                            <input class="clearinput text-center form-control w-100 " name="current_room"  ng-model="rooms.inputs.current_room" readonly/>
+                        </div>
+                        <div class="mb-5 mt-4 w-60">
+                            <label class="text-center w-100 mb-2 f-14 blu-clr">New Room</label>
+                            <select ng-model="rooms.inputs.new_room" class="form-control methpay w-100 f-13" name="new_room">
+                                <option selected value="">None</option>
+                                <option ng-repeat = "room in rooms.roomSubstitutes" value="{{room.room_number}}">{{room.room_number}} - {{room.room_category}}</option>
+                            </select>
+                        </div>
+                        <p class="opac-50 f-14 w-70 text-center">
+                            <b>*</b> The pricing for the original Room Booking <br/> will be used and maintained after the change.
+                        </p>
+                    </form>
+                    <div class="modal-footer w-100">
+                            <div class="justify-content-center w-100 d-flex flex-column">
+                                <div class="py-1 row justify-content-center w-100">
+                                    <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                            height="70px" /></div>
+    
+                                    <button ng-disabled = "!rooms.inputs.new_room" type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                        onclick="changeRoom()">
+                                        {{settings.modal.name | limitTo:7}}
+                                    </button>
+                                </div>
+                                <div class="row pt-2 justify-content-center">
+                                    <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <!--....... Room Start ......... -->
+
             <!--....... Reservation Start ......... -->
             <div class="w-100" ng-if="settings.modal.active == 'Reservation'">
                 <div class="w-100" ng-if="settings.modal.name == 'Add Reservation'">
@@ -384,11 +423,11 @@
                 <div class="w-100" ng-if="settings.modal.name == 'Claim Reservation'">
                     <form class="p-4 w-100 ClaimReservationForm row justify-content-center m-0">
                         
-                        <div class="my-4 w-100">
+                        <div class="my-4 w-70">
                             <label class="text-center w-100 f-14 blu-clr">Address</label>
                             <textarea class="clearinput form-control w-100 font-fam-Montserrat text-center d-block" placeholder="Address" name="contact_address" ></textarea>
                         </div>
-                        <div class="my-4 w-100">
+                        <div class="my-4 w-70">
                             <label class="text-center w-100 f-14 blu-clr">Phone Number</label>
                             <input class="clearinput form-control w-100 font-fam-Montserrat text-center d-block" placeholder="Phone Number" name="phone_number"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" />
                         </div>
@@ -713,6 +752,38 @@
                         </div>
 
                     </div>
+                </div>
+            </div>
+            <!--....... Pay End ......... -->
+
+            <!--....... Reprint Start ......... -->
+            <div class="w-100" ng-if="settings.modal.active == 'Reprint'">
+                <div class="py-4 w-100 row justify-content-center m-0 px-5">
+                    <form class = 'w-70 CheckOutForm' autocomplete = "off">
+                        <ul class = "w-100">
+                            <li ng-click = "guest.roomBookings.selected = []; guest.roomBookings.selected = guest.roomBookings.select(room, guest.roomBookings.selected);" ng-repeat = 'room in guest.roomBookings.booking' class = "w-100 row bb-1" ng-class = "{'purp-back wht font-weight-bold': (guest.roomBookings.selected | objInArray : room.room_id : 'room_id')}">
+                                <span class="col-4 text-center py-2">{{room.booking_ref}}</span>
+                                <span class="col-4 text-center py-2">{{room.check_in_date | limitTo:10}}</span>
+                                <span class="col-4 text-center py-2">{{room.net_cost}}</span>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <div class="modal-footer w-100">
+                    <div class="justify-content-center w-100 d-flex flex-column">
+                        <div class="py-1 row justify-content-center w-100">
+                            <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
+                                    height="70px" /></div>
+                            <button ng-disabled = "guest.roomBookings.selected.length == 0" type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                onclick="rePrint()">
+                                {{settings.modal.name}}
+                            </button>
+                        </div>
+                        <div class="row pt-3 justify-content-center">
+                            <p class="{{settings.modal.msgcolor}} report f-14">{{settings.modal.msg}}</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <!--....... Pay End ......... -->

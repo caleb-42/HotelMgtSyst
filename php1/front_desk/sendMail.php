@@ -20,7 +20,6 @@ foreach ($settings as $shop_settings) {
 $select_settings_query->close();
 
 $reservation_data = $_POST["reservation_data"];
- $reservation_out = $reservation_data;
 
 $reservation_data = json_decode($reservation_data, true);
 $msg_response=["OUTPUT", "NOTHING HAPPENED"];
@@ -28,78 +27,42 @@ $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 $reservation_ref = $reservation_data["reservation_ref"];
 $total_cost = 0;
 $no_of_rooms = 0;
-$rooms = [];
 $net_room_rate = 0;
+$guest_id = '';
+$phone_number = '';
+$email = '';
+$reserved_date = '';
+$guest_name = '';
 
-$get_all_ref_details_sql = "SELECT * FROM frontdesk_reservations WHERE deposit_confirmed = 'NO' AND reservation_ref = '$reservation_ref' AND cancelled != 'YES'";
+$get_all_ref_details_sql = "SELECT * FROM frontdesk_reservations WHERE  reservation_ref = '$reservation_ref' AND cancelled != 'YES'";
 $get_all_ref_results = mysqli_query($dbConn, $get_all_ref_details_sql);
-if (mysqli_num_rows($get_all_ref_results)) {
-	$no_of_rooms = mysqli_num_rows($get_all_ref_results);
-	$i = 0;
-	while ($row = mysqli_fetch_assoc($get_all_ref_results)) {
-		$total_cost = $total_cost + $row["room_total_cost"];
-		$rooms[$i]["room_number"] = $row["room_number"];
-		$rooms[$i]["room_id"] = $row["room_id"];
-		$rooms[$i]["room_rate"] = $row["room_rate"];
-		$net_room_rate = $net_room_rate + $rooms[$i]["room_rate"];
-		$guest_id = $row["guest_id"];
-		$phone_number = $row["phone_number"];
-		$email = $row["email"];
-        $reserved_date = $row["reserved_date"];
-        $guest_name = $row["guest_name"];
-	}
-} else {
-	$msg_response=["ERROR", "Already confirmed or cancelled reservation"];
-	$response_message = json_encode($msg_response);
-	die($response_message);
+
+$no_of_rooms = mysqli_num_rows($get_all_ref_results);
+$i = 0;
+while ($row = mysqli_fetch_assoc($get_all_ref_results)) {
+    $total_cost = $total_cost + $row["room_total_cost"];
+    $net_room_rate = $net_room_rate + $row["room_rate"];
+    $guest_id = $row["guest_id"];
+    $phone_number = $row["phone_number"];
+    $email = $row["email"];
+    $reserved_date = $row["reserved_date"];
+    $guest_name = $row["guest_name"];
 }
 
 
 $total_rooms_reserved = $no_of_rooms;
-$amount_paid = $reservation_data["amount_paid"];
-if ($amount_paid == "") {
-	$amount_paid = 0;
-}
-$balance = $total_cost - $amount_paid;
-$means_of_payment = $reservation_data["means_of_payment"];
-$frontdesk_rep = $reservation_data["frontdesk_rep"];
 
-if ($amount_paid < $net_room_rate) {
-	$msg_response =["ERROR", "Deposit must be at least equal to single night(s) of reserved room(s)"];
-	$response_message = json_encode($msg_response);
-	die($response_message);
-}
+$get_all_ref_details_sql = "SELECT * FROM frontdesk_reservation_txn WHERE reservation_ref = '$reservation_ref'";
+$get_all_ref_results = mysqli_query($dbConn, $get_all_ref_details_sql);
+$arr = mysqli_fetch_assoc($get_all_ref_results);
 
-$update_reservation_query ="UPDATE frontdesk_reservations SET deposit_confirmed = 'YES' WHERE reservation_ref = '$reservation_ref'";
 
-$update_reservation_result = mysqli_query($dbConn, $update_reservation_query);
+/* print_r([$reservation_ref, $arr]);
+exit; */
 
-/*Record Transaction*/
-if ($amount_paid) {
-	$payment_record_query = "INSERT INTO frontdesk_payments (frontdesk_txn, amount_paid, amount_balance, net_paid, txn_worth, guest_id, means_of_payment ,date_of_payment,frontdesk_rep) VALUES ('$reservation_ref', $amount_paid, $balance, $amount_paid, $total_cost, '$guest_id', '$means_of_payment', CURRENT_TIMESTAMP, $frontdesk_rep)";
-} else {
-	$payment_record_query = "INSERT INTO frontdesk_payments (frontdesk_txn, amount_paid, net_paid, amount_balance, txn_worth, guest_id, frontdesk_rep) VALUES ('$reservation_ref', $amount_paid, $amount_paid, $balance, $total_cost, '$guest_id', $frontdesk_rep)";
-}
-
-if ($balance == 0) {
-	$payment_status = "PAID FULL";
-} else {
-	$payment_status = "UNBALANCED";
-}
-
-$payment_record_result = mysqli_query($dbConn, $payment_record_query);
-
-//var_dump($customer_ref);
-$txn_insert_query = "INSERT INTO frontdesk_reservation_txn (reservation_ref, total_rooms_reserved, total_cost, deposited, balance, payment_status, frontdesk_rep, means_of_payment) VALUES ('$reservation_ref', $total_rooms_reserved, $total_cost, $amount_paid, $balance, '$payment_status', '$frontdesk_rep', '$means_of_payment')";
-$txn_insert_result = mysqli_query($dbConn, $txn_insert_query);
-
-if(($txn_insert_result)){
-	$msg_response[0] = "OUTPUT";
-	$msg_response[1] = "CONFIRMED";
-} else {
-	$msg_response[0] = "ERROR";
-	$msg_response[1] = "SOMETHING WENT WRONG ". mysqli_error($dbConn);
-}
+$amount_paid = $arr["deposited"];
+$balance =  $arr["balance"];
+$means_of_payment = $arr["means_of_payment"];
 
 $message_mail = '<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -227,12 +190,12 @@ $mail->Body    = $message_mail;
 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
  if(!$mail->send()) {
-     $msg_response =["OUTPUT", "MESSAGE FAILED"];
+     $msg_response =["ERROR", "FAILED"];
      /* echo '';
      echo 'Mailer Error: ' . $mail->ErrorInfo; */
  } else {
      $msg_response[0] = "OUTPUT";
-     $msg_response[1] = "CONFIRMED AND DELIVERED TO CLIENT";
+     $msg_response[1] = "SENT";
  }
 
 $response_message = json_encode($msg_response);

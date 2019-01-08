@@ -85,6 +85,11 @@ dashApp.directive('dashmodalentry', ['$rootScope', 'jsonPost', '$filter', functi
                 console.log(jsonForm);
                 scope.guest.checkIn(jsonForm);
             };
+            changeRoom = function(){
+                $rootScope.settings.modal.adding = true;
+                jsonForm = $(".changeRoomForm").serializeObject();
+                scope.rooms.changeRoom(jsonForm);
+            }
             addReservation = function () {
                 //$rootScope.settings.modal.adding = true;
                 jsonForm = $(".addReservationForm").serializeObject();
@@ -111,6 +116,9 @@ dashApp.directive('dashmodalentry', ['$rootScope', 'jsonPost', '$filter', functi
             };
             checkOut = function () {
                 scope.guest.checkOut();
+            };
+            rePrint = function () {
+                scope.guest.rePrint();
             };
             payBalance = function () {
                 $rootScope.settings.modal.adding = true

@@ -20,7 +20,7 @@
   $frontdesk_bookings = get_all_frontdesk_bookings($get_bookings_result, $get_bookings_array);
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	echo $frontdesk_bookings;
+	  echo $frontdesk_bookings;
   } else {
   	echo "UNAUTHORIZED ACCESS";
   } 

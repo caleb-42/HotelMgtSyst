@@ -29,7 +29,7 @@
                             <div class="userlisthd row justify-content-between px-4">
                                 <h4 class=" mt-4 py-2 font-fam-Montserrat-bold">Manage Rooms</h4>
                                 <div class="mt-4">
-                                    <!-- <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation';settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';rooms.roomgrid.getrooms(['deluxe','standard']);  reservation.guestAutoComplete.getGuest({value : 'guest_name'});" data-toggle="modal" data-target="#crud">Add Reservation</button> -->
+                                    <button ng-disabled = "rooms.jslist.selectedObj.booked != 'YES'" class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Rooms';settings.modal.name = 'Change Room'; settings.modal.size = 'md'; rooms.getRoomSubstitutes();" data-toggle="modal" data-target="#crud">Change Room</button>
                                 </div>
                             </div>
                                 <roomgrid></roomgrid>
@@ -65,7 +65,9 @@
                                     <button class="btn  purp-back wht opac-50 mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Guest'; settings.modal.name = 'Update Guest'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud" ng-disabled="!guest.jslist.selected">Update</button>
                                     <button class="btn btn-warning mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Pay'; settings.modal.name = 'Pay Balance'; settings.modal.size = 'md';" data-toggle="modal" data-target="#crud" ng-disabled="!guest.jslist.selected">Pay</button>
                                     <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'CheckIn'; settings.modal.name = 'CheckIn'; settings.modal.size = 'lg'; guest.roomgrid.getrooms(['deluxe','standard'])" ng-disabled="!guest.jslist.selected">Check In</button>
-                                    <button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="settings.modal.active = 'CheckOut'; settings.modal.name = 'CheckOut'; settings.modal.size = 'lg';" ng-disabled="!guest.jslist.selected">Check Out</button>
+                                    <button class="btn btn-outline-danger mx-1 font-fam-Montserrat f-12" data-toggle="modal" data-target="#crud" ng-click="guest.roomBookings.selected = []; settings.modal.active = 'CheckOut'; settings.modal.name = 'CheckOut'; settings.modal.size = 'lg';" ng-disabled="!guest.jslist.selected">Check Out</button>
+                                    <button class="btn btn-success mx-1 font-fam-Montserrat f-12"  data-toggle="modal" data-target="#crud"  ng-click="guest.roomBookings.selected = []; settings.modal.active = 'Reprint'; settings.modal.name = 'Reprint'; settings.modal.size = 'lg';" ng-disabled="!guest.jslist.selected">Reprint</button>
+                                    <button class="btn btn-danger mx-1 font-fam-Montserrat f-12" ng-click="guest.cancel();" ng-disabled="!guest.jslist.selected">Cancel</button>
                                 </div>
                             </div>
                             <jslist class="font-fam-Montserrat"></jslist>
@@ -103,6 +105,7 @@
                                     <button class="btn btn-info mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation';settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';reservation.roomgrid.getrooms(['deluxe','standard']);  reservation.guestAutoComplete.getGuest({value : 'guest_name'});" data-toggle="modal" data-target="#crud">Add</button>
                                     <button class="btn btn-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation'; settings.modal.name = 'Update Reservation'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud" ng-disabled="!reservation.jslist.selected" >Update</button>
                                     <button class = "btn purp-back wht opac-70 font-fam-Montserrat f-12" ng-disabled="!reservation.jslist.selected || reservation.jslist.selectedObj.booked == 'YES'" ng-click = "reservation.state()" data-toggle="modal" data-target="#crud">{{reservation.jslist.selectedObj.deposit_confirmed == 'NO' ? 'Confirm' : 'Claim'}}</button>
+                                    <button class="{{reservation.sendMail.label == 'Sending...' ? 'hvr-pulse-grow' : ''}} btn mx-1 btn-warning font-fam-Montserrat f-12" ng-click="reservation.sendMail.send(reservation.jslist.selectedObj);" ng-disabled="reservation.jslist.selectedObj.deposit_confirmed == 'NO' || !reservation.jslist.selected || reservation.sendMail.label == 'Sending...'">{{reservation.sendMail.label}}</button>
                                     <button class = "btn btn-danger font-fam-Montserrat f-12" ng-disabled="!reservation.jslist.selected" ng-click = "reservation.deleteReservation()">Cancel</button>
                                 </div>
                             </div>
