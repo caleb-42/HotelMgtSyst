@@ -43,7 +43,7 @@
      $pay_ref = $table_txn;
    } else if ($table == "reservations") {
      $table = "frontdesk_payments";
-     $table_txn = "frontdesk_reservation_txn";
+     $table_txn = "frontdesk_txn";
      $like = "AND frontdesk_txn LIKE '%RESV_%'";
      $ref = "reservation_ref";
      $pay_ref = "frontdesk_txn";

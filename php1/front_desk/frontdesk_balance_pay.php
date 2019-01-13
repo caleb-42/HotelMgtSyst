@@ -69,7 +69,7 @@ $get_guest_outstanding = "SELECT * FROM frontdesk_txn WHERE guest_id = '$guest_i
 $get_guest_result = mysqli_query($dbConn, $get_guest_outstanding);
 if (mysqli_num_rows($get_guest_result) == 0) {
     $msg_response[0] = "ERROR";
-    $msg_response[1] = "This guest does not have an outstanding room booking balance " . mysqli_num_rows($get_guest_result);
+    $msg_response[1] = "This guest does not have an outstanding room booking balance " . $get_guest_outstanding;
     $response_message = json_encode($msg_response);
     $printer -> close();
     die($response_message);
@@ -112,7 +112,7 @@ for ($i=0; $deposit_extra > 0; $i++) {
   $txn_date = $last_payment_details["txn_date"];
 
   $txn_worth = intval($last_payment_details["txn_worth"]);
-  $guest_id = $last_payment_details["guest_id"];
+  //$guest_id = $last_payment_details["guest_id"];
   $total_cost = $last_payment_details["txn_worth"];
 
   if ((intval($last_payment_details["amount_balance"]) - $amount_paid) >= 0) {
@@ -277,7 +277,7 @@ $msg_response=["OUTPUT", "NOTHING HAPPENED"];
 
 if($update_txn_result && $update_payment_result){
 	$msg_response[0] = "OUTPUT";
-	$msg_response[1] = "PAYMENT RECORDS SUCCESSFULLY UPDATED";
+	$msg_response[1] = "PAYMENT RECORDS SUCCESSFULLY UPDATED ";
 } else {
 	$msg_response[0] = "ERROR";
 	$msg_response[1] = "SOMETHING WENT WRONG";

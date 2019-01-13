@@ -1,7 +1,7 @@
 <?php
 include "../../settings/connect.php"; //$database handler $dbConn or $conn
 
-  $get_txn_sql = "SELECT * FROM frontdesk_reservation_txn";
+  $get_txn_sql = "SELECT * FROM frontdesk_txn WHERE transaction_type = 'RESERVATION'";
   $get_txn_result = mysqli_query($dbConn, $get_txn_sql);
   $get_txn_array = [];
 

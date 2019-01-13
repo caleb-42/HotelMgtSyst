@@ -2,11 +2,11 @@
   include "../settings/connect.php"; //$database handler $dbConn or $conn
    $table = $_POST["table"];
    if ($table == "frontdesk") {
-     $table = "frontdesk_txn";
+     $table = "frontdesk_txn WHERE booking_ref LIKE '%BK_%'";
    } else if ($table == "restaurant") {
      $table = "restaurant_txn";
    } else if ($table == "reservations") {
-     $table = "frontdesk_reservation_txn";
+     $table = "frontdesk_txn WHERE booking_ref LIKE '%RESV_%'";
    } else {
       $msg_response=["OUTPUT", "No table requested"];
       $response_message = json_encode($msg_response);

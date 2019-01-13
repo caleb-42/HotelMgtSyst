@@ -90,7 +90,7 @@ if ($balance == 0) {
 $payment_record_result = mysqli_query($dbConn, $payment_record_query);
 
 //var_dump($customer_ref);
-$txn_insert_query = "INSERT INTO frontdesk_reservation_txn (reservation_ref, total_rooms_reserved, total_cost, deposited, balance, payment_status, frontdesk_rep, means_of_payment) VALUES ('$reservation_ref', $total_rooms_reserved, $total_cost, $amount_paid, $balance, '$payment_status', '$frontdesk_rep', '$means_of_payment')";
+$txn_insert_query = "INSERT INTO frontdesk_txn (booking_ref, total_rooms_booked, total_cost, deposited, balance, payment_status, frontdesk_rep, means_of_payment, guest_id, transaction_type) VALUES ('$reservation_ref', $total_rooms_reserved, $total_cost, $amount_paid, $balance, '$payment_status', '$frontdesk_rep', '$means_of_payment', '$guest_id', 'RESERVATION')";
 $txn_insert_result = mysqli_query($dbConn, $txn_insert_query);
 
 if(($txn_insert_result)){
@@ -213,18 +213,10 @@ $mail->From = 'eweteg@gmail.com';
 $mail->FromName = $shop_name;
 //$mail->addAddress('tegogs@gmail.com', 'Joe User');     // Add a recipient
 $mail->addAddress($email);               // Name is optional
-<<<<<<< HEAD
+
 $mail->addReplyTo($shop_email, 'Information');
-$mail->addCC('tegovona@gmail.com');
+$mail->addCC($shop_email);
 $mail->addBCC('ewiscobaba@gmail.com');
-=======
-echo $email;
-$mail->addReplyTo($shop_email, 'Information');
-$mail->addCC($email);
-$mail->addBCC('ewiscobaba@gmail.com');
-/* $mail->addCC($email);
-$mail->addBCC('ewiscobaba@gmail.com'); */
->>>>>>> refs/remotes/origin/tego
 
 $mail->WordWrap = 60;                                 // Set word wrap to 50 characters
 //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
@@ -235,7 +227,6 @@ $mail->Subject = $shop_name . ' reservation';
 $mail->Body    = $message_mail;
 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-<<<<<<< HEAD
 if(!$mail->send()) {
     $msg_response =["ERROR", $mail->ErrorInfo];
     // echo '';
@@ -244,16 +235,6 @@ if(!$mail->send()) {
     $msg_response[0] = "OUTPUT";
     $msg_response[1] = "CONFIRMED";
 }
-=======
-// if(!$mail->send()) {
-//     $msg_response =["ERROR", "Message could not be sent."];
-//     echo '';
-//     echo 'Mailer Error: ' . $mail->ErrorInfo;
-// } else {
-//     $msg_response[0] = "OUTPUT";
-//     $msg_response[1] = "CONFIRMED";
-// }
->>>>>>> refs/remotes/origin/tego
 
 $response_message = json_encode($msg_response);
 echo $response_message;

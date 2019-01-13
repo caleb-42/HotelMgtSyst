@@ -47,6 +47,7 @@ $printer = new Printer($connector);
  $msg_response = ["OUTPUT", "NOTHING HAPPENED"];
 
  $reservation_ref = $reservation_data["reservation_ref"];
+ $booking_ref = $reservation_ref;
  $contact_address = $reservation_data["contact_address"];
  $guest_type_gender = $reservation_data["guest_type_gender"];
  $new_guest = 0;
@@ -73,20 +74,6 @@ if (mysqli_num_rows($get_all_ref_results)) {
  $reservations = [];
  $frontdesk_rep = $reservation_data["frontdesk_rep"];
 
- $rand_id = mt_rand(0, 100000);
- $booking_ref = "BK_" . $rand_id;
-
- $duplicate_id_query = "SELECT * FROM frontdesk_bookings WHERE booking_ref = '$booking_ref'";
- $duplicate_id_result = mysqli_query($dbConn, $duplicate_id_query);
-
- while (mysqli_num_rows($duplicate_id_result) > 0) {
-	$rand_id = mt_rand(0, 100000);
-    $booking_ref = "BK_" . $rand_id;
-
-    $duplicate_id_query = "SELECT * FROM frontdesk_bookings WHERE booking_ref = '$booking_ref'";
-    $duplicate_id_result = mysqli_query($dbConn, $duplicate_id_query);
- }
-
  if ($guest_id == "") {
  	$new_guest = 1;
  	$rand_id = mt_rand(0, 100000);
@@ -102,7 +89,14 @@ if (mysqli_num_rows($get_all_ref_results)) {
        $duplicate_id_query = "SELECT * FROM frontdesk_guests WHERE guest_id = '$guest_id'";
        $duplicate_id_result = mysqli_query($dbConn, $duplicate_id_query);
     }
- }
+    $sql_update_frontdesk_txn = "UPDATE frontdesk_txn SET guest_id = '$guest_id' WHERE booking_ref = '$booking_ref'";
+    $update_frontdesk_txn_result = mysqli_query($dbConn, $sql_update_frontdesk_txn);
+ } /*else {
+ 	$msg_response = ["ERROR", "Unable to generate unique guest id 1 ". $guest_id];
+ 	$response_message = json_encode($msg_response);
+	$printer -> close();
+ 	die($response_message);
+ } */
 
  $get_reservations_query = $conn->prepare("SELECT no_of_nights, reserved_date, booked, cancelled, room_number, room_category, room_rate, room_total_cost FROM frontdesk_reservations WHERE reservation_ref = '$reservation_ref' AND room_id = ?");
  
@@ -172,13 +166,12 @@ if (mysqli_num_rows($get_all_ref_results)) {
  	die($response_message);
  }
 
- $insert_into_bookings = $conn->prepare("INSERT INTO frontdesk_bookings (booking_ref, reservation_ref, room_number, room_id, room_category, room_rate, guest_name, guest_id, no_of_nights, net_cost, guests, expected_checkout_date, expected_checkout_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, CURRENT_TIME)");
+ $insert_into_bookings = $conn->prepare("INSERT INTO frontdesk_bookings (booking_ref, room_number, room_id, room_category, room_rate, guest_name, guest_id, no_of_nights, net_cost, guests, expected_checkout_date, expected_checkout_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, CURRENT_TIME)");
 
-$insert_into_bookings->bind_param("ssississiiis", $tx_ref, $reserve_ref, $room_number, $room_id, $room_category, $room_rate, $client_name, $client_id, $no_of_days, $room_net_cost, $guests, $expected_checkout_date);
+$insert_into_bookings->bind_param("sississiiis", $tx_ref, $room_number, $room_id, $room_category, $room_rate, $client_name, $client_id, $no_of_days, $room_net_cost, $guests, $expected_checkout_date);
 
 for ($i=0; $i <$no_of_rooms; $i++) { 
-	$tx_ref = $booking_ref;
-	$reserve_ref = $reservation_ref;
+	$tx_ref = $reservation_ref;
 	$room_number = $rooms[$i]["room_number"];
 	$room_id = $rooms[$i]["room_id"];
 	$room_category = $rooms[$i]["room_category"];
@@ -213,7 +206,7 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 }
 $update_room_query->close();
 
-$update_reservation_query = $conn->prepare("UPDATE frontdesk_reservations SET booked = 'YES', booking_ref = '$booking_ref', guest_id = '$guest_id' WHERE room_id = ? AND reservation_ref = '$reservation_ref'");
+$update_reservation_query = $conn->prepare("UPDATE frontdesk_reservations SET booked = 'YES', guest_id = '$guest_id' WHERE room_id = ? AND reservation_ref = '$reservation_ref'");
 $update_reservation_query->bind_param("s", $room_id);
 for ($i=0; $i <$no_of_rooms ; $i++) {
 	$room_id = $rooms[$i]["room_id"];
@@ -221,7 +214,7 @@ for ($i=0; $i <$no_of_rooms ; $i++) {
 }
 $update_reservation_query->close();
 
-$get_reservation_details = "SELECT * FROM frontdesk_reservation_txn WHERE reservation_ref = '$reservation_ref'";
+$get_reservation_details = "SELECT * FROM frontdesk_txn WHERE booking_ref = '$reservation_ref'";
 $reservation_details = mysqli_query($dbConn, $get_reservation_details);
 $reservation_row = mysqli_fetch_assoc($reservation_details);
 
