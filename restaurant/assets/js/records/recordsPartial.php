@@ -1,7 +1,7 @@
 <div ng-controller="records"> <!-- {{tabnav.selected == 'Customers' ? null : 'w-100'}} -->
-    <div class="prime-hd float-left anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.primeclass : 'w-100'}}">
-        <div class="statusbar hs-9 grn row  align-items-end pl-1">
-            <div class="tabnav h-70 col-7 row">
+    <div class="prime-hd anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.primeclass : 'w-100'}}">
+        <div class="statusbar grn row  align-items-end pl-1">
+            <div class="tabnav col-7 row">
                 <button ng-repeat='nav in tabnav.navs | objtoarray' class="tabpill btnnone" ng-click="tabnav.selectNav(nav.name)" ng-class="{focus:nav.name == tabnav.selected.name}">
                 <h5>{{nav.name}}</h5>
             </button>
@@ -53,7 +53,7 @@
     </div>
     <!--statusbar for primehd end--><!-- {{tabnav.selected == 'Customers' ? null : 'w-0 gone'}} -->
     <div class="main-sidebar-right hs-100 whtback anim {{tabnav.selected.options.rightbar ? tabnav.selected.options.rightbar.rightbarclass : 'w-0 gone'}}">
-        <div class="statusbar hs-9 grn row align-items-end justify-content-center">
+        <div class="statusbar grn row align-items-end justify-content-center">
             <h4 class="text-center wht">{{tabnav.selected.name == 'Customers' ? 'Sales Tranx' : 'Sales List'}} <i class="fa fa-book"></i></h4>
         </div>
         <!--statusbar for main-sidebar-right end -->

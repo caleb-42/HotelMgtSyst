@@ -25,23 +25,10 @@ app.filter('intervalGetDate', function(){
         }
         today.setDate(today.getDate() + parseInt(input));
         dd = today.getDate();
-        dd = String(dd).length > 1 ? dd : ('0' + dd);
         mm = today.getMonth() + 1;
-        mm = String(mm).length > 1 ? mm : ('0' + mm);
         yy = today.getFullYear();
         today = yy + '-' + mm + '-' + dd;
         return today;
-    }
-});
-app.filter('dateGetInterval', function(){
-    return function(input, startdate){
-        var oneday = 24*60*60*1000;
-        var firstDate = new Date(startdate);
-        var endDate = new Date(input);
-        var diff = Math.round(Math.abs(
-            (firstDate.getTime() - endDate.getTime())/(oneday)
-        ));
-        return diff;
     }
 });
 app.filter('capitalize', function() {

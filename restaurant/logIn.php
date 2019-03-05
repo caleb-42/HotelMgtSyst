@@ -35,9 +35,7 @@ $date=date("D M d, Y g:i a");
                 <form autocomplete="off" role="form" method="post" action = "../php1/restaurant_bar/restaurant_logon.php" class="align-self-center">
                     <div class="formhd text-center px-4 pt-4">
                         <img  class = "" width = 200px height = 70px src = "assets/img/logo.png"/>
-                        <!-- <h5 class = "Title mb-4 pb-1 mx-5 mt-3 wht font-fam-Calibri">Sales</h5> -->
-                        
-                        <img  class = "my-4 ml-2" width = 170px height = 90px src = "assets/img/title.png"/>
+                        <h5 class = "Title mb-4 pb-1 mx-5 mt-3 wht font-fam-Calibri">Sales</h5>
                         <div class="row mb-4 pb-2">
                             <input type="text" name="username" class="form-control text-center font-fam-Montserrat-bold inputcolor" required id="username" required value = "Username" placehd = "Username"/>
                             <input type="text" name="password" class="form-control text-center font-fam-Montserrat-bold inputcolor" id="password" value="Password" required placehd = "Password"/>

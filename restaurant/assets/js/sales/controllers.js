@@ -1,4 +1,4 @@
-salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', '$timeout', function ($rootScope, $scope, jsonPost, $filter, $timeout) {
+salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', function ($rootScope, $scope, jsonPost, $filter) {
     $scope.tabnav = {
         navs: {
             Sales: {
@@ -37,41 +37,41 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', '$t
             $scope.sales.cust_list = [];
             cp = jsonPost.data("../php1/restaurant_bar/restaurant_customer.php", {});
             cp.then(function (result) {
-                if (result) {
-                    result.forEach(function (elm) {
-                        elm.type = 'customer';
-                        elm.room = 'none';
-                    });
-                    $scope.sales.cust_list = result ? result : [];
-                    console.log($scope.sales.cust_list);
+                if (!result) {
+                    return;
                 }
-                
-                gp = jsonPost.data("../php1/restaurant_bar/list_guests_all.php", {});
-                gp.then(function(result){
-                    if(result){
-                        cust_list = [];
-                        result.forEach(function(elm){
-                            obj = {};
-                            obj.customer_id = elm.guest_id;
-                            obj.full_name = elm.guest_name;
-                            obj.gender = elm.guest_type_gender;
-                            obj.phone_number = elm.phone_number;
-                            obj.contact_address = elm.contact_address;
-                            obj.outstanding_balance = elm.restaurant_outstanding;
-                            cust_list.push(obj);
-                        });
-                        //$scope.sales.cust_list = cust_list.concat()
-                        $scope.sales.lodger_list = cust_list;
-                        console.log($scope.sales.lodger_list);
-                    }
-                    $scope.buyer.customer.makeCustomerList();
+                result.forEach(function (elm) {
+                    elm.type = 'customer';
+                    elm.room = 'none';
                 });
+                $scope.sales.cust_list = result ? result : [];
+                console.log($scope.sales.cust_list);
+            });
+            gp = jsonPost.data("../php1/restaurant_bar/list_guests_all.php", {});
+            gp.then(function(result){
+                if(!result){
+                    return;
+                }
+                cust_list = [];
+                result.forEach(function(elm){
+                    obj = {};
+                    obj.customer_id = elm.guest_id;
+                    obj.full_name = elm.guest_name;
+                    obj.gender = elm.guest_type_gender;
+                    obj.phone_number = elm.phone_number;
+                    obj.contact_address = elm.contact_address;
+                    obj.outstanding_balance = elm.restaurant_outstanding;
+                    cust_list.push(obj);
+                });
+                //$scope.sales.cust_list = cust_list.concat()
+                $scope.sales.lodger_list = cust_list;
+                console.log($scope.sales.lodger_list);
             });
         },
         products: {
             layout: "listlayout",
             itemlist: function () {
-                //$scope.sales.makeCustomerList();
+                $scope.sales.makeCustomerList();
                 return {
                     jsonfunc: jsonPost.data("../php1/restaurant_bar/restaurant_items.php", {})
                 }
@@ -117,8 +117,6 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', '$t
                         console.log($scope.sales.order.list);
                         $rootScope.$emit("neworder", $scope.sales.order.list);
                     };
-                }else{
-                    alert('give the customer a name');
                 }
             },
             list: [],
@@ -178,46 +176,6 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', '$t
     $scope.buyer = {
         showPanel: "search",
         customer: {
-            paybal : {
-                means_of_payment: 'Cash',
-                debtpay : function () {
-                    //console.log('ewere');
-                    ref = {
-                        debt: $scope.buyer.customer.selected.outstanding_balance,
-                        means_of_payment: $scope.buyer.customer.paybal.means_of_payment,
-                        amount_paid : $scope.buyer.customer.paybal.balance,
-                        customer_id : $scope.buyer.customer.selected.customer_id,
-                        sales_rep:$rootScope.settings.user
-                    }
-                    //console.log(ref);
-                    jsonPost.data("../php1/restaurant_bar/restaurant_cust_balance_pay.php", {
-                        payment_details: $filter('json')(ref)
-                    }).then(function (response) {
-                        console.log(response);
-                        if (typeof (response) == "string") {
-                            $scope.sales.makeCustomerList();
-                            $scope.buyer.customer.paybal.msg = "BACKEND CODE ERROR";
-                            $scope.buyer.customer.paybal.msgcolor = "choral";
-                        } else {
-                            if(response[0] == "OUTPUT"){
-                                $scope.buyer.customer.paybal.msg = response[1];
-                                $scope.sales.makeCustomerList();
-                                $scope.buyer.customer.paybal.msgcolor = "green";
-                            }else{
-                                $scope.sales.makeCustomerList();
-                                $scope.buyer.customer.paybal.msg =  response[1];
-                                $scope.buyer.customer.paybal.msgcolor = "choral";
-                            }
-                        }
-                        
-                        $scope.buyer.customer.paybal.balance = "";
-                        $scope.buyer.customer.selected = $scope.buyer.customer.selectedDefault;
-                        $timeout(function(){
-                            $scope.buyer.customer.paybal.msg = "";
-                        },3000);
-                    });
-                }
-            },
             new: {
                 gender: "male"
             },
@@ -240,10 +198,10 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', '$t
                 console.log($scope.buyer.customer.selected);
             },
             makeCustomerList: function () {
-                if(!$scope.sales.lodger_list){
+                if($scope.sales.lodger_list){
                     $scope.buyer.customer.customerList = $scope.sales.cust_list ? $scope.sales.cust_list : [];
                     return;
-                }else if(!$scope.sales.cust_list){
+                }else if($scope.sales.cust_list){
                     $scope.buyer.customer.customerList = $scope.sales.lodger_list ? $scope.sales.lodger_list : [];
                     return;
                 }
@@ -426,10 +384,6 @@ salesApp.controller("sales", ["$rootScope", "$scope", 'jsonPost', '$filter', '$t
                         }
                     });
                 } else {
-                    if($scope.surcharge.reciept.amount_paid != $scope.surcharge.reciept.discounted_total_cost) {
-                        $rootScope.settings.modal.msgprompt(['ERROR', 'VISITORS MUST PAY DISCOUNTED COST IN FULL']);
-                        return;
-                    }
                     $scope.surcharge.reciept.customer_ref = "BUYER";
                 }
                 console.log($scope.surcharge.reciept);

@@ -29,7 +29,7 @@
                             <div class="userlisthd row justify-content-between px-4">
                                 <h4 class=" mt-4 py-2 font-fam-Montserrat-bold">Manage Rooms</h4>
                                 <div class="mt-4">
-                                    <!-- <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation';settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';rooms.roomgrid.getrooms(['deluxe','standard']);  reservation.guestAutoComplete.getGuest({value : 'guest_name'});" data-toggle="modal" data-target="#crud">Add Reservation</button> -->
+                                    <!-- <button class="btn btn-outline-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation';settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';rooms.roomgrid.getrooms(['deluxe','standard']);  guest.getguest({value : 'guest_name'});" data-toggle="modal" data-target="#crud">Add Reservation</button> -->
                                 </div>
                             </div>
                                 <roomgrid></roomgrid>
@@ -76,11 +76,11 @@
 
                     <div class = "row w-100">
                         <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Rooms</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? (guest.jslist.selectedObj.rooms | arraytostring) : ''}} </p>
+                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? (guest.jslist.selectedObj.rooms | arraytostring) : '2, 4, 7'}} </p>
                         <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Phone Number</h6>
-                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.phone_number : ''}} </p>
+                        <p class = " col-8 f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.phone_number : '08130439102'}} </p>
                         <h6 class = "text-left f-14 col-4 font-fam-Montserrat-bold purp-clr opac-70 py-1 br-1 m-0 py-1 px-3">Address</h6>
-                        <p class = "  col-8  f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.contact_address : ''}} </p>
+                        <p class = "  col-8  f-13 opac-70 m-0 py-1 px-3">{{guest.jslist.selectedObj ? guest.jslist.selectedObj.contact_address : 'Conversion of Architectural Blueprints to well-designed Structural layouts (foundaton, beams, columns and bases, slabs'}} </p>
                     </div>
 
                 </div>
@@ -92,7 +92,7 @@
                             <div class="userlisthd row justify-content-between">
                                 <h4 class=" my-4 py-2 font-fam-Montserrat-bold">Manage Reservation</h4>
                                 <div class="my-4">
-                                    <button class="btn btn-info mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation';settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';reservation.roomgrid.getrooms(['deluxe','standard']);  reservation.guestAutoComplete.getGuest({value : 'guest_name'});" data-toggle="modal" data-target="#crud">Add</button>
+                                    <button class="btn btn-info mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation';settings.modal.name = 'Add Reservation'; settings.modal.size = 'lg';reservation.roomgrid.getrooms(['deluxe','standard']);  guest.getguest({value : 'guest_name'});" data-toggle="modal" data-target="#crud">Add</button>
                                     <button class="btn btn-success mx-1 font-fam-Montserrat f-12" ng-click="settings.modal.active = 'Reservation'; settings.modal.name = 'Update Reservation'; settings.modal.size = 'lg';" data-toggle="modal" data-target="#crud" ng-disabled="!reservation.jslist.selected" >Update</button>
                                     <button class = "btn purp-back wht opac-70 font-fam-Montserrat f-12" ng-disabled="!reservation.jslist.selected || reservation.jslist.selectedObj.booked == 'YES'" ng-click = "reservation.state()" data-toggle="modal" data-target="#crud">{{reservation.jslist.selectedObj.deposit_confirmed == 'NO' ? 'Confirm' : 'Claim'}}</button>
                                     <button class = "btn btn-danger font-fam-Montserrat f-12" ng-disabled="!reservation.jslist.selected" ng-click = "reservation.deleteReservation()">Cancel</button>

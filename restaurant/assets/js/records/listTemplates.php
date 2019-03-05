@@ -65,15 +65,15 @@
         <h4 class=" text-center w-100 "> Select A Transaction</h4>
     </div>
     <div class = "listcont {{!listsales.jslist.active ? 'gone' : 'notgone'}}">
-        <div class = "orange font-fam-Montserrat-bold row p-2 justify-content-between w-100 f-13" style = "border-radius: 5px; margin : 10px 0 !important;">
+        <div class = "orange font-fam-Montserrat-bold row p-2 justify-content-between w-100" style = "border-radius: 5px; margin : 10px 0 !important;">
             <span>Sales Rep</span>
             <span>{{listsales.jslist.tranx.sales_rep}}</span>
         </div>
-        <div class = "orange font-fam-Montserrat-bold row p-2 justify-content-between w-100 f-13" style = "border-radius: 5px; margin : 10px 0 !important;">
+        <div class = "orange font-fam-Montserrat-bold row p-2 justify-content-between w-100" style = "border-radius: 5px; margin : 10px 0 !important;">
             <span>Tranx Time</span>
             <span>{{listsales.jslist.tranx.txn_time}}</span>
         </div>
-        <div class = "orange font-fam-Montserrat-bold row p-2 justify-content-between w-100 f-13" style = "border-radius: 5px; margin : 10px 0 20px !important;">
+        <div class = "orange font-fam-Montserrat-bold row p-2 justify-content-between w-100" style = "border-radius: 5px; margin : 10px 0 20px !important;">
             <span>Customer Ref</span>
             <span>{{listsales.jslist.tranx.customer_ref}}</span>
         </div>

@@ -27,7 +27,7 @@
 
 
 <!-- ............cartitems start ..............-->
-<div ng-if = "<?php echo $_GET['type']   == 'cartitems'?>" ng-repeat = "cartItem in cart" class="cartItem-row relatv row align-items-center pt-4">
+<div ng-if = "<?php echo $_GET['type']   == 'cartitems'?>" ng-repeat = "cartItem in cart" class="cartItem-row row align-items-center pt-4">
     <div class = "hvr-overlay anim">
         <div class = "w-40 float-right row h-100 align-items-center">
             <i class = " col-4 fa-2x fa fa-plus blac anim" ng-click = "cartitemsOps.addItemQty($index, cartItem.current_stock, cartItem.editqty)"></i>

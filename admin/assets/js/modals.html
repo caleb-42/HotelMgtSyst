@@ -118,7 +118,7 @@
                                         <label for="deluxe" class="f-15 ml-2">Deluxe</label>
                                     </span>
                                     <span class="col-6 text-center">
-                                        <input type="radio" class="clearinput " ng-model='rooms.jslist.new_room_category' value="standard" name="new_room_category" id="standard"
+                                        <input type="radio" class="clearinput " ng-model='rooms.jslist.room_category' value="standard" name="new_room_category" id="standard"
                                         />
                                         <label for="standard" class="f-15 ml-2 ">Standard</label>
                                     </span>
@@ -576,7 +576,7 @@
                                 name="new_room_number"  /> -->
                             <select class="clearinput form-control roomno font-fam-Montserrat d-block my-4 f-13" name="new_room_number">
                                 <option value="">None</option>
-                                <option ng-repeat="rm in rooms.allrooms" value={{rm.room_number}}>{{rm.room_number}}</option>
+                                <option ng-repeat="rm in rooms.allrooms" value={ {rm.room_number}}>{{rm.room_number}}</option>
                             </select>
                             <input class="clearinput user-name form-control font-fam-Montserrat text-center d-block my-4" placeholder="Nights" name="new_no_of_nights"
                                 type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"

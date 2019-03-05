@@ -52,10 +52,6 @@
                                         </li>
                                     </ul>
                                 </div>
-                                
-                            </div>
-                            <div class="row pt-3 justify-content-center w-100">
-                                <p class="{{buyer.customer.paybal.msgcolor}} report fw-600 text-center w-100 f-14">{{buyer.customer.paybal.msg}}</p>
                             </div>
                         </div>
                         <div class="historyPanel float-right w-50 pl-3 pr-2">
@@ -70,17 +66,6 @@
                                 <div class="col-8 my-3 opac-50 ">{{buyer.customer.selected.phone_number}}</div>
                                 <div class="col-4 my-3 opac-50  pl-4">Address</div>
                                 <div class="col-8 my-3 opac-50 ">{{buyer.customer.selected.contact_address}}</div>
-                            </div>
-                            <div class="row px-4">
-                                <input ng-disabled = "buyer.customer.selected.full_name == 'Buyer' || buyer.customer.selected.outstanding_balance == '0'" placeholder="Balance" class="form-control customer-search f-14 my-3 col-4" ng-model="buyer.customer.paybal.balance" />
-                                <select ng-model="buyer.customer.paybal.means_of_payment" ng-disabled = "buyer.customer.selected.full_name == 'Buyer' || buyer.customer.selected.outstanding_balance == '0'" class="form-control methpay my-3 offset-1 col-4 f-13"
-                                name="means_of_payment">
-                                    <option value="Cash">Cash</option>
-                                    <option value="Cheque">Cheque</option>
-                                    <option value="POS">POS</option>
-                                    <option value="Credit">Credit</option>
-                                </select>
-                                <button ng-click = "buyer.customer.paybal.debtpay()" ng-disabled = "buyer.customer.selected.full_name == 'Buyer' || buyer.customer.selected.outstanding_balance == '0'" class="btn btn-success my-3 px-1 offset-1 f-14 col-2">Pay</button>
                             </div>
                         </div>
                         <div class="clr"></div>
@@ -413,18 +398,18 @@
                 <div class="w-100" ng-if="settings.modal.name == 'Add User'">
                     <form class="p-4 w-100 addUserForm row justify-content-center m-0">
                         <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Name"
-                            name="user" ng-model = "users.inputs.user" />
+                            name="user" />
                         <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Username"
-                            name="user_name" ng-model = "users.inputs.user_name" />
+                            name="user_name" />
                         <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Password"
-                            name="user_pass" ng-model = "users.inputs.password" />
+                            name="user_pass" />
                         <div class="row justify-content-between w-50">
                             <span>
-                                <input type="radio" id="admin" value="admin" ng-model = "users.inputs.role" name="role" />
+                                <input type="radio" id="admin" value="admin" name="role" />
                                 <label for="admin" class="f-15 ml-2">Admin</label>
                             </span>
                             <span>
-                                <input type="radio" checked value="user" ng-model = "users.inputs.role" name="role" id="user" />
+                                <input type="radio" checked value="user" name="role" id="user" />
                                 <label for="user" class="f-15 ml-2">User</label>
                             </span>
                         </div>
@@ -434,7 +419,7 @@
                             <div class="py-1 row justify-content-center w-100">
                                 <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
                                         height="70px" /></div>
-                                <button ng-disabled = "!users.inputs.user || !users.inputs.user_name || !users.inputs.password || !users.inputs.role" type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
                                     onclick="addUser()">
                                     {{settings.modal.name | limitTo:3}}
                                 </button>
@@ -456,24 +441,24 @@
                             <input class="role form-control font-fam-Montserrat text-center d-block my-4" placeholder="Role"
                                 name="role" readonly />
                             <input class="password form-control font-fam-Montserrat text-center d-block my-4"
-                                placeholder="Password" name="pass" ng-model="users.inputs.new_gender" readonly />
+                                placeholder="Password" name="pass" readonly />
                         </div>
                         <div class="float-right w-45 row m-0 justify-content-center">
-                            <input class="user form-control font-fam-Montserrat text-center d-block my-4" ng-model="users.inputs.new_user" placeholder="User"
+                            <input class="user form-control font-fam-Montserrat text-center d-block my-4" placeholder="User"
                                 name="new_user" />
-                            <input class="user-name form-control font-fam-Montserrat text-center d-block my-4" ng-model="users.inputs.new_user_name"
+                            <input class="user-name form-control font-fam-Montserrat text-center d-block my-4"
                                 placeholder="Username" name="new_user_name" />
                             <div class="row justify-content-between w-50 py-4">
                                 <span class="py-1">
-                                    <input type="radio" ng-model="users.inputs.new_role" id="admin" value="admin" name="new_role" />
+                                    <input type="radio" id="admin" value="admin" name="new_role" />
                                     <label for="admin" class="f-15 ml-2">Admin</label>
                                 </span>
                                 <span class="py-1">
-                                    <input type="radio" ng-model="users.inputs.new_role" value="user" name="new_role" id="user" />
+                                    <input type="radio" checked value="user" name="new_role" id="user" />
                                     <label for="user" class="f-15 ml-2">User</label>
                                 </span>
                             </div>
-                            <input class="password form-control font-fam-Montserrat text-center d-block my-4" ng-model = "users.inputs.new_password"
+                            <input class="password form-control font-fam-Montserrat text-center d-block my-4"
                                 placeholder="Password" name="new_password" />
                         </div>
                     </form>
@@ -483,7 +468,7 @@
                                 <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
                                         height="70px" /></div>
 
-                                <button ng-disabled = "!users.inputs.new_user && !users.inputs.new_user_name && !users.inputs.new_role && !users.inputs.new_password" type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
                                     onclick="updateUser()">
                                     {{settings.modal.name | limitTo:7}}
                                 </button>
@@ -502,19 +487,19 @@
                 <div class="w-100" ng-if="settings.modal.name == 'Add Customer'">
                     <form class="p-4 w-100 addCustomersForm row justify-content-center m-0">
                         <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Name"
-                            name="full_name" ng-model = "customers.inputs.name"/>
+                            name="full_name" />
                         <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Phone"
-                            name="phone_number"  type="number" onkeydown="javascript: return event.keyCode !=69" ng-model = "customers.inputs.phone"/>
+                            name="phone_number"  type="number" onkeydown="javascript: return event.keyCode !=69" />
                         <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Address"
-                            name="contact_address" ng-model = "customers.inputs.address"/>
+                            name="contact_address" />
 
                         <div class="row justify-content-between w-50 py-4">
                             <span class="py-1">
-                                <input ng-model = "customers.inputs.guest_type_gender" type="radio" id="male" value="male" name="gender" />
+                                <input type="radio" id="male" value="male" name="gender" />
                                 <label for="male" class="f-15 ml-2">Male</label>
                             </span>
                             <span class="py-1">
-                                <input ng-model = "customers.inputs.guest_type_gender" type="radio" checked value="female" name="gender" id="female" />
+                                <input type="radio" checked value="female" name="gender" id="female" />
                                 <label for="female" class="f-15 ml-2">Female</label>
                             </span>
                         </div>
@@ -524,7 +509,7 @@
                             <div class="py-1 row justify-content-center w-100">
                                 <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
                                         height="70px" /></div>
-                                <button ng-disabled = "!customers.inputs.guest_type_gender || !customers.inputs.address || !customers.inputs.phone || !customers.inputs.name" type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
                                     onclick="addCustomer('.addCustomersForm')">
                                     {{settings.modal.name | limitTo:3}}
                                 </button>
@@ -549,20 +534,20 @@
                                 name="gender" readonly />
                         </div>
                         <div class="float-right w-45 row m-0 justify-content-center">
-                            <input ng-model = "customers.inputs.name" class="form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Name"
+                            <input class="form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Name"
                                 name="new_full_name" />
-                            <input ng-model = "customers.inputs.phone" class="form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Phone"
+                            <input class="form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Phone"
                                 name="new_phone_number"  type="number" onkeydown="javascript: return event.keyCode !=69" />
-                            <input ng-model = "customers.inputs.address" class="form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Address"
+                            <input class="form-control w-100 font-fam-Montserrat text-center d-block my-4" placeholder="Address"
                                 name="new_contact_address" />
 
                             <div class="row justify-content-between w-50 py-4">
                                 <span class="py-1">
-                                    <input ng-model = "customers.inputs.new_gender" type="radio" id="male" value="male" name="new_gender" />
+                                    <input type="radio" id="male" value="male" name="new_gender" />
                                     <label for="male" class="f-15 ml-2">Male</label>
                                 </span>
                                 <span class="py-1">
-                                    <input ng-model = "customers.inputs.new_gender" type="radio" checked value="female" name="new_gender" id="female" />
+                                    <input type="radio" checked value="female" name="new_gender" id="female" />
                                     <label for="female" class="f-15 ml-2">Female</label>
                                 </span>
                             </div>
@@ -574,7 +559,7 @@
                                 <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
                                         height="70px" /></div>
 
-                                <button ng-disabled = "!customers.inputs.name && !customers.inputs.phone && !customers.inputs.address && !customers.inputs.new_gender" type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success"
                                     onclick="updateCustomer()">
                                     {{settings.modal.name | limitTo:7}}
                                 </button>
@@ -588,9 +573,9 @@
 
                 <div class="w-100" ng-if="settings.modal.name == 'Debt Clear'">
                     <form class="p-4 w-100 debtpayForm row justify-content-center m-0">
-                        <input ng-model = "listtranxs.inputs.amt" class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Amount Paid" name="amount_paid" type="number" onkeydown="javascript: return event.keyCode !=69" />
+                        <input class="form-control w-75 font-fam-Montserrat text-center d-block my-4" placeholder="Amount Paid" name="amount_paid" type="number" onkeydown="javascript: return event.keyCode !=69" />
 
-                        <select ng-model="listtranxs.inputs.pay_method" class="form-control methpay mx-auto my-4 w-40 f-13"
+                        <select ng-model="listtranxs.jslist.pay_method" class="form-control methpay mx-auto my-4 w-40 f-13"
                             name="means_of_payment">
                             <option value="Cash">Cash</option>
                             <option value="Cheque">Cheque</option>
@@ -605,7 +590,7 @@
                             <div class="py-1 row justify-content-center w-100">
                                 <div ng-class="{gone : !settings.modal.adding}"><img src="./assets/img/loader.gif" width="100px"
                                         height="70px" /></div>
-                                <button ng-disabled = "!listtranxs.inputs.amt || !listtranxs.inputs.pay_method" type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success" onclick="debtpaydata()">
+                                <button type="button" class="{{settings.modal.adding ? 'gone' : ''}} b-0 btn btn-success" onclick="debtpaydata()">
                                     pay
                                 </button>
                             </div>

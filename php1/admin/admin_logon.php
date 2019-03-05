@@ -1,7 +1,7 @@
 <?php
 sleep(3);
-include "../settings/connect.php";  //database name = $dbConn
-$hashedPassword = '';
+include "/settings/connect.php";  //database name = $dbConn
+
 function generateHash($password) {
 	if (defined("CRYPT_BLOWFISH") && CRYPT_BLOWFISH) {
 		$salt = '$2y$11$' . substr(md5(uniqid(rand(), true)), 0, 22);
@@ -28,7 +28,6 @@ while ($stmt->fetch()) {
 $stmt->close();
 
 if (!verify($password, $hashedPassword)) {
-	//echo $hashedPassword;
 	$username = "";
 	$password = "";
 	header("Location:  ../../admin/login.php?output=Login failed, please retry with a valid username and password");
